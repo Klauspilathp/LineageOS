@@ -3,12 +3,15 @@ package com.gnol.springboot.client.config;
 import javax.annotation.Resource;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.gnol.jwt.spring.boot.autoconfigure.JwtRsaUtil;
 import com.gnol.springboot.client.services.sys.SysMenuService;
@@ -43,6 +46,12 @@ public class ClusterWebSecurityConfiguration extends WebSecurityConfigurerAdapte
      */
     @Resource(name = "sysMenuServiceImpl")
     private SysMenuService sysMenuService;
+
+    @Bean("sha1PasswordEncoder")
+    @Primary
+    public PasswordEncoder sha1PasswordEncoder() {
+        return new SHA1PasswordEncoder(2);
+    }
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
