@@ -1,5 +1,6 @@
 #!/bin/bash
-#
+# 
+# chmod +x stop.sh
 # 该脚本用于停止已经启动的应用
 # 
 
