@@ -25,6 +25,7 @@
 	                            <input type="text" name="keywords" placeholder="请输入关键词" autocomplete="off" class="layui-input"></div>
 	                        <div class="layui-inline layui-show-xs-block">
 	                            <button class="layui-btn" lay-submit="" lay-filter="searchs"><i class="layui-icon">&#xe615;</i></button>
+	                            <button type="reset" class="layui-btn layui-btn-primary"><i class="layui-icon">&#x1006;</i></button>
 	                        </div>
 	                    </form>
 	                </div>
@@ -80,8 +81,8 @@
 		{{#  } }}
 	</script>
 	<script type="text/html" id="table-row-oper">
-		<a title="查看" sec:authorize="hasRole('sys_user:info')" onclick="xadmin.open('查看', '/sys/user/info', 800, 500)" href="javascript:;"><i class="layui-icon">&#xe63c;</i></a>
-		<a title="编辑" sec:authorize="hasRole('sys_user:goEdit')" onclick="xadmin.open('编辑系统用户', '/sys/user/goEdit', 800, 500)" href="javascript:;"><i class="layui-icon">&#xe642;</i></a>
+		<a title="查看" sec:authorize="hasRole('sys_user:info')" onclick="xadmin.open('查看', '/sys/user/info?userId=' + {{ d.userId }}, 800, 500)" href="javascript:;"><i class="layui-icon">&#xe63c;</i></a>
+		<a title="编辑" sec:authorize="hasRole('sys_user:goEdit')" onclick="xadmin.open('编辑系统用户', '/sys/user/goEdit?userId=' + {{ d.userId }}, 800, 500)" href="javascript:;"><i class="layui-icon">&#xe642;</i></a>
         <a lay-event="del" sec:authorize="hasRole('sys_user:del')" onclick="del(this, '{{ d.nickname }}', '{{ d.userId }}')" href="javascript:;"><i class="layui-icon">&#xe640;</i></a>
 	</script>
 	<script type="text/html" id="table-toolbar">
@@ -101,8 +102,8 @@
 	<script type="text/javascript">
 		layui.extend({
 		    'request': '/static/lib/layui/lay/modules/request' // 扩展模块
-		}).use(['layer', 'request', 'table', 'laydate'], function() {
-		    var layer = layui.layer, $ = layui.jquery, request = layui.request, table = layui.table, laydate = layui.laydate;
+		}).use(['layer', 'request', 'table', 'laydate', 'form'], function() {
+		    var layer = layui.layer, $ = layui.jquery, request = layui.request, table = layui.table, laydate = layui.laydate, form = layui.form;
 		    // 执行一个 laydate 实例
             laydate.render({
                 elem: '#queryStartTime' // 指定元素
@@ -110,6 +111,14 @@
             // 执行一个 laydate 实例
             laydate.render({
                 elem: '#queryEndTime'
+            });
+            
+            // 搜索
+            form.on('submit(searchs)', function(data) {
+                table.reload('table-id', {
+                    where: data.field
+                });
+                return false;
             });
             
             // 头部工具栏监听事件
