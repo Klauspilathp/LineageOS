@@ -109,7 +109,7 @@ d7c_springboot 采用 Maven 进行项目构建系统，支持 JDK1.8+、MySQL5.7
 
 1.  安装 MySQL、Redis、Rabbitmq 等服务，数据库脚本位于项目根目录下的 d7c.sql；
 2.  修改应用下的 d7c_springboot_**/src/main/resources/application.properties 属性文件，并根据所选环境查看 d7c_springboot_**/src/main/resources/config/application-*.properties 文件中引用的配置，去 d7c_springboot_common/src/main/resources/config 目录下找到对应的属性文件并修改属性配置；
-3.  此处仅展示 d7c_springboot_client_web 应用的运行流程。
+3.  服务启动类是应用包下的 *Application.java 文件，此处仅展示 d7c_springboot_client_web 应用的运行流程。
 
 ## 运行展示
 
