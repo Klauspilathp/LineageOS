@@ -15,7 +15,9 @@
 		<div class="fly-panel">
 			<div class="fly-none">
 				<h2><i class="layui-icon layui-icon-face-cry"></i></h2>
-				<p>服务器内部错误...<a href="javascript:location.reload();"> 刷新</a></p>
+				<p th:text="${timestamp}"></p>
+				<p th:text="${exception}"></p>
+				<p><span th:text="${message}"></span>...<a href="javascript:location.reload();"> 刷新</a></p>
 			</div>
 		</div>
 	</div>
