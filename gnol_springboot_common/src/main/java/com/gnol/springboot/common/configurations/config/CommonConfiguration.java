@@ -1,9 +1,13 @@
 package com.gnol.springboot.common.configurations.config;
 
+import org.springframework.boot.actuate.autoconfigure.endpoint.condition.ConditionalOnEnabledEndpoint;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.env.Environment;
 
 import com.gnol.plugins.core.context.GnolApplicationObjectSupport;
+import com.gnol.springboot.common.actuator.endpoint.CustomEndPoint;
 
 /**
  * @Title: CommonConfiguration
@@ -21,6 +25,16 @@ public class CommonConfiguration {
     @Bean("gnolApplicationObjectSupport")
     public GnolApplicationObjectSupport gnolApplicationObjectSupport() {
         return new GnolApplicationObjectSupport();
+    }
+
+    /**
+     * 自定义监控端点。
+     */
+    @Bean
+    @ConditionalOnMissingBean
+    @ConditionalOnEnabledEndpoint
+    public CustomEndPoint customEndPoint(Environment environment) {
+        return new CustomEndPoint(environment);
     }
 
 }
