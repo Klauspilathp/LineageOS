@@ -19,7 +19,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
  * 而 @EnableDiscoveryClient 注解只需启动一个服务
  */
 @EnableDiscoveryClient
-@EnableFeignClients // 启用 Fegin
+@EnableFeignClients(basePackages = {"com.gnol.springboot.common.feigns"}) // 启用 Fegin
 @EnableCircuitBreaker // 启用 hystrix
 public class EurekaClient1Application {
 
