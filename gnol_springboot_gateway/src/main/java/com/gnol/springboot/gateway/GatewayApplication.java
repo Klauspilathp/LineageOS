@@ -11,6 +11,11 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
  * @author: 吴佳隆
  * @date: 2020年6月27日 下午7:03:08
  * @Description: gateway 网关启动类
+ * 查询所有路由规则 GET：http://127.0.0.1:8081/actuator/gateway/routes
+ * 查询指定 id 路由规则 GET：http://127.0.0.1:8081/actuator/gateway/routes/gnol-springboot-auth
+ * 刷新路由规则 POST：http://127.0.0.1:8081/actuator/gateway/refresh
+ * 查询路由过滤器 GET：http://127.0.0.1:8081/actuator/gateway/routefilters
+ * 查询全局过滤器 GET：http://127.0.0.1:8081/actuator/gateway/globalfilters
  */
 @SpringBootApplication(scanBasePackages = {"com.gnol.springboot"})
 @EnableDiscoveryClient // eureka 客户端
