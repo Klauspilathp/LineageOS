@@ -67,6 +67,11 @@
 			<groupId>com.gnol</groupId>
 			<artifactId>gnol_springboot_plugins_net</artifactId>
 		</dependency>
+		<!-- stream 响应式编程，早期版本是 spring-cloud-stream-rxjava -->
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-stream-reactive</artifactId>
+		</dependency>
 	</dependencies>
 
 	<build>

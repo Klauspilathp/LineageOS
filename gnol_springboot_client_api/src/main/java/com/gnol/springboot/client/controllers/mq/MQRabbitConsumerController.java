@@ -60,7 +60,7 @@ public class MQRabbitConsumerController implements RabbitConstant {
     }
 
     // 先用 /mq/rabbit_producer/createExchange 接口创建队列，再放开注解监听！！！
-    @RabbitListener(queues = FANOUT_QUEUE_3)
+    // @RabbitListener(queues = FANOUT_QUEUE_3)
     public void getFanout3MsgTest(Message msg) {
         logger.info("getFanout3MsgTest received from {} message: [{}].", FANOUT_QUEUE_3, new String(msg.getBody()));
     }

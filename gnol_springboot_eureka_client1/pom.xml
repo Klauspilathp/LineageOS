@@ -48,7 +48,7 @@
 			<groupId>com.gnol</groupId>
 			<artifactId>spring-boot-starter-oauth2</artifactId>
 		</dependency>
-		<!-- 响应式编程，早期版本是 spring-cloud-stream-rxjava -->
+		<!-- stream 响应式编程，早期版本是 spring-cloud-stream-rxjava -->
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-stream-reactive</artifactId>
