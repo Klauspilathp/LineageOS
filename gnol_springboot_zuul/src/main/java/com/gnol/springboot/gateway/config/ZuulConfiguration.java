@@ -21,4 +21,12 @@ public class ZuulConfiguration {
         return new SpringFormEncoder();
     }
 
+    /**
+     * 解决如果遇到已经在配置中声明了 spring.sleuth.sampler.percentage=1.0，而在 zipkin-traces 中还看不到数据的问题。
+     */
+    /*@Bean
+    public Sampler defaultSampler() {
+        return Sampler.ALWAYS_SAMPLE;
+    }*/
+
 }
