@@ -18,5 +18,3 @@ SpringBoot 内置条件注解有关 @ConditionalOnXxx 注解，根据名称可�
 	@ConditionalOnResource：类路径是否有指定的值；
 	@ConditionalOnSingleCandidate：当指定 Bean 在 SpringIoc 容器内只有一个，或者虽然有多个但是指定首选的 Bean；
 	@ConditionalOnWebApplication：当前项目是 Web 项目的条件。
-
-

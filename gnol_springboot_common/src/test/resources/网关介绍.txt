@@ -1,0 +1,23 @@
+gateway：
+基本介绍：
+	Spring Cloud Gateway 是 Spring 官方基于 Spring 5.0、Spring Boot 2.0 和 Project Reactor 等技术开发的网关，
+Spring Cloud Gateway 旨在为微服务架构提供一种简单而有效的统一的 API 路由管理方式。Spring Cloud Gateway 作为 Spring 
+Cloud 生态系中的网关，目标是替代 Netflix Zuul，其不仅提供统一的路由方式，并且基于 Filter 链的方式提供了网关基本的功能，
+例如：安全、监控、埋点和限流等。
+性能：
+	WebFlux 模块的名称是 Spring-WebFlux，名称中的 Flux 来源于 Reactor 中的类 Flux。Spring WebFlux 有一个全新的非阻塞
+的函数式 Reactive Web 框架，可以用来构建异步的、非阻塞的、事件驱动的服务，在伸缩性方面表现非常好。使用非阻塞 API，Websockets 
+得到支持，并且由于它与 Spring 紧密集成，所以将会是一个更好的开发体验。
+源码维护组织：
+	Spring Cloud Gateway 是 Spring 旗下 Spring-Cloud 的一个子项目。还有一种说法是因为 zuul2 连续跳票和 zuul1 的性能表现
+不是很理想，所以催生了 Spring 孵化 Gateway 项目。
+
+Zuul：
+基本介绍：
+	Zuul1 是基于 Servlet 框架构建，采用的是阻塞和多线程方式，即一个线程处理一次连接请求，这种方式在内部延迟严重、设备故障较多情况下
+会引起存活的连接增多和线程增加的情况发生。
+性能：
+	本文的 Zuul，指的是 Zuul 1.x，是一个基于阻塞 io 的 API Gateway。Zuul 已经发布了 Zuul 2.x，基于 Netty，也是非阻塞的，支持
+长连接，但 Spring Cloud 暂时还没有整合计划。
+源码维护组织：
+	Zuul 则是 NetFlix 公司的项目，只是 Spring 将 Zuul 集成在 Spring-Cloud 中使用而已。关键目前 Spring 不打算集成 Zuul 2.x。
