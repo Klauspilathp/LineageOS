@@ -19,7 +19,8 @@ import org.springframework.context.annotation.Import;
 @Import({org.flowable.ui.idm.conf.ApplicationConfiguration.class,
         org.flowable.ui.idm.servlet.AppDispatcherServletConfiguration.class,
         org.flowable.ui.modeler.conf.ApplicationConfiguration.class,
-        org.flowable.ui.modeler.servlet.AppDispatcherServletConfiguration.class})
+        org.flowable.ui.modeler.servlet.AppDispatcherServletConfiguration.class,
+        org.flowable.ui.idm.conf.SecurityConfiguration.class})
 @SpringBootApplication(scanBasePackages = {"com.d7c.springboot"})
 /**
  * @EnableEurekaClient 注解请求 eureka 客户端服务时要求至少启动两个客户端服务，
