@@ -1,4 +1,4 @@
-package com.gnol.springboot.client.controllers.test;
+package com.gnol.springboot.client.controllers.mq;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,14 +12,14 @@ import com.gnol.springboot.client.services.mq.impl.MQProducerServiceImpl;
 
 /**
  * @Title: MQProducerController
- * @Package: com.gnol.springboot.client.controllers.test
+ * @Package: com.gnol.springboot.client.controllers.mq
  * @author: 吴佳隆
  * @date: 2021年1月5日 上午11:41:11
  * @Description: 生产消息控制类
  * https://github.com/spring-cloud/spring-cloud-stream/tree/2.1.x
  */
 @RestController
-@RequestMapping(value = "/test/MQProducer")
+@RequestMapping(value = "/mq/MQProducer")
 public class MQProducerController {
     @Autowired
     private MQProducerServiceImpl producerService;
