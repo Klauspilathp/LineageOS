@@ -30,6 +30,8 @@ import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenCo
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 import org.springframework.web.client.RestTemplate;
 
+import com.gnol.oauth2.spring.boot.CustomAccessTokenConverter;
+import com.gnol.oauth2.spring.boot.CustomWebResponseExceptionTranslator;
 import com.gnol.plugins.core.StringUtil;
 import com.netflix.appinfo.InstanceInfo;
 import com.netflix.appinfo.InstanceInfo.InstanceStatus;
