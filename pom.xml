@@ -51,6 +51,7 @@
 		<module>d7c_springboot_quartz</module>
 		<module>d7c_springboot_client_oauth2</module>
 		<module>d7c_springboot_sharding</module>
+		<module>d7c_springboot_activiti</module>
 	</modules>
 	
 	<!-- 集中定义依赖版本号 -->
@@ -124,6 +125,12 @@
 			<dependency>
 				<groupId>com.d7c</groupId>
 				<artifactId>spring-boot-starter-oauth2</artifactId>
+				<version>${d7c_springboot_plugins.version}</version>
+			</dependency>
+			<!-- d7c 项目封装的 spring-boot 关于 activiti starter -->
+			<dependency>
+				<groupId>com.d7c</groupId>
+				<artifactId>spring-boot-starter-activiti</artifactId>
 				<version>${d7c_springboot_plugins.version}</version>
 			</dependency>
             <!-- d7c springboot 版插件工程 =======>end -->

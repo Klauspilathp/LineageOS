@@ -1,0 +1,69 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.gnol</groupId>
+		<artifactId>gnol_springboot</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+		<relativePath>../pom.xml</relativePath>
+	</parent>
+	<artifactId>gnol_springboot_activiti</artifactId>
+	<packaging>jar</packaging>
+	<name>gnol_springboot_activiti</name>
+	<description>gnol_springboot 项目 activiti 工作流模块，该模块以 jar 包的形式发布，只提供 REST 风格的 API 接口，
+		所有页面发布在 d7c_springboot_web 项目中或其他 web 容器中，BPMN 文件存储在其他存储服务上，仅通过输入流部署流程。</description>
+
+	<dependencies>
+		<!-- gnol 项目封装的 spring-boot 关于 oauth2 starter -->
+		<dependency>
+			<groupId>com.gnol</groupId>
+			<artifactId>spring-boot-starter-oauth2</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.gnol</groupId>
+			<artifactId>gnol_springboot_common</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<!-- gnol 项目封装的 spring-boot 关于 mybatis 持久化层 starter -->
+		<dependency>
+			<groupId>com.gnol</groupId>
+			<artifactId>spring-boot-starter-mybatis</artifactId>
+		</dependency>
+		<!-- eureka client -->
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+		</dependency>
+		<!-- config client -->
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-config</artifactId>
+		</dependency>
+		<!-- admin client -->
+		<dependency>
+			<groupId>de.codecentric</groupId>
+			<artifactId>spring-boot-admin-starter-client</artifactId>
+		</dependency>
+		<!-- sleuth zipkin -->
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-zipkin</artifactId>
+		</dependency>
+		<!-- gnol 项目封装的 spring-boot 关于 activiti starter -->
+		<dependency>
+			<groupId>com.gnol</groupId>
+			<artifactId>spring-boot-starter-activiti</artifactId>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<finalName>${project.artifactId}</finalName>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>
