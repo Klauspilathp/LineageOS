@@ -47,6 +47,7 @@
 	                                <th lay-data="{field:'status', width: 80, align:'center', templet: function (d) {return d.status == 1 ? '正常' : d.status == 2 ? '冻结' : '删除'}}">用户状态</th>
 	                                <th lay-data="{field:'loginTime', width: 150, templet: function (d) {return (d.loginTime == undefined || d.loginTime == '' || d.loginTime == null) ? '' : layui.util.toDateString(d.loginTime, 'yyyy-MM-dd HH:mm:ss');}}">最近登录时间</th>
 	                                <th lay-data="{field:'loginIp', width: 90}">最近登录地址</th>
+	                                <th lay-data="{type:'normal', width: 120, align:'center', templet: '#table-row-oper'}">操作</th>
 	                            </tr>
 	                        </thead>
 	                    </table>
@@ -77,6 +78,11 @@
 		{{#  } else { }}
 			<span style="color: #F581B1;">错误用户类型</span>
 		{{#  } }}
+	</script>
+	<script type="text/html" id="table-row-oper">
+		<a title="查看" sec:authorize="hasRole('sys_user:info')" onclick="xadmin.open('查看', '/sys/user/info', 800, 500)" href="javascript:;"><i class="layui-icon">&#xe63c;</i></a>
+		<a title="编辑" sec:authorize="hasRole('sys_user:goEdit')" onclick="xadmin.open('编辑系统用户', '/sys/user/goEdit', 800, 500)" href="javascript:;"><i class="layui-icon">&#xe642;</i></a>
+        <a lay-event="del" sec:authorize="hasRole('sys_user:del')" onclick="del(this, '{{ d.nickname }}', '{{ d.userId }}')" href="javascript:;"><i class="layui-icon">&#xe640;</i></a>
 	</script>
 	<script type="text/html" id="table-toolbar">
 		<div class = "layui-btn-container">
@@ -119,6 +125,15 @@
                 }
             });
 		});
+		
+		// 删除用户
+		function del(obj, msg, userId) {
+            layer.confirm('确认要删除[' + msg + ']用户吗？', function(index) {
+                // 发异步删除数据
+                $(obj).parents("tr").remove();
+                successMsg("已成功删除了[" + msg + "]用户。");
+            });
+        }
 	</script>
 </body>
 </html>

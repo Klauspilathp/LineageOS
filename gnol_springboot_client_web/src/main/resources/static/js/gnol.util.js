@@ -13,3 +13,11 @@ function errorMsg(msg) {
     });
 }
 
+// 成功提示
+function successMsg(msg) {
+    layer.msg(msg, {
+        icon: 1,
+        time: 2000,
+        anim: 6
+    });
+}
