@@ -121,7 +121,7 @@
 	<![endif]-->
 	<script>
 		// 是否开启刷新记忆 tab 功能
-	    var is_remember = false;
+	    //var is_remember = false;
 	</script>
 	<script type="text/javascript">
 		layui.extend({
@@ -133,13 +133,98 @@
                 url: '/sys/menu/authMenu', 
                 dataType: 'json',
                 success: function(res) {
-                    var html = menuTree("nav", res.data);
+                    var html = menuTree("<ul id='nav'>", res.data);
                     $("#side-nav").append(html);
+                    
+                    // 左侧菜单
+                    $('.left-nav #nav').on('click', 'li', function(event) {
+                        if ($(this).parent().attr('id') == 'nav') {
+                            xadmin.set_cate_data({
+                                key: 'f1',
+                                value: $('.left-nav #nav li').index($(this))
+                            });
+                            xadmin.set_cate_data({
+                                key: 'f2',
+                                value: null
+                            });
+                            xadmin.set_cate_data({
+                                key: 'f3',
+                                value: null
+                            });
+                        }
+
+                        if ($(this).parent().parent().parent().attr('id') == 'nav') {
+                            xadmin.set_cate_data({
+                                key: 'f2',
+                                value: $('.left-nav #nav li').index($(this))
+                            });
+                            xadmin.set_cate_data({
+                                key: 'f3',
+                                value: null
+                            });
+                        }
+
+                        if ($(this).parent().parent().parent().parent().parent().attr('id') == 'nav') {
+                            xadmin.set_cate_data({
+                                key: 'f3',
+                                value: $('.left-nav #nav li').index($(this))
+                            });
+                        }
+
+                        if ($('.left-nav').css('width') == '60px') {
+                            $('.left-nav').animate({
+                                width: '220px'
+                            }, 100);
+                            $('.page-content').animate({
+                                left: '220px'
+                            }, 100);
+                            $('.left-nav i').css('font-size', '14px');
+                            $('.left-nav cite,.left-nav .nav_right').show();
+                        }
+
+                        if ($(window).width() < 768) {
+                            $('.page-content-bg').show();
+                        }
+
+                        $('.left-nav').find('a').removeClass('active');
+                        $(this).children('a').addClass('active');
+                        if ($(this).children('.sub-menu').length) {
+                            if ($(this).hasClass('open')) {
+                                $(this).removeClass('open');
+                                $(this).find('.nav_right').html('&#xe697;');
+                                $(this).children('.sub-menu').stop(true, true).slideUp();
+                                $(this).siblings().children('.sub-menu').slideUp();
+                            } else {
+                                $(this).addClass('open');
+                                $(this).children('a').find('.nav_right').html('&#xe6a6;');
+                                $(this).children('.sub-menu').stop(true, true).slideDown();
+                                $(this).siblings().children('.sub-menu').stop(true, true).slideUp();
+                                $(this).siblings().find('.nav_right').html('&#xe697;');
+                                $(this).siblings().removeClass('open');
+                            }
+                        }
+                        event.stopPropagation();
+                    });
+                    
+                    var left_tips_index = null;
+                    $('.left-nav #nav').on('mouseenter', '.left-nav-li', function(event) {
+                        if ($('.left-nav').css('width') != '220px') {
+                            var tips = $(this).attr('lay-tips');
+                            left_tips_index = layer.tips(tips, $(this));
+                        }
+                    });
+
+                    $('.left-nav #nav').on('mouseout', '.left-nav-li', function(event) {
+                        layer.close(left_tips_index);
+                    });
+                    
+                    // 页面加载完要做的
+                    xadmin.end();
                 }
             });
          
             function menuTree(container, data) {
-                var html = "<ul id='" + container + "'>";
+                var html = container;
                 $.each(data, function(i, menu) {
                     if (menu.visible != 1) {
                         return true;
@@ -152,7 +237,7 @@
                         html += "')\"><i class='iconfont'>&#xe6a7;</i><cite>" + menu.menuName + "</cite></a>";
                     }
                     if (menu.childrens) {
-                        html += menuTree("sub-menu", menu.childrens);
+                        html += menuTree("<ul class='sub-menu'>", menu.childrens);
                     }
                     html += "</li>";
                 });
