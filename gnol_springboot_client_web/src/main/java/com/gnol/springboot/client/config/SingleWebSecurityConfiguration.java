@@ -73,6 +73,11 @@ public class SingleWebSecurityConfiguration extends WebSecurityConfigurerAdapter
      */
     @Autowired
     private DataSource dataSource;
+    /**
+     * redis 中持久化记住我 token 实现
+     */
+    @Resource(name = "redisPersistentTokenRepository")
+    private PersistentTokenRepository persistentTokenRepository;
 
     @Bean("sha1PasswordEncoder")
     @Primary
@@ -126,7 +131,7 @@ public class SingleWebSecurityConfiguration extends WebSecurityConfigurerAdapter
                             AuthenticationException exception) throws IOException, ServletException {
                         response.sendRedirect("/index?error=" + exception.getMessage());
                     }
-                }).and().rememberMe().tokenRepository(jdbcTokenRepositoryImpl()) // new InMemoryTokenRepositoryImpl()、jdbcTokenRepositoryImpl()
+                }).and().rememberMe().tokenRepository(persistentTokenRepository) // new InMemoryTokenRepositoryImpl()、jdbcTokenRepositoryImpl()
                 .tokenValiditySeconds(60 * 60 * 24) // 记住我一天
                 .and().logout().logoutSuccessUrl("/index") // 登出授权
                 .invalidateHttpSession(true).clearAuthentication(true)
