@@ -51,7 +51,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
                             Authentication authentication) throws IOException, ServletException {
                         logger.debug("{} 用户在 {} 地址登录成功！", authentication.getName(), request.getRemoteAddr());
-                        response.sendRedirect("/chat");
+                        response.sendRedirect("/index");
                     }
                 }).and().logout() // 登出授权
                 .invalidateHttpSession(true).clearAuthentication(true);
