@@ -3,15 +3,12 @@ package com.d7c.springboot.client.controllers.activiti;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.zip.ZipInputStream;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.activiti.api.process.runtime.ProcessRuntime;
-import org.activiti.api.runtime.shared.query.Pageable;
 import org.activiti.engine.RepositoryService;
 import org.activiti.engine.repository.Deployment;
 import org.apache.commons.io.FilenameUtils;
@@ -31,6 +28,7 @@ import com.d7c.plugins.core.StringUtil;
 import com.d7c.plugins.core.enums.HttpStatus;
 import com.d7c.plugins.tools.idfactory.uuid.UUID;
 import com.d7c.springboot.client.controllers.WebBaseController;
+import com.d7c.springboot.client.services.activiti.ActivitiProcessDefinitionService;
 
 /**
  * @Title: ActivitiProcessDefinitionController
@@ -43,15 +41,15 @@ import com.d7c.springboot.client.controllers.WebBaseController;
 @RequestMapping(value = "/activiti/processDefinition")
 public class ActivitiProcessDefinitionController extends WebBaseController {
     /**
-     * 操作流程实例服务，访问时用户需要拥有 ACTIVITI_USER 角色的权限。
-     */
-    @Autowired
-    private ProcessRuntime processRuntime;
-    /**
      * 提供对流程定义和部署存储库的访问服务
      */
     @Autowired
     private RepositoryService repositoryService;
+    /**
+     * activiti 流程定义服务
+     */
+    @Resource(name = "activitiProcessDefinitionServiceImpl")
+    private ActivitiProcessDefinitionService activitiProcessDefinitionService;
 
     /**
      * @Title: getProcessDefinition
@@ -63,32 +61,7 @@ public class ActivitiProcessDefinitionController extends WebBaseController {
      */
     @GetMapping(value = "/getProcessDefinition")
     public PageResult getProcessDefinition(@RequestParam(value = "processDefinitionKey") String processDefinitionKey) {
-        // 流程定义对象
-        org.activiti.engine.repository.ProcessDefinition processDefinition = repositoryService
-                .createProcessDefinitionQuery().processDefinitionKey(processDefinitionKey).singleResult();
-
-        /*if (processDefinition == null) {
-            return PageResult.error("流程定义不存在！");
-        }
-        // 流程部署 ID
-        String deploymentId = processDefinition.getDeploymentId();
-        // 获取 bpmn 文件名称
-        String diagramResourceName = processDefinition.getDiagramResourceName();
-        // 获取 png 文件名称
-        String resourceName = processDefinition.getResourceName();
-        // bpmn 文件输入流
-        InputStream diagramInputStream = repositoryService.getResourceAsStream(deploymentId, diagramResourceName);
-        // png 文件输入流
-        InputStream pngInputStream = repositoryService.getResourceAsStream(deploymentId, resourceName);*/
-
-        PageData pd = PageData.build().set("id", processDefinition.getId())
-                .set("category", processDefinition.getCategory()).set("name", processDefinition.getName())
-                .set("key", processDefinition.getKey()).set("description", processDefinition.getDescription())
-                .set("version", processDefinition.getVersion()).set("resourceName", processDefinition.getResourceName())
-                .set("deploymentId", processDefinition.getDeploymentId())
-                .set("diagramResourceName", processDefinition.getDiagramResourceName())
-                .set("suspended", processDefinition.isSuspended()).set("tenantId", processDefinition.getTenantId());
-        return PageResult.ok(pd);
+        return PageResult.ok(activitiProcessDefinitionService.getProcessDefinition(processDefinitionKey));
     }
 
     /**
@@ -136,23 +109,8 @@ public class ActivitiProcessDefinitionController extends WebBaseController {
     @GetMapping(value = "/listProcessDefinitionByProcessDefinitionKey")
     public PageResult listProcessDefinitionByProcessDefinitionKey(
             @RequestParam(value = "processDefinitionKey") String processDefinitionKey) {
-        List<org.activiti.engine.repository.ProcessDefinition> processDefinitions = repositoryService
-                .createProcessDefinitionQuery().processDefinitionKey(OPERATE_FAILED).orderByProcessDefinitionVersion()
-                .desc().list();
-
-        List<PageData> pds = new ArrayList<PageData>();
-        for (org.activiti.engine.repository.ProcessDefinition processDefinition : processDefinitions) {
-            pds.add(PageData.build().set("id", processDefinition.getId())
-                    .set("category", processDefinition.getCategory()).set("name", processDefinition.getName())
-                    .set("key", processDefinition.getKey()).set("description", processDefinition.getDescription())
-                    .set("version", processDefinition.getVersion())
-                    .set("resourceName", processDefinition.getResourceName())
-                    .set("deploymentId", processDefinition.getDeploymentId())
-                    .set("diagramResourceName", processDefinition.getDiagramResourceName())
-                    .set("suspended", processDefinition.isSuspended())
-                    .set("tenantId", processDefinition.getTenantId()));
-        }
-        return PageResult.ok(pds);
+        return PageResult
+                .ok(activitiProcessDefinitionService.listProcessDefinitionByProcessDefinitionKey(processDefinitionKey));
     }
 
     /**
@@ -164,17 +122,7 @@ public class ActivitiProcessDefinitionController extends WebBaseController {
      */
     @GetMapping(value = "/listProcessDefinition")
     public PageResult listProcessDefinition(Page<PageData> page) {
-        org.activiti.api.runtime.shared.query.Page<org.activiti.api.process.model.ProcessDefinition> processDefinitions = processRuntime
-                .processDefinitions(Pageable.of(page.getCurrentResult(), page.getPageSize()));
-        page.setTotalResult(processDefinitions.getTotalItems());
-
-        List<PageData> pds = new ArrayList<PageData>();
-        for (org.activiti.api.process.model.ProcessDefinition processDefinition : processDefinitions.getContent()) {
-            pds.add(PageData.build().set("id", processDefinition.getId()).set("name", processDefinition.getName())
-                    .set("key", processDefinition.getKey()).set("description", processDefinition.getDescription())
-                    .set("version", processDefinition.getVersion()).set("formKey", processDefinition.getFormKey()));
-        }
-        return PageResult.ok(pds).setPage(page);
+        return activitiProcessDefinitionService.listProcessDefinition(page);
     }
 
     /**
