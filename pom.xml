@@ -50,6 +50,7 @@
 		<module>gnol_springboot_client_websocket</module>
 		<module>gnol_springboot_client_rpc</module>
 		<module>gnol_springboot_quartz</module>
+		<module>gnol_springboot_client_oauth2</module>
 	</modules>
 	
 	<!-- 集中定义依赖版本号 -->
