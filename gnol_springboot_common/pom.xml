@@ -46,6 +46,11 @@
 			<groupId>com.gnol</groupId>
 			<artifactId>spring-boot-starter-redis</artifactId>
 		</dependency>
+		<!-- ehcache 相关依赖，参考 https://www.cnblogs.com/wchxj/p/8119528.html -->
+		<dependency>
+			<groupId>net.sf.ehcache</groupId>
+			<artifactId>ehcache</artifactId>
+		</dependency>
 	</dependencies>
 
 	<build>

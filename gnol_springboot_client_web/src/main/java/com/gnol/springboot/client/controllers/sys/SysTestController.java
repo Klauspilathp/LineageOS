@@ -20,6 +20,7 @@ import com.gnol.plugins.tools.lang.RandomNumber;
 import com.gnol.springboot.client.controllers.WebBaseController;
 import com.gnol.springboot.client.services.sys.SysTestService;
 import com.gnol.springboot.client.services.test1.Test1TestService;
+import com.gnol.springboot.common.configurations.ehcache.EhcacheService;
 import com.gnol.springboot.common.dos.sys.SysTest;
 import com.gnol.springboot.common.dos.test1.Test1Test;
 
@@ -45,6 +46,8 @@ public class SysTestController extends WebBaseController {
      */
     @Resource(name = "test1TestServiceImpl")
     private Test1TestService test1TestService;
+    @Autowired
+    private EhcacheService ehcacheService;
 
     @RequestMapping(value = "/test1")
     public String test1(ModelMap map) throws FileNotFoundException {
@@ -127,6 +130,13 @@ public class SysTestController extends WebBaseController {
         test1.setText("insert two database by test1_test " + random);
         int insert1 = test1TestService.insert1(test1);
         return PageResult.ok("sys_test：" + insert + ", test1_test：" + insert1 + ", random：" + random + "。");
+    }
+
+    @RequestMapping(value = "/test9")
+    @ResponseBody
+    public PageResult test9() {
+        ehcacheService.addObject("abc", "ecd");
+        return PageResult.ok(ehcacheService.getObject("abc"));
     }
 
 }

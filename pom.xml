@@ -60,6 +60,7 @@
 		<swagger.version>2.9.2</swagger.version>
 		<spring-boot-admin.version>2.1.6</spring-boot-admin.version>
 		<spring-boot-zuul.version>2.1.5.RELEASE</spring-boot-zuul.version>
+		<ehcache.version>2.10.4</ehcache.version>
 	</properties>
 
     <!-- 只是对版本进行管理，不会实际引入 jar -->
@@ -136,6 +137,12 @@
 				<groupId>org.springframework.cloud</groupId>
 				<artifactId>spring-cloud-starter-netflix-zuul</artifactId>
 				<version>${spring-boot-zuul.version}</version>
+			</dependency>
+			<!-- ehcache 相关依赖，参考 https://www.cnblogs.com/wchxj/p/8119528.html -->
+			<dependency>
+				<groupId>net.sf.ehcache</groupId>
+				<artifactId>ehcache</artifactId>
+				<version>${ehcache.version}</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>

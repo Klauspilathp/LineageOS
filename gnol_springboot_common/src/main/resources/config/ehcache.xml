@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="./ehcache.xsd"
+	updateCheck="false">
+	<!-- http://ehcache.org/ehcache.xsd -->
+	<!-- 缓存存放目录，java.io.tmpdir 是操作系统缓存的临时目录 -->
+	<!-- <diskStore path="E:\Trash\cache\ehcaches" /> -->
+	<diskStore path="./ehcaches" />
+	
+	<!-- RMI 是 Java 的一种远程方法调用技术，是一种点对点的基于 Java 对象的通讯方式。EhCache 从 1.2 版本开始就支持 RMI 方式的缓存集群 -->
+	<!-- 在集群环境中 EhCache 所有缓存对象的键和值都必须是可序列化的，也就是必须实现 java.io.Serializable 接口，这点在其它集群方式下也是需要遵守的 -->
+	<!-- 采用 RMI 集群模式时，集群中的每个节点都是对等关系，并不存在主节点和从节点的概念，因此节点间必须有一个机制能够互相认识对方，知道其它节点的信息，包括主机地址、端口号等 -->
+	<!-- EhCache 提供两种节点的发现方式：手工配置和自动发现。手工配置方式要求在每个节点中配置其它所有节点的连接信息，一旦集群中的节点发生变化时，需要对缓存进行重新配置 -->
+
+	<!-- manual：手动发现配置 -->
+	<!-- 指定除自身之外网络群体中其他提供同步的主机列表，用"|"分开不同的主机，其它节点配置类似，只需把 rmiUrls 中的两个 IP 地址换成另外两个节点对应的 IP 地址即可 -->
+	<!-- 配宿主主机配置监听程序，监听从成员们发向当前 CacheManager 的消息 -->
+	<!-- 防火墙设置，根据配置文件开启 multicast，打开以下端口 40001（TCP）、40002（TCP）、4446（UDP），其中4446是用于组播的端口 -->
+	<!-- <cacheManagerPeerProviderFactory
+		class="net.sf.ehcache.distribution.RMICacheManagerPeerProviderFactory"
+		properties="socketTimeoutMillis=12000,peerDiscovery=manual,rmiUrls=//192.168.7.4:40001/defaultCache" />
+	<cacheManagerPeerListenerFactory
+		class="net.sf.ehcache.distribution.RMICacheManagerPeerListenerFactory"
+		properties="hostName=192.168.7.3,port=40001,socketTimeoutMillis=12000" /> -->
+	
+	<!-- automatic：自动发现配置 -->
+	<!-- 配置组广播地址和组广播端口：组播地址可以指定 D 类 IP 地址空间，范围从 224.0.1.0 到 238.255.255.255 中的任何一个地址 -->
+	<!-- timeToLive 是指搜索范围：0是同一台服务器，1是同一个子网，32是指同一站点，64是指同一块地域，128是同一块大陆，255是不限制 -->
+	<!-- <cacheManagerPeerProviderFactory
+		class="net.sf.ehcache.distribution.RMICacheManagerPeerProviderFactory"
+		properties="peerDiscovery=automatic,multicastGroupAddress=230.0.0.1,multicastGroupPort=44446,timeToLive=32" />
+	<cacheManagerPeerListenerFactory
+		class="net.sf.ehcache.distribution.RMICacheManagerPeerListenerFactory"
+		properties="hostName=127.0.0.1,port=44446,socketTimeoutMillis=12000" /> -->
+	
+	<!-- 查看 /gnol-common/src/test/resources/ehcache.txt -->
+	<defaultCache eternal="false" maxElementsInMemory="10000" maxElementsOnDisk="10000000"
+		overflowToDisk="true" timeToIdleSeconds="120" timeToLiveSeconds="120" diskPersistent="false"
+		diskExpiryThreadIntervalSeconds="120" memoryStoreEvictionPolicy="LRU">
+		<!-- 监听 RMI 同步缓存对象配置，注册相应的缓存监听类，用于处理缓存事件，如 put、remove、update 和 expire -->
+		<!-- <cacheEventListenerFactory class="net.sf.ehcache.distribution.RMICacheReplicatorFactory"
+			properties="replicatePuts=true,replicateUpdates=true,replicateRemovals=true,replicateAsynchronously=true,replicateUpdatesViaCopy=false" /> -->
+		<!-- 用于在初始化缓存，以及自动设置 -->
+		<!-- <bootstrapCacheLoaderFactory class="net.sf.ehcache.distribution.RMIBootstrapCacheLoaderFactory"/> -->
+	</defaultCache>
+
+</ehcache>
