@@ -33,6 +33,12 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-quartz</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>com.mchange</groupId>
+			<artifactId>c3p0</artifactId>
+			<version>0.9.5.4</version>
+			<scope>compile</scope>
+		</dependency>
 		<!-- mail -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
