@@ -1,5 +1,6 @@
 package com.gnol.springboot.client;
 
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
@@ -17,6 +18,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 @EnableDiscoveryClient // eureka 客户端
 @EnableFeignClients(basePackages = {"com.gnol.springboot"}) // 启用 Fegin
 @EnableCircuitBreaker // 启用 hystrix
+@MapperScan(basePackages = {"com.gnol.springboot.common.daos", "com.gnol.springboot.client.daos"})
 public class ApiApplication {
 
     public static void main(String[] args) {
