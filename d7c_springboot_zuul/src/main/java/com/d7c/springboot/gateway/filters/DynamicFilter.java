@@ -44,8 +44,8 @@ public class DynamicFilter {
         logger.info("zuul loads the script under {}", scriptRoot);
         try {
             FilterFileManager.init(d7cProperties.getGroovyRefreshInterval(), // 刷新时间间隔，单位秒
-                    scriptRoot + FilterConstants.ERROR_TYPE, scriptRoot + FilterConstants.POST_TYPE,
-                    scriptRoot + FilterConstants.PRE_TYPE, scriptRoot + FilterConstants.ROUTE_TYPE);
+                    /*scriptRoot + FilterConstants.ERROR_TYPE,*/ scriptRoot + FilterConstants.POST_TYPE,
+                    scriptRoot + FilterConstants.PRE_TYPE/*, scriptRoot + FilterConstants.ROUTE_TYPE*/);
         } catch (NumberFormatException e) {
             e.printStackTrace();
         } catch (IllegalAccessException e) {

@@ -15,13 +15,15 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
  * @Title: ActivitiConfiguration
  * @Package: com.d7c.springboot.client.config
  * @author: 吴佳隆
  * @date: 2020年7月26日 下午1:06:37
- * @Description: api 项目配置类
+ * @Description: activiti 项目配置类
  */
 @Configuration
 @EnableOAuth2Client // 必须在此类上加此注解 OAuth2RestTemplate 才能使用 eureka 服务名访问其他服务
@@ -51,8 +53,22 @@ public class ActivitiConfiguration {
         return new D7cProperties();
     }
 
+    /**
+     * 将 bpmn 流程文件资源目录映射为可以 Rest 方式访问的路径
+     */
+    @Bean(name = "bpmnResoucesPath")
+    public WebMvcConfigurer bpmnResoucesPath() {
+        return new WebMvcConfigurer() {
+            @Override
+            public void addResourceHandlers(ResourceHandlerRegistry registry) {
+                registry.addResourceHandler("/processes/**").addResourceLocations("classpath:/processes/");
+                WebMvcConfigurer.super.addResourceHandlers(registry);
+            }
+        };
+    }
+
     // --- 支持跨域的两种配置方式
-    @Bean
+    @Bean(name = "corsFilter")
     public CorsFilter corsFilter() {
         final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         final CorsConfiguration config = new CorsConfiguration();
@@ -65,7 +81,7 @@ public class ActivitiConfiguration {
         return new CorsFilter(source);
     }
 
-    /*@Bean
+    /*@Bean(name = "corsConfigurer")
     public WebMvcConfigurer corsConfigurer() {
         return new WebMvcConfigurer() {
             @Override
