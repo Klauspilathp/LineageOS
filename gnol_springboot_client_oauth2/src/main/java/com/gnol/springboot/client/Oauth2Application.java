@@ -1,4 +1,4 @@
-package com.gnol.springboot.oauth2;
+package com.gnol.springboot.client;
 
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
@@ -9,7 +9,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 
 /**
  * @Title: Oauth2Application
- * @Package: com.gnol.springboot.oauth2
+ * @Package: com.gnol.springboot.client
  * @author: 吴佳隆
  * @date: 2020年6月15日 上午9:52:39
  * @Description: 资源授权服务器启动类
@@ -18,7 +18,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 @EnableDiscoveryClient // eureka 客户端
 @EnableFeignClients(basePackages = {"com.gnol.springboot"}) // 启用 Fegin
 @EnableCircuitBreaker // 启用 hystrix
-@MapperScan(basePackages = {"com.gnol.springboot.common.daos", "com.gnol.springboot.oauth2.daos"})
+@MapperScan(basePackages = {"com.gnol.springboot.common.daos", "com.gnol.springboot.client.daos"})
 public class Oauth2Application {
 
     /**

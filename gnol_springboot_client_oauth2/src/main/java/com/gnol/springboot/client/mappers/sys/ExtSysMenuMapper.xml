@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.gnol.springboot.oauth2.daos.sys.ExtSysMenuDao">
+<mapper namespace="com.gnol.springboot.client.daos.sys.ExtSysMenuDao">
 	<!-- resultMap引入：resultMap="com.gnol.springboot.common.daos.sys.BaseSysMenuDao.BaseResultMap" -->
 	<!-- SQL 片段引入：<include refid="com.gnol.springboot.common.daos.sys.BaseSysMenuDao.Base_Column_List"/> -->
 	<!-- 根据角色编号查询权限列表 -->

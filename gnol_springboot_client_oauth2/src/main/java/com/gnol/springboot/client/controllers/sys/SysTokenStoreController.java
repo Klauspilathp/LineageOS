@@ -1,4 +1,4 @@
-package com.gnol.springboot.oauth2.controllers.sys;
+package com.gnol.springboot.client.controllers.sys;
 
 import java.util.Collection;
 
@@ -10,11 +10,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.gnol.plugins.core.PageResult;
-import com.gnol.springboot.oauth2.controllers.WebBaseController;
+import com.gnol.springboot.client.controllers.WebBaseController;
 
 /**
  * @Title: SysTokenStoreController
- * @Package: com.gnol.springboot.oauth2.controllers.sys
+ * @Package: com.gnol.springboot.client.controllers.sys
  * @author: 吴佳隆
  * @date: 2020年7月22日 下午7:19:15
  * @Description: token 管理

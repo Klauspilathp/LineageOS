@@ -1,4 +1,4 @@
-package com.gnol.springboot.oauth2.config;
+package com.gnol.springboot.client.config;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -25,12 +25,12 @@ import com.gnol.redis.spring.boot.autoconfigure.RedisService;
 import com.gnol.springboot.common.dos.sys.SysUser;
 import com.gnol.springboot.common.enums.auth.AuthTypeEnum;
 import com.gnol.springboot.common.enums.sys.StatusEnum;
-import com.gnol.springboot.oauth2.daos.sys.ExtSysMenuDao;
-import com.gnol.springboot.oauth2.daos.sys.ExtSysUserDao;
+import com.gnol.springboot.client.daos.sys.ExtSysMenuDao;
+import com.gnol.springboot.client.daos.sys.ExtSysUserDao;
 
 /**
  * @Title: UserDetailsServiceImpl
- * @Package: com.gnol.springboot.oauth2.config
+ * @Package: com.gnol.springboot.client.config
  * @author: 吴佳隆
  * @date: 2020年7月13日 下午3:37:41
  * @Description: spring security UserDetailsService 实现

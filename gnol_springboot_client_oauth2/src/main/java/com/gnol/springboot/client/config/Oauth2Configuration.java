@@ -1,4 +1,4 @@
-package com.gnol.springboot.oauth2.config;
+package com.gnol.springboot.client.config;
 
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Configuration;
 
 /**
  * @Title: Oauth2Configuration
- * @Package: com.gnol.springboot.oauth2.config
+ * @Package: com.gnol.springboot.client.config
  * @author: 吴佳隆
  * @date: 2020年7月20日 上午9:44:31
  * @Description: 资源授权服务器配置类

@@ -1,4 +1,4 @@
-package com.gnol.springboot.oauth2.config;
+package com.gnol.springboot.client.config;
 
 import java.util.Set;
 
@@ -7,7 +7,7 @@ import org.springframework.security.core.userdetails.User;
 
 /**
  * @Title: CustomUserDetails
- * @Package: com.gnol.springboot.oauth2.config
+ * @Package: com.gnol.springboot.client.config
  * @author: 吴佳隆
  * @date: 2020年7月17日 下午8:03:35
  * @Description: 自定义 org.springframework.security.core.userdetails.UserDetails

@@ -1,11 +1,11 @@
-package com.gnol.springboot.oauth2.config;
+package com.gnol.springboot.client.config;
 
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
  * @Title: GnolProperties
- * @Package: com.gnol.springboot.oauth2.config
+ * @Package: com.gnol.springboot.client.config
  * @author: 吴佳隆
  * @date: 2020年7月14日 上午9:18:53
  * @Description: gnol 系统自定义属性

@@ -1,4 +1,4 @@
-package com.gnol.springboot.oauth2.controllers.sys;
+package com.gnol.springboot.client.controllers.sys;
 
 import java.io.IOException;
 
@@ -16,12 +16,12 @@ import com.gnol.plugins.tools.code.captcha.Captcha;
 import com.gnol.plugins.tools.code.captcha.GifCaptcha;
 import com.gnol.plugins.tools.code.captcha.SpecCaptcha;
 import com.gnol.redis.spring.boot.autoconfigure.RedisService;
-import com.gnol.springboot.oauth2.config.GnolConstant;
-import com.gnol.springboot.oauth2.controllers.WebBaseController;
+import com.gnol.springboot.client.config.GnolConstant;
+import com.gnol.springboot.client.controllers.WebBaseController;
 
 /**
  * @Title: VerifyCodeController
- * @Package: com.gnol.springboot.oauth2.controllers.sys
+ * @Package: com.gnol.springboot.client.controllers.sys
  * @author: 吴佳隆
  * @date: 2019年06月17日 19:42:16
  * @Description: gnol 系统获取验证码 Controller

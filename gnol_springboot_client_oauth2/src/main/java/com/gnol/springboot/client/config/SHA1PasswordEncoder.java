@@ -1,4 +1,4 @@
-package com.gnol.springboot.oauth2.config;
+package com.gnol.springboot.client.config;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
@@ -13,7 +13,7 @@ import com.gnol.plugins.core.exception.GnolRuntimeException;
 
 /**
  * @Title: SHA1PasswordEncoder
- * @Package: com.gnol.springboot.oauth2.config
+ * @Package: com.gnol.springboot.client.config
  * @author: 吴佳隆
  * @date: 2020年7月11日 上午11:58:15
  * @Description: SHA1 的 PasswordEncoder 加密实现类

@@ -1,4 +1,4 @@
-package com.gnol.springboot.oauth2.daos.sys;
+package com.gnol.springboot.client.daos.sys;
 
 import java.util.Set;
 
@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 
 /**
  * @Title: ExtSysMenuDao
- * @Package: com.gnol.springboot.oauth2.daos.sys
+ * @Package: com.gnol.springboot.client.daos.sys
  * @author: 吴佳隆
  * @date: 2019年06月18日 08:57:22
  * @Description: gnol 系统菜单表扩展 Dao

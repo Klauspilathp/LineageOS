@@ -1,4 +1,4 @@
-package com.gnol.springboot.oauth2.controllers;
+package com.gnol.springboot.client.controllers;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -27,7 +27,7 @@ import com.gnol.plugins.tools.file.FileUtil;
 
 /**
  * @Title: WebBaseController
- * @Package: com.gnol.springboot.oauth2.controllers
+ * @Package: com.gnol.springboot.client.controllers
  * @author: 吴佳隆
  * @date: 2019年12月11日 上午8:21:02
  * @Description: WEB 页面基础 Controller

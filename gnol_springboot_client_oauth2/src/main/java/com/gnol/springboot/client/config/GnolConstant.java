@@ -1,8 +1,8 @@
-package com.gnol.springboot.oauth2.config;
+package com.gnol.springboot.client.config;
 
 /**
  * @Title: GnolConstant
- * @Package: com.gnol.springboot.oauth2.config
+ * @Package: com.gnol.springboot.client.config
  * @author: 吴佳隆
  * @date: 2019年12月10日 下午6:54:28
  * @Description: gnol 属性文件相关常量

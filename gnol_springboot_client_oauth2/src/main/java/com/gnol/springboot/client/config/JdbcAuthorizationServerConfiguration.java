@@ -1,4 +1,4 @@
-package com.gnol.springboot.oauth2.config;
+package com.gnol.springboot.client.config;
 
 import javax.annotation.Resource;
 import javax.sql.DataSource;
@@ -25,7 +25,7 @@ import org.springframework.security.oauth2.provider.token.store.JdbcTokenStore;
 
 /**
  * @Title: JdbcAuthorizationServerConfiguration
- * @Package: com.gnol.springboot.oauth2.config
+ * @Package: com.gnol.springboot.client.config
  * @author: 吴佳隆
  * @date: 2020年7月21日 下午6:51:30
  * @Description: Jdbc 储存策略 oauth2 授权服务器策略
