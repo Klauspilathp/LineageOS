@@ -1,7 +1,9 @@
 package com.d7c.springboot.client.services.demo;
 
+import org.quartz.Scheduler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -17,6 +19,8 @@ import org.springframework.stereotype.Service;
 @Lazy(false)
 public class Task1Demo {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
+    @Autowired
+    private Scheduler scheduler;
 
     /**
      * cron：cron 表达式；
@@ -27,6 +31,7 @@ public class Task1Demo {
     @Scheduled(cron = "0/5 * * * * ?")
     public void testTask() {
         logger.info("Task1Demo.testTask=======>定时任务测试...");
+        logger.info("scheduler：{}", scheduler);
     }
 
 }
