@@ -18,7 +18,7 @@ public class CommonConfiguration {
     /**
      * 初始化  org.springframework.context.ApplicationContext
      */
-    @Bean
+    @Bean("gnolApplicationObjectSupport")
     public GnolApplicationObjectSupport gnolApplicationObjectSupport() {
         return new GnolApplicationObjectSupport();
     }
