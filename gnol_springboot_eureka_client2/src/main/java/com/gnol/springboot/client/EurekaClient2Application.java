@@ -1,5 +1,6 @@
 package com.gnol.springboot.client;
 
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
@@ -23,6 +24,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableDiscoveryClient
 @EnableFeignClients(basePackages = {"com.gnol.springboot"}) // 启用 Fegin
 @EnableCircuitBreaker // 启用 hystrix
+@MapperScan(basePackages = {"com.gnol.springboot.common.daos", "com.gnol.springboot.client.daos"})
 @EnableJms // 启用 jms 支持
 @EnableScheduling // 启用定时任务
 public class EurekaClient2Application {
