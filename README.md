@@ -107,15 +107,62 @@ d7c_springboot 采用 Maven 进行项目构建系统，支持 JDK1.8+、MySQL5.7
 
 ## 使用说明
 
-1.  xxxx
-2.  xxxx
-3.  xxxx
+1.  安装 MySQL、Redis、Rabbitmq 等服务，数据库脚本位于项目根目录下的 d7c.sql；
+2.  修改应用下的 d7c_springboot_**/src/main/resources/application.properties 属性文件，并根据所选环境查看 d7c_springboot_**/src/main/resources/config/application-*.properties 文件中引用的配置，去 d7c_springboot_common/src/main/resources/config 目录下找到对应的属性文件并修改属性配置；
+3.  此处仅展示 d7c_springboot_client_web 应用的运行流程。
 
 ## 运行展示
 
-```
+1.  启动 d7c_springboot_eureka_server 应用发现其他服务
+
+java -jar d7c_springboot_eureka_server.jar
 
 ```
+*
+*
+*
+[d7c] INFO  [2021-06-11 09:35:33] com.netflix.eureka.registry.PeerAwareInstanceRegistryImpl.openForTraffic(PeerAwareInstanceRegistryImpl.java:242) - Renew threshold is: 1
+[d7c] INFO  [2021-06-11 09:35:33] com.netflix.eureka.registry.PeerAwareInstanceRegistryImpl.openForTraffic(PeerAwareInstanceRegistryImpl.java:253) - Changing status to UP
+[d7c] INFO  [2021-06-11 09:35:33] org.springframework.cloud.netflix.eureka.server.EurekaServerInitializerConfiguration.lambda$start$0(EurekaServerInitializerConfiguration.java:72) - Started Eureka Server
+[d7c] DEBUG [2021-06-11 09:35:33] com.d7c.springboot.server.listener.EurekaInstanceListener.onApplicationEvent(EurekaInstanceListener.java:54) - 当前服务正常！
+[d7c] INFO  [2021-06-11 09:35:33] org.springframework.integration.monitor.IntegrationMBeanExporter.registerChannel(IntegrationMBeanExporter.java:767) - Registering MessageChannel springCloudBus.anonymous.9OvjuqxvQYuOKO3bx4RGGA.errors
+[d7c] INFO  [2021-06-11 09:35:33] org.springframework.cloud.stream.binder.BinderErrorChannel.adjustCounterIfNecessary(AbstractSubscribableChannel.java:64) - Channel 'application-1.springCloudBus.anonymous.9OvjuqxvQYuOKO3bx4RGGA.errors' has 1 subscriber(s).
+[d7c] INFO  [2021-06-11 09:35:33] org.springframework.cloud.stream.binder.BinderErrorChannel.adjustCounterIfNecessary(AbstractSubscribableChannel.java:64) - Channel 'application-1.springCloudBus.anonymous.9OvjuqxvQYuOKO3bx4RGGA.errors' has 2 subscriber(s).
+[d7c] INFO  [2021-06-11 09:35:33] org.springframework.integration.amqp.inbound.AmqpInboundChannelAdapter.start(AbstractEndpoint.java:159) - started inbound.springCloudBus.anonymous.9OvjuqxvQYuOKO3bx4RGGA
+[d7c] INFO  [2021-06-11 09:35:33] org.apache.coyote.http11.Http11NioProtocol.log(DirectJDKLog.java:173) - Starting ProtocolHandler ["http-nio-9000"]
+[d7c] INFO  [2021-06-11 09:35:33] org.springframework.boot.web.embedded.tomcat.TomcatWebServer.start(TomcatWebServer.java:202) - Tomcat started on port(s): 9000 (http) with context path ''
+[d7c] INFO  [2021-06-11 09:35:33] org.springframework.cloud.netflix.eureka.serviceregistry.EurekaAutoServiceRegistration.onApplicationEvent(EurekaAutoServiceRegistration.java:145) - Updating port to 9000
+[d7c] INFO  [2021-06-11 09:35:33] com.d7c.springboot.server.EurekaServerApplication.logStarted(StartupInfoLogger.java:59) - Started EurekaServerApplication in 36.026 seconds (JVM running for 37.735)
+[d7c] INFO  [2021-06-11 09:35:43] com.netflix.eureka.registry.AbstractInstanceRegistry.run(AbstractInstanceRegistry.java:1250) - Running the evict task with compensationTime 0ms
+```
+
+2.  启动 d7c-springboot-client-web 应用 com.d7c.springboot.client.WebApplication.main()
+
+```
+*
+*
+*
+[d7c] INFO  [2021-06-11 09:39:54] org.springframework.cloud.stream.binder.BinderErrorChannel.adjustCounterIfNecessary(AbstractSubscribableChannel.java:64) - Channel 'application-1.springCloudBus.anonymous.vKLjr4ZbSpqtr-7EiIDebg.errors' has 2 subscriber(s).
+[d7c] INFO  [2021-06-11 09:39:54] org.springframework.integration.amqp.inbound.AmqpInboundChannelAdapter.start(AbstractEndpoint.java:159) - started inbound.springCloudBus.anonymous.vKLjr4ZbSpqtr-7EiIDebg
+[d7c] INFO  [2021-06-11 09:39:54] org.apache.coyote.http11.Http11NioProtocol.log(DirectJDKLog.java:173) - Starting ProtocolHandler ["http-nio-8090"]
+[d7c] INFO  [2021-06-11 09:39:54] org.springframework.boot.web.embedded.tomcat.TomcatWebServer.start(TomcatWebServer.java:202) - Tomcat started on port(s): 8090 (http) with context path ''
+[d7c] INFO  [2021-06-11 09:39:54] org.springframework.cloud.netflix.eureka.serviceregistry.EurekaAutoServiceRegistration.onApplicationEvent(EurekaAutoServiceRegistration.java:145) - Updating port to 8090
+[d7c] INFO  [2021-06-11 09:39:54] com.d7c.springboot.client.WebApplication.logStarted(StartupInfoLogger.java:59) - Started WebApplication in 25.781 seconds (JVM running for 26.844)
+[d7c] INFO  [2021-06-11 09:40:04] com.netflix.discovery.DiscoveryClient.fetchRegistry(DiscoveryClient.java:976) - Disable delta property : false
+[d7c] INFO  [2021-06-11 09:40:04] com.netflix.discovery.DiscoveryClient.fetchRegistry(DiscoveryClient.java:977) - Single vip registry refresh property : null
+[d7c] INFO  [2021-06-11 09:40:04] com.netflix.discovery.DiscoveryClient.fetchRegistry(DiscoveryClient.java:978) - Force full registry fetch : false
+[d7c] INFO  [2021-06-11 09:40:04] com.netflix.discovery.DiscoveryClient.fetchRegistry(DiscoveryClient.java:979) - Application is null : false
+[d7c] INFO  [2021-06-11 09:40:04] com.netflix.discovery.DiscoveryClient.fetchRegistry(DiscoveryClient.java:980) - Registered Applications size is zero : true
+[d7c] INFO  [2021-06-11 09:40:04] com.netflix.discovery.DiscoveryClient.fetchRegistry(DiscoveryClient.java:982) - Application version is -1: false
+[d7c] INFO  [2021-06-11 09:40:04] com.netflix.discovery.DiscoveryClient.getAndStoreFullRegistry(DiscoveryClient.java:1065) - Getting all instance registry info from the eureka server
+[d7c] INFO  [2021-06-11 09:40:04] com.netflix.discovery.DiscoveryClient.getAndStoreFullRegistry(DiscoveryClient.java:1074) - The response status is 200
+```
+
+3.  浏览器访问 http://127.0.0.1:8090/index
+
+账号：wujialong
+密码都是：000000
+
 
 ## 捐助打赏
 
