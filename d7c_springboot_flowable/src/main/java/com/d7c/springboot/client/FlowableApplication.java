@@ -13,7 +13,8 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
  * @Package: com.d7c.springboot.client
  * @author: 吴佳隆
  * @date: 2021年4月22日 下午8:16:54
- * @Description: flowable 工作流 client 启动类
+ * @Description: flowable 工作流 client 启动类。
+ * https://tkjohn.github.io/flowable-userguide
  */
 @SpringBootApplication(scanBasePackages = {"com.d7c.springboot"})
 /**
