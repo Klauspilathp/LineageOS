@@ -41,6 +41,12 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-actuator</artifactId>
 		</dependency>
+		<!-- 返回 actuator 的资源满足 HAL 规范，即不止包含了 data，还包含了相关资源的 link，
+			但这个包不能随便加，因为它依赖 spring-boot-starter-web 包和 Json Bean 相关初始化，所以在需要的项目单独引用吧！ -->
+		<!-- <dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-hateoas</artifactId>
+		</dependency> -->
 		<!-- redis -->
 		<dependency>
 			<groupId>com.gnol</groupId>
