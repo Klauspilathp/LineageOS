@@ -7,7 +7,6 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
-import org.springframework.context.annotation.Import;
 
 /**
  * @Title: FlowableApplication
@@ -16,11 +15,6 @@ import org.springframework.context.annotation.Import;
  * @date: 2021年4月22日 下午8:16:54
  * @Description: flowable 工作流 client 启动类
  */
-@Import({org.flowable.ui.idm.conf.ApplicationConfiguration.class,
-        org.flowable.ui.idm.servlet.AppDispatcherServletConfiguration.class,
-        org.flowable.ui.modeler.conf.ApplicationConfiguration.class,
-        org.flowable.ui.modeler.servlet.AppDispatcherServletConfiguration.class,
-        org.flowable.ui.idm.conf.SecurityConfiguration.class})
 @SpringBootApplication(scanBasePackages = {"com.d7c.springboot"})
 /**
  * @EnableEurekaClient 注解请求 eureka 客户端服务时要求至少启动两个客户端服务，
