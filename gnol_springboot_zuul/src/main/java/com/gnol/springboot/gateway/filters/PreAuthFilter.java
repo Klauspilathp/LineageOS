@@ -59,6 +59,9 @@ public class PreAuthFilter extends ZuulFilter {
         PageResult result = authFeignClient.validate(token, servlet_path);
         if (!result.isOk()) {
             logger.debug("{} 路径的接口被 token {} 的用户非法访问...", servlet_path, token);
+            /*ctx.setSendZuulResponse(false);
+            ctx.setResponseStatusCode(HttpStatus.HS_401.getKey());
+            return null;*/
             throw new AuthRuntimeException(result.getMessage());
         }
         // return 值没有意义，zuul 框架没有使用
