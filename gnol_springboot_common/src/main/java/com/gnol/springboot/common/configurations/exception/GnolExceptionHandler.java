@@ -35,7 +35,7 @@ import com.gnol.plugins.core.exception.GnolRuntimeException;
         prefix = "gnol.exception", // 配置前缀 gnol.exception
         name = "enabled", // 配置名称
         havingValue = "true", // 与配置值比较，如果相等则配置生效
-        matchIfMissing = false // 默认配置值，即默认开启此配置
+        matchIfMissing = false // 默认配置值，即默认不开启此配置
 )
 @RestControllerAdvice
 public class GnolExceptionHandler {
