@@ -1,6 +1,6 @@
 package com.gnol.springboot.client.services.sys;
 
-import com.gnol.springboot.common.pojos.sys.SysLog;
+import com.gnol.springboot.common.dos.sys.SysLog;
 
 /**
  * @Title: SysLogBatchService

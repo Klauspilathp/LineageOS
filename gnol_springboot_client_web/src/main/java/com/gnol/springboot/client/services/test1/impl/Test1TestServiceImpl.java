@@ -12,7 +12,7 @@ import com.gnol.plugins.core.context.IdService;
 import com.gnol.springboot.client.daos.test1.ExtTest1TestDao;
 import com.gnol.springboot.client.services.test1.Test1TestService;
 import com.gnol.springboot.common.daos.test1.BaseTest1TestDao;
-import com.gnol.springboot.common.pojos.test1.Test1Test;
+import com.gnol.springboot.common.dos.test1.Test1Test;
 
 /**
  * @Title: Test1TestServiceImpl

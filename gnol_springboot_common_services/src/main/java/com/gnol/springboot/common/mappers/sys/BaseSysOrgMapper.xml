@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gnol.springboot.common.daos.sys.BaseSysOrgDao">
     <!-- 通用查询映射结果 -->
-	<resultMap id="BaseResultMap" type="com.gnol.springboot.common.pojos.sys.SysOrg">
+	<resultMap id="BaseResultMap" type="com.gnol.springboot.common.dos.sys.SysOrg">
 		<id column="orgId" property="orgId" jdbcType="BIGINT"/>
 		<result column="orgNameCN" property="orgNameCN" jdbcType="VARCHAR"/>
 		<result column="orgNameEN" property="orgNameEN" jdbcType="VARCHAR"/>
@@ -43,7 +43,7 @@
 	</sql>
 	
 	<!-- 插入数据 -->
-	<insert id="insert" parameterType="com.gnol.springboot.common.pojos.sys.SysOrg">
+	<insert id="insert" parameterType="com.gnol.springboot.common.dos.sys.SysOrg">
 		INSERT INTO sys_org (
 		<trim suffixOverrides=",">
 			orgId, 
@@ -172,7 +172,7 @@
 	</insert>
 	
 	<!-- 更新全部字段 -->
-	<update id="updateByKey" parameterType="com.gnol.springboot.common.pojos.sys.SysOrg">
+	<update id="updateByKey" parameterType="com.gnol.springboot.common.dos.sys.SysOrg">
 		UPDATE sys_org SET 
 			orgNameCN = #{orgNameCN, jdbcType=VARCHAR}, 
 			orgNameEN = #{orgNameEN, jdbcType=VARCHAR}, 
@@ -204,7 +204,7 @@
 	</update>
 	
 	<!-- 只更新不为 null 和 空字符串的字段 -->
-	<update id="update" parameterType="com.gnol.springboot.common.pojos.sys.SysOrg">
+	<update id="update" parameterType="com.gnol.springboot.common.dos.sys.SysOrg">
 		UPDATE sys_org 
 		<trim prefix="set" suffixOverrides=",">
 			checkValue = checkValue(), 

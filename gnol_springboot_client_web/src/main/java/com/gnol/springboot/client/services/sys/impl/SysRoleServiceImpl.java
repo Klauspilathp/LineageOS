@@ -23,8 +23,8 @@ import com.gnol.springboot.client.daos.sys.ExtSysUserDao;
 import com.gnol.springboot.client.services.sys.SysRoleMenuService;
 import com.gnol.springboot.client.services.sys.SysRoleService;
 import com.gnol.springboot.common.daos.sys.BaseSysRoleDao;
+import com.gnol.springboot.common.dos.sys.SysRole;
 import com.gnol.springboot.common.enums.sys.StatusEnum;
-import com.gnol.springboot.common.pojos.sys.SysRole;
 
 /**
  * @Title: SysRoleServiceImpl

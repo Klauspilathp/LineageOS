@@ -17,7 +17,7 @@ import com.gnol.springboot.client.config.GnolConstant;
 import com.gnol.springboot.client.daos.sys.ExtSysRoleMenuDao;
 import com.gnol.springboot.client.services.sys.SysRoleMenuService;
 import com.gnol.springboot.common.daos.sys.BaseSysRoleMenuDao;
-import com.gnol.springboot.common.pojos.sys.SysRoleMenu;
+import com.gnol.springboot.common.dos.sys.SysRoleMenu;
 
 /**
  * @Title: SysRoleMenuServiceImpl

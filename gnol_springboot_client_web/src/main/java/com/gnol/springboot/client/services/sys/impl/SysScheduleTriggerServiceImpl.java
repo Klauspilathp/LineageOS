@@ -14,8 +14,8 @@ import com.gnol.plugins.tools.json.SFJsonUtil;
 import com.gnol.springboot.client.daos.sys.ExtSysScheduleTriggerDao;
 import com.gnol.springboot.client.services.sys.SysScheduleTriggerService;
 import com.gnol.springboot.common.daos.sys.BaseSysScheduleTriggerDao;
+import com.gnol.springboot.common.dos.sys.SysScheduleTrigger;
 import com.gnol.springboot.common.enums.sys.StatusEnum;
-import com.gnol.springboot.common.pojos.sys.SysScheduleTrigger;
 
 /**
  * @Title: SysScheduleTriggerServiceImpl

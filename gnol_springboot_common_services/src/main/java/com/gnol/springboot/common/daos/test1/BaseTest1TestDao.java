@@ -2,8 +2,8 @@ package com.gnol.springboot.common.daos.test1;
 
 import org.springframework.stereotype.Repository;
 
-import com.gnol.springboot.common.pojos.test1.Test1Test;
 import com.gnol.plugins.core.context.BaseDao;
+import com.gnol.springboot.common.dos.test1.Test1Test;
 
 /**
  * @Title: BaseTest1TestDao

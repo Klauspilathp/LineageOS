@@ -4,7 +4,7 @@ import com.gnol.plugins.core.Page;
 import com.gnol.plugins.core.PageData;
 import com.gnol.plugins.core.PageResult;
 import com.gnol.plugins.core.context.BaseService;
-import com.gnol.springboot.common.pojos.sys.SysTest;
+import com.gnol.springboot.common.dos.sys.SysTest;
 
 /**
  * @Title: SysTestService

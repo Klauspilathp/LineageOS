@@ -13,8 +13,8 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
 import com.gnol.plugins.core.StringUtil;
 import com.gnol.springboot.common.daos.sys.BaseSysLogDao;
+import com.gnol.springboot.common.dos.sys.SysLog;
 import com.gnol.springboot.common.enums.sys.LogTypeEnum;
-import com.gnol.springboot.common.pojos.sys.SysLog;
 
 /**
  * @Title: AbstractSysLogBatchService

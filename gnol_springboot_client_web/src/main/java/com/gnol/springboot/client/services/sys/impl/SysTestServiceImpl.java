@@ -12,7 +12,7 @@ import com.gnol.plugins.core.context.IdService;
 import com.gnol.springboot.client.daos.sys.ExtSysTestDao;
 import com.gnol.springboot.client.services.sys.SysTestService;
 import com.gnol.springboot.common.daos.sys.BaseSysTestDao;
-import com.gnol.springboot.common.pojos.sys.SysTest;
+import com.gnol.springboot.common.dos.sys.SysTest;
 
 /**
  * @Title: SysTestServiceImpl

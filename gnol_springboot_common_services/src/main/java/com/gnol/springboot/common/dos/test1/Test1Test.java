@@ -1,10 +1,10 @@
-package com.gnol.springboot.common.pojos.test1;
+package com.gnol.springboot.common.dos.test1;
 
-import com.gnol.springboot.common.pojos.BasePojo;
+import com.gnol.springboot.common.dos.BasePojo;
 
 /**
  * @Title: Test1Test
- * @Package: com.gnol.springboot.common.pojos.test1
+ * @Package: com.gnol.springboot.common.dos.test1
  * @author: 吴佳隆
  * @date: 2020年07月04日 12:52:38
  * @Description: Test1Test pojo

@@ -3,7 +3,7 @@ package com.gnol.springboot.common.daos.sys;
 import org.springframework.stereotype.Repository;
 
 import com.gnol.plugins.core.context.BaseDao;
-import com.gnol.springboot.common.pojos.sys.SysSession;
+import com.gnol.springboot.common.dos.sys.SysSession;
 
 /**
  * @Title: BaseSysSessionDao

@@ -14,8 +14,8 @@ import com.gnol.plugins.core.context.AbstractBaseService;
 import com.gnol.springboot.client.daos.sys.ExtSysImgDao;
 import com.gnol.springboot.client.services.sys.SysImgService;
 import com.gnol.springboot.common.daos.sys.BaseSysImgDao;
+import com.gnol.springboot.common.dos.sys.SysImg;
 import com.gnol.springboot.common.enums.sys.StatusEnum;
-import com.gnol.springboot.common.pojos.sys.SysImg;
 
 /**
  * @Title: SysImgServiceImpl

@@ -11,7 +11,7 @@ import com.gnol.plugins.core.context.AbstractBaseService;
 import com.gnol.springboot.client.daos.sys.ExtSysLogDao;
 import com.gnol.springboot.client.services.sys.SysLogService;
 import com.gnol.springboot.common.daos.sys.BaseSysLogDao;
-import com.gnol.springboot.common.pojos.sys.SysLog;
+import com.gnol.springboot.common.dos.sys.SysLog;
 
 /**
  * @Title: SysLogServiceImpl

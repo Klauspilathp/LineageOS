@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gnol.springboot.common.daos.sys.BaseSysRoleMenuDao">
     <!-- 通用查询映射结果 -->
-	<resultMap id="BaseResultMap" type="com.gnol.springboot.common.pojos.sys.SysRoleMenu">
+	<resultMap id="BaseResultMap" type="com.gnol.springboot.common.dos.sys.SysRoleMenu">
 		<result column="roleId" property="roleId" jdbcType="BIGINT"/>
 		<result column="menuId" property="menuId" jdbcType="INTEGER"/>
 	</resultMap>
@@ -13,7 +13,7 @@
 	</sql>
 	
 	<!-- 插入数据 -->
-	<insert id="insert" parameterType="com.gnol.springboot.common.pojos.sys.SysRoleMenu">
+	<insert id="insert" parameterType="com.gnol.springboot.common.dos.sys.SysRoleMenu">
 		INSERT INTO sys_role_menu (
 		<trim suffixOverrides=",">
 			roleId, 
@@ -36,14 +36,14 @@
 	</insert>
 	
 	<!-- 更新全部字段 -->
-	<update id="updateByKey" parameterType="com.gnol.springboot.common.pojos.sys.SysRoleMenu">
+	<update id="updateByKey" parameterType="com.gnol.springboot.common.dos.sys.SysRoleMenu">
 		UPDATE sys_role_menu SET 
 			menuId = #{menuId, jdbcType=INTEGER} 
 		WHERE roleId = #{roleId, jdbcType=BIGINT}
 	</update>
 	
 	<!-- 只更新不为 null 和 空字符串的字段 -->
-	<update id="update" parameterType="com.gnol.springboot.common.pojos.sys.SysRoleMenu">
+	<update id="update" parameterType="com.gnol.springboot.common.dos.sys.SysRoleMenu">
 		UPDATE sys_role_menu 
 		<trim prefix="set" suffixOverrides=",">
 			<if test="null != menuId">

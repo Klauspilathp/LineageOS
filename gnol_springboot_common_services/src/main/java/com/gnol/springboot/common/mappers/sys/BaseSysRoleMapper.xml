@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gnol.springboot.common.daos.sys.BaseSysRoleDao">
     <!-- 通用查询映射结果 -->
-	<resultMap id="BaseResultMap" type="com.gnol.springboot.common.pojos.sys.SysRole">
+	<resultMap id="BaseResultMap" type="com.gnol.springboot.common.dos.sys.SysRole">
 		<id column="roleId" property="roleId" jdbcType="BIGINT"/>
 		<result column="parentId" property="parentId" jdbcType="BIGINT"/>
 		<result column="roleName" property="roleName" jdbcType="VARCHAR"/>
@@ -23,7 +23,7 @@
 	</sql>
 	
 	<!-- 插入数据 -->
-	<insert id="insert" parameterType="com.gnol.springboot.common.pojos.sys.SysRole">
+	<insert id="insert" parameterType="com.gnol.springboot.common.dos.sys.SysRole">
 		INSERT INTO sys_role (
 		<trim suffixOverrides=",">
 			roleId, 
@@ -80,7 +80,7 @@
 	</insert>
 	
 	<!-- 更新全部字段 -->
-	<update id="updateByKey" parameterType="com.gnol.springboot.common.pojos.sys.SysRole">
+	<update id="updateByKey" parameterType="com.gnol.springboot.common.dos.sys.SysRole">
 		UPDATE sys_role SET 
 			parentId = #{parentId, jdbcType=BIGINT}, 
 			roleName = #{roleName, jdbcType=VARCHAR}, 
@@ -94,7 +94,7 @@
 	</update>
 	
 	<!-- 只更新不为 null 和 空字符串的字段 -->
-	<update id="update" parameterType="com.gnol.springboot.common.pojos.sys.SysRole">
+	<update id="update" parameterType="com.gnol.springboot.common.dos.sys.SysRole">
 		UPDATE sys_role 
 		<trim prefix="set" suffixOverrides=",">
 			checkValue = checkValue(), 

@@ -1,13 +1,13 @@
-package com.gnol.springboot.common.pojos.sys;
+package com.gnol.springboot.common.dos.sys;
 
 import java.math.BigDecimal;
 import java.util.Date;
 
-import com.gnol.springboot.common.pojos.BasePojo;
+import com.gnol.springboot.common.dos.BasePojo;
 
 /**
  * @Title: SysUser
- * @Package: com.gnol.springboot.common.pojos.sys
+ * @Package: com.gnol.springboot.common.dos.sys
  * @author: 吴佳隆
  * @date: 2019年06月18日 09:13:40
  * @Description: gnol 系统_用户表 pojo

@@ -10,7 +10,7 @@
 	</select>
 	
 	<!-- 更新登录状态 -->
-	<update id="updateByLogin" parameterType="com.gnol.springboot.common.pojos.sys.SysUser">
+	<update id="updateByLogin" parameterType="com.gnol.springboot.common.dos.sys.SysUser">
 		UPDATE sys_user SET 
 			loginStatus = #{loginStatus, jdbcType=TINYINT}, 
 			loginTime = #{loginTime, jdbcType=TIMESTAMP}, 

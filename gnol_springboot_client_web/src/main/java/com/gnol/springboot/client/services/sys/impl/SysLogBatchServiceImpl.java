@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.gnol.plugins.core.context.IdService;
 import com.gnol.springboot.client.services.sys.AbstractSysLogBatchService;
-import com.gnol.springboot.common.pojos.sys.SysLog;
+import com.gnol.springboot.common.dos.sys.SysLog;
 
 /**
  * @Title: SysLogBatchServiceImpl

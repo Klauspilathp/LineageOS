@@ -1,14 +1,14 @@
-package com.gnol.springboot.common.pojos;
+package com.gnol.springboot.common.dos;
 
 import java.io.Serializable;
 import java.util.Date;
 
+import com.gnol.springboot.common.dos.sys.SysSession;
 import com.gnol.springboot.common.enums.sys.StatusEnum;
-import com.gnol.springboot.common.pojos.sys.SysSession;
 
 /**
  * @Title: BasePojo
- * @Package: com.gnol.springboot.common.pojos
+ * @Package: com.gnol.springboot.common.dos
  * @author: 吴佳隆
  * @date: 2019年5月21日 下午6:32:26
  * @Description: 基础 pojo，所有 pojo 都应该继承此类

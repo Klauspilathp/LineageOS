@@ -1,7 +1,7 @@
 package com.gnol.springboot.common.services;
 
 import com.gnol.plugins.core.context.BaseService;
-import com.gnol.springboot.common.pojos.sys.SysId;
+import com.gnol.springboot.common.dos.sys.SysId;
 
 /**
  * @Title: SysIdService

@@ -4,7 +4,7 @@
 	<!-- resultMap引入：resultMap="com.gnol.springboot.common.daos.sys.BaseSysSessionDao.BaseResultMap" -->
 	<!-- SQL 片段引入：<include refid="com.gnol.springboot.common.daos.sys.BaseSysSessionDao.Base_Column_List"/> -->
 	<!-- 插入更新数据 -->
-	<insert id="insertReplace" parameterType="com.gnol.springboot.common.pojos.sys.SysSession">
+	<insert id="insertReplace" parameterType="com.gnol.springboot.common.dos.sys.SysSession">
 		REPLACE INTO sys_session (
 		<trim suffixOverrides=",">
 			userId, 

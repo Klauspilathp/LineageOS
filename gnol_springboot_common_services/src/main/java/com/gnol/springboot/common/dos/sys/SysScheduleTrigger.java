@@ -1,10 +1,10 @@
-package com.gnol.springboot.common.pojos.sys;
+package com.gnol.springboot.common.dos.sys;
 
-import com.gnol.springboot.common.pojos.BasePojo;
+import com.gnol.springboot.common.dos.BasePojo;
 
 /**
  * @Title: SysScheduleTrigger
- * @Package: com.gnol.springboot.common.pojos.sys
+ * @Package: com.gnol.springboot.common.dos.sys
  * @author: 吴佳隆
  * @date: 2020年05月09日 14:02:58
  * @Description: gnol系统_任务调度 pojo

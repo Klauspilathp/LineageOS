@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gnol.springboot.common.daos.sys.BaseSysScheduleTriggerDao">
     <!-- 通用查询映射结果 -->
-	<resultMap id="BaseResultMap" type="com.gnol.springboot.common.pojos.sys.SysScheduleTrigger">
+	<resultMap id="BaseResultMap" type="com.gnol.springboot.common.dos.sys.SysScheduleTrigger">
 		<id column="scheduleTriggerId" property="scheduleTriggerId" jdbcType="BIGINT"/>
 		<result column="jobIp" property="jobIp" jdbcType="VARCHAR"/>
 		<result column="jobGroup" property="jobGroup" jdbcType="VARCHAR"/>
@@ -24,7 +24,7 @@
 	</sql>
 	
 	<!-- 插入数据 -->
-	<insert id="insert" parameterType="com.gnol.springboot.common.pojos.sys.SysScheduleTrigger">
+	<insert id="insert" parameterType="com.gnol.springboot.common.dos.sys.SysScheduleTrigger">
 		INSERT INTO sys_schedule_trigger (
 		<trim suffixOverrides=",">
 			scheduleTriggerId, 
@@ -85,7 +85,7 @@
 	</insert>
 	
 	<!-- 更新全部字段 -->
-	<update id="updateByKey" parameterType="com.gnol.springboot.common.pojos.sys.SysScheduleTrigger">
+	<update id="updateByKey" parameterType="com.gnol.springboot.common.dos.sys.SysScheduleTrigger">
 		UPDATE sys_schedule_trigger SET 
 			jobIp = #{jobIp, jdbcType=VARCHAR}, 
 			jobGroup = #{jobGroup, jdbcType=VARCHAR}, 
@@ -100,7 +100,7 @@
 	</update>
 	
 	<!-- 只更新不为 null 和 空字符串的字段 -->
-	<update id="update" parameterType="com.gnol.springboot.common.pojos.sys.SysScheduleTrigger">
+	<update id="update" parameterType="com.gnol.springboot.common.dos.sys.SysScheduleTrigger">
 		UPDATE sys_schedule_trigger 
 		<trim prefix="set" suffixOverrides=",">
 			checkValue = checkValue(), 

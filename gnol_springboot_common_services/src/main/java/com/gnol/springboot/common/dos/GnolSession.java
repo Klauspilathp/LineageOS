@@ -1,4 +1,4 @@
-package com.gnol.springboot.common.pojos;
+package com.gnol.springboot.common.dos;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -13,7 +13,7 @@ import com.gnol.springboot.common.enums.sys.UserTypeEnum;
 
 /**
  * @Title: Session
- * @Package: com.gnol.springboot.common.pojos
+ * @Package: com.gnol.springboot.common.dos
  * @author: 吴佳隆
  * @date: 2020年4月5日 上午9:32:34
  * @Description: 系统 SESSION 基类

@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gnol.springboot.common.daos.sys.BaseSysMenuDao">
     <!-- 通用查询映射结果 -->
-	<resultMap id="BaseResultMap" type="com.gnol.springboot.common.pojos.sys.SysMenu">
+	<resultMap id="BaseResultMap" type="com.gnol.springboot.common.dos.sys.SysMenu">
 		<id column="menuId" property="menuId" jdbcType="INTEGER"/>
 		<result column="parentId" property="parentId" jdbcType="INTEGER"/>
 		<result column="menuName" property="menuName" jdbcType="VARCHAR"/>
@@ -28,7 +28,7 @@
 	</sql>
 	
 	<!-- 插入数据 -->
-	<insert id="insert" parameterType="com.gnol.springboot.common.pojos.sys.SysMenu">
+	<insert id="insert" parameterType="com.gnol.springboot.common.dos.sys.SysMenu">
 		INSERT INTO sys_menu (
 		<trim suffixOverrides=",">
 			menuId, 
@@ -105,7 +105,7 @@
 	</insert>
 	
 	<!-- 更新全部字段 -->
-	<update id="updateByKey" parameterType="com.gnol.springboot.common.pojos.sys.SysMenu">
+	<update id="updateByKey" parameterType="com.gnol.springboot.common.dos.sys.SysMenu">
 		UPDATE sys_menu SET 
 			parentId = #{parentId, jdbcType=INTEGER}, 
 			menuName = #{menuName, jdbcType=VARCHAR}, 
@@ -124,7 +124,7 @@
 	</update>
 	
 	<!-- 只更新不为 null 和 空字符串的字段 -->
-	<update id="update" parameterType="com.gnol.springboot.common.pojos.sys.SysMenu">
+	<update id="update" parameterType="com.gnol.springboot.common.dos.sys.SysMenu">
 		UPDATE sys_menu 
 		<trim prefix="set" suffixOverrides=",">
 			checkValue = checkValue(), 

@@ -17,8 +17,8 @@ import com.gnol.springboot.client.bos.tree.ZTree;
 import com.gnol.springboot.client.daos.sys.ExtSysDictDao;
 import com.gnol.springboot.client.services.sys.SysDictService;
 import com.gnol.springboot.common.daos.sys.BaseSysDictDao;
+import com.gnol.springboot.common.dos.sys.SysDict;
 import com.gnol.springboot.common.enums.sys.StatusEnum;
-import com.gnol.springboot.common.pojos.sys.SysDict;
 
 /**
  * @Title: SysDictServiceImpl

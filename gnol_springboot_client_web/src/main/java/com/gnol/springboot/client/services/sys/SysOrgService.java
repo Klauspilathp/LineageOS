@@ -7,7 +7,7 @@ import com.gnol.plugins.core.PageResult;
 import com.gnol.plugins.core.context.BaseService;
 import com.gnol.springboot.client.bos.tree.SelectTree;
 import com.gnol.springboot.client.bos.tree.ZTree;
-import com.gnol.springboot.common.pojos.sys.SysOrg;
+import com.gnol.springboot.common.dos.sys.SysOrg;
 
 /**
  * @Title: SysOrgService

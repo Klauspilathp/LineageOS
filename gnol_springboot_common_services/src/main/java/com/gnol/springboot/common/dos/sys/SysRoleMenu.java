@@ -1,10 +1,10 @@
-package com.gnol.springboot.common.pojos.sys;
+package com.gnol.springboot.common.dos.sys;
 
 import java.io.Serializable;
 
 /**
  * @Title: SysRoleMenu
- * @Package: com.gnol.springboot.common.pojos.sys
+ * @Package: com.gnol.springboot.common.dos.sys
  * @author: 吴佳隆
  * @date: 2019年06月18日 09:13:40
  * @Description: gnol 系统角色菜单表 pojo

@@ -18,9 +18,9 @@ import com.gnol.springboot.client.bos.tree.ZTreeUtil;
 import com.gnol.springboot.client.daos.sys.ExtSysTerritoryDao;
 import com.gnol.springboot.client.services.sys.SysTerritoryService;
 import com.gnol.springboot.common.daos.sys.BaseSysTerritoryDao;
+import com.gnol.springboot.common.dos.sys.SysTerritory;
 import com.gnol.springboot.common.enums.sys.LevelEnum;
 import com.gnol.springboot.common.enums.sys.StatusEnum;
-import com.gnol.springboot.common.pojos.sys.SysTerritory;
 
 /**
  * @Title: SysTerritoryServiceImpl

@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gnol.springboot.common.daos.sys.BaseSysTerritoryDao">
     <!-- 通用查询映射结果 -->
-	<resultMap id="BaseResultMap" type="com.gnol.springboot.common.pojos.sys.SysTerritory">
+	<resultMap id="BaseResultMap" type="com.gnol.springboot.common.dos.sys.SysTerritory">
 		<id column="territoryId" property="territoryId" jdbcType="BIGINT"/>
 		<result column="territoryNameCN" property="territoryNameCN" jdbcType="VARCHAR"/>
 		<result column="territoryNameEN" property="territoryNameEN" jdbcType="VARCHAR"/>
@@ -37,7 +37,7 @@
 	</sql>
 	
 	<!-- 插入数据 -->
-	<insert id="insert" parameterType="com.gnol.springboot.common.pojos.sys.SysTerritory">
+	<insert id="insert" parameterType="com.gnol.springboot.common.dos.sys.SysTerritory">
 		INSERT INTO sys_territory (
 		<trim suffixOverrides=",">
 			territoryId, 
@@ -150,7 +150,7 @@
 	</insert>
 	
 	<!-- 更新全部字段 -->
-	<update id="updateByKey" parameterType="com.gnol.springboot.common.pojos.sys.SysTerritory">
+	<update id="updateByKey" parameterType="com.gnol.springboot.common.dos.sys.SysTerritory">
 		UPDATE sys_territory SET 
 			territoryNameCN = #{territoryNameCN, jdbcType=VARCHAR}, 
 			territoryNameEN = #{territoryNameEN, jdbcType=VARCHAR}, 
@@ -178,7 +178,7 @@
 	</update>
 	
 	<!-- 只更新不为 null 和 空字符串的字段 -->
-	<update id="update" parameterType="com.gnol.springboot.common.pojos.sys.SysTerritory">
+	<update id="update" parameterType="com.gnol.springboot.common.dos.sys.SysTerritory">
 		UPDATE sys_territory 
 		<trim prefix="set" suffixOverrides=",">
 			checkValue = checkValue(), 

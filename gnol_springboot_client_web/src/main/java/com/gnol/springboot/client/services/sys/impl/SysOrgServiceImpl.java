@@ -22,11 +22,11 @@ import com.gnol.springboot.client.daos.sys.ExtSysOrgDao;
 import com.gnol.springboot.client.daos.sys.ExtSysUserDao;
 import com.gnol.springboot.client.services.sys.SysOrgService;
 import com.gnol.springboot.common.daos.sys.BaseSysOrgDao;
+import com.gnol.springboot.common.dos.sys.SysOrg;
 import com.gnol.springboot.common.enums.sys.LevelEnum;
 import com.gnol.springboot.common.enums.sys.OrgTypeEnum;
 import com.gnol.springboot.common.enums.sys.StatusEnum;
 import com.gnol.springboot.common.enums.sys.YesNoEnum;
-import com.gnol.springboot.common.pojos.sys.SysOrg;
 
 /**
  * @Title: SysOrgServiceImpl

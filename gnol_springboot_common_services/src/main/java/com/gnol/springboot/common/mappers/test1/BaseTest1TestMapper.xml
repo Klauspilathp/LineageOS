@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gnol.springboot.common.daos.test1.BaseTest1TestDao">
     <!-- 通用查询映射结果 -->
-	<resultMap id="BaseResultMap" type="com.gnol.springboot.common.pojos.test1.Test1Test">
+	<resultMap id="BaseResultMap" type="com.gnol.springboot.common.dos.test1.Test1Test">
 		<id column="tid" property="tid" jdbcType="INTEGER"/>
 		<result column="text" property="text" jdbcType="VARCHAR"/>
 	</resultMap>
@@ -13,7 +13,7 @@
 	</sql>
 	
 	<!-- 插入数据 -->
-	<insert id="insert" parameterType="com.gnol.springboot.common.pojos.test1.Test1Test">
+	<insert id="insert" parameterType="com.gnol.springboot.common.dos.test1.Test1Test">
 		INSERT INTO test1_test (
 		<trim suffixOverrides=",">
 			tid, 
@@ -38,14 +38,14 @@
 	</insert>
 	
 	<!-- 更新全部字段 -->
-	<update id="updateByKey" parameterType="com.gnol.springboot.common.pojos.test1.Test1Test">
+	<update id="updateByKey" parameterType="com.gnol.springboot.common.dos.test1.Test1Test">
 		UPDATE test1_test SET 
 			text = #{text, jdbcType=VARCHAR} 
 		WHERE tid = #{tid, jdbcType=INTEGER} 
 	</update>
 	
 	<!-- 只更新不为 null 和 空字符串的字段 -->
-	<update id="update" parameterType="com.gnol.springboot.common.pojos.test1.Test1Test">
+	<update id="update" parameterType="com.gnol.springboot.common.dos.test1.Test1Test">
 		UPDATE test1_test 
 		<trim prefix="set" suffixOverrides=",">
 			<if test="null != text and text != ''">

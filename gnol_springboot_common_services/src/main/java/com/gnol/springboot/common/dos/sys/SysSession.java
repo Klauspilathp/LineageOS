@@ -1,14 +1,14 @@
-package com.gnol.springboot.common.pojos.sys;
+package com.gnol.springboot.common.dos.sys;
 
 import java.util.Date;
 
 import com.gnol.plugins.tools.date.TimeConstant;
+import com.gnol.springboot.common.dos.GnolSession;
 import com.gnol.springboot.common.enums.sys.SourceEnum;
-import com.gnol.springboot.common.pojos.GnolSession;
 
 /**
  * @Title: SysSession
- * @Package: com.gnol.springboot.common.pojos.sys
+ * @Package: com.gnol.springboot.common.dos.sys
  * @author: 吴佳隆
  * @date: 2019年06月18日 09:13:40
  * @Description: gnol 系统_用户详情权限临时表，用户在登录，下线等情况下触发插入、删除、更新操作，然后以此表关联业务表查询指定范围内的 pojo

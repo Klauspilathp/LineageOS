@@ -19,8 +19,8 @@ import com.gnol.springboot.client.bos.tree.ZTreeUtil;
 import com.gnol.springboot.client.daos.sys.ExtSysMenuDao;
 import com.gnol.springboot.client.services.sys.SysMenuService;
 import com.gnol.springboot.common.daos.sys.BaseSysMenuDao;
+import com.gnol.springboot.common.dos.sys.SysMenu;
 import com.gnol.springboot.common.enums.sys.StatusEnum;
-import com.gnol.springboot.common.pojos.sys.SysMenu;
 
 /**
  * @Title: SysMenuServiceImpl

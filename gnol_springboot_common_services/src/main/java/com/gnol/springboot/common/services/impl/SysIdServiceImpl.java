@@ -8,7 +8,7 @@ import com.gnol.plugins.core.StringUtil;
 import com.gnol.plugins.core.context.AbstractBaseService;
 import com.gnol.springboot.common.daos.sys.BaseSysIdDao;
 import com.gnol.springboot.common.daos.sys.ExtSysIdDao;
-import com.gnol.springboot.common.pojos.sys.SysId;
+import com.gnol.springboot.common.dos.sys.SysId;
 import com.gnol.springboot.common.services.SysIdService;
 
 /**

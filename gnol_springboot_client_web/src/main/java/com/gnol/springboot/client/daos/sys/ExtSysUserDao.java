@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import com.gnol.plugins.core.Page;
 import com.gnol.plugins.core.PageData;
-import com.gnol.springboot.common.pojos.sys.SysUser;
+import com.gnol.springboot.common.dos.sys.SysUser;
 
 /**
  * @Title: ExtSysUserDao

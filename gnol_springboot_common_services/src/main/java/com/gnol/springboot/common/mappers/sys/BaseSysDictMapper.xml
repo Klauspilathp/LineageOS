@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gnol.springboot.common.daos.sys.BaseSysDictDao">
     <!-- 通用查询映射结果 -->
-	<resultMap id="BaseResultMap" type="com.gnol.springboot.common.pojos.sys.SysDict">
+	<resultMap id="BaseResultMap" type="com.gnol.springboot.common.dos.sys.SysDict">
 		<id column="dictId" property="dictId" jdbcType="BIGINT"/>
 		<result column="parentId" property="parentId" jdbcType="BIGINT"/>
 		<result column="dictType" property="dictType" jdbcType="VARCHAR"/>
@@ -25,7 +25,7 @@
 	</sql>
 	
 	<!-- 插入数据 -->
-	<insert id="insert" parameterType="com.gnol.springboot.common.pojos.sys.SysDict">
+	<insert id="insert" parameterType="com.gnol.springboot.common.dos.sys.SysDict">
 		INSERT INTO sys_dict (
 		<trim suffixOverrides=",">
 			parentId, 
@@ -86,7 +86,7 @@
 	</insert>
 	
 	<!-- 更新全部字段 -->
-	<update id="updateByKey" parameterType="com.gnol.springboot.common.pojos.sys.SysDict">
+	<update id="updateByKey" parameterType="com.gnol.springboot.common.dos.sys.SysDict">
 		UPDATE sys_dict SET 
 			parentId = #{parentId, jdbcType=BIGINT}, 
 			dictType = #{dictType, jdbcType=VARCHAR}, 
@@ -102,7 +102,7 @@
 	</update>
 	
 	<!-- 只更新不为 null 和 空字符串的字段 -->
-	<update id="update" parameterType="com.gnol.springboot.common.pojos.sys.SysDict">
+	<update id="update" parameterType="com.gnol.springboot.common.dos.sys.SysDict">
 		UPDATE sys_dict 
 		<trim prefix="set" suffixOverrides=",">
 			checkValue = checkValue(), 

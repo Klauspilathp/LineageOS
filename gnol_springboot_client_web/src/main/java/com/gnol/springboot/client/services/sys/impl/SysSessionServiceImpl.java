@@ -11,9 +11,9 @@ import com.gnol.springboot.client.services.sys.SysOrgService;
 import com.gnol.springboot.client.services.sys.SysRoleService;
 import com.gnol.springboot.client.services.sys.SysSessionService;
 import com.gnol.springboot.common.daos.sys.BaseSysSessionDao;
+import com.gnol.springboot.common.dos.sys.SysOrg;
+import com.gnol.springboot.common.dos.sys.SysSession;
 import com.gnol.springboot.common.enums.sys.LevelEnum;
-import com.gnol.springboot.common.pojos.sys.SysOrg;
-import com.gnol.springboot.common.pojos.sys.SysSession;
 
 /**
  * @Title: SysUserTemServiceImpl

@@ -5,7 +5,7 @@ import java.util.List;
 import com.gnol.plugins.core.PageData;
 import com.gnol.plugins.core.PageResult;
 import com.gnol.plugins.core.context.BaseService;
-import com.gnol.springboot.common.pojos.sys.SysImg;
+import com.gnol.springboot.common.dos.sys.SysImg;
 
 /**
  * @Title: SysImgService

@@ -1,11 +1,11 @@
-package com.gnol.springboot.common.pojos.sys;
+package com.gnol.springboot.common.dos.sys;
 
 import java.io.Serializable;
 import java.util.Date;
 
 /**
  * @Title: SysId
- * @Package: com.gnol.springboot.common.pojos.sys
+ * @Package: com.gnol.springboot.common.dos.sys
  * @author: 吴佳隆
  * @date: 2020年04月03日 12:15:02
  * @Description: gnol系统_主键操作 pojo

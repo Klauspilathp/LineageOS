@@ -21,15 +21,15 @@ import com.gnol.springboot.client.services.sys.SysOrgService;
 import com.gnol.springboot.client.services.sys.SysRoleService;
 import com.gnol.springboot.client.services.sys.SysUserService;
 import com.gnol.springboot.common.daos.sys.BaseSysUserDao;
+import com.gnol.springboot.common.dos.sys.SysOrg;
+import com.gnol.springboot.common.dos.sys.SysRole;
+import com.gnol.springboot.common.dos.sys.SysUser;
 import com.gnol.springboot.common.enums.sys.LevelEnum;
 import com.gnol.springboot.common.enums.sys.LoginStatusEnum;
 import com.gnol.springboot.common.enums.sys.SexEnum;
 import com.gnol.springboot.common.enums.sys.StatusEnum;
 import com.gnol.springboot.common.enums.sys.UserTypeEnum;
 import com.gnol.springboot.common.enums.sys.YesNoEnum;
-import com.gnol.springboot.common.pojos.sys.SysOrg;
-import com.gnol.springboot.common.pojos.sys.SysRole;
-import com.gnol.springboot.common.pojos.sys.SysUser;
 
 /**
  * @Title: SysUserServiceImpl

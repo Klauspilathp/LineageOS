@@ -1,10 +1,10 @@
-package com.gnol.springboot.common.pojos.sys;
+package com.gnol.springboot.common.dos.sys;
 
-import com.gnol.springboot.common.pojos.BasePojo;
+import com.gnol.springboot.common.dos.BasePojo;
 
 /**
  * @Title: SysTest
- * @Package: com.gnol.springboot.common.pojos.sys
+ * @Package: com.gnol.springboot.common.dos.sys
  * @author: 吴佳隆
  * @date: 2020年07月04日 12:42:01
  * @Description: SysTest pojo

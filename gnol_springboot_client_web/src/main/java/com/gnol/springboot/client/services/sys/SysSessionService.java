@@ -1,7 +1,7 @@
 package com.gnol.springboot.client.services.sys;
 
 import com.gnol.plugins.core.context.BaseService;
-import com.gnol.springboot.common.pojos.sys.SysSession;
+import com.gnol.springboot.common.dos.sys.SysSession;
 
 /**
  * @Title: SysSessionService
