@@ -73,7 +73,7 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
     }
 
     /**
-     * token 检查策略
+     * 授权服务器安全策略
      */
     @Override
     public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
