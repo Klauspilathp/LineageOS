@@ -9,7 +9,7 @@
 	</parent>
 	<artifactId>gnol_springboot_common_services</artifactId>
 	<packaging>jar</packaging>
-	<name>gnol_springboot_services</name>
+	<name>gnol_springboot_common_services</name>
 	<description>gnol_springboot 公共服务模块</description>
 
 	<dependencies>
