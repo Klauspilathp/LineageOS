@@ -2,15 +2,9 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<parent>
-		<groupId>top.d7c.springboot.plugins</groupId>
-		<artifactId>d7c_springboot_plugins_parent</artifactId>
-		<version>1.0.1</version>
-		<relativePath />
-	</parent>
 	<groupId>top.d7c.springboot</groupId>
 	<artifactId>d7c_springboot</artifactId>
-	<version>1.0.1</version>
+	<version>1.1.0</version>
 	<packaging>pom</packaging>
 	<name>d7c_springboot</name>
 	<url>http://www.d7c.top/d7c_springboot/</url>
@@ -28,7 +22,7 @@
 			<name>aliyun maven</name>
 			<url>https://maven.aliyun.com/repository/public</url>
 		</repository>
-		<repository>
+		<!-- <repository>
 			<id>nexusReleases</id>
 			<name>nexus Releases</name>
 			<url>http://www.d7c.top:8081/repository/maven-releases/</url>
@@ -37,7 +31,7 @@
 			<id>nexusSnapshots</id>
 			<name>nexus Snapshots</name>
 			<url>http://www.d7c.top:8081/repository/maven-snapshots/</url>
-		</repository>
+		</repository> -->
 	</repositories>
     <!-- 设定插件仓库 -->
 	<pluginRepositories>
@@ -46,7 +40,7 @@
 			<name>aliyun maven</name>
 			<url>https://maven.aliyun.com/repository/public</url>
 		</pluginRepository>
-		<pluginRepository>
+		<!-- <pluginRepository>
 			<id>nexusReleases</id>
 			<name>nexus Releases</name>
 			<url>http://www.d7c.top:8081/repository/maven-releases/</url>
@@ -55,7 +49,7 @@
 			<id>nexusSnapshots</id>
 			<name>nexus Snapshots</name>
 			<url>http://www.d7c.top:8081/repository/maven-snapshots/</url>
-		</pluginRepository>
+		</pluginRepository> -->
 	</pluginRepositories>
 
 	<modules>
@@ -96,7 +90,7 @@
         <!-- 解决 Description	Resource Path Location Type Unknown	pom.xml	/d7c_springboot_common	line 1	Maven Configuration Problem -->
 		<maven-jar-plugin.version>3.1.1</maven-jar-plugin.version>
         <!-- jar 版本管理 -->
-		<d7c_springboot_plugins.version>1.0.1</d7c_springboot_plugins.version>
+		<d7c_springboot_plugins.version>1.1.0</d7c_springboot_plugins.version>
 	</properties>
 
     <!-- 只是对版本进行管理，不会实际引入 jar -->
@@ -107,96 +101,13 @@
     <!-- system：跟 provided 相似，但是在系统中要以外部JAR包的形式提供，maven 不会在 repository 查找它 -->
 	<dependencyManagement>
 		<dependencies>
-            <!-- d7c springboot 版插件工程 =======>start -->
 			<dependency>
 				<groupId>top.d7c.springboot.plugins</groupId>
-				<artifactId>d7c_springboot_plugins</artifactId>
+				<artifactId>d7c_springboot_plugins_parent</artifactId>
 				<version>${d7c_springboot_plugins.version}</version>
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
-			<dependency>
-				<groupId>top.d7c.springboot.plugins</groupId>
-				<artifactId>d7c_springboot_plugins_core</artifactId>
-				<version>${d7c_springboot_plugins.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>top.d7c.springboot.plugins</groupId>
-				<artifactId>d7c_springboot_plugins_tools</artifactId>
-				<version>${d7c_springboot_plugins.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>top.d7c.springboot.plugins</groupId>
-				<artifactId>d7c_springboot_plugins_net</artifactId>
-				<version>${d7c_springboot_plugins.version}</version>
-			</dependency>
-			<!-- d7c 项目封装的 spring-boot 关于 fastDFS starter -->
-			<dependency>
-				<groupId>top.d7c.springboot.plugins</groupId>
-				<artifactId>spring-boot-starter-fastDFS</artifactId>
-				<version>${d7c_springboot_plugins.version}</version>
-			</dependency>
-			<!-- d7c 项目封装的 spring-boot 关于 jwt starter -->
-			<dependency>
-				<groupId>top.d7c.springboot.plugins</groupId>
-				<artifactId>spring-boot-starter-jwt</artifactId>
-				<version>${d7c_springboot_plugins.version}</version>
-			</dependency>
-			<!-- d7c 项目封装的 spring-boot 关于 redis starter -->
-			<dependency>
-				<groupId>top.d7c.springboot.plugins</groupId>
-				<artifactId>spring-boot-starter-redis</artifactId>
-				<version>${d7c_springboot_plugins.version}</version>
-			</dependency>
-			<!-- d7c 项目封装的 spring-boot 关于 activemq starter -->
-			<dependency>
-				<groupId>top.d7c.springboot.plugins</groupId>
-				<artifactId>spring-boot-starter-activemq</artifactId>
-				<version>${d7c_springboot_plugins.version}</version>
-			</dependency>
-			<!-- d7c 项目封装的 spring-boot 关于 mybatis 持久化层 starter -->
-			<dependency>
-				<groupId>top.d7c.springboot.plugins</groupId>
-				<artifactId>spring-boot-starter-mybatis</artifactId>
-				<version>${d7c_springboot_plugins.version}</version>
-			</dependency>
-			<!-- d7c 项目封装的 spring-boot 关于 oauth2 starter -->
-			<dependency>
-				<groupId>top.d7c.springboot.plugins</groupId>
-				<artifactId>spring-boot-starter-oauth2</artifactId>
-				<version>${d7c_springboot_plugins.version}</version>
-			</dependency>
-			<!-- d7c 项目封装的 spring-boot 关于 activiti starter -->
-			<dependency>
-				<groupId>top.d7c.springboot.plugins</groupId>
-				<artifactId>spring-boot-starter-activiti</artifactId>
-				<version>${d7c_springboot_plugins.version}</version>
-			</dependency>
-			<!-- d7c 项目封装的 spring-boot 关于 aliyun oss starter -->
-			<dependency>
-				<groupId>top.d7c.springboot.plugins</groupId>
-				<artifactId>spring-boot-starter-aliyun-oss</artifactId>
-				<version>${d7c_springboot_plugins.version}</version>
-			</dependency>
-			<!-- d7c 项目封装的 spring-boot 关于 elasticsearch starter -->
-			<dependency>
-				<groupId>top.d7c.springboot.plugins</groupId>
-				<artifactId>spring-boot-starter-elasticsearch</artifactId>
-				<version>${d7c_springboot_plugins.version}</version>
-			</dependency>
-			<!-- d7c 项目封装的 spring-boot 关于 mongodb starter，建议采用 mongodb server 为 3.4.x、3.6.x -->
-			<dependency>
-				<groupId>top.d7c.springboot.plugins</groupId>
-				<artifactId>spring-boot-starter-mongodb</artifactId>
-				<version>${d7c_springboot_plugins.version}</version>
-			</dependency>
-			<!-- d7c 项目封装的 spring-boot 关于 flowable starter -->
-			<dependency>
-				<groupId>top.d7c.springboot.plugins</groupId>
-				<artifactId>spring-boot-starter-flowable</artifactId>
-				<version>${d7c_springboot_plugins.version}</version>
-			</dependency>
-            <!-- d7c springboot 版插件工程 =======>end -->
 		</dependencies>
 	</dependencyManagement>
 
