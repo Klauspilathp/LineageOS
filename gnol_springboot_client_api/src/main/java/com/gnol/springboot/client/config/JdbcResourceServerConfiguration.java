@@ -20,8 +20,8 @@ import org.springframework.web.client.RestTemplate;
  * @date: 2020年7月22日 下午2:09:54
  * @Description: Jdbc 储存策略存储授权码 oauth2 资源服务器配置
  */
-/*@Configuration
-@EnableResourceServer*/
+// @Configuration
+// @EnableResourceServer
 public class JdbcResourceServerConfiguration extends ResourceServerConfigurerAdapter {
     /**
      * gnol 系统自定义属性

@@ -28,8 +28,8 @@ import org.springframework.security.oauth2.provider.token.store.JdbcTokenStore;
  * @date: 2020年7月21日 下午6:51:30
  * @Description: Jdbc 储存策略 oauth2 授权服务器策略
  */
-/*@Configuration
-@EnableAuthorizationServer*/
+// @Configuration
+// @EnableAuthorizationServer
 public class JdbcAuthorizationServerConfiguration extends AuthorizationServerConfigurerAdapter {
     /**
      * 数据源
