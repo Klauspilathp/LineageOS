@@ -4,6 +4,7 @@ import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.web.client.RestTemplate;
 
 import com.gnol.springboot.common.configurations.exception.CustomResponseErrorHandler;
@@ -20,6 +21,7 @@ public class RestTemplateConfiguration {
 
     @Bean
     @LoadBalanced // ribbon 的负载均衡注解，org.springframework.cloud.client.loadbalancer.LoadBalancerAutoConfiguration
+    @Primary
     public RestTemplate restTemplate(RestTemplateBuilder builder) {
         RestTemplate restTemplate = builder.build();
         restTemplate.setErrorHandler(new CustomResponseErrorHandler());
