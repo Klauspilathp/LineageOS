@@ -107,9 +107,9 @@ public class JwtKeyPairAuthorizationServerConfiguration extends AuthorizationSer
         // jwt 非对称（密钥对）加密
         KeyPair keyPair = new KeyStoreKeyFactory(
                 new ClassPathResource(authorizationServerProperties.getJwt().getKeyStore()), // 密钥文件路径
-                authorizationServerProperties.getJwt().getKeyPassword().toCharArray() // 密码
+                authorizationServerProperties.getJwt().getKeyStorePassword().toCharArray() // 密码
         ).getKeyPair(authorizationServerProperties.getJwt().getKeyAlias(), // 别名
-                authorizationServerProperties.getJwt().getKeyStorePassword().toCharArray());
+                authorizationServerProperties.getJwt().getKeyPassword().toCharArray());
         tokenConverter.setKeyPair(keyPair);
         return tokenConverter;
     }
