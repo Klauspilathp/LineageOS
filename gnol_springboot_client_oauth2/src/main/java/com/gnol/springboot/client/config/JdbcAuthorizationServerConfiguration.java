@@ -118,6 +118,7 @@ public class JdbcAuthorizationServerConfiguration extends AuthorizationServerCon
                 .authorizationCodeServices(jdbcAuthorizationCodeServices()) // 授权码模式数据来源
                 .approvalStore(jdbcApprovalStore()) // 授权信息保存策略
                 .tokenStore(jdbcTokenStore()) // token 持久化策略
+                .accessTokenConverter(new CustomAccessTokenConverter()) // 自定义 token 解析工具
                 .allowedTokenEndpointRequestMethods(HttpMethod.GET, HttpMethod.POST); // 允许 GET、POST 请求 /oauth/token 端点
     }
 

@@ -62,6 +62,7 @@ public class JdbcResourceServerConfiguration extends ResourceServerConfigurerAda
         remoteTokenServices.setCheckTokenEndpointUrl(authorizationServerProperties.getCheckTokenAccess());
         remoteTokenServices.setClientId(oAuth2ClientProperties.getClientId());
         remoteTokenServices.setClientSecret(oAuth2ClientProperties.getClientSecret());
+        remoteTokenServices.setAccessTokenConverter(new CustomAccessTokenConverter());
         resources.resourceId(resourceServerProperties.getServiceId()) // 当前资源服务器的 id
                 .tokenServices(remoteTokenServices).stateless(true);
     }
