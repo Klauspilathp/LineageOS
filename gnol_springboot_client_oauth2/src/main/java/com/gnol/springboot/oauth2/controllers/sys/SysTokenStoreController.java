@@ -5,9 +5,9 @@ import java.util.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.provider.token.TokenStore;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.gnol.plugins.core.PageResult;
 import com.gnol.springboot.oauth2.controllers.WebBaseController;
@@ -19,8 +19,8 @@ import com.gnol.springboot.oauth2.controllers.WebBaseController;
  * @date: 2020年7月22日 下午7:19:15
  * @Description: token 管理
  */
-@Controller
-@RequestMapping(value = "/common")
+@RestController
+@RequestMapping(value = "/token")
 public class SysTokenStoreController extends WebBaseController {
     /**
      * token 持久化策略

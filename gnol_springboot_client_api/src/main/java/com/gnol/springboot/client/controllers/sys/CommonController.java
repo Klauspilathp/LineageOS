@@ -2,9 +2,8 @@ package com.gnol.springboot.client.controllers.sys;
 
 import java.util.Date;
 
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.gnol.plugins.core.PageResult;
 import com.gnol.springboot.client.controllers.WebBaseController;
@@ -16,7 +15,7 @@ import com.gnol.springboot.client.controllers.WebBaseController;
  * @date: 2019年06月18日 08:56:45
  * @Description: gnol 系统_公共 Controller
  */
-@Controller
+@RestController
 @RequestMapping(value = "/common")
 public class CommonController extends WebBaseController {
 
@@ -28,7 +27,6 @@ public class CommonController extends WebBaseController {
      * @return PageResult
      */
     @RequestMapping(value = "/getTime")
-    @ResponseBody
     public PageResult getTime() {
         return PageResult.ok(new Date());
     }
