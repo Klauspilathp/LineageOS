@@ -40,5 +40,10 @@ public interface RabbitConstant {
      * 广播（多播）交换机名称，会把消息发送给绑定它的全部队列，即使设置了 routingKey 也会被忽略。
      */
     String FANOUT = "fanoutExchange";
+    // 队列名称
+    String FANOUT_QUEUE_0 = "fanoutQueue0";
+    String FANOUT_QUEUE_1 = "fanoutQueue1";
+    String FANOUT_QUEUE_2 = "fanoutQueue2";
+    String FANOUT_QUEUE_3 = "fanoutQueue3";
 
 }

@@ -40,7 +40,26 @@ public class MQRabbitConsumerController implements RabbitConstant {
     // ------- 发布订阅模式 ------- end
 
     // ------- 广播模式 ------- start
+    @RabbitListener(queues = FANOUT_QUEUE_0)
+    public void getFanout0MsgTest(Message msg) {
+        logger.info("getFanout0MsgTest received from {} message: [{}].", FANOUT_QUEUE_0, new String(msg.getBody()));
+    }
 
+    @RabbitListener(queues = FANOUT_QUEUE_1)
+    public void getFanout1MsgTest(Message msg) {
+        logger.info("getFanout1MsgTest received from {} message: [{}].", FANOUT_QUEUE_1, new String(msg.getBody()));
+    }
+
+    @RabbitListener(queues = FANOUT_QUEUE_2)
+    public void getFanout2MsgTest(Message msg) {
+        logger.info("getFanout2MsgTest received from {} message: [{}].", FANOUT_QUEUE_2, new String(msg.getBody()));
+    }
+
+    // 先用 /mq/rabbit_producer/createExchange 接口创建队列，再放开注解监听！！！
+    @RabbitListener(queues = FANOUT_QUEUE_3)
+    public void getFanout3MsgTest(Message msg) {
+        logger.info("getFanout3MsgTest received from {} message: [{}].", FANOUT_QUEUE_3, new String(msg.getBody()));
+    }
     // ------- 广播模式 ------- end
 
 }

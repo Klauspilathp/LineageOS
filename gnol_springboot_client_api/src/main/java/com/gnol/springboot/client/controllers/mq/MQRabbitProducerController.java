@@ -1,8 +1,10 @@
 package com.gnol.springboot.client.controllers.mq;
 
+import org.springframework.amqp.core.AmqpAdmin;
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
 import org.springframework.amqp.core.DirectExchange;
+import org.springframework.amqp.core.FanoutExchange;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.core.TopicExchange;
@@ -126,7 +128,68 @@ public class MQRabbitProducerController implements RabbitConstant {
     // ------- 发布订阅模式 ------- end
 
     // ------- 广播模式 ------- start
+    @Bean("fanoutQueue0")
+    public Queue fanoutQueue0() {
+        return new Queue(FANOUT_QUEUE_0);
+    }
 
+    @Bean("fanoutQueue1")
+    public Queue fanoutQueue1() {
+        return new Queue(FANOUT_QUEUE_1);
+    }
+
+    @Bean("fanoutQueue2")
+    public Queue fanoutQueue2() {
+        return new Queue(FANOUT_QUEUE_2);
+    }
+
+    @Bean("fanoutExchange")
+    public FanoutExchange fanoutExchange() {
+        return new FanoutExchange(FANOUT);
+    }
+
+    @Bean("bindingQueue0ToFanoutExchange")
+    Binding bindingQueue0ToFanoutExchange(@Qualifier("fanoutQueue0") Queue fanoutQueue0,
+            @Qualifier("fanoutExchange") FanoutExchange fanoutExchange) {
+        return BindingBuilder.bind(fanoutQueue0).to(fanoutExchange);
+    }
+
+    @Bean("bindingQueue1ToFanoutExchange")
+    Binding bindingQueue1ToFanoutExchange(@Qualifier("fanoutQueue1") Queue fanoutQueue1,
+            @Qualifier("fanoutExchange") FanoutExchange fanoutExchange) {
+        return BindingBuilder.bind(fanoutQueue1).to(fanoutExchange);
+    }
+
+    @Bean("bindingQueue2ToFanoutExchange")
+    Binding bindingQueue2ToFanoutExchange(@Qualifier("fanoutQueue2") Queue fanoutQueue2,
+            @Qualifier("fanoutExchange") FanoutExchange fanoutExchange) {
+        return BindingBuilder.bind(fanoutQueue2).to(fanoutExchange);
+    }
+
+    // 向对列发送一个广播消息
+    @GetMapping(value = "/sendFanoutMsgTest")
+    public PageResult sendFanoutMsgTest() {
+        rabbitTemplate.convertAndSend(FANOUT, null, "我发送了一个广播消息，发送时间是" + DateUtil.getDateSecond());
+        return PageResult.ok();
+    }
     // ------- 广播模式 ------- end
+
+    /**
+     * 管理组件
+     */
+    @Autowired
+    private AmqpAdmin amqpAdmin;
+
+    // 创建交换机与队列的绑定关系
+    @GetMapping(value = "/createExchange")
+    public PageResult createExchange() {
+        // 创建队列
+        amqpAdmin.declareQueue(new Queue(FANOUT_QUEUE_3, true // 是否持久化
+        ));
+        // amqpAdmin.declareExchange(new FanoutExchange(FANOUT));
+        // 创建绑定关系
+        amqpAdmin.declareBinding(new Binding(FANOUT_QUEUE_3, Binding.DestinationType.QUEUE, FANOUT, "", null));
+        return PageResult.ok();
+    }
 
 }
