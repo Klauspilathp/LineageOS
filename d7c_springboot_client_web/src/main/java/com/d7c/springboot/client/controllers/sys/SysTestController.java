@@ -11,7 +11,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.d7c.fastDFS.spring.boot.autoconfigure.FastDFService;
+import com.d7c.fastDFS.spring.boot.autoconfigure.FastDFSService;
 import com.d7c.mybatis.spring.boot.autoconfigure.CurrDataSource;
 import com.d7c.mybatis.spring.boot.autoconfigure.DataSourceType;
 import com.d7c.plugins.core.PageData;
@@ -35,7 +35,7 @@ import com.d7c.springboot.common.dos.test1.Test1Test;
 @RequestMapping(value = "/sys/test")
 public class SysTestController extends WebBaseController {
     @Autowired
-    private FastDFService fastDFService;
+    private FastDFSService fastDFSService;
     /**
      * SysTest Service 实现
      */
@@ -54,13 +54,13 @@ public class SysTestController extends WebBaseController {
 
     @RequestMapping(value = "/test1")
     public String test1(ModelMap map) throws FileNotFoundException {
-        System.out.println(fastDFService);
+        System.out.println(fastDFSService);
         /*File file = new File("E:\\Trash\\temp\\logo.png");
         FileInputStream fileInputStream = new FileInputStream(file);
-        String uploadFile = fastDFService.uploadFile(fileInputStream, file.length(), "png", null);
+        String uploadFile = fastDFSService.uploadFile(fileInputStream, file.length(), "png", null);
         System.out.println(uploadFile);*/
 
-        /*byte[] downloadFileByByte = fastDFService
+        /*byte[] downloadFileByByte = fastDFSService
                 .downloadFileByByte("group1/M00/00/6E/rBKEUV7h21eAIoz_AAABlYi1F6w031.png");*/
         map.addAttribute("name", "吴佳隆");
         return "sys/test/test1";

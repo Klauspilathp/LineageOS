@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.d7c.fastDFS.spring.boot.autoconfigure.FastDFService;
+import com.d7c.fastDFS.spring.boot.autoconfigure.FastDFSService;
 import com.d7c.plugins.core.PageResult;
 import com.d7c.springboot.client.controllers.WebBaseController;
 
@@ -29,8 +29,8 @@ public class CommonController extends WebBaseController {
     /**
      * fastDFS 服务实现
      */
-    @Resource(name = "fastDFServiceImpl")
-    private FastDFService fastDFService;
+    @Resource(name = "fastDFSServiceImpl")
+    private FastDFSService fastDFSService;
 
     /**
      * @Title: getTime
@@ -67,7 +67,7 @@ public class CommonController extends WebBaseController {
         }
         String originalFilename = multipartFile.getOriginalFilename();
         String extensionName = FilenameUtils.getExtension(originalFilename);
-        String imgPath = fastDFService.uploadFile(bytes, extensionName, null);
+        String imgPath = fastDFSService.uploadFile(bytes, extensionName, null);
         return PageResult.ok(imgPath);
     }
 

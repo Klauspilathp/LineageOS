@@ -7,7 +7,7 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
-import com.d7c.fastDFS.spring.boot.autoconfigure.FastDFService;
+import com.d7c.fastDFS.spring.boot.autoconfigure.FastDFSService;
 import com.d7c.plugins.core.PageData;
 import com.d7c.plugins.core.PageResult;
 import com.d7c.plugins.core.context.AbstractBaseService;
@@ -34,8 +34,8 @@ public class SysImgServiceImpl extends AbstractBaseService<BaseSysImgDao, SysImg
     /**
      * fastDFS 服务实现
      */
-    @Resource(name = "fastDFServiceImpl")
-    private FastDFService fastDFService;
+    @Resource(name = "fastDFSServiceImpl")
+    private FastDFSService fastDFSService;
 
     @Override
     public List<PageData> listByImgType(PageData pd) {
@@ -64,7 +64,7 @@ public class SysImgServiceImpl extends AbstractBaseService<BaseSysImgDao, SysImg
     public PageResult delBatch(PageData pd) {
         // 先查出要删除的图片列表
         // 再去图片服务器删除图片
-        fastDFService.deleteFile(null);
+        fastDFSService.deleteFile(null);
         return PageResult.ok();
     }
 
