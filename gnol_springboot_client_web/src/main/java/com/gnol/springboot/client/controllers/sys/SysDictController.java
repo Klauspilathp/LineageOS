@@ -147,7 +147,7 @@ public class SysDictController extends WebBaseController {
      * @Description: 新增字典是查询父级字典信息
      * @return PageResult
      */
-    @RequestMapping(value = "/getParentDict")
+    @RequestMapping(value = "/getParentDictName")
     @RolesAllowed("sys_dict:goAdd")
     @ResponseBody
     public PageResult getParentDictName() {
