@@ -90,6 +90,7 @@ public class JwtAuthenticationFilter extends BasicAuthenticationFilter {
                 new CustomUserDetails(StringUtil.toLong(claims.get("userId")),
                         StringUtil.toString(claims.get("username")), "NO_SESSION_AUTHENTICATION", true, authorities),
                 null, authorities);
+        // authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
         SecurityContextHolder.getContext().setAuthentication(authenticationToken);
         chain.doFilter(request, response);
     }
