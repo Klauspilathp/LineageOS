@@ -21,6 +21,16 @@
 			<name>aliyun maven</name>
 			<url>https://maven.aliyun.com/repository/public</url>
 		</repository>
+		<repository>
+			<id>nexusReleases</id>
+			<name>nexus Releases</name>
+			<url>http://www.d7c.top:8081/repository/maven-releases/</url>
+		</repository>
+		<repository>
+			<id>nexusSnapshots</id>
+			<name>nexus Snapshots</name>
+			<url>http://www.d7c.top:8081/repository/maven-snapshots/</url>
+		</repository>
 	</repositories>
     <!-- 设定插件仓库 -->
 	<pluginRepositories>
@@ -28,6 +38,16 @@
 			<id>alimaven</id>
 			<name>aliyun maven</name>
 			<url>https://maven.aliyun.com/repository/public</url>
+		</pluginRepository>
+		<pluginRepository>
+			<id>nexusReleases</id>
+			<name>nexus Releases</name>
+			<url>http://www.d7c.top:8081/repository/maven-releases/</url>
+		</pluginRepository>
+		<pluginRepository>
+			<id>nexusSnapshots</id>
+			<name>nexus Snapshots</name>
+			<url>http://www.d7c.top:8081/repository/maven-snapshots/</url>
 		</pluginRepository>
 	</pluginRepositories>
 
