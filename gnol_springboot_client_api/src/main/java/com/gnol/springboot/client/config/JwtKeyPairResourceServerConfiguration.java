@@ -3,10 +3,14 @@ package com.gnol.springboot.client.config;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.security.oauth2.authserver.AuthorizationServerProperties;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.ResourceServerProperties;
 import org.springframework.context.annotation.Bean;
@@ -26,7 +30,10 @@ import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenCo
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 import org.springframework.web.client.RestTemplate;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.gnol.plugins.core.StringUtil;
+import com.netflix.appinfo.InstanceInfo;
+import com.netflix.appinfo.InstanceInfo.InstanceStatus;
+import com.netflix.discovery.EurekaClient;
 
 /**
  * @Title: JdbcResourceServerConfiguration
@@ -38,6 +45,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @Configuration
 @EnableResourceServer
 public class JwtKeyPairResourceServerConfiguration extends ResourceServerConfigurerAdapter {
+    private static final Logger logger = LoggerFactory.getLogger(JwtKeyPairResourceServerConfiguration.class);
     /**
      * 资源服务器属性配置
      */
@@ -53,6 +61,16 @@ public class JwtKeyPairResourceServerConfiguration extends ResourceServerConfigu
      */
     @Autowired
     private RestTemplate restTemplate;
+    /**
+     * eureka 客户端
+     */
+    @Autowired
+    private EurekaClient eurekaClient;
+    /**
+     * 授权服务器应用名称
+     */
+    @Value("${gnol.oauth2.application.name:gnol-springboot-oauth2}")
+    private String oauth2ApplicationName;
     /**
      * 自定义异常转化器
      */
@@ -117,13 +135,20 @@ public class JwtKeyPairResourceServerConfiguration extends ResourceServerConfigu
         Resource resource = new ClassPathResource(authorizationServerProperties.getJwt().getKeyStore());
         try (BufferedReader br = new BufferedReader(new InputStreamReader(resource.getInputStream()))) {
             key = br.lines().collect(Collectors.joining("\r\n"));
-        } catch (IOException ioe) {
-            ObjectMapper objectMapper = new ObjectMapper();
-            String result = restTemplate.getForObject(authorizationServerProperties.getTokenKeyAccess(), String.class);
-            try {
-                Map map = objectMapper.readValue(result, Map.class);
-                key = map.get("value").toString();
-            } catch (IOException e) {
+        } catch (IOException e) {
+            logger.warn("本地公钥读取失败，从授权服务器获取公共公钥。");
+            // 获取授权服务器实例列表
+            List<InstanceInfo> instances = eurekaClient.getApplication(oauth2ApplicationName).getInstances();
+            for (InstanceInfo instanceInfo : instances) {
+                if (instanceInfo.getStatus() == InstanceStatus.UP) { // 上线状态
+                    logger.debug("从 {} 服务获取公共公钥。", instanceInfo.getHomePageUrl());
+                    Map result = restTemplate.getForObject(instanceInfo.getHomePageUrl() + "/oauth/token_key",
+                            Map.class);
+                    key = result.get("value").toString();
+                    break;
+                }
+            }
+            if (StringUtil.isBlank(key)) {
                 e.printStackTrace();
             }
         }
