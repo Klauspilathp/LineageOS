@@ -5,6 +5,7 @@ import org.springframework.amqp.core.BindingBuilder;
 import org.springframework.amqp.core.DirectExchange;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.core.Queue;
+import org.springframework.amqp.core.TopicExchange;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -44,7 +45,7 @@ public class MQRabbitProducerController implements RabbitConstant {
     @Autowired
     private RabbitTemplate rabbitTemplate;
 
-    // ------- 点对点模式
+    // ------- 点对点模式 ------- start
     // 创建交换机
     @Bean("directExchange")
     public DirectExchange directExchange() {
@@ -77,9 +78,55 @@ public class MQRabbitProducerController implements RabbitConstant {
         Object msg = rabbitTemplate.receiveAndConvert(DIRECT_QUEUE);
         return PageResult.ok(msg);
     }
+    // ------- 点对点模式 ------- end
 
-    // ------- 发布订阅模式
+    // ------- 发布订阅模式 ------- start
+    // 创建交换机
+    @Bean("topicExchange")
+    public TopicExchange topicExchange() {
+        return new TopicExchange(TOPIC);
+    }
 
-    // ------- 广播模式
+    // 创建第一个队列
+    @Bean("topicQueue0")
+    public Queue topicQueue0() {
+        return new Queue(TOPIC_QUEUE_0);
+    }
+
+    // 创建第二个队列
+    @Bean("topicQueue1")
+    public Queue topicQueue1() {
+        return new Queue(TOPIC_QUEUE_1);
+    }
+
+    // 把队列绑定到交换机
+    @Bean("bindingQueue0ToTopicExchange")
+    public Binding bindingQueue0ToTopicExchange(@Qualifier("topicQueue0") Queue queue,
+            @Qualifier("topicExchange") TopicExchange exchange) {
+        return BindingBuilder.bind(queue).to(exchange).with(TOPIC_ROUTINGKEY_0);
+    }
+
+    @Bean("bindingQueue1ToTopicExchange")
+    public Binding bindingQueue1ToTopicExchange(@Qualifier("topicQueue1") Queue queue,
+            @Qualifier("topicExchange") TopicExchange exchange) {
+        return BindingBuilder.bind(queue).to(exchange).with(TOPIC_ROUTINGKEY_1);
+    }
+
+    // 向对列发送一个发布订阅消息
+    @GetMapping(value = "/sendTopicMsgTest")
+    public PageResult sendTopicMsgTest() {
+        rabbitTemplate.convertAndSend(TOPIC, TOPIC_ROUTINGKEY_0,
+                "我向{" + TOPIC_ROUTINGKEY_0 + "}发送了一个消息，发送时间是" + DateUtil.getDateSecond());
+        rabbitTemplate.convertAndSend(TOPIC, "topic.a",
+                "我向{" + "topic.a" + "}发送了一个消息，发送时间是" + DateUtil.getDateSecond());
+        rabbitTemplate.convertAndSend(TOPIC, "topic.bcd",
+                "我向{" + "topic.bcd" + "}发送了一个消息，发送时间是" + DateUtil.getDateSecond());
+        return PageResult.ok();
+    }
+    // ------- 发布订阅模式 ------- end
+
+    // ------- 广播模式 ------- start
+
+    // ------- 广播模式 ------- end
 
 }

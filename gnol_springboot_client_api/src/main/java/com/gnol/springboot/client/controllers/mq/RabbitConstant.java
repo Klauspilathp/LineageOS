@@ -29,6 +29,12 @@ public interface RabbitConstant {
      *    * 表示一个单词。
      */
     String TOPIC = "topic";
+    // routingKey 名称
+    String TOPIC_ROUTINGKEY_0 = "topic.routingKey";
+    String TOPIC_ROUTINGKEY_1 = "topic.#";
+    // 队列名称
+    String TOPIC_QUEUE_0 = "topicQueue0";
+    String TOPIC_QUEUE_1 = "topicQueue1";
     // ------- 广播模式
     /**
      * 广播（多播）交换机名称，会把消息发送给绑定它的全部队列，即使设置了 routingKey 也会被忽略。
