@@ -108,7 +108,8 @@ public class JwtKeyPairAuthorizationServerConfiguration extends AuthorizationSer
         KeyPair keyPair = new KeyStoreKeyFactory(
                 new ClassPathResource(authorizationServerProperties.getJwt().getKeyStore()), // 密钥文件路径
                 authorizationServerProperties.getJwt().getKeyPassword().toCharArray() // 密码
-        ).getKeyPair(authorizationServerProperties.getJwt().getKeyAlias()); // 别名
+        ).getKeyPair(authorizationServerProperties.getJwt().getKeyAlias(), // 别名
+                authorizationServerProperties.getJwt().getKeyStorePassword().toCharArray());
         tokenConverter.setKeyPair(keyPair);
         return tokenConverter;
     }
