@@ -14,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Primary;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.Authentication;
@@ -37,13 +36,13 @@ import com.gnol.springboot.client.services.sys.SysUserService;
  * @date: 2020年7月6日 下午3:49:51
  * @Description: 集群 web security 配置
  */
-// @Configuration
-// @EnableWebSecurity
+/*@Configuration
+@EnableWebSecurity
 @EnableGlobalMethodSecurity( // 开启 security 注解
         prePostEnabled = false, // 基于表达式进行方法级别的访问控制
         securedEnabled = false, // security 内置注解
         jsr250Enabled = true // JSR-250 提供的安全控制注解
-)
+)*/
 public class ClusterWebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     private static final Logger logger = LoggerFactory.getLogger(ClusterWebSecurityConfiguration.class);
     /**
