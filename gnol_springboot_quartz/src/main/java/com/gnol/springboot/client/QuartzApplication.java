@@ -7,6 +7,7 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
 import org.springframework.cloud.openfeign.EnableFeignClients;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 /**
  * @Title: QuartzApplication
@@ -19,6 +20,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 @EnableFeignClients(basePackages = {"com.gnol.springboot"}) // 启用 Fegin
 @EnableCircuitBreaker // 启用 hystrix
 @MapperScan(basePackages = {"com.gnol.springboot.common.daos", "com.gnol.springboot.client.daos"})
+@EnableScheduling // 启用定时任务
 public class QuartzApplication extends SpringBootServletInitializer {
 
     public static void main(String[] args) {
