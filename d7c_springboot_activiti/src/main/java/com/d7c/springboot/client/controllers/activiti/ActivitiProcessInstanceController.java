@@ -2,7 +2,6 @@ package com.d7c.springboot.client.controllers.activiti;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 import org.activiti.api.model.shared.model.VariableInstance;
 import org.activiti.api.process.model.ProcessInstance;
@@ -23,6 +22,7 @@ import com.d7c.plugins.core.PageData;
 import com.d7c.plugins.core.PageResult;
 import com.d7c.plugins.core.StringUtil;
 import com.d7c.plugins.tools.idfactory.uuid.UUID;
+import com.d7c.plugins.tools.json.SFJsonUtil;
 import com.d7c.springboot.client.controllers.WebBaseController;
 
 /**
@@ -78,10 +78,11 @@ public class ActivitiProcessInstanceController extends WebBaseController {
      * @return PageResult
      */
     @PostMapping(value = "/runProcessInstance")
-    public PageResult runProcessInstance(@RequestParam("processDefinitionKey") String processDefinitionKey,
-            @RequestParam("businessKey") String businessKey, @RequestParam("variables") Map<String, Object> variables) {
+    public PageResult runProcessInstance(@RequestParam(value = "processDefinitionKey") String processDefinitionKey,
+            @RequestParam(value = "businessKey") String businessKey,
+            @RequestParam(value = "variables") String variables) {
         org.activiti.engine.runtime.ProcessInstance processInstance = runtimeService
-                .startProcessInstanceByKey(processDefinitionKey, businessKey, variables);
+                .startProcessInstanceByKey(processDefinitionKey, businessKey, SFJsonUtil.jsonToMap(variables));
         return PageResult.ok(processInstance);
     }
 
@@ -97,18 +98,19 @@ public class ActivitiProcessInstanceController extends WebBaseController {
      * @return PageResult
      */
     @PostMapping(value = "/startProcessInstance")
-    public PageResult startProcessInstance(@RequestParam("processDefinitionKey") String processDefinitionKey,
-            @RequestParam("instanceName") String instanceName, @RequestParam("businessKey") String businessKey,
-            @RequestParam("variables") Map<String, Object> variables) {
+    public PageResult startProcessInstance(@RequestParam(value = "processDefinitionKey") String processDefinitionKey,
+            @RequestParam(value = "instanceName", required = false) String instanceName,
+            @RequestParam(value = "businessKey") String businessKey,
+            @RequestParam(value = "variables") String variables) {
         if (StringUtil.isBlank(processDefinitionKey)) {
             return PageResult.error("processDefinitionKey 不能为空！");
         }
         if (StringUtil.isBlank(instanceName)) {
             instanceName = UUID.getUUID().nextStr();
         }
-        ProcessInstance processInstance = processRuntime.start(
-                ProcessPayloadBuilder.start().withProcessDefinitionKey(processDefinitionKey).withName(instanceName)
-                        .withBusinessKey(businessKey).withVariable("variables", variables).build());
+        ProcessInstance processInstance = processRuntime.start(ProcessPayloadBuilder.start()
+                .withProcessDefinitionKey(processDefinitionKey).withName(instanceName).withBusinessKey(businessKey)
+                .withVariable("variables", SFJsonUtil.jsonToMap(variables)).build());
         return PageResult.ok(processInstance);
     }
 
@@ -121,7 +123,7 @@ public class ActivitiProcessInstanceController extends WebBaseController {
      * @return PageResult
      */
     @GetMapping(value = "/deleteProcessInstance")
-    public PageResult deleteProcessInstance(@RequestParam("processDefinitionId") String processDefinitionId) {
+    public PageResult deleteProcessInstance(@RequestParam(value = "processDefinitionId") String processDefinitionId) {
         ProcessInstance processInstance = processRuntime
                 .delete(ProcessPayloadBuilder.delete().withProcessInstanceId(processDefinitionId).build());
         return PageResult.ok(processInstance);
@@ -138,8 +140,8 @@ public class ActivitiProcessInstanceController extends WebBaseController {
      */
     @GetMapping(value = "/suspendedProcessInstanceByProcessDefinitionIdAndDate")
     public PageResult suspendedProcessInstanceByProcessDefinitionIdAndDate(
-            @RequestParam("processDefinitionId") String processDefinitionId,
-            @RequestParam("suspensionDate") Date suspensionDate) {
+            @RequestParam(value = "processDefinitionId") String processDefinitionId,
+            @RequestParam(value = "suspensionDate") Date suspensionDate) {
         if (suspensionDate == null || suspensionDate.before(new Date())) {
             suspensionDate = new Date();
         }
@@ -159,8 +161,8 @@ public class ActivitiProcessInstanceController extends WebBaseController {
      */
     @GetMapping(value = "/activateProcessInstanceByProcessDefinitionIdAndDate")
     public PageResult activateProcessInstanceByProcessDefinitionIdAndDate(
-            @RequestParam("processDefinitionId") String processDefinitionId,
-            @RequestParam("activationDate") Date activationDate) {
+            @RequestParam(value = "processDefinitionId") String processDefinitionId,
+            @RequestParam(value = "activationDate") Date activationDate) {
         if (activationDate == null || activationDate.before(new Date())) {
             activationDate = new Date();
         }
@@ -178,7 +180,8 @@ public class ActivitiProcessInstanceController extends WebBaseController {
      * @return PageResult
      */
     @GetMapping(value = "/suspendedProcessInstance")
-    public PageResult suspendedProcessInstance(@RequestParam("processDefinitionId") String processDefinitionId) {
+    public PageResult suspendedProcessInstance(
+            @RequestParam(value = "processDefinitionId") String processDefinitionId) {
         ProcessInstance processInstance = processRuntime
                 .suspend(ProcessPayloadBuilder.suspend().withProcessInstanceId(processDefinitionId).build());
         return PageResult.ok(processInstance);
@@ -193,7 +196,7 @@ public class ActivitiProcessInstanceController extends WebBaseController {
      * @return PageResult
      */
     @GetMapping(value = "/activateProcessInstance")
-    public PageResult activateProcessInstance(@RequestParam("processDefinitionId") String processDefinitionId) {
+    public PageResult activateProcessInstance(@RequestParam(value = "processDefinitionId") String processDefinitionId) {
         // 底层用的是 runtimeService.activateProcessInstanceById(processInstanceId);
         ProcessInstance processInstance = processRuntime
                 .resume(ProcessPayloadBuilder.resume().withProcessInstanceId(processDefinitionId).build());
@@ -209,7 +212,7 @@ public class ActivitiProcessInstanceController extends WebBaseController {
      * @return PageResult
      */
     @GetMapping(value = "/getVariables")
-    public PageResult getVariables(@RequestParam("processInstanceId") String processInstanceId) {
+    public PageResult getVariables(@RequestParam(value = "processInstanceId") String processInstanceId) {
         List<VariableInstance> variables = processRuntime
                 .variables(ProcessPayloadBuilder.variables().withProcessInstanceId(processInstanceId).build());
         return PageResult.ok(variables);

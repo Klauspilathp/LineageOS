@@ -62,7 +62,7 @@ public class ActivitiProcessDefinitionController extends WebBaseController {
      * @return PageResult
      */
     @GetMapping(value = "/getProcessDefinition")
-    public PageResult getProcessDefinition(@RequestParam("processDefinitionKey") String processDefinitionKey) {
+    public PageResult getProcessDefinition(@RequestParam(value = "processDefinitionKey") String processDefinitionKey) {
         // 流程定义对象
         org.activiti.engine.repository.ProcessDefinition processDefinition = repositoryService
                 .createProcessDefinitionQuery().processDefinitionKey(processDefinitionKey).singleResult();
@@ -93,8 +93,9 @@ public class ActivitiProcessDefinitionController extends WebBaseController {
      * @throws IOException 
      */
     @GetMapping(value = "/getProcessDefinitionXML")
-    public void getProcessDefinitionXML(HttpServletResponse response, @RequestParam("deploymentId") String deploymentId,
-            @RequestParam("resourceName") String resourceName) throws IOException {
+    public void getProcessDefinitionXML(HttpServletResponse response,
+            @RequestParam(value = "deploymentId") String deploymentId,
+            @RequestParam(value = "resourceName") String resourceName) throws IOException {
         if (StringUtil.isBlank(deploymentId)) {
             response(response, HttpStatus.HS_270.getKey(), "deploymentId 不能为空！");
             return;
@@ -125,7 +126,7 @@ public class ActivitiProcessDefinitionController extends WebBaseController {
      */
     @GetMapping(value = "/listProcessDefinitionByProcessDefinitionKey")
     public PageResult listProcessDefinitionByProcessDefinitionKey(
-            @RequestParam("processDefinitionKey") String processDefinitionKey) {
+            @RequestParam(value = "processDefinitionKey") String processDefinitionKey) {
         List<org.activiti.engine.repository.ProcessDefinition> processDefinitions = repositoryService
                 .createProcessDefinitionQuery().processDefinitionKey(OPERATE_FAILED).orderByProcessDefinitionVersion()
                 .desc().list();
