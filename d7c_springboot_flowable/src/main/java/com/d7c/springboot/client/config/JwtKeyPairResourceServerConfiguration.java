@@ -181,6 +181,7 @@ public class JwtKeyPairResourceServerConfiguration extends ResourceServerConfigu
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
+        // /app/rest/authenticate
         http.authorizeRequests().antMatchers("/**").permitAll()
                 // 指定不同请求方式访问资源所需权限，一般查询是 read，其余是 write。
                 .antMatchers(HttpMethod.GET, "/**").access("#oauth2.hasScope('read')")
