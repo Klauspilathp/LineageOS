@@ -38,7 +38,7 @@ public class PreAuthGlobalFilter implements GlobalFilter, Ordered {
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         ServerHttpRequest request = exchange.getRequest();
         String path = request.getPath().value();
-        if (StringUtil.startsWith(path, "/auth/")) {
+        if (StringUtil.startsWithAny(path, "/auth/", "/oauth2/oauth/")) {
             return chain.filter(exchange);
         }
         // 从请求中获取 token 参数
