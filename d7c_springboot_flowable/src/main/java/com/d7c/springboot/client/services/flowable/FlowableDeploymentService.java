@@ -1,5 +1,7 @@
 package com.d7c.springboot.client.services.flowable;
 
+import com.d7c.plugins.core.PageResult;
+
 /**
  * @Title: FlowableDeploymentService
  * @Package: com.d7c.springboot.client.services.flowable
@@ -8,5 +10,15 @@ package com.d7c.springboot.client.services.flowable;
  * @Description: flowable 流程部署服务接口
  */
 public interface FlowableDeploymentService {
+
+    /**
+     * @Title: listDeployment
+     * @author: 吴佳隆
+     * @data: 2021年5月8日 下午3:08:57
+     * @Description: 根据流程部署 key 查询流程部署列表
+     * @param key
+     * @return PageResult
+     */
+    PageResult listDeployment(String key);
 
 }

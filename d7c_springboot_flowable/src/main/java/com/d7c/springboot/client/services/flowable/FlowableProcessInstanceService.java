@@ -1,5 +1,6 @@
 package com.d7c.springboot.client.services.flowable;
 
+import java.io.InputStream;
 import java.util.Map;
 
 import com.d7c.plugins.core.Page;
@@ -47,5 +48,15 @@ public interface FlowableProcessInstanceService {
      * @return PageResult
      */
     PageResult deleteProcessInstance(String processInstanceId, String deleteReason);
+
+    /**
+     * @Title: getProcessDiagramInputStream
+     * @author: 吴佳隆
+     * @data: 2021年5月8日 下午3:07:33
+     * @Description: 根据流程实例 ID 生成基于 BPMN 2.0 流程中的图交换信息图像的输入流
+     * @param processInstanceId
+     * @return InputStream
+     */
+    InputStream getProcessDiagramInputStream(String processInstanceId);
 
 }

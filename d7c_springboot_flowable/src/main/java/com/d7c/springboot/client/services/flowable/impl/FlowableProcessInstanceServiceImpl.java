@@ -1,12 +1,20 @@
 package com.d7c.springboot.client.services.flowable.impl;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.flowable.bpmn.model.BpmnModel;
+import org.flowable.engine.HistoryService;
+import org.flowable.engine.RepositoryService;
 import org.flowable.engine.RuntimeService;
+import org.flowable.engine.TaskService;
+import org.flowable.engine.history.HistoricProcessInstance;
 import org.flowable.engine.runtime.ProcessInstance;
 import org.flowable.engine.runtime.ProcessInstanceQuery;
+import org.flowable.image.impl.DefaultProcessDiagramGenerator;
+import org.flowable.task.api.Task;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
@@ -33,6 +41,21 @@ public class FlowableProcessInstanceServiceImpl implements FlowableProcessInstan
      */
     @Autowired
     private RuntimeService runtimeService;
+    /**
+     * 提供对流程定义和部署存储库的访问服务
+     */
+    @Autowired
+    private RepositoryService repositoryService;
+    /**
+     * 操作流程任务服务
+     */
+    @Autowired
+    private TaskService taskService;
+    /**
+     * 查询历史表数据服务
+     */
+    @Autowired
+    private HistoryService historyService;
 
     @Override
     public PageResult listProcessInstance(Page<PageData> page) {
@@ -114,6 +137,40 @@ public class FlowableProcessInstanceServiceImpl implements FlowableProcessInstan
 
         runtimeService.deleteProcessInstance(processInstanceId, deleteReason);
         return PageResult.ok();
+    }
+
+    @Override
+    public InputStream getProcessDiagramInputStream(String processInstanceId) {
+        if (StringUtil.isNotBlank(processInstanceId)) {
+            return null;
+        }
+
+        Task task = taskService.createTaskQuery().processInstanceId(processInstanceId).singleResult();
+        String processDefinitionId = null;
+        List<String> highLightedActivities = new ArrayList<String>();
+        if (task == null) {
+            HistoricProcessInstance historicProcessInstance = historyService.createHistoricProcessInstanceQuery()
+                    .processInstanceId(processInstanceId).singleResult();
+            if (historicProcessInstance != null) {
+                processDefinitionId = historicProcessInstance.getProcessDefinitionId();
+            }
+        } else {
+            processDefinitionId = task.getProcessDefinitionId();
+            highLightedActivities.add(task.getTaskDefinitionKey());
+        }
+
+        if (StringUtil.isBlank(processDefinitionId)) {
+            return null;
+        }
+
+        BpmnModel bpmnModel = repositoryService.getBpmnModel(processDefinitionId);
+        if (bpmnModel == null) {
+            return null;
+        }
+
+        DefaultProcessDiagramGenerator processDiagramGenerator = new DefaultProcessDiagramGenerator();
+
+        return processDiagramGenerator.generateDiagram(bpmnModel, "png", highLightedActivities, false);
     }
 
 }
