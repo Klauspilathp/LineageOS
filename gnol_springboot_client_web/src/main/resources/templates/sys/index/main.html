@@ -10,17 +10,6 @@
 	<link rel="stylesheet" href="/static/css/font.css">
 	<link rel="stylesheet" href="/static/css/xadmin.css">
 	<!-- <link rel="stylesheet" href="/static/css/theme5.css"> -->
-	<script type="text/javascript" src="/static/lib/layui/layui.js" charset="UTF-8"></script>
-	<script type="text/javascript" src="/static/js/xadmin.js"></script>
-	<!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
-	<!--[if lt IE 9]>
-		<script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
-		<script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
-	<![endif]-->
-	<script>
-		// 是否开启刷新记忆 tab 功能
-	    var is_remember = false;
-	</script>
 </head>
 <body class="index">
 	<!-- 顶部开始 -->
@@ -76,7 +65,7 @@
 	<!-- 左侧菜单开始 -->
 	<div class="left-nav">
 		<div id="side-nav">
-			<ul id="nav">
+			<!-- <ul id="nav">
 				<li><a href="javascript:;"><i class="iconfont left-nav-li" lay-tips="会员管理">&#xe6b8;</i><cite>会员管理</cite><i class="iconfont nav_right">&#xe697;</i></a>
 					<ul class="sub-menu">
 						<li><a onclick="xadmin.add_tab('统计页面','welcome1.html')"><i class="iconfont">&#xe6a7;</i><cite>统计页面</cite></a></li>
@@ -97,7 +86,7 @@
 						<li><a onclick="xadmin.add_tab('订单列表1','order-list1.html')"><i class="iconfont">&#xe6a7;</i><cite>订单列表1</cite></a></li>
 					</ul>
 				</li>
-			</ul>
+			</ul> -->
 		</div>
 	</div>
 	<!-- 左侧菜单结束 -->
@@ -123,10 +112,53 @@
 		</div>
 	</div>
 	<div class="page-content-bg"></div>
+	<script type="text/javascript" src="/static/lib/layui/layui.js" charset="UTF-8"></script>
+	<script type="text/javascript" src="/static/js/xadmin.js"></script>
+	<!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
+	<!--[if lt IE 9]>
+		<script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+		<script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+	<![endif]-->
+	<script>
+		// 是否开启刷新记忆 tab 功能
+	    var is_remember = false;
+	</script>
 	<script type="text/javascript">
-		layui.use(['layer', 'jquery'], function() {
-            var layer = layui.layer, $ = layui.jquery;
-            
+		layui.extend({
+		    'request': '/static/lib/layui/lay/modules/request' // 扩展模块
+        }).use(['layer', 'jquery', 'request', 'element'], function() {
+            var layer = layui.layer, $ = layui.jquery, request = layui.request, element = layui.element;
+            // 渲染菜单
+            request.get({
+                url: '/sys/menu/authMenu', 
+                dataType: 'json',
+                success: function(res) {
+                    var html = menuTree("nav", res.data);
+                    $("#side-nav").append(html);
+                }
+            });
+         
+            function menuTree(container, data) {
+                var html = "<ul id='" + container + "'>";
+                $.each(data, function(i, menu) {
+                    if (menu.visible != 1) {
+                        return true;
+                    }
+                    if (menu.menuFunc == 1) { // 模块
+                        html += "<li><a href='javascript:;'><i class='iconfont left-nav-li' lay-tips='";
+                        html += menu.menuName + "'>&#xe6b8;</i><cite>" + menu.menuName + "</cite><i class='iconfont nav_right'>&#xe697;</i></a>";
+                    } else if (menu.menuFunc == 2) { // 页面
+                        html += "<li><a onclick=\"xadmin.add_tab('" + menu.menuName + "', '" + menu.menuUrl;
+                        html += "')\"><i class='iconfont'>&#xe6a7;</i><cite>" + menu.menuName + "</cite></a>";
+                    }
+                    if (menu.childrens) {
+                        html += menuTree("sub-menu", menu.childrens);
+                    }
+                    html += "</li>";
+                });
+                html += "</ul>";
+                return html;
+            }
 		});
     </script>
 </body>

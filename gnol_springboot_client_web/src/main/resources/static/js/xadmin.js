@@ -353,7 +353,7 @@ layui.use(['layer', 'element', 'jquery'], function() {
 
     // 页面加载完要做的
     xadmin.end();
-})
+});
 // md5-----------------------------------------------------------------------------------
 /*
  * Add integers, wrapping at 2^32. This uses 16-bit operations internally
