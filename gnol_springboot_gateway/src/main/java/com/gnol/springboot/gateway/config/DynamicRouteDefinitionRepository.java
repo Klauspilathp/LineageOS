@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.route.RouteDefinition;
 import org.springframework.cloud.gateway.route.RouteDefinitionRepository;
 import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.stereotype.Repository;
 
 import com.gnol.plugins.core.StringUtil;
 
@@ -24,7 +23,7 @@ import reactor.core.publisher.Mono;
  * @date: 2020年8月1日 下午1:13:10
  * @Description: 动态路由配置，org.springframework.cloud.gateway.route.InMemoryRouteDefinitionRepository
  */
-@Repository
+// @Repository
 public class DynamicRouteDefinitionRepository implements RouteDefinitionRepository {
     private static final Logger logger = LoggerFactory.getLogger(DynamicRouteDefinitionRepository.class);
     /**
