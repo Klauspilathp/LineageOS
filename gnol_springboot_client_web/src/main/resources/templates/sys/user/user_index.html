@@ -116,7 +116,10 @@
             // 搜索
             form.on('submit(searchs)', function(data) {
                 table.reload('table-id', {
-                    where: data.field
+                    where: data.field,
+                    page: {
+                        curr: 1
+                    }
                 });
                 return false;
             });
