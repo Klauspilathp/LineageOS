@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.gnol.fastDFS.spring.boot.autoconfigure.FastDFService;
 import com.gnol.springboot.client.controllers.WebBaseController;
 import com.gnol.springboot.client.services.sys.SysTestService;
+import com.gnol.springboot.client.services.test1.Test1TestService;
 
 /**
  * @Title: SysTestController
@@ -30,6 +31,11 @@ public class SysTestController extends WebBaseController {
      */
     @Resource(name = "sysTestServiceImpl")
     private SysTestService sysTestService;
+    /**
+     * Test1Test Service 实现
+     */
+    @Resource(name = "test1TestServiceImpl")
+    private Test1TestService test1TestService;
 
     @RequestMapping(value = "/test1")
     public String test1(ModelMap map) throws FileNotFoundException {
@@ -39,8 +45,8 @@ public class SysTestController extends WebBaseController {
         String uploadFile = fastDFService.uploadFile(fileInputStream, file.length(), "png", null);
         System.out.println(uploadFile);*/
 
-        byte[] downloadFileByByte = fastDFService
-                .downloadFileByByte("group1/M00/00/6E/rBKEUV7h21eAIoz_AAABlYi1F6w031.png");
+        /*byte[] downloadFileByByte = fastDFService
+                .downloadFileByByte("group1/M00/00/6E/rBKEUV7h21eAIoz_AAABlYi1F6w031.png");*/
         map.addAttribute("name", "吴佳隆");
         return "sys/test/test1";
     }
