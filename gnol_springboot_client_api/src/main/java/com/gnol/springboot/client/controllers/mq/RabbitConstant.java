@@ -1,0 +1,38 @@
+package com.gnol.springboot.client.controllers.mq;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+/**
+ * @Title: RabbitConstant
+ * @Package: com.gnol.springboot.client.controllers.mq
+ * @author: 吴佳隆
+ * @date: 2021年1月6日 下午3:23:21
+ * @Description: 定义一些关于 rabbit 消息队列的常量
+ */
+public interface RabbitConstant {
+    static final Logger logger = LoggerFactory.getLogger(RabbitConstant.class);
+    // ------- 点对点模式
+    /**
+     * 点对点（单播）交换机名称，默认的交换机模式，是在创建消息队列的时候指定一个 routingKey，当发送者发送消息的时候指定 routingKey，那么该消息会发送到该队列中。
+     */
+    String DIRECT = "directExchange";
+    // routingKey 名称
+    String DIRECT_ROUTINGKEY = "directRoutingKey";
+    // 队列名称
+    String DIRECT_QUEUE = "directQueue";
+    // ------- 发布订阅模式
+    /**
+     * 发布订阅（多播）交换机名称，将消息发送到与交换机名称匹配的指定队列中（消息进入交换机时就匹配，匹配完成后进入固定队列）。
+     * 交换机名称通配符规则：
+     *    # 表示零到多个单词；
+     *    * 表示一个单词。
+     */
+    String TOPIC = "topic";
+    // ------- 广播模式
+    /**
+     * 广播（多播）交换机名称，会把消息发送给绑定它的全部队列，即使设置了 routingKey 也会被忽略。
+     */
+    String FANOUT = "fanoutExchange";
+
+}

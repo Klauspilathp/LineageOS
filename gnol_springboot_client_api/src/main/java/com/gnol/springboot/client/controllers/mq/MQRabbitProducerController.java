@@ -1,0 +1,85 @@
+package com.gnol.springboot.client.controllers.mq;
+
+import org.springframework.amqp.core.Binding;
+import org.springframework.amqp.core.BindingBuilder;
+import org.springframework.amqp.core.DirectExchange;
+import org.springframework.amqp.core.Message;
+import org.springframework.amqp.core.Queue;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Bean;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.gnol.plugins.core.PageResult;
+import com.gnol.plugins.tools.date.DateUtil;
+
+/**
+ * @Title: MQRabbitProducerController
+ * @Package: com.gnol.springboot.client.controllers.mq
+ * @author: 吴佳隆
+ * @date: 2021年1月6日 下午2:53:56
+ * @Description: rabbit RabbitTemplate 生产消息测试
+ */
+@RestController
+@RequestMapping(value = "/mq/rabbit_producer")
+public class MQRabbitProducerController implements RabbitConstant {
+    /**
+     * 消息发送过程：
+     *    当生产者发送消息时，首先会根据指定的 exchange 交换机找到所属的多个队列，而队列绑定的 routingKey 路由键名称不同，消息会根据路由键的名称发送到对应的队列。
+     * <p/>
+     * 消息消费过程：
+     *    消息消费者绑定指定名称的消息队列，从指定的消息队列消费消息。
+     * <p/>
+     * eg.
+     * 将 Java 对象转换为 Amqp {@link Message} 发送到具有特定路由键的 exchange。
+     * org.springframework.amqp.rabbit.core.RabbitTemplate.convertAndSend(
+     *  String exchange, // 交换机名称
+     *  String routingKey, // 路由键名称
+     *  Object message // Java 对象的消息
+     *  )
+     */
+    @Autowired
+    private RabbitTemplate rabbitTemplate;
+
+    // ------- 点对点模式
+    // 创建交换机
+    @Bean("directExchange")
+    public DirectExchange directExchange() {
+        return new DirectExchange(DIRECT);
+    }
+
+    // 创建队列
+    @Bean("directQueue")
+    public Queue directQueue() {
+        return new Queue(DIRECT_QUEUE);
+    }
+
+    // 把队列绑定到交换机
+    @Bean("bindingQueueToDirectExchange")
+    public Binding bindingQueueToDirectExchange(@Qualifier("directQueue") Queue queue,
+            @Qualifier("directExchange") DirectExchange exchange) {
+        return BindingBuilder.bind(queue).to(exchange).with(DIRECT_ROUTINGKEY);
+    }
+
+    // 向对列发送一个点对点消息
+    @GetMapping(value = "/sendDirectMsgTest")
+    public PageResult sendDirectMsgTest() {
+        rabbitTemplate.convertAndSend(DIRECT, DIRECT_ROUTINGKEY, "我是一个简单消息，发送时间是" + DateUtil.getDateSecond());
+        return PageResult.ok();
+    }
+
+    // 从队列获取个点对点消息
+    @GetMapping(value = "/getDirectMsgTest")
+    public PageResult getDirectMsgTest() {
+        Object msg = rabbitTemplate.receiveAndConvert(DIRECT_QUEUE);
+        return PageResult.ok(msg);
+    }
+
+    // ------- 发布订阅模式
+
+    // ------- 广播模式
+
+}
