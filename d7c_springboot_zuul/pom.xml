@@ -23,6 +23,12 @@
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-netflix-zuul</artifactId>
 		</dependency>
+		<!-- 动态加载 groovy 过滤器依赖 -->
+		<dependency>
+			<groupId>org.codehaus.groovy</groupId>
+			<artifactId>groovy-all</artifactId>
+			<type>pom</type>
+		</dependency>
 		<!-- eureka client -->
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>

@@ -19,7 +19,7 @@
 		<repository>
 			<id>alimaven</id>
 			<name>aliyun maven</name>
-			<url>http://maven.aliyun.com/nexus/content/groups/public</url>
+			<url>https://maven.aliyun.com/repository/public</url>
 		</repository>
 	</repositories>
     <!-- 设定插件仓库 -->
@@ -27,7 +27,7 @@
 		<pluginRepository>
 			<id>alimaven</id>
 			<name>aliyun maven</name>
-			<url>http://maven.aliyun.com/nexus/content/groups/public</url>
+			<url>https://maven.aliyun.com/repository/public</url>
 		</pluginRepository>
 	</pluginRepositories>
 
@@ -70,6 +70,7 @@
 		<ehcache.version>2.10.4</ehcache.version>
 		<oshi.version>5.2.2</oshi.version>
 		<sharding.version>3.1.0</sharding.version>
+		<groovy.version>2.5.14</groovy.version>
 	</properties>
 
     <!-- 只是对版本进行管理，不会实际引入 jar -->
@@ -181,6 +182,13 @@
 				<groupId>io.shardingsphere</groupId>
 				<artifactId>sharding-jdbc-spring-boot-starter</artifactId>
 				<version>${sharding.version}</version>
+			</dependency>
+			<!-- groovy -->
+			<dependency>
+				<groupId>org.codehaus.groovy</groupId>
+				<artifactId>groovy-all</artifactId>
+				<version>${groovy.version}</version>
+				<type>pom</type>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>

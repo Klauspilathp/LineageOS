@@ -9,6 +9,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.Scope;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
+import com.d7c.oauth2.spring.boot.SHA1PasswordEncoder;
 
 /**
  * @Title: WebConfiguration
@@ -19,6 +22,15 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
  */
 @Configuration
 public class WebConfiguration {
+
+    /**
+     * SHA1 的 PasswordEncoder 加密实现类
+     */
+    @Bean("sha1PasswordEncoder")
+    @Primary
+    public PasswordEncoder sha1PasswordEncoder() {
+        return new SHA1PasswordEncoder(2);
+    }
 
     /**
      * d7c 系统自定义属性

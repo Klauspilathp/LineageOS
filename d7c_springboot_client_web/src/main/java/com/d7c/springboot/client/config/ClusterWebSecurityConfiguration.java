@@ -3,15 +3,12 @@ package com.d7c.springboot.client.config;
 import javax.annotation.Resource;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Primary;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.d7c.jwt.spring.boot.autoconfigure.JwtRsaUtil;
-import com.d7c.oauth2.spring.boot.SHA1PasswordEncoder;
 import com.d7c.springboot.client.services.sys.SysMenuService;
 
 /**
@@ -19,7 +16,7 @@ import com.d7c.springboot.client.services.sys.SysMenuService;
  * @Package: com.d7c.springboot.client.config
  * @author: 吴佳隆
  * @date: 2020年7月6日 下午3:49:51
- * @Description: 集群 web security 配置
+ * @Description: 集群 web security 配置，认证服务器为 d7c_springboot_auth。
  */
 /*@Configuration
 @EnableWebSecurity
@@ -45,18 +42,19 @@ public class ClusterWebSecurityConfiguration extends WebSecurityConfigurerAdapte
     @Resource(name = "sysMenuServiceImpl")
     private SysMenuService sysMenuService;
 
-    @Bean("sha1PasswordEncoder")
-    @Primary
-    public PasswordEncoder sha1PasswordEncoder() {
-        return new SHA1PasswordEncoder(2);
-    }
+    /**
+     * SHA1 的 PasswordEncoder 加密实现类
+     */
+    @Resource(name = "sha1PasswordEncoder")
+    private PasswordEncoder passwordEncoder;
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
         http.csrf().disable() // 关闭 csrf 跨站访问拦截
                 .authorizeRequests()
-                .antMatchers("/eureka/apps/**"/*eureka 心跳相关*/, "/actuator", "/actuator/**"/*监控相关*/, "/login"/*认证授权*/,
-                        "/logout"/*注销授权*/)
+                .antMatchers("/eureka/apps/**"/*eureka 心跳相关*/, "/static/**"/*静态资源*/, "/favicon.ico", "/index"/*去登录页面*/,
+                        "/verifyCode" /*验证码*/, "/loginParam"/*登录页参数*/, "/actuator", "/actuator/**"/*监控相关*/,
+                        "/login"/*认证授权*/, "/logout"/*注销授权*/)
                 .permitAll() // 免授权请求配置
                 .anyRequest().authenticated() // 其余所有请求都需要授权
                 .and()
