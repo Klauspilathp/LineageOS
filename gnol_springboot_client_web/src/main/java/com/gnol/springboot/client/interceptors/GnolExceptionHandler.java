@@ -1,12 +1,14 @@
 package com.gnol.springboot.client.interceptors;
 
+import java.util.Date;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.Set;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 
 import org.hibernate.validator.internal.engine.path.PathImpl;
-import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -19,8 +21,6 @@ import org.springframework.web.method.annotation.MethodArgumentTypeMismatchExcep
 import org.springframework.web.servlet.ModelAndView;
 
 import com.gnol.plugins.core.PageResult;
-import com.gnol.plugins.core.enums.HttpStatus;
-import com.gnol.plugins.core.exception.GnolException;
 import com.gnol.plugins.core.exception.GnolRuntimeException;
 
 /**
@@ -32,92 +32,95 @@ import com.gnol.plugins.core.exception.GnolRuntimeException;
  */
 @ControllerAdvice
 public class GnolExceptionHandler {
-
-    @ExceptionHandler(MissingServletRequestParameterException.class)
+    
+    @ExceptionHandler(GnolRuntimeException.class)
     @ResponseBody
-    public PageResult handlerMissingServletRequestParameterException(MissingServletRequestParameterException e) {
-        e.printStackTrace();
-        return PageResult.error(String.format("Missing Request Parameter: %s", e.getParameterName()));
+    public PageResult handlerGnolRuntimeException(GnolRuntimeException e) {
+        return PageResult.build(e.getHs());
     }
+
+   
 
     /**
      * 参数校验错误异常
      */
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
-    @ResponseBody
-    public PageResult handlerMethodArgumentTypeMismatchException(MethodArgumentTypeMismatchException e) {
-        e.printStackTrace();
-        return PageResult.error(String.format("Method Argument Type Mismatch: %s", e.getName()));
+    public ModelAndView handlerMethodArgumentTypeMismatchException(MethodArgumentTypeMismatchException e) {
+        Map<String, Object> model = new LinkedHashMap<>();
+        model.put("timestamp", new Date());
+        model.put("exception", MethodArgumentTypeMismatchException.class.getName());
+        model.put("message", String.format("Method Argument Type Mismatch: %s", e.getName()));
+        return new ModelAndView("error/error", model);
     }
 
     /**
      * 参数校验错误异常
      */
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    @ResponseBody
-    public PageResult handlerMethodArgumentNotValidException(MethodArgumentNotValidException e) {
-        e.printStackTrace();
+    public ModelAndView handlerMethodArgumentNotValidException(MethodArgumentNotValidException e) {
+        Map<String, Object> model = new LinkedHashMap<>();
+        model.put("timestamp", new Date());
+        model.put("exception", Exception.class.getName());
         BindingResult result = e.getBindingResult();
         FieldError error = result.getFieldError();
-        return PageResult.error(String.format("%s:%s", error.getField(), error.getDefaultMessage()));
+        model.put("message", String.format("%s:%s", error.getField(), error.getDefaultMessage()));
+        return new ModelAndView("error/error", model);
     }
 
     /**
      * 参数校验错误异常
      */
     @ExceptionHandler(BindException.class)
-    @ResponseBody
-    public PageResult handlerBindException(BindException e) {
-        e.printStackTrace();
+    public ModelAndView handlerBindException(BindException e) {
+        Map<String, Object> model = new LinkedHashMap<>();
+        model.put("timestamp", new Date());
+        model.put("exception", Exception.class.getName());
         FieldError error = e.getFieldError();
-        return PageResult.error(String.format("%s:%s", error.getField(), error.getDefaultMessage()));
+        model.put("message", String.format("%s:%s", error.getField(), error.getDefaultMessage()));
+        return new ModelAndView("error/error", model);
     }
 
     /**
      * 参数校验错误异常
      */
     @ExceptionHandler(ConstraintViolationException.class)
-    @ResponseBody
-    public PageResult handlerConstraintViolationException(ConstraintViolationException e) {
-        e.printStackTrace();
+    public ModelAndView handlerConstraintViolationException(ConstraintViolationException e) {
         Set<ConstraintViolation<?>> violations = e.getConstraintViolations();
         ConstraintViolation<?> violation = violations.iterator().next();
         String path = ((PathImpl) violation.getPropertyPath()).getLeafNode().getName();
-        return PageResult.error(String.format("%s:%s", path, violation.getMessage()));
+        Map<String, Object> model = new LinkedHashMap<>();
+        model.put("timestamp", new Date());
+        model.put("exception", Exception.class.getName());
+        model.put("message", String.format("%s:%s", path, violation.getMessage()));
+        return new ModelAndView("error/error", model);
     }
 
     /**
-     * 参数校验错误异常
+     * 
      */
-    @ExceptionHandler(HttpMessageNotReadableException.class)
-    @ResponseBody
-    public PageResult handlerHttpMessageNotReadableException(HttpMessageNotReadableException e) {
-        e.printStackTrace();
-        return PageResult.error(e.getMessage());
+    @ExceptionHandler(MissingServletRequestParameterException.class)
+    public ModelAndView handlerMissingServletRequestParameterException(MissingServletRequestParameterException e) {
+        Map<String, Object> model = new LinkedHashMap<>();
+        model.put("timestamp", new Date());
+        model.put("exception", MissingServletRequestParameterException.class.getName());
+        model.put("message", String.format("Missing Request Parameter: %s", e.getParameterName()));
+        return new ModelAndView("error/error", model);
     }
-
-    @ExceptionHandler(GnolRuntimeException.class)
-    @ResponseBody
-    public PageResult handlerGnolRuntimeException(GnolRuntimeException e) {
-        e.printStackTrace();
-        return PageResult.build(e.getHs());
-    }
-
-    @ExceptionHandler(GnolException.class)
-    public ModelAndView handlerGnolException(GnolException e) {
-        e.printStackTrace();
-        ModelAndView mv = new ModelAndView();
-        mv.addObject("msg", e.toString());
-        mv.setViewName("error");
-        return mv;
-
-    }
+    
+    
 
     @ExceptionHandler(Exception.class)
-    @ResponseBody
-    public PageResult handlerException(Exception e) {
-        e.printStackTrace();
-        return PageResult.build(HttpStatus.HS_500.getKey(), e.getMessage());
+    public ModelAndView handlerException(Exception e) {
+        Map<String, Object> model = new LinkedHashMap<>();
+        model.put("timestamp", new Date());
+        if (e instanceof MissingServletRequestParameterException) { // 缺少参数
+            model.put("exception", MissingServletRequestParameterException.class.getName());
+            model.put("message", e.getMessage() == null ? e.toString() : e.getMessage());
+        }
+        
+        model.put("exception", Exception.class.getName());
+        model.put("message", e.getMessage() == null ? e.toString() : e.getMessage());
+        return new ModelAndView("error/error", model);
     }
 
 }
