@@ -3,12 +3,14 @@ package com.gnol.springboot.client.config;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.client.serviceregistry.Registration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
+import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JdbcTokenStore;
 
@@ -23,6 +25,11 @@ import org.springframework.security.oauth2.provider.token.store.JdbcTokenStore;
 @EnableResourceServer
 public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter {
     /**
+     * 发现系统中登记的服务实例对象
+     */
+    @Autowired
+    private Registration registration;
+    /**
      * 数据源
      */
     @Autowired
@@ -34,6 +41,14 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
     @Bean
     public TokenStore jdbcTokenStore() {
         return new JdbcTokenStore(dataSource);
+    }
+
+    /**
+     * 指定当前资源 id 和 token 存储方案 
+     */
+    @Override
+    public void configure(ResourceServerSecurityConfigurer resources) throws Exception {
+        resources.resourceId(registration.getServiceId()).tokenStore(jdbcTokenStore());
     }
 
     @Override
