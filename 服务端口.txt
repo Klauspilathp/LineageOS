@@ -17,3 +17,4 @@ gnol-springboot-client1:8092
 gnol-springboot-client2:8093
 gnol-springboot-webflux:8094
 gnol-springboot-websocket:8095
+gnol-springboot-rpc:8096
