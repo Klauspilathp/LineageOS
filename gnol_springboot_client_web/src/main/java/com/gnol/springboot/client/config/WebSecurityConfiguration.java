@@ -64,7 +64,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and().cors() // 支持跨域请求
                 .and().authorizeRequests()
                 .antMatchers("/eureka/apps/**"/*eureka 心跳相关*/, "/static/**"/*静态资源*/, "/favicon.ico", "/index"/*去登录页面*/,
-                        "/loginParam"/*登录页参数*/)
+                        "/loginParam"/*登录页参数*/, "/actuator", "/actuator/**"/*监控相关*/)
                 .permitAll() // 免授权请求配置
                 .anyRequest().authenticated() // 其余所有请求都需要授权
                 .and().formLogin().usernameParameter("userAccount").passwordParameter("password").loginPage("/index")
