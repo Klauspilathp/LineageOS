@@ -1,7 +1,5 @@
 package com.d7c.springboot.gateway.config;
 
-import java.io.File;
-
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
@@ -20,29 +18,5 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 )
 @ConfigurationProperties(prefix = "d7c")
 public class D7cProperties {
-    /**
-     * groovy 脚本的 zuul 过滤器父目录，默认是 resources/groovy/filters。
-     */
-    private String groovyFilters = "groovy" + File.separator + "filters";
-    /**
-     * 刷新时间间隔，单位秒，默认 5 秒。
-     */
-    private int groovyRefreshInterval;
-
-    public String getGroovyFilters() {
-        return groovyFilters;
-    }
-
-    public void setGroovyFilters(String groovyFilters) {
-        this.groovyFilters = groovyFilters;
-    }
-
-    public int getGroovyRefreshInterval() {
-        return groovyRefreshInterval;
-    }
-
-    public void setGroovyRefreshInterval(int groovyRefreshInterval) {
-        this.groovyRefreshInterval = groovyRefreshInterval;
-    }
 
 }
