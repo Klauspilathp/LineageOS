@@ -13,6 +13,7 @@ import org.activiti.engine.RepositoryService;
 import org.activiti.engine.RuntimeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -76,7 +77,7 @@ public class ActivitiProcessInstanceController extends WebBaseController {
      * @param instanceVariable      流程实例参数
      * @return PageResult
      */
-    @GetMapping(value = "/runProcessInstance")
+    @PostMapping(value = "/runProcessInstance")
     public PageResult runProcessInstance(@RequestParam("processDefinitionKey") String processDefinitionKey,
             @RequestParam("businessKey") String businessKey, @RequestParam("variables") Map<String, Object> variables) {
         org.activiti.engine.runtime.ProcessInstance processInstance = runtimeService
@@ -95,7 +96,7 @@ public class ActivitiProcessInstanceController extends WebBaseController {
      * @param instanceVariable      流程实例参数
      * @return PageResult
      */
-    @GetMapping(value = "/startProcessInstance")
+    @PostMapping(value = "/startProcessInstance")
     public PageResult startProcessInstance(@RequestParam("processDefinitionKey") String processDefinitionKey,
             @RequestParam("instanceName") String instanceName, @RequestParam("businessKey") String businessKey,
             @RequestParam("variables") Map<String, Object> variables) {
