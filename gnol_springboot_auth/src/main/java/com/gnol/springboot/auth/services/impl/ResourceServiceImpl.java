@@ -3,7 +3,10 @@ package com.gnol.springboot.auth.services.impl;
 import org.springframework.stereotype.Service;
 
 import com.gnol.plugins.core.PageData;
+import com.gnol.plugins.core.StringUtil;
+import com.gnol.springboot.auth.config.GnolConstant;
 import com.gnol.springboot.auth.services.ResourceService;
+import com.gnol.springboot.common.enums.auth.AuthTypeEnum;
 
 import io.jsonwebtoken.Claims;
 
@@ -20,7 +23,27 @@ public class ResourceServiceImpl implements ResourceService {
     @Override
     public boolean isPermitted(PageData pd, Claims claims) {
         String servlet_path = pd.getString("servlet_path");
-        return servlet_path == null;
+        if (StringUtil.isBlank(servlet_path)) {
+            return false;
+        }
+        // 授权类型
+        AuthTypeEnum authTypeEnum = AuthTypeEnum.forKey(claims.get(GnolConstant.AUTH_TYPE));
+        if (authTypeEnum == null) {
+            return false;
+        }
+        boolean isAuth = false;
+        switch (authTypeEnum) {
+            case WEB:
+
+                break;
+            case WAP:
+
+                break;
+            case MOBILE:
+
+                break;
+        }
+        return isAuth;
     }
 
 }

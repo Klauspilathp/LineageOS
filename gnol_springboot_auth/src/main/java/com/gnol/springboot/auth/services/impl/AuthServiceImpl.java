@@ -71,6 +71,8 @@ public class AuthServiceImpl implements AuthService {
             return PageResult.error("password 不能为空！");
         }
         Map<String, Object> claims = new HashMap<String, Object>();
+        Object resourceId = null;
+        String auth_type = null;
         switch (authTypeEnum) {
             case WEB:
                 SysUser sysUser = sysUserDao.getSysUserByUserAccount(username);
@@ -85,10 +87,10 @@ public class AuthServiceImpl implements AuthService {
                 )) {
                     return PageResult.error("wrong password !");
                 }
+                resourceId = sysUser.getRoleId();
+                auth_type = authTypeEnum.getKey();
                 claims.put("userId", sysUser.getUserId());
-                claims.put("roleId", sysUser.getRoleId());
                 claims.put("username", username);
-                claims.put("subject", authTypeEnum.getKey());
                 logger.debug("{} 用户正在尝试登陆！", username);
                 break;
             case WAP:
@@ -100,6 +102,8 @@ public class AuthServiceImpl implements AuthService {
             default:
                 return PageResult.error("暂不支持该认证类型！");
         }
+        claims.put("resourceId", resourceId);
+        claims.put(GnolConstant.AUTH_TYPE, auth_type);
         return PageResult.ok(tokenService.getToken(claims));
     }
 
