@@ -1,5 +1,7 @@
 package com.d7c.springboot.client.config;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
@@ -14,6 +16,7 @@ import com.d7c.plugins.core.StringUtil;
  */
 @Component
 public class FlowableModelerPasswordEncoder implements PasswordEncoder {
+    private static final Logger logger = LoggerFactory.getLogger(FlowableModelerPasswordEncoder.class);
 
     @Override
     public String encode(CharSequence rawPassword) {
@@ -25,6 +28,7 @@ public class FlowableModelerPasswordEncoder implements PasswordEncoder {
 
     @Override
     public boolean matches(CharSequence rawPassword, String encodedPassword) {
+        logger.debug("rawPassword:{}, encodedPassword:{}", rawPassword, encodedPassword);
         return true;
     }
 
