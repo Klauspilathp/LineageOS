@@ -5,6 +5,7 @@ gnol-springboot-gateway:8081
 gnol-springboot-eureka-server:9000
 
 gnol-springboot-auth:9100
+gnol-springboot-oauth2:9101
 
 gnol-springboot-config:9200
 
