@@ -19,6 +19,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import com.alibaba.fastjson.JSONArray;
 import com.gnol.jwt.spring.boot.autoconfigure.JwtRsaUtil;
 import com.gnol.plugins.core.PageResult;
 import com.gnol.plugins.core.StringUtil;
@@ -109,7 +110,7 @@ public class JwtLoginFilter extends UsernamePasswordAuthenticationFilter {
                 CustomUserDetails userDetails = (CustomUserDetails) authResult.getPrincipal();
                 claims.put("userId", userDetails.getParams());
                 claims.put("username", userDetails.getUsername());
-                claims.put("authorities", userDetails.getAuthorities());
+                claims.put("authorities", JSONArray.toJSONString(userDetails.getAuthorities()));
                 jwt_id = StringUtil.toString(userDetails.getParams());
                 break;
             case WAP:
@@ -122,6 +123,7 @@ public class JwtLoginFilter extends UsernamePasswordAuthenticationFilter {
         String token = JwtRsaUtil.generateToken(claims, jwt_id, appid, securityKey.getPrivateKey(),
                 securityKey.getExpiration());
         response.addHeader(AuthConstant.AUTH_HEADER, "Bearer " + token);
+        response.addHeader(SecurityKey.M.appid, appid);
         response.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
         response.setStatus(HttpServletResponse.SC_OK);
         try {

@@ -63,6 +63,7 @@ public class ClusterWebSecurityConfiguration extends WebSecurityConfigurerAdapte
                 .permitAll() // 免授权请求配置
                 .anyRequest().authenticated() // 其余所有请求都需要授权
                 .and().addFilter(new JwtLoginFilter(super.authenticationManager(), securityKeyDao, JwtRsaUtil)) // 登录授权过滤器
+                .addFilter(new JwtAuthenticationFilter(super.authenticationManager(), securityKeyDao, JwtRsaUtil)) // token 检验过滤器，在授权服务器中，此过滤器不是必须的
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS); // 禁用 HttpSession
         // disable page caching
         // http.headers().frameOptions().sameOrigin().cacheControl();

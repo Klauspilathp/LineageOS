@@ -8,5 +8,11 @@
 		SELECT privateKey, status, expiration FROM security_key 
 		WHERE appid = #{appid, jdbcType=VARCHAR}
 	</select>
+	
+	<!-- 根据 appid 查询公钥 -->
+	<select id="getPublicKey" parameterType="java.lang.String" resultType="com.gnol.springboot.common.dos.security.SecurityKey">
+		SELECT publicKey, status FROM security_key 
+		WHERE appid = #{appid, jdbcType=VARCHAR}
+	</select>
 
 </mapper>

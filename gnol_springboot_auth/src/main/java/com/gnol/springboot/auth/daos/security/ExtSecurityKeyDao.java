@@ -24,4 +24,14 @@ public interface ExtSecurityKeyDao {
      */
     SecurityKey getPrivateKey(String appid);
 
+    /**
+     * @Title: getPublicKey
+     * @author: 吴佳隆
+     * @data: 2020年7月20日 下午12:33:17
+     * @Description: 根据 appid 查询公钥
+     * @param appid         应用主键
+     * @return SecurityKey
+     */
+    SecurityKey getPublicKey(String appid);
+
 }
