@@ -1,0 +1,12 @@
+https://www.jianshu.com/p/68f22f9a00ee
+授权服务器端点：
+	授权端点：/oauth/authorize
+	令牌端点：/oauth/token
+	用户确认授权提交端点：/oauth/confirm_access
+	授权服务错误信息端点：/oauth/error
+	用于资源服务访问的令牌解析端点：/oauth/check_token
+	使用 JWT 时提供公有密匙端点：/oauth/token_key
+
+
+
+

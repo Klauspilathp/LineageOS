@@ -77,8 +77,8 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
      */
     @Override
     public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
-        security.allowFormAuthenticationForClients();
-        security.checkTokenAccess("isAuthenticated()");
+        security.allowFormAuthenticationForClients().tokenKeyAccess("permitAll()") // 开启 /oauth/token_key 验证端口免授权访问
+                .checkTokenAccess("isAuthenticated()"); // 开启 /oauth/check_token 验证端口授权访问
     }
 
     /**
@@ -90,7 +90,7 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
     }
 
     /**
-     * oauth2 主配置信息
+     * oauth2 主配置信息，用来配置授权、授权码及 token 令牌服务
      */
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {

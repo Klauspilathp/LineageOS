@@ -1,5 +1,7 @@
 package com.gnol.springboot.client.config;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.security.KeyFactory;
 import java.security.NoSuchAlgorithmException;
 import java.security.interfaces.RSAPublicKey;
@@ -79,6 +81,21 @@ public class GnolProperties {
             X509EncodedKeySpec keySpec = new X509EncodedKeySpec(Base64.getDecoder().decode(publicKeyStr));
             KeyFactory keyFactory = KeyFactory.getInstance("RSA");
             this.rsaPublicKey = (RSAPublicKey) keyFactory.generatePublic(keySpec);
+        }
+        if (GnolConstant.LOCAL_IP == null) { // 获取本地 ip 地址
+            InetAddress inet = null;
+            try {
+                inet = InetAddress.getLocalHost();
+            } catch (UnknownHostException var4) {
+                var4.printStackTrace();
+            }
+            if (inet != null) {
+                String ipAddress = inet.getHostAddress();
+                if (ipAddress != null && ipAddress.length() > 15 && ipAddress.indexOf(",") > 0) {
+                    ipAddress = ipAddress.substring(0, ipAddress.indexOf(","));
+                }
+                GnolConstant.LOCAL_IP = ipAddress;
+            }
         }
     }
 

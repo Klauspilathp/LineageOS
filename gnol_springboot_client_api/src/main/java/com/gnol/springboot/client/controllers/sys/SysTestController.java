@@ -1,6 +1,10 @@
 package com.gnol.springboot.client.controllers.sys;
 
+import java.security.Principal;
+
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -18,13 +22,14 @@ import com.gnol.springboot.client.controllers.WebBaseController;
 @RequestMapping(value = "/sys/test")
 public class SysTestController extends WebBaseController {
 
-    @RequestMapping(value = "/test1")
+    @PostMapping(value = "/test1")
     @ResponseBody
-    public PageResult test1() {
+    public PageResult test1(Principal principal) {
+        System.out.println(principal);
         return PageResult.ok("SysTestController.test1");
     }
 
-    @RequestMapping(value = "/test2")
+    @GetMapping(value = "/test2")
     @ResponseBody
     public PageResult test2() {
         return PageResult.ok("SysTestController.test2");

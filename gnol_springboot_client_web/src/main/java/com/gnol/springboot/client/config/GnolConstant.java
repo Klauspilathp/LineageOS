@@ -11,6 +11,8 @@ public class GnolConstant {
     /*********************************************** system ********************************************/
     // --- 当前服务器编号，0~1023，com.gnol.plugins.tools.idfactory.idworker.IdWorker 中 workerId 使用
     public static final String SERVER_NO = "SERVER_NO";
+    // 本地 ip 地址 
+    public static String LOCAL_IP = null;
 
     /*********************************************** session ********************************************/
     // --- 验证码

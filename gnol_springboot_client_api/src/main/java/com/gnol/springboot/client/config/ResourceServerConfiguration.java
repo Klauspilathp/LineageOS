@@ -44,7 +44,7 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
     }
 
     /**
-     * 指定当前资源 id 和 token 存储方案 
+     * 指定当前资源服务器的 id 和 token 存储方案 
      */
     @Override
     public void configure(ResourceServerSecurityConfigurer resources) throws Exception {
@@ -59,7 +59,7 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
                 .antMatchers(HttpMethod.POST, "/**").access("#oauth2.hasScope('write')")
                 .antMatchers(HttpMethod.PATCH, "/**").access("#oauth2.hasScope('write')")
                 .antMatchers(HttpMethod.PUT, "/**").access("#oauth2.hasScope('write')")
-                .antMatchers(HttpMethod.DELETE, "/**").access("#oauth2.hasScope('write')").and().headers()
+                .antMatchers(HttpMethod.DELETE, "/**").access("#oauth2.hasScope('write')").and().headers() // 添加跨域请求头
                 .addHeaderWriter((request, response) -> {
                     response.addHeader("Access-Control-Allow-Origin", "*"); // 允许跨域
                     if (request.getMethod().equals("OPTIONS")) { // 如果是跨域的预检请求，则原封不动向下传达请求头信息
