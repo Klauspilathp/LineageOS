@@ -37,7 +37,7 @@ public class ShardingCityController extends WebBaseController {
     private IdService idService;
 
     /**
-     * 测试单库分表
+     * 测试新增
      */
     @GetMapping(value = "t1")
     public PageResult t1() {

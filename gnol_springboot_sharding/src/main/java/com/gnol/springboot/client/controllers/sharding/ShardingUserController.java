@@ -38,7 +38,7 @@ public class ShardingUserController extends WebBaseController {
     private IdService idService;
 
     /**
-     * 测试单库分表
+     * 测试新增
      */
     @GetMapping(value = "t1")
     public PageResult t1() {
@@ -52,24 +52,10 @@ public class ShardingUserController extends WebBaseController {
     }
 
     /**
-     * 测试单表多库
+     * 测试查询
      */
     @GetMapping(value = "t2")
     public PageResult t2() {
-        List<ShardingUser> shardingUsers = new ArrayList<ShardingUser>();
-        for (int i = 0; i < 100; i++) {
-            long userId = idService.getLong(ShardingUser.M.TABLE_NAME);
-            shardingUsers.add(new ShardingUser(userId, "user" + userId, i % 2));
-        }
-        shardingUserService.insertBatch(shardingUsers);
-        return PageResult.ok(shardingUsers);
-    }
-
-    /**
-     * 测试单表多库
-     */
-    @GetMapping(value = "t3")
-    public PageResult t3() {
         PageData pd = this.getEmptyPageData();
         pd.put(ShardingUser.M.sex, 0);
         List<ShardingUser> shardingUsers = shardingUserService.listBy(pd);
