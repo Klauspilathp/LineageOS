@@ -19,7 +19,7 @@ import com.gnol.springboot.client.services.mq.impl.MQProducerServiceImpl;
  * https://github.com/spring-cloud/spring-cloud-stream/tree/2.1.x
  */
 @RestController
-@RequestMapping(value = "/mq/MQProducer")
+@RequestMapping(value = "/mq/producer")
 public class MQProducerController {
     @Autowired
     private MQProducerServiceImpl producerService;
