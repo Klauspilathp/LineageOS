@@ -1,14 +1,66 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 	<meta charset="UTF-8">
 	<title>聊天室页面</title>
-	<script th:src="@{../static/sockjs.min.js}"></script>
-    <script th:src="@{../static/stomp.min.js}"></script>
-    <script th:src="@{../static/jquery.js}"></script>
 </head>
-<body>
-	<a href="/queue">去聊天页面</a>
-	<a href="/topic">去聊天室页面</a>
+<body onload="disconnect();">
+	<noscript><h2 style="color: #ff0000">您的浏览器不支持 websocket</h2></noscript>
+	<div>
+		<div>
+			<button id="connect" onclick="connect();">连接</button>
+			<button id="disconnect" disabled="disabled" onclick="disconnect();">断开连接</button>
+		</div>
+		<div id="send-div">
+			<label>目标账号：</label><input type="text" id="target-username" />
+			<button onclick="send();">发送</button>
+			<p id="response-msg"></p>
+		</div>
+	</div>
+	<script th:src="@{../static/js/sockjs.min.js}"></script>
+    <script th:src="@{../static/js/stomp.min.js}"></script>
+    <script th:src="@{../static/js/jquery.js}"></script>
+	<script type="text/javascript">
+		var stompClient = null;
+		
+		// 设置连接信息
+	    function setConnected(connected) {
+	        document.getElementById('connect').disabled = connected;
+	        document.getElementById('disconnect').disabled = !connected;
+	        document.getElementById('send-div').style.visibility = connected ? 'visible' : 'hidden';
+	        $('#response-msg').html();
+	    }
+		
+		// 连接
+	    function connect() {
+		    // 链接到 /endpoint-topic 端点
+		    var socket = new SockJS('/endpoint-topic');
+		    // 使用 stomp 协议的 WebSocket 客户端
+		    stompClient = Stomp.over(socket);
+		    stompClient.connect({}, function(frame) { // 链接到 WebSocket 服务端
+		        setConnected(true);
+		    	console.log('Connected: ' + frame);
+		    	// 订阅 /topic/topic-server 节点发送的消息，在控制器 @SendTo 中定义
+		    	stompClient.subscribe('/topic/topic-server', function(respnose) {
+		    	    $("#response-msg").html(respnose.body);
+	            });
+	        });
+	    }
+		
+		// 断开连接
+	    function disconnect() {
+		    if (stompClient != null) {
+		        stompClient.disconnect();
+	        }
+		    setConnected(false);
+		    console.log("Disconnected");
+	    }
+		
+		// 向目标账号发送消息
+	    function send() {
+	        var targetUsername = $('#target-username').val();
+	        stompClient.send("/sys/topic/send", {}, JSON.stringify({ 'username': targetUsername }));
+	    }
+	</script>
 </body>
 </html>

@@ -1,10 +1,12 @@
 package com.gnol.springboot.client.controllers.sys;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
+import java.util.Map;
+
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * @Title: TopicController
@@ -15,12 +17,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @CrossOrigin(origins = "*", maxAge = 3600)
 @Controller
-@RequestMapping(value = "/sys/topic")
+@MessageMapping(value = "/sys/topic")
 public class TopicController {
-    /**
-     * 使用 SimpMessagingTemplate 向浏览器发送消息
-     */
-    @Autowired
-    private SimpMessagingTemplate template;
+
+    @MessageMapping("/send")
+    @SendTo("/topic/topic-server")
+    @ResponseBody
+    public String send(Map<String, Object> message) {
+        return "Welcome, " + message.get("username") + "!";
+    }
 
 }

@@ -32,29 +32,25 @@
 			</tbody>
 		</table>
 	</form>
-	<div id="output"></div>
-	<script th:inline="javascript">
+	<div id="received-msg"></div>
+	<script type="text/javascript">
 		// 链接到 /endpoint-queue 端点
 		var sock = new SockJS("/endpoint-queue");
 		var stomp = Stomp.over(sock);
 		stomp.connect('guest', 'guest', function(frame) {
 		    // 订阅 /user/queue/chat 节点发送的消息，与控制器中 convertAndSendToUser 定义的地址保持一致。
 		    // 这里的 /user 是必须的，表示使用 user 发送消息到指定用户。
-	        stomp.subscribe("/user/queue/notifications", handleNotification);
+	        stomp.subscribe("/user/queue/chat", chat);
 		});
 		
 		$('#queue-form').submit(function(e) {
 		    e.preventDefault();
 		    var text = $('#queue-form').find('textarea[name="text"]').val();
-		    sendSpittle(text);
+		    stomp.send("/sys/queue/chat", {}, JSON.stringify({ 'msg': text }));
 	    });
 		
-		function handleNotification(message) {
-	        $('#output').append("<b>Received: " + message.body + "</b><br/>");
-	    }
-		
-	    function sendSpittle(text) {
-	        stomp.send("/sys/queue/chat", {}, JSON.stringify({ 'name': text }));
+		function chat(msg) {
+	        $('#received-msg').append("<b>Received: " + msg.body + "</b><br/>");
 	    }
 	    
 	    $('#stop').click(function() {
