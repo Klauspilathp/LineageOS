@@ -5,10 +5,9 @@ import javax.annotation.security.RolesAllowed;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.gnol.plugins.core.PageResult;
 import com.gnol.springboot.client.controllers.WebBaseController;
 import com.gnol.springboot.client.services.sys.SysDictService;
 import com.gnol.springboot.client.services.sys.SysOrgService;
@@ -51,38 +50,17 @@ public class SysUserController extends WebBaseController {
     @Resource(name = "sha1PasswordEncoder")
     private PasswordEncoder passwordEncoder;
 
-    @RequestMapping(value = "/index")
-    @RolesAllowed("sys_menu:edit")
-    @ResponseBody
-    public PageResult index() {
-        return PageResult.ok("sys_menu:edit");
-    }
-
-    @RequestMapping(value = "/index1")
-    @RolesAllowed("sys_menu:edit1")
-    @ResponseBody
-    public PageResult index1() {
-        return PageResult.ok("sys_menu:edit1");
-    }
-
-    @RequestMapping(value = "/index2")
-    @RolesAllowed("sys_user:edit")
-    @ResponseBody
-    public PageResult index2() {
-        return PageResult.ok("sys_user:edit");
-    }
-
-    @RequestMapping(value = "/index3")
-    @RolesAllowed("sys_log")
-    @ResponseBody
-    public PageResult index3() {
-        return PageResult.ok("sys_log");
-    }
-
-    @RequestMapping(value = "/index4")
-    @ResponseBody
-    public PageResult index4() {
-        return PageResult.ok("ok");
+    /**
+     * @Title: index
+     * @author: 吴佳隆
+     * @data: 2020年7月18日 下午6:44:14
+     * @Description: 系统用户首页
+     * @return String
+     */
+    @GetMapping(value = "/index")
+    @RolesAllowed("sys_user:index")
+    public String index() {
+        return "sys/user/index";
     }
 
 }
