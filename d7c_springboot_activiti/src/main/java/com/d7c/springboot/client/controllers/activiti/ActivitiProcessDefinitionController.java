@@ -216,8 +216,8 @@ public class ActivitiProcessDefinitionController extends WebBaseController {
         // 部署 resources/processess/ 目录下的资源文件
         String deploymentFileName = pd.getString("deploymentFileName");
         if (StringUtil.isNotBlank(deploymentFileName)) {
-            deployment = repositoryService.createDeployment()
-                    .addClasspathResource("resources/processess/" + deploymentFileName).name(deploymentName) // 初始化流程
+            deployment = repositoryService.createDeployment().addClasspathResource("bpmn/" + deploymentFileName)
+                    .name(deploymentName) // 初始化流程
                     .deploy();
             return PageResult.ok(deployment.getId());
         }
