@@ -4,12 +4,14 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.UUID;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import com.d7c.plugins.core.StringUtil;
 import com.d7c.plugins.core.context.SpringContextHolder;
 import com.d7c.plugins.core.exception.D7cRuntimeException;
 import com.d7c.plugins.tools.date.TimeConstant;
 import com.d7c.springboot.common.daos.sys.BaseSysUserDao;
 import com.d7c.springboot.common.enums.sys.UserTypeEnum;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * @Title: D7cSession
@@ -64,8 +66,7 @@ public abstract class D7cSession implements Serializable {
         this.expireTimestamp = new Date(this.startTimestamp.getTime() + this.timeout);
     }
 
-    public D7cSession(String sessionId, long visitorId, String visitorName, int userType, String source,
-            long timeout) {
+    public D7cSession(String sessionId, long visitorId, String visitorName, int userType, String source, long timeout) {
         if (visitorId <= 0) {
             throw new D7cRuntimeException("SESSION 创建失败！");
         }
@@ -154,6 +155,8 @@ public abstract class D7cSession implements Serializable {
      * @Description: 获取访问者对象
      * @return Object
      */
+    @JSONField(serialize = false)
+    @JsonIgnore
     public Object getVisitor() {
         Object visitor = null;
         switch (this.getUserTypeEnum()) {
