@@ -32,7 +32,7 @@ public class Oauth2Application {
      *      `authorized_grant_types`, `web_server_redirect_uri`, `authorities`, `access_token_validity`, `refresh_token_validity`, 
      *      `additional_information`, `autoapprove`, `create_time`) VALUES ('client1', 'gnol-springboot-client-api', 
      *      '$2a$10$rJGklBeto2hvmhdWnHp85etyZPpWRTOSIK/aNWfmXVsKNcbX.Dsfq', 'read,write', 
-     *      'client_credentials,implicit,authorization_code,refresh_token,password', 'http://www.baidu.com', NULL, NULL, NULL, 
+     *      'client_credentials,implicit,authorization_code,refresh_token,password', 'http://127.0.0.1:8091/callback/getToken', NULL, NULL, NULL, 
      *      NULL, 'false', '2020-07-26 11:19:03');
      *  4、授权码模式示例：
      *      浏览器请求 http://127.0.0.1:9101/oauth/authorize?response_type=code&client_id=client1 接口；
