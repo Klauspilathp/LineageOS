@@ -32,11 +32,11 @@ public class BaiduShortUrl {
      * @author: 吴佳隆
      * @data: 2020年7月24日 下午5:49:13
      * @Description: 生成百度短链接
-     * @param LongUrl           长链接
-     * @param TermOfValidity    有效期，"long-term"：长期，"1-year"：1年
+     * @param longUrl           长链接
+     * @param termOfValidity    有效期，"long-term"：长期，"1-year"：1年
      * @return String           短链接
      */
-    public static String createShortUrl(String LongUrl, String TermOfValidity) {
+    public static String createShortUrl(String longUrl, String termOfValidity) {
         HttpRequestConfig request = new HttpRequestConfig();
         request.setRequestMethod(RequestMethodEnum.POST);
         request.setUrl("https://dwz.cn/api/v3/short-urls");
@@ -46,8 +46,8 @@ public class BaiduShortUrl {
         headers.put("Content-Language", "zh");
         request.setHeaders(headers);
         Map<String, Object> params = new HashMap<String, Object>();
-        params.put("LongUrl", "utf-8");
-        params.put("TermOfValidity", "true");
+        params.put("LongUrl", longUrl);
+        params.put("TermOfValidity", termOfValidity);
         request.setParams(params);
         PageResult result = RequestUtil.byHttp(request);
         if (HttpStatus.equalValue(HttpStatus.HS_200, result.getStatus())) {
