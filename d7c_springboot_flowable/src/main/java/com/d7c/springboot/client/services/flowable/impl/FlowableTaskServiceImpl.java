@@ -111,7 +111,12 @@ public class FlowableTaskServiceImpl implements FlowableTaskService {
             return PageResult.error("可执行任务不存在！");
         }
 
-        // 拾取任务
+        // 向组任务添加候选人
+        // taskService.addCandidateUser(taskId, userId);
+        // 删除组任务中的候选人
+        // taskService.deleteCandidateUser(taskId, userId);
+
+        // 个人拾取任务
         taskService.claim(task.getId(), userId);
 
         // 完成任务

@@ -7,6 +7,9 @@ import org.flowable.engine.RepositoryService;
 import org.flowable.engine.repository.ProcessDefinition;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.d7c.plugins.core.Page;
 import com.d7c.plugins.core.PageData;
@@ -54,6 +57,14 @@ public class FlowableProcessDefinitionServiceImpl implements FlowableProcessDefi
             }
         }
         return PageResult.ok(pds).setPage(page);
+    }
+
+    @Transactional(readOnly = false, isolation = Isolation.DEFAULT, propagation = Propagation.REQUIRED)
+    @Override
+    public PageResult suspendProcessDefinitionById(String processDefinitionId) {
+        // SUSPENSION_STATE_ 字段为 1 表示流程被激活，为 2 表示流程被挂起。
+        repositoryService.suspendProcessDefinitionById(processDefinitionId);
+        return PageResult.ok();
     }
 
 }

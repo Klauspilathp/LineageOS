@@ -52,6 +52,7 @@ public class FlowableProcessDefinitionController extends WebBaseController {
      * @param request
      * @param multipartFile
      * @return PageResult
+     * flowable 可以部署以 bpmn20.xml 或 bpmn 结尾的流程部署文件！！！！！！！
      */
     @PostMapping(value = "/deploymentUploadProcess")
     @ResponseBody
@@ -78,11 +79,13 @@ public class FlowableProcessDefinitionController extends WebBaseController {
             InputStream inputStream = multipartFile.getInputStream();
             if (extensionName.equals("bpmn")) {
                 deployment = repositoryService.createDeployment().addInputStream(originalFilename, inputStream)
+                        .category("分类") // 流程分类
                         .name(deploymentName) // 初始化流程
                         .deploy();
             } else {
                 ZipInputStream zip = new ZipInputStream(inputStream);
-                deployment = repositoryService.createDeployment().addZipInputStream(zip).name(deploymentName) // 初始化流程
+                deployment = repositoryService.createDeployment().addZipInputStream(zip).category("分类") // 流程分类
+                        .name(deploymentName) // 初始化流程
                         .deploy();
             }
             return PageResult.ok(deployment.getId());

@@ -23,4 +23,14 @@ public interface FlowableProcessDefinitionService {
      */
     PageResult listActiveProcessDefinition(Page<PageData> page);
 
+    /**
+     * @Title: suspendProcessDefinitionById
+     * @author: 吴佳隆
+     * @data: 2021年5月8日 下午5:36:52
+     * @Description: 根据流程定义 ID 挂起流程
+     * @param processDefinitionId
+     * @return PageResult
+     */
+    PageResult suspendProcessDefinitionById(String processDefinitionId);
+
 }
