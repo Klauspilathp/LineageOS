@@ -7,16 +7,16 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
- * @Title: SysTestController
+ * @Title: QueueController
  * @Package: com.gnol.springboot.client.controllers.sys
  * @author: 吴佳隆
  * @date: 2020年7月14日 下午4:33:49
- * @Description: websocket 测试处理器
+ * @Description: websocket 队列消息测试处理器
  */
 @CrossOrigin(origins = "*", maxAge = 3600)
 @Controller
-@RequestMapping(value = "/sys/test")
-public class SysTestController {
+@RequestMapping(value = "/sys/queue")
+public class QueueController {
     /**
      * 使用 SimpMessagingTemplate 向浏览器发送消息
      */

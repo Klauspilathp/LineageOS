@@ -15,15 +15,39 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class IndexController {
 
     /**
-     * @Title: chat
+     * @Title: index
+     * @author: 吴佳隆
+     * @data: 2020年7月14日 下午5:43:19
+     * @Description: 登录成功后首页
+     * @return String
+     */
+    @RequestMapping(value = "/index", method = RequestMethod.GET)
+    public String index() {
+        return "index";
+    }
+
+    /**
+     * @Title: queue
      * @author: 吴佳隆
      * @data: 2020年7月14日 下午5:09:25
      * @Description: 去聊天页面
      * @return String
      */
-    @RequestMapping(value = "/chat", method = RequestMethod.GET)
-    public String chat() {
-        return "chat";
+    @RequestMapping(value = "/queue", method = RequestMethod.GET)
+    public String queue() {
+        return "queue";
+    }
+
+    /**
+     * @Title: topic
+     * @author: 吴佳隆
+     * @data: 2020年7月14日 下午5:53:00
+     * @Description: 去聊天室页面
+     * @return String
+     */
+    @RequestMapping(value = "/topic", method = RequestMethod.GET)
+    public String topic() {
+        return "topic";
     }
 
 }
