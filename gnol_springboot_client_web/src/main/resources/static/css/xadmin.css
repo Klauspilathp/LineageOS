@@ -344,6 +344,10 @@ body {
 table th, table td {
     word-break: break-all;
 }
+.center {
+	text-align: center!important; 
+	vertical-align: middle!important;
+}
 
 /*404页面样式*/
 
