@@ -10,6 +10,7 @@ import org.activiti.api.runtime.shared.query.Pageable;
 import org.activiti.engine.RepositoryService;
 import org.activiti.engine.RuntimeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -174,7 +175,7 @@ public class ActivitiProcessInstanceController extends WebBaseController {
     @GetMapping(value = "/suspendedProcessInstanceByProcessDefinitionIdAndDate")
     public PageResult suspendedProcessInstanceByProcessDefinitionIdAndDate(
             @RequestParam(value = "processDefinitionId") String processDefinitionId,
-            @RequestParam(value = "suspensionDate") Date suspensionDate) {
+            @RequestParam(value = "suspensionDate") @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date suspensionDate) {
         if (suspensionDate == null || suspensionDate.before(new Date())) {
             suspensionDate = new Date();
         }
@@ -195,7 +196,7 @@ public class ActivitiProcessInstanceController extends WebBaseController {
     @GetMapping(value = "/activateProcessInstanceByProcessDefinitionIdAndDate")
     public PageResult activateProcessInstanceByProcessDefinitionIdAndDate(
             @RequestParam(value = "processDefinitionId") String processDefinitionId,
-            @RequestParam(value = "activationDate") Date activationDate) {
+            @RequestParam(value = "activationDate") @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date activationDate) {
         if (activationDate == null || activationDate.before(new Date())) {
             activationDate = new Date();
         }
@@ -230,7 +231,7 @@ public class ActivitiProcessInstanceController extends WebBaseController {
      * @Title: activateProcessInstance
      * @author: 吴佳隆
      * @data: 2021年1月18日 下午2:44:37
-     * @Description: 激活单个流程实例
+     * @Description: 激活单个流程实例，需要用户具有 ROLE_ACTIVITI_ADMIN 角色。
      * @param processDefinitionId   流程定义 ID
      * @return PageResult
      */
