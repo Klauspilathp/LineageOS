@@ -1,6 +1,7 @@
 package com.d7c.springboot.client.services.flowable;
 
 import java.util.List;
+import java.util.Map;
 
 import com.d7c.plugins.core.PageData;
 import com.d7c.plugins.core.PageResult;
@@ -34,5 +35,27 @@ public interface FlowableTaskService {
      * @return PageResult
      */
     PageResult listRunTask(String processInstanceId);
+
+    /**
+     * @Title: completeTask
+     * @author: 吴佳隆
+     * @data: 2021年5月8日 下午2:26:30
+     * @Description: 拾取并完成任务
+     * @param taskId        任务 ID
+     * @param userId        拾取并完成任务人 ID
+     * @param variables     完成任务参数
+     * @return PageResult
+     */
+    PageResult completeTask(String taskId, String userId, Map<String, Object> variables);
+
+    /**
+     * @Title: unclaim
+     * @author: 吴佳隆
+     * @data: 2021年5月8日 下午2:27:32
+     * @Description: 归还任务
+     * @param taskId        任务 ID
+     * @return PageResult
+     */
+    PageResult unclaim(String taskId);
 
 }

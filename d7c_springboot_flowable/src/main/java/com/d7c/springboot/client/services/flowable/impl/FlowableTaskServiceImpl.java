@@ -2,12 +2,16 @@ package com.d7c.springboot.client.services.flowable.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.flowable.engine.TaskService;
 import org.flowable.task.api.Task;
 import org.flowable.task.api.TaskQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.d7c.plugins.core.PageData;
 import com.d7c.plugins.core.PageResult;
@@ -79,6 +83,42 @@ public class FlowableTaskServiceImpl implements FlowableTaskService {
         });
 
         return PageResult.ok(pds);
+    }
+
+    @Transactional(readOnly = false, isolation = Isolation.DEFAULT, propagation = Propagation.REQUIRED)
+    @Override
+    public PageResult completeTask(String taskId, String userId, Map<String, Object> variables) {
+        if (StringUtil.isBlank(taskId)) {
+            return PageResult.error("taskId 不能为空！");
+        }
+        if (StringUtil.isBlank(userId)) {
+            return PageResult.error("userId 不能为空！");
+        }
+
+        Task task = taskService.createTaskQuery().taskId(taskId).taskUnassigned().active().singleResult();
+        if (task == null) {
+            return PageResult.error("可执行任务不存在！");
+        }
+
+        // 拾取任务
+        taskService.claim(task.getId(), userId);
+
+        // 完成任务
+        taskService.complete(task.getId(), variables);
+
+        return PageResult.ok();
+    }
+
+    @Transactional(readOnly = false, isolation = Isolation.DEFAULT, propagation = Propagation.REQUIRED)
+    @Override
+    public PageResult unclaim(String taskId) {
+        if (StringUtil.isBlank(taskId)) {
+            return PageResult.error("taskId 不能为空！");
+        }
+
+        taskService.unclaim(taskId);
+
+        return PageResult.ok();
     }
 
 }

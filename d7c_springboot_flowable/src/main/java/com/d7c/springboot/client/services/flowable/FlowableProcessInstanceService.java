@@ -37,4 +37,15 @@ public interface FlowableProcessInstanceService {
      */
     PageResult startProcessInstanceById(String processDefinitionId, String businessKey, Map<String, Object> variables);
 
+    /**
+     * @Title: deleteProcessInstance
+     * @author: 吴佳隆
+     * @data: 2021年5月8日 下午2:07:49
+     * @Description: 删除流程实例
+     * @param processInstanceId 流程实例 ID
+     * @param deleteReason      删除原因
+     * @return PageResult
+     */
+    PageResult deleteProcessInstance(String processInstanceId, String deleteReason);
+
 }

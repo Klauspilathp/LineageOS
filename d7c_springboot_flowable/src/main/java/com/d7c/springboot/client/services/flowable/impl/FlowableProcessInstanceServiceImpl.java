@@ -106,4 +106,14 @@ public class FlowableProcessInstanceServiceImpl implements FlowableProcessInstan
         return PageResult.ok(pd);
     }
 
+    @Override
+    public PageResult deleteProcessInstance(String processInstanceId, String deleteReason) {
+        if (StringUtil.isBlank(processInstanceId)) {
+            return PageResult.error("processInstanceId 不能为空！");
+        }
+
+        runtimeService.deleteProcessInstance(processInstanceId, deleteReason);
+        return PageResult.ok();
+    }
+
 }
