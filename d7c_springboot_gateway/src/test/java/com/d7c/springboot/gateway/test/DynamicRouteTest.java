@@ -17,6 +17,8 @@ public class DynamicRouteTest {
      * 3、需要添加或删除路由规则时，直接向 com.d7c.springboot.gateway.config.GatewayConfiguration.GATEWAY_ROUTES_TOPIC_QUEUE
      * 消息队列发送一条发布订阅消息即可；
      * 4、调用 http://127.0.0.1:8081/actuator/gateway/routes 接口随时查询所有路由规则。
+     * 
+     * 注意：如果配置文件中存在路由定义，那么这些路由定义将不能被操作，通过 /actuator/gateway/routes 端点可以查询到。
      */
 
 }
