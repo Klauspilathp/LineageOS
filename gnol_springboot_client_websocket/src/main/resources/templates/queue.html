@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>聊天页面</title>
+	<script th:src="@{../static/js/sockjs.min.js}"></script>
+    <script th:src="@{../static/js/stomp.min.js}"></script>
+    <script th:src="@{../static/js/jquery.js}"></script>
+</head>
+<body>
+	<form action="" id="queue-form">
+		<table style="width: 80%; text-align: center;">
+			<thead>
+				<tr>
+					<th colspan="12">
+						<h1>聊天室</h1>
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>
+						<textarea style="margin: 0px; padding: 0px; width: 100%; font-size: 24px;" rows="10" name="text"></textarea>
+					<td>
+				</tr>
+				<tr>
+					<td style="text-align: right;">
+						<input type="submit" value="发送" />
+						<input type="button" value="断开" id="stop" />
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</form>
+	<div id="output"></div>
+	<script th:inline="javascript">
+		// 链接到 /endpoint-queue 端点
+		var sock = new SockJS("/endpoint-queue");
+		var stomp = Stomp.over(sock);
+		stomp.connect('guest', 'guest', function(frame) {
+		    // 订阅 /user/queue/chat 节点发送的消息，与控制器中 convertAndSendToUser 定义的地址保持一致。
+		    // 这里的 /user 是必须的，表示使用 user 发送消息到指定用户。
+	        stomp.subscribe("/user/queue/notifications", handleNotification);
+		});
+		
+		$('#queue-form').submit(function(e) {
+		    e.preventDefault();
+		    var text = $('#queue-form').find('textarea[name="text"]').val();
+		    sendSpittle(text);
+	    });
+		
+		function handleNotification(message) {
+	        $('#output').append("<b>Received: " + message.body + "</b><br/>");
+	    }
+		
+	    function sendSpittle(text) {
+	        stomp.send("/sys/queue/chat", {}, JSON.stringify({ 'name': text }));
+	    }
+	    
+	    $('#stop').click(function() {
+	        sock.close();
+	    });
+	</script>
+</body>
+</html>
