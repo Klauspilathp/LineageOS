@@ -4,7 +4,11 @@
     <startEvent id="startevent1" name="Start"></startEvent>
     <userTask id="usertask1" name="提交出差申请"></userTask>
     <sequenceFlow id="flow1" name="填写出差申请表" sourceRef="startevent1" targetRef="usertask1"></sequenceFlow>
-    <userTask id="usertask2" name="项目经理审批"></userTask>
+    <userTask id="usertask2" name="项目经理审批">
+      <extensionElements>
+        <activiti:taskListener event="all" class="com.d7c.springboot.client.services.evection.listener.PMListener"></activiti:taskListener>
+      </extensionElements>
+    </userTask>
     <sequenceFlow id="flow2" sourceRef="usertask1" targetRef="usertask2"></sequenceFlow>
     <exclusiveGateway id="exclusivegateway1" name="Exclusive Gateway"></exclusiveGateway>
     <sequenceFlow id="flow5" sourceRef="usertask2" targetRef="exclusivegateway1"></sequenceFlow>
@@ -84,7 +88,7 @@
         <omgdi:waypoint x="362.0" y="285.0"></omgdi:waypoint>
         <omgdi:waypoint x="362.0" y="340.0"></omgdi:waypoint>
         <bpmndi:BPMNLabel>
-          <omgdc:Bounds height="14.0" width="100.0" x="320.0" y="309.0"></omgdc:Bounds>
+          <omgdc:Bounds height="14.0" width="84.0" x="320.0" y="309.0"></omgdc:Bounds>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="flow9" id="BPMNEdge_flow9">
@@ -122,7 +126,7 @@
         <omgdi:waypoint x="592.0" y="355.0"></omgdi:waypoint>
         <omgdi:waypoint x="592.0" y="410.0"></omgdi:waypoint>
         <bpmndi:BPMNLabel>
-          <omgdc:Bounds height="42.0" width="100.0" x="543.0" y="368.0"></omgdc:Bounds>
+          <omgdc:Bounds height="14.0" width="96.0" x="543.0" y="368.0"></omgdc:Bounds>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
