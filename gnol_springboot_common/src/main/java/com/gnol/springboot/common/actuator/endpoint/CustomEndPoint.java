@@ -15,9 +15,9 @@ import com.gnol.plugins.core.PageResult;
  * @Package: com.gnol.springboot.common.actuator.endpoint
  * @author: 吴佳隆
  * @date: 2021年1月4日 下午1:49:39
- * @Description: 自定义监控端点，访问 /actuator/custom_endPoint 端点会出现自定义信息。
+ * @Description: 自定义监控端点，访问 /actuator/custom-endPoint 端点会出现自定义信息。
  */
-@Endpoint(id = "custom_endPoint") // 构建 REST API 请求的唯一路径
+@Endpoint(id = "custom-endPoint") // 构建 REST API 请求的唯一路径，不能包含下划线“_”。
 public class CustomEndPoint {
     /**
      * 当前应用运行时环境

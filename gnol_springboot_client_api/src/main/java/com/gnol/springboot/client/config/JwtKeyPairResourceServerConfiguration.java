@@ -179,7 +179,7 @@ public class JwtKeyPairResourceServerConfiguration extends ResourceServerConfigu
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests().antMatchers("/callback/**").permitAll()
+        http.authorizeRequests().antMatchers("/callback/**", "/actuator/**", "/test/**").permitAll()
                 // 指定不同请求方式访问资源所需权限，一般查询是 read，其余是 write。
                 .antMatchers(HttpMethod.GET, "/**").access("#oauth2.hasScope('read')")
                 .antMatchers(HttpMethod.POST, "/**").access("#oauth2.hasScope('write')")
