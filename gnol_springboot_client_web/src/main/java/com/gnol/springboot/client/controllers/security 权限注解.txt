@@ -1,0 +1,23 @@
+使用表达式时间方法级别的安全性，启用前置注解：
+@PreAuthorize：在方法调用之前基于表达式的计算结果来限制对方法的访问
+示例：
+	@PreAuthorize("hasAnyRole('user')") 只有 user 角色可以访问
+	@PreAuthorize("hasRole('TWO')")：只有 TWO 角色才能访问
+	@PreAuthorize("hasAnyRole('user') or hasAnyRole('admin')") user 角色或者 admin 角色都可访问
+	@PreAuthorize("hasAnyRole('user') and hasAnyRole('admin')") 同时拥有 user 和 admin 角色才能访问
+	@PreAuthorize("#id < 10") 限制只能查询 id 小于 10 的用户
+	@PreAuthorize("principal.username.equals(#username)") 只能查询自己的信息
+	@PreAuthorize("#user.name.equals('abc')") 限制只能新增用户名称为 abc 的用户
+
+@PostAuthorize：允许方法调用，但如果表达式计算结果为 false 将抛出一个安全性异常
+示例：
+	@PostAuthorize("returnObject.name == authentication.name") 查询到用户信息后，再验证用户名是否和登录用户名一致
+	@PostAuthorize("returnObject % 2 == 0") 验证返回的数是否是偶数
+
+@PostFilter：允许方法调用，但必须按照表达式来过滤方法的结果
+示例：
+	@PostFilter("filterObject.id%2==0") 指定过滤的参数，过滤偶数
+
+@PreFilter：允许方法调用，但必须在进入方法之前过滤输入值
+示例：
+	@PreFilter(filterTarget="ids", value="filterObject%2==0") 指定过滤的参数，过滤偶数

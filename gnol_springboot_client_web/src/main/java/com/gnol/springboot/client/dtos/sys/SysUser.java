@@ -22,6 +22,7 @@ public class SysUser extends com.gnol.springboot.common.dos.sys.SysUser implemen
      */
     private List<SysMenu> authorities;
 
+    // 获取当前用户对应的角色列表
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return authorities;
@@ -36,24 +37,28 @@ public class SysUser extends com.gnol.springboot.common.dos.sys.SysUser implemen
         return getUserAccount();
     }
 
+    // 账户是否未过期，过期无法验证
     @Override
     public boolean isAccountNonExpired() {
         return true;
     }
 
+    // 指定用户是否解锁，锁定的用户无法进行身份验证
     @Override
     public boolean isAccountNonLocked() {
         return true;
     }
 
+    // 指示用户凭据是否已过期
     @Override
     public boolean isCredentialsNonExpired() {
         return true;
     }
 
+    // 用户是否已被禁用，禁用的用户不进行身份验证
     @Override
     public boolean isEnabled() {
-        return getStatus() != null && getStatus().equals(StatusEnum.NORMAL.getKey());
+        return getStatus() == null || !getStatus().equals(StatusEnum.NORMAL.getKey());
     }
 
 }
