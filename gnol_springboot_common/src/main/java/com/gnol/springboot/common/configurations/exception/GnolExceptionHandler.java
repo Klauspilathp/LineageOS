@@ -32,6 +32,7 @@ public class GnolExceptionHandler {
 
     @ExceptionHandler(MissingServletRequestParameterException.class)
     public PageResult handlerMissingServletRequestParameterException(MissingServletRequestParameterException e) {
+        e.printStackTrace();
         return PageResult.error(String.format("Missing Request Parameter: %s", e.getParameterName()));
     }
 
@@ -40,6 +41,7 @@ public class GnolExceptionHandler {
      */
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
     public PageResult handlerMethodArgumentTypeMismatchException(MethodArgumentTypeMismatchException e) {
+        e.printStackTrace();
         return PageResult.error(String.format("Method Argument Type Mismatch: %s", e.getName()));
     }
 
@@ -48,6 +50,7 @@ public class GnolExceptionHandler {
      */
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public PageResult handlerMethodArgumentNotValidException(MethodArgumentNotValidException e) {
+        e.printStackTrace();
         BindingResult result = e.getBindingResult();
         FieldError error = result.getFieldError();
         return PageResult.error(String.format("%s:%s", error.getField(), error.getDefaultMessage()));
@@ -58,6 +61,7 @@ public class GnolExceptionHandler {
      */
     @ExceptionHandler(BindException.class)
     public PageResult handlerBindException(BindException e) {
+        e.printStackTrace();
         FieldError error = e.getFieldError();
         return PageResult.error(String.format("%s:%s", error.getField(), error.getDefaultMessage()));
     }
@@ -67,6 +71,7 @@ public class GnolExceptionHandler {
      */
     @ExceptionHandler(ConstraintViolationException.class)
     public PageResult handlerConstraintViolationException(ConstraintViolationException e) {
+        e.printStackTrace();
         Set<ConstraintViolation<?>> violations = e.getConstraintViolations();
         ConstraintViolation<?> violation = violations.iterator().next();
         String path = ((PathImpl) violation.getPropertyPath()).getLeafNode().getName();
@@ -78,22 +83,26 @@ public class GnolExceptionHandler {
      */
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public PageResult handlerHttpMessageNotReadableException(HttpMessageNotReadableException e) {
+        e.printStackTrace();
         return PageResult.error(e.getMessage());
     }
 
     @ExceptionHandler(GnolRuntimeException.class)
     public PageResult handlerGnolRuntimeException(GnolRuntimeException e) {
+        e.printStackTrace();
         return PageResult.build(e.getHs().getKey(), e.getMessage());
     }
 
     @ExceptionHandler(GnolException.class)
     public PageResult handlerGnolException(GnolException e) {
+        e.printStackTrace();
         return PageResult.build(e.getHs().getKey(), e.getMessage());
 
     }
 
     @ExceptionHandler(Exception.class)
     public PageResult handlerException(Exception e) {
+        e.printStackTrace();
         return PageResult.build(HttpStatus.HS_500.getKey(), e.getMessage());
     }
 
