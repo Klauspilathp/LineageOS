@@ -17,7 +17,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.alibaba.fastjson.JSONObject;
 import com.gnol.plugins.core.Page;
@@ -36,10 +35,6 @@ import com.gnol.plugins.tools.file.FileUtil;
 public class WebBaseController {
     protected final Logger logger = LoggerFactory.getLogger(this.getClass());
     /**
-     * 操作 KEY
-     */
-    public static final String OPERATE_KEY = "operate";
-    /**
      * 操作结果 KEY
      */
     public static final String OPERATE_RESULT_KEY = "operateResult";
@@ -55,28 +50,6 @@ public class WebBaseController {
      * 失败消息值
      */
     public static final String OPERATE_FAILED = "failed";
-
-    /**
-     * @Title: getModelAndView
-     * @author: 吴佳隆
-     * @data: 2019年6月16日 下午12:13:40
-     * @Description: 获取 ModelAndView
-     * @return ModelAndView
-     */
-    public ModelAndView getModelAndView() {
-        return new ModelAndView();
-    }
-
-    /**
-     * @Title: getPage
-     * @author: 吴佳隆
-     * @data: 2019年6月13日 下午10:08:58
-     * @Description: 获取页面分页数据对象
-     * @return Page<PageData>
-     */
-    public Page<PageData> getPage() {
-        return new Page<PageData>(this.getPageData());
-    }
 
     /**
      * @Title: operateInfo
@@ -107,64 +80,6 @@ public class WebBaseController {
     }
 
     /**
-     * @Title: operateInfo
-     * @author: 吴佳隆
-     * @data: 2020年4月11日 上午9:48:30
-     * @Description: 设置成功操作内容
-     * @param mv            org.springframework.web.servlet.ModelAndView 对象
-     * @param result        com.gnol.plugins.core.PageResult 对象
-     * @return ModelAndView
-     */
-    public ModelAndView operateInfo(ModelAndView mv, PageResult result) {
-        if (mv == null) {
-            mv = this.getModelAndView();
-        }
-        mv.setViewName("common/save_result");
-        if (result != null && result.isOk()) {
-            return mv.addObject(OPERATE_RESULT_KEY, OPERATE_SUCCEED).addObject(OPERATE_INFO_KEY,
-                    result.getMessage() == null ? "操作成功！" : result.getMessage());
-        }
-        return mv.addObject(OPERATE_RESULT_KEY, OPERATE_FAILED).addObject(OPERATE_INFO_KEY,
-                result == null ? "操作失败！" : result.getMessage() == null ? "操作失败！" : result.getMessage());
-    }
-
-    /**
-     * @Title: operate
-     * @author: 吴佳隆
-     * @data: 2020年4月11日 上午9:49:20
-     * @Description: 设置消息
-     * @param mv            org.springframework.web.servlet.ModelAndView 对象
-     * @param operate       操作内容
-     * @return ModelAndView
-     */
-    public ModelAndView operate(ModelAndView mv, Object operate) {
-        if (mv == null) {
-            mv = this.getModelAndView();
-        }
-        return mv.addObject(OPERATE_KEY, operate);
-    }
-
-    /**
-     * @Title: operate
-     * @author: 吴佳隆
-     * @data: 2020年4月11日 上午9:52:56
-     * @Description: 设置操作值
-     * @param mv                org.springframework.web.servlet.ModelAndView 对象
-     * @param operate           操作内容
-     * @param default_operate   当操作内容为空时默认的操作内容
-     * @return ModelAndView
-     */
-    public ModelAndView operate(ModelAndView mv, Object operate, Object default_operate) {
-        if (mv == null) {
-            mv = this.getModelAndView();
-        }
-        if (StringUtil.isNotBlank(operate)) {
-            return mv.addObject(OPERATE_KEY, operate);
-        }
-        return mv.addObject(OPERATE_KEY, default_operate);
-    }
-
-    /**
      * @Title: getEmptyPageData
      * @author: 吴佳隆
      * @data: 2020年5月1日 下午2:57:47
@@ -176,6 +91,17 @@ public class WebBaseController {
     }
 
     /**
+     * @Title: getPage
+     * @author: 吴佳隆
+     * @data: 2019年6月13日 下午10:08:58
+     * @Description: 获取页面分页数据对象
+     * @return Page<PageData>
+     */
+    public Page<PageData> getPage() {
+        return new Page<PageData>(this.getPageData());
+    }
+
+    /**
      * @Title: getPageData
      * @author: 吴佳隆
      * @data: 2019年6月13日 下午10:08:51
@@ -184,7 +110,7 @@ public class WebBaseController {
      */
     @SuppressWarnings("unchecked")
     public PageData getPageData() {
-        PageData pd = new PageData();
+        PageData pd = this.getEmptyPageData();
         HttpServletRequest request = this.getRequest();
         Set<Entry<String, String[]>> entrySet = request.getParameterMap().entrySet();
         for (Entry<String, String[]> entry : entrySet) {
