@@ -46,6 +46,9 @@ public class SysTestController extends WebBaseController {
      */
     @Resource(name = "test1TestServiceImpl")
     private Test1TestService test1TestService;
+    /**
+     * ehcache 缓存服务实现
+     */
     @Autowired
     private EhcacheService ehcacheService;
 
