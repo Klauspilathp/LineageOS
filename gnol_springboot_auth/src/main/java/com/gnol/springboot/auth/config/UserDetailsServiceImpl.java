@@ -1,5 +1,8 @@
 package com.gnol.springboot.auth.config;
 
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 import javax.annotation.Resource;
@@ -67,8 +70,11 @@ public class UserDetailsServiceImpl implements UserDetailsService {
                 if (sysUser == null) {
                     throw new UsernameNotFoundException("the user does not exist !");
                 }
-                Set<SimpleGrantedAuthority> authorities = sysMenuDao.listPermissionsByRoleId(sysUser.getRoleId());
-                CustomUserDetails user = new CustomUserDetails(sysUser.getUserId(), // 系统用户主键
+                Set<SimpleGrantedAuthority> authorities = new HashSet<SimpleGrantedAuthority>(0); // sysMenuDao.listPermissionsByRoleId(sysUser.getRoleId());
+                Map<String, Object> params = new HashMap<String, Object>(2);
+                params.put("userId", sysUser.getUserId()); // 系统用户主键
+                params.put("roleId", sysUser.getRoleId()); // 系统用户角色主键
+                CustomUserDetails user = new CustomUserDetails(params, // 系统用户参数
                         username, // 用户名
                         username + "&" + sysUser.getPassword(), // 盐值 + 加密后的密码
                         StatusEnum.equalValue(StatusEnum.NORMAL, sysUser.getStatus()), // 账号是否被启用

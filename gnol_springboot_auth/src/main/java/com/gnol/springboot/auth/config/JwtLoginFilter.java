@@ -19,7 +19,6 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import com.alibaba.fastjson.JSONArray;
 import com.gnol.jwt.spring.boot.autoconfigure.JwtRsaUtil;
 import com.gnol.plugins.core.PageResult;
 import com.gnol.plugins.core.StringUtil;
@@ -86,6 +85,7 @@ public class JwtLoginFilter extends UsernamePasswordAuthenticationFilter {
     /**
      * 认证成功后操作
      */
+    @SuppressWarnings("unchecked")
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain,
             Authentication authResult) throws IOException, ServletException {
@@ -108,10 +108,12 @@ public class JwtLoginFilter extends UsernamePasswordAuthenticationFilter {
         switch (authTypeEnum) {
             case WEB:
                 CustomUserDetails userDetails = (CustomUserDetails) authResult.getPrincipal();
-                claims.put("userId", userDetails.getParams());
+                Map<String, Object> params = (Map<String, Object>) userDetails.getParams();
+                claims.put("userId", params.get("userId"));
+                claims.put("roleId", params.get("roleId"));
                 claims.put("username", userDetails.getUsername());
-                claims.put("authorities", JSONArray.toJSONString(userDetails.getAuthorities()));
-                jwt_id = StringUtil.toString(userDetails.getParams());
+                // claims.put("authorities", JSONArray.toJSONString(userDetails.getAuthorities()));
+                jwt_id = StringUtil.toString(params.get("userId"));
                 break;
             case WAP:
 

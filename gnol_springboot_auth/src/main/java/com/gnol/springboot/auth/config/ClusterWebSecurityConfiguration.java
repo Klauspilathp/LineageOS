@@ -16,6 +16,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.gnol.jwt.spring.boot.autoconfigure.JwtRsaUtil;
 import com.gnol.springboot.auth.daos.security.ExtSecurityKeyDao;
+import com.gnol.springboot.auth.daos.sys.ExtSysMenuDao;
 
 /**
  * @Title: ClusterWebSecurityConfiguration
@@ -42,6 +43,11 @@ public class ClusterWebSecurityConfiguration extends WebSecurityConfigurerAdapte
      */
     @Autowired
     private JwtRsaUtil JwtRsaUtil;
+    /**
+     * gnol 系统菜单表扩展 Dao
+     */
+    @Resource(name = "extSysMenuDao")
+    private ExtSysMenuDao sysMenuDao;
 
     @Bean("sha1PasswordEncoder")
     @Primary
@@ -63,7 +69,8 @@ public class ClusterWebSecurityConfiguration extends WebSecurityConfigurerAdapte
                 .permitAll() // 免授权请求配置
                 .anyRequest().authenticated() // 其余所有请求都需要授权
                 .and().addFilter(new JwtLoginFilter(super.authenticationManager(), securityKeyDao, JwtRsaUtil)) // 登录授权过滤器
-                .addFilter(new JwtAuthenticationFilter(super.authenticationManager(), securityKeyDao, JwtRsaUtil)) // token 检验过滤器，在授权服务器中，此过滤器不是必须的
+                .addFilter(new JwtAuthenticationFilter(super.authenticationManager(), securityKeyDao, JwtRsaUtil,
+                        sysMenuDao)) // token 检验过滤器，在授权服务器中，此过滤器不是必须的
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS); // 禁用 HttpSession
         // disable page caching
         // http.headers().frameOptions().sameOrigin().cacheControl();

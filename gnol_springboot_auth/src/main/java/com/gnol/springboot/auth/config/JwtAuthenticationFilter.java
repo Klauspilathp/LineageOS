@@ -10,16 +10,15 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
-import com.alibaba.fastjson.JSONArray;
 import com.gnol.jwt.spring.boot.autoconfigure.JwtRsaUtil;
 import com.gnol.plugins.core.PageResult;
 import com.gnol.plugins.core.StringUtil;
 import com.gnol.plugins.core.enums.HttpStatus;
 import com.gnol.springboot.auth.daos.security.ExtSecurityKeyDao;
+import com.gnol.springboot.auth.daos.sys.ExtSysMenuDao;
 import com.gnol.springboot.common.constant.AuthConstant;
 import com.gnol.springboot.common.dos.security.SecurityKey;
 import com.gnol.springboot.common.enums.sys.StatusEnum;
@@ -42,12 +41,17 @@ public class JwtAuthenticationFilter extends BasicAuthenticationFilter {
      * jwt 采用 RSA 方式加密的 token 工具类
      */
     private JwtRsaUtil JwtRsaUtil;
+    /**
+     * gnol 系统菜单表扩展 Dao
+     */
+    private ExtSysMenuDao sysMenuDao;
 
     public JwtAuthenticationFilter(AuthenticationManager authenticationManager, ExtSecurityKeyDao securityKeyDao,
-            JwtRsaUtil JwtRsaUtil) {
+            JwtRsaUtil JwtRsaUtil, ExtSysMenuDao sysMenuDao) {
         super(authenticationManager);
         this.securityKeyDao = securityKeyDao;
         this.JwtRsaUtil = JwtRsaUtil;
+        this.sysMenuDao = sysMenuDao;
     }
 
     @Override
@@ -105,7 +109,8 @@ public class JwtAuthenticationFilter extends BasicAuthenticationFilter {
         // 初始化 SecurityContextHolder对象
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
                 StringUtil.toString(claims.get("username")), null,
-                JSONArray.parseArray(StringUtil.toString(claims.get("authorities")), SimpleGrantedAuthority.class));
+                // JSONArray.parseArray(StringUtil.toString(claims.get("authorities")), SimpleGrantedAuthority.class)
+                sysMenuDao.listPermissionsByRoleId(StringUtil.toLong(claims.get("roleId"))));
         SecurityContextHolder.getContext().setAuthentication(authenticationToken);
         chain.doFilter(request, response);
     }
