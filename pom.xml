@@ -48,9 +48,9 @@
 		<module>gnol_springboot_dashboard</module>
 		<module>gnol_springboot_webflux</module>
 		<module>gnol_springboot_client_websocket</module>
-		<module>gnol_springboot_client_rpc</module>
 		<module>gnol_springboot_quartz</module>
 		<module>gnol_springboot_client_oauth2</module>
+		<module>gnol_springboot_sharding</module>
 	</modules>
 	
 	<!-- 集中定义依赖版本号 -->
@@ -68,6 +68,7 @@
 		<spring-boot-zuul.version>2.1.5.RELEASE</spring-boot-zuul.version>
 		<ehcache.version>2.10.4</ehcache.version>
 		<oshi.version>5.2.2</oshi.version>
+		<sharding.version>3.1.0</sharding.version>
 	</properties>
 
     <!-- 只是对版本进行管理，不会实际引入 jar -->
@@ -161,6 +162,12 @@
 				<groupId>com.github.oshi</groupId>
 				<artifactId>oshi-core</artifactId>
 				<version>${oshi.version}</version>
+			</dependency>
+			<!-- sharding -->
+			<dependency>
+				<groupId>io.shardingsphere</groupId>
+				<artifactId>sharding-jdbc-spring-boot-starter</artifactId>
+				<version>${sharding.version}</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
