@@ -1,6 +1,5 @@
 package com.gnol.springboot.client.config;
 
-import java.util.HashSet;
 import java.util.Set;
 
 import javax.annotation.Resource;
@@ -16,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import com.gnol.plugins.core.StringUtil;
 import com.gnol.springboot.client.daos.sys.ExtSysUserDao;
+import com.gnol.springboot.client.services.sys.SysMenuService;
 import com.gnol.springboot.common.dos.sys.SysUser;
 import com.gnol.springboot.common.enums.sys.StatusEnum;
 
@@ -34,6 +34,11 @@ public class UserDetailsServiceImpl implements UserDetailsService {
      */
     @Resource(name = "extSysUserDao")
     private ExtSysUserDao sysUserDao;
+    /**
+     * gnol 系统菜单表 Service
+     */
+    @Resource(name = "sysMenuServiceImpl")
+    private SysMenuService sysMenuService;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -44,9 +49,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         if (sysUser == null) {
             throw new UsernameNotFoundException("the user does not exist !");
         }
-        Set<SimpleGrantedAuthority> authorities = new HashSet<SimpleGrantedAuthority>();
-        authorities.add(new SimpleGrantedAuthority("admin"));
-        authorities.add(new SimpleGrantedAuthority("user"));
+        Set<SimpleGrantedAuthority> authorities = sysMenuService.listPermissionsByRoleId(sysUser.getRoleId());
         User user = new User(username, // 用户名
                 username + "&" + sysUser.getPassword(), // 盐值 + 加密后的密码
                 StatusEnum.equalValue(StatusEnum.NORMAL, sysUser.getStatus()), // 账号是否被启用

@@ -4,8 +4,8 @@
 	<!-- resultMap引入：resultMap="com.gnol.springboot.common.daos.sys.BaseSysMenuDao.BaseResultMap" -->
 	<!-- SQL 片段引入：<include refid="com.gnol.springboot.common.daos.sys.BaseSysMenuDao.Base_Column_List"/> -->
 	<!-- 根据角色编号查询权限列表 -->
-	<select id="listPermissionsByRoleId" parameterType="java.lang.Long" resultType="java.lang.String">
-		SELECT m.permissions FROM sys_menu m 
+	<select id="listPermissionsByRoleId" parameterType="java.lang.Long" resultType="org.springframework.security.core.authority.SimpleGrantedAuthority">
+		SELECT CONCAT("ROLE_", m.permissions) role FROM sys_menu m 
 		INNER JOIN (SELECT menuId FROM sys_role_menu 
 			WHERE roleId = #{roleId, jdbcType=BIGINT}) r ON r.menuId = m.menuId 
 	</select>

@@ -3,6 +3,7 @@ package com.gnol.springboot.client.daos.sys;
 import java.util.List;
 import java.util.Set;
 
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Repository;
 
 import com.gnol.plugins.core.PageData;
@@ -25,9 +26,9 @@ public interface ExtSysMenuDao {
      * @data: 2019年7月1日 下午4:01:08
      * @Description: 根据角色编号查询权限列表
      * @param roleId
-     * @return Set<String>
+     * @return Set<SimpleGrantedAuthority>
      */
-    Set<String> listPermissionsByRoleId(Long roleId);
+    Set<SimpleGrantedAuthority> listPermissionsByRoleId(Long roleId);
 
     /**
      * @Title: listPermissionsBySessionId

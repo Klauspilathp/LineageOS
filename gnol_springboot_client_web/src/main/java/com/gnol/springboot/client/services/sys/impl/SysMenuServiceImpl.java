@@ -6,6 +6,7 @@ import java.util.Set;
 
 import javax.annotation.Resource;
 
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Service;
 
 import com.gnol.plugins.core.PageData;
@@ -39,7 +40,7 @@ public class SysMenuServiceImpl extends AbstractBaseService<BaseSysMenuDao, SysM
     private ExtSysMenuDao sysMenuDao;
 
     @Override
-    public Set<String> listPermissionsByRoleId(Long roleId) {
+    public Set<SimpleGrantedAuthority> listPermissionsByRoleId(Long roleId) {
         if (roleId == null) {
             return null;
         }

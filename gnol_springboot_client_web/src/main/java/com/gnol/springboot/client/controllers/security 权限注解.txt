@@ -1,4 +1,4 @@
-使用表达式时间方法级别的安全性，启用前置注解：
+prePostEnabled 基于表达式进行方法级别的访问控制：
 @PreAuthorize：在方法调用之前基于表达式的计算结果来限制对方法的访问
 示例：
 	@PreAuthorize("hasAnyRole('user')") 只有 user 角色可以访问
@@ -21,3 +21,18 @@
 @PreFilter：允许方法调用，但必须在进入方法之前过滤输入值
 示例：
 	@PreFilter(filterTarget="ids", value="filterObject%2==0") 指定过滤的参数，过滤偶数
+
+
+securedEnabled security 内置的方法级别安全控制注解：
+@Secured：基于角色集合进行访问控制，默认角色需要带 ROLE_ 前缀
+示例：
+	@Secured({"ROLE_USER", "ROLE_ADMIN"}) 只允许拥有 USER 或 ADMIN 权限的用户访问
+
+
+jsr250Enabled JSR-250 提供的安全控制注解：
+@DenyAll：拒绝所有访问
+@PermitAll：同意所有访问
+@RolesAllowed：同 @Secured 注解
+示例：
+	@RolesAllowed({"USER", "ADMIN"}) 只允许拥有 USER 或 ADMIN 权限的用户访问
+

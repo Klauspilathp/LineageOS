@@ -34,7 +34,9 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity( // 开启 security 注解
-        securedEnabled = true, prePostEnabled = true // 使用表达式时间方法级别的安全性
+        prePostEnabled = false, // 基于表达式进行方法级别的访问控制
+        securedEnabled = false, // security 内置注解
+        jsr250Enabled = true // JSR-250 提供的安全控制注解
 )
 public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     private static final Logger logger = LoggerFactory.getLogger(WebSecurityConfiguration.class);
