@@ -3,7 +3,6 @@
 <mapper namespace="com.gnol.springboot.auth.daos.security.ExtSecurityKeyDao">
 	<!-- resultMap引入：resultMap="com.gnol.springboot.common.daos.security.BaseSecurityKeyDao.BaseResultMap" -->
 	<!-- SQL 片段引入：<include refid="com.gnol.springboot.common.daos.security.BaseSecurityKeyDao.Base_Column_List"/> -->
-	
 	<!-- 根据 appid 查询私钥 -->
 	<select id="getPrivateKey" parameterType="java.lang.String" resultType="com.gnol.springboot.common.dos.security.SecurityKey">
 		SELECT privateKey, status, expiration FROM security_key 
