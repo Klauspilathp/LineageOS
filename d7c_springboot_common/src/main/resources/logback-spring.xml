@@ -16,6 +16,9 @@
 		<root level="info">
 			<appender-ref ref="STDOUT" />
 		</root>
+		<logger name="org.activiti" level="debug" additivity="false">
+			<appender-ref ref="STDOUT" />
+		</logger>
 		<logger name="com.d7c.springboot" level="debug" additivity="false">
 			<appender-ref ref="STDOUT" />
 		</logger>

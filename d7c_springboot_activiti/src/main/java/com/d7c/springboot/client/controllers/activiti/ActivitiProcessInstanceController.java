@@ -67,13 +67,13 @@ public class ActivitiProcessInstanceController extends WebBaseController {
 
         List<PageData> pds = new ArrayList<PageData>();
         for (org.activiti.api.process.model.ProcessInstance processInstance : processInstances.getContent()) {
-            PageData.build().set("id", processInstance.getId()).set("name", processInstance.getName())
+            pds.add(PageData.build().set("id", processInstance.getId()).set("name", processInstance.getName())
                     .set("startDate", processInstance.getStartDate()).set("initiator", processInstance.getInitiator())
                     .set("businessKey", processInstance.getBusinessKey())
                     .set("processDefinitionId", processInstance.getProcessDefinitionId())
                     .set("processDefinitionKey", processInstance.getProcessDefinitionKey())
                     .set("parentId", processInstance.getParentId())
-                    .set("processDefinitionVersion", processInstance.getProcessDefinitionVersion());
+                    .set("processDefinitionVersion", processInstance.getProcessDefinitionVersion()));
         }
         return PageResult.ok(pds).setPage(page);
     }
@@ -179,6 +179,7 @@ public class ActivitiProcessInstanceController extends WebBaseController {
         if (suspensionDate == null || suspensionDate.before(new Date())) {
             suspensionDate = new Date();
         }
+
         repositoryService.suspendProcessDefinitionById(processDefinitionId, true, // true 挂起该流程定义下的所有流程实例
                 suspensionDate);
         return PageResult.ok();
@@ -200,6 +201,7 @@ public class ActivitiProcessInstanceController extends WebBaseController {
         if (activationDate == null || activationDate.before(new Date())) {
             activationDate = new Date();
         }
+
         repositoryService.activateProcessDefinitionById(processDefinitionId, true, // true 激活该流程定义下的所有流程实例
                 activationDate);
         return PageResult.ok();
@@ -264,9 +266,10 @@ public class ActivitiProcessInstanceController extends WebBaseController {
 
         List<PageData> pds = new ArrayList<PageData>();
         for (org.activiti.api.model.shared.model.VariableInstance variableInstance : variables) {
-            PageData.build().set("name", variableInstance.getName()).set("type", variableInstance.getType())
+            pds.add(PageData.build().set("name", variableInstance.getName()).set("type", variableInstance.getType())
                     .set("processInstanceId", variableInstance.getProcessInstanceId())
-                    .set("taskId", variableInstance.getTaskId()).set("taskVariable", variableInstance.isTaskVariable());
+                    .set("taskId", variableInstance.getTaskId())
+                    .set("taskVariable", variableInstance.isTaskVariable()));
         }
         return PageResult.ok(pds);
     }

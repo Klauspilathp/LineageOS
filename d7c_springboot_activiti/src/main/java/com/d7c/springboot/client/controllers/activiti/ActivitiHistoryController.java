@@ -1,11 +1,10 @@
 package com.d7c.springboot.client.controllers.activiti;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.activiti.engine.HistoryService;
-import org.activiti.engine.history.HistoricActivityInstance;
 import org.activiti.engine.history.HistoricActivityInstanceQuery;
-import org.activiti.engine.history.HistoricTaskInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -58,8 +57,28 @@ public class ActivitiHistoryController extends WebBaseController {
             historicActivityInstanceQuery.processDefinitionId(processDefinitionId);
         }
         historicActivityInstanceQuery.orderByHistoricActivityInstanceEndTime().desc();
-        List<HistoricActivityInstance> historicActivityInstances = historicActivityInstanceQuery.list();
-        return PageResult.ok(historicActivityInstances);
+        List<org.activiti.engine.history.HistoricActivityInstance> historicActivityInstances = historicActivityInstanceQuery
+                .list();
+
+        List<PageData> pds = new ArrayList<PageData>();
+        for (org.activiti.engine.history.HistoricActivityInstance historicActivityInstance : historicActivityInstances) {
+            pds.add(PageData.build().set("id", historicActivityInstance.getId())
+                    .set("activityId", historicActivityInstance.getActivityId())
+                    .set("activityName", historicActivityInstance.getActivityName())
+                    .set("activityType", historicActivityInstance.getActivityType())
+                    .set("processDefinitionId", historicActivityInstance.getProcessDefinitionId())
+                    .set("processInstanceId", historicActivityInstance.getProcessInstanceId())
+                    .set("executionId", historicActivityInstance.getExecutionId())
+                    .set("taskId", historicActivityInstance.getTaskId())
+                    .set("calledProcessInstanceId", historicActivityInstance.getCalledProcessInstanceId())
+                    .set("assignee", historicActivityInstance.getAssignee())
+                    .set("startTime", historicActivityInstance.getStartTime())
+                    .set("endTime", historicActivityInstance.getEndTime())
+                    .set("durationInMillis", historicActivityInstance.getDurationInMillis())
+                    .set("deleteReason", historicActivityInstance.getDeleteReason())
+                    .set("tenantId", historicActivityInstance.getTenantId()));
+        }
+        return PageResult.ok(pds);
     }
 
     /**
@@ -79,12 +98,41 @@ public class ActivitiHistoryController extends WebBaseController {
         if (StringUtil.isBlank(assignee)) {
             assignee = SecurityUtil.getUserId().toString();
         }
-
-        List<HistoricTaskInstance> historicTaskInstances = historyService.createHistoricTaskInstanceQuery()
-                .taskAssignee(assignee) // 代理人
+        List<org.activiti.engine.history.HistoricTaskInstance> historicTaskInstances = historyService
+                .createHistoricTaskInstanceQuery().taskAssignee(assignee) // 代理人
                 .processInstanceId(pd.getString("processInstanceId")) // 流程实例 ID
                 .orderByHistoricTaskInstanceEndTime().desc().listPage(page.getCurrentResult(), page.getPageSize());
-        return PageResult.ok(historicTaskInstances);
+
+        List<PageData> pds = new ArrayList<PageData>();
+        for (org.activiti.engine.history.HistoricTaskInstance historicActivityInstance : historicTaskInstances) {
+            pds.add(PageData.build().set("id", historicActivityInstance.getId())
+                    .set("name", historicActivityInstance.getName())
+                    .set("description", historicActivityInstance.getDescription())
+                    .set("priority", historicActivityInstance.getPriority())
+                    .set("owner", historicActivityInstance.getOwner())
+                    .set("assignee", historicActivityInstance.getAssignee())
+                    .set("processInstanceId", historicActivityInstance.getProcessInstanceId())
+                    .set("executionId", historicActivityInstance.getExecutionId())
+                    .set("processDefinitionId", historicActivityInstance.getProcessDefinitionId())
+                    .set("createTime", historicActivityInstance.getCreateTime())
+                    .set("taskDefinitionKey", historicActivityInstance.getTaskDefinitionKey())
+                    .set("dueDate", historicActivityInstance.getDueDate())
+                    .set("category", historicActivityInstance.getCategory())
+                    .set("parentTaskId", historicActivityInstance.getParentTaskId())
+                    .set("tenantId", historicActivityInstance.getTenantId())
+                    .set("formKey", historicActivityInstance.getFormKey())
+                    .set("taskLocalVariables", historicActivityInstance.getTaskLocalVariables())
+                    .set("processVariables", historicActivityInstance.getProcessVariables())
+                    .set("claimTime", historicActivityInstance.getClaimTime())
+                    .set("businessKey", historicActivityInstance.getBusinessKey())
+                    .set("deleteReason", historicActivityInstance.getDeleteReason())
+                    .set("startTime", historicActivityInstance.getStartTime())
+                    .set("endTime", historicActivityInstance.getEndTime())
+                    .set("durationInMillis", historicActivityInstance.getDurationInMillis())
+                    .set("workTimeInMillis", historicActivityInstance.getWorkTimeInMillis())
+                    .set("claimTime", historicActivityInstance.getClaimTime()));
+        }
+        return PageResult.ok(pds);
     }
 
 }

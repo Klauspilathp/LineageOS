@@ -1,5 +1,6 @@
 package com.d7c.springboot.client.controllers.activiti;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.activiti.engine.RepositoryService;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.d7c.plugins.core.PageData;
 import com.d7c.plugins.core.PageResult;
 import com.d7c.plugins.core.StringUtil;
 import com.d7c.springboot.client.controllers.WebBaseController;
@@ -39,8 +41,20 @@ public class ActivitiDeploymentController extends WebBaseController {
      */
     @GetMapping(value = "/listDeployment")
     public PageResult listDeployment() {
+        /**
+         * Activiti 采用懒加载查询数据，所以要遍历的取出放到 map 中返回出去，
+         * 否则会报 Could not write JSON: lazy loading outside command context; 错误。
+         */
         List<Deployment> deployments = repositoryService.createDeploymentQuery().list();
-        return PageResult.ok(deployments);
+
+        List<PageData> pds = new ArrayList<PageData>();
+        for (Deployment deployment : deployments) {
+            pds.add(PageData.build().set("id", deployment.getId()).set("name", deployment.getName())
+                    .set("deploymentTime", deployment.getDeploymentTime()).set("category", deployment.getCategory())
+                    .set("key", deployment.getKey()).set("tenantId", deployment.getTenantId())
+                    .set("projectReleaseVersion", deployment.getProjectReleaseVersion()));
+        }
+        return PageResult.ok(pds);
     }
 
     /**
@@ -56,8 +70,8 @@ public class ActivitiDeploymentController extends WebBaseController {
         if (StringUtil.isBlank(deploymentId)) {
             return PageResult.error("deploymentId 不能为空！");
         }
-        repositoryService.deleteDeployment(deploymentId, true // 级联删除
-        );
+
+        repositoryService.deleteDeployment(deploymentId, true); // 级联删除
         return PageResult.ok(deploymentId + "流程部署已删除！");
     }
 
