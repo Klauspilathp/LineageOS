@@ -73,8 +73,10 @@ public class Oauth2Application {
      *      生成密钥帮助：keytool -genkeypair -help
      *      生成密钥库文件：keytool -genkeypair -alias oauth2 -keyalg RSA -keypass oauth2keypass -keystore oauth2.jks -storepass oauth2storepass
      *          生成的 oauth2.jks 密钥库文件在当前目录。
-     *      生成一个公钥：keytool -list -rfc -keystore oauth2.jks -storepass oauth2storepass
+     *      生成一个公钥：keytool -list -rfc -keystore oauth2.jks --storepass oauth2storepass | openssl x509 -inform pem -pubkey
      *          将打印出的公钥放到一个文件中，例如 oauth2-public.txt 中。注意生成公钥时 oauth2.jks 文件必须是授权服务器上的 oauth2.jks 文件。
+     *      keytool -genkeypair -alias oauth2 -keyalg RSA -keypass oauth2keypass -keystore oauth2.keystore -storepass oauth2storepass
+     *      keytool -list -rfc --keystore oauth2.keystore -storepass oauth2storepass | openssl x509 -inform pem -pubkey
      *  2、
      *  3、
      *  4、
