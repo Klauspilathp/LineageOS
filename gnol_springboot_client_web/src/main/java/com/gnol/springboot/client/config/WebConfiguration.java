@@ -2,6 +2,7 @@ package com.gnol.springboot.client.config;
 
 import java.util.concurrent.ThreadPoolExecutor;
 
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
@@ -23,7 +24,7 @@ public class WebConfiguration {
      */
     @Bean(name = "threadPoolTaskExecutor")
     @Primary
-    @Scope("singleton")
+    @Scope(ConfigurableBeanFactory.SCOPE_SINGLETON)
     public ThreadPoolTaskExecutor threadPoolTaskExecutor() {
         ThreadPoolTaskExecutor threadPoolTaskExecutor = new ThreadPoolTaskExecutor();
         // 线程池维护线程的最少数量
