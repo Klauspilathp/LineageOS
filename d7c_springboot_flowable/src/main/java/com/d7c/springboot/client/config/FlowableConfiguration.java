@@ -54,16 +54,14 @@ public class FlowableConfiguration {
     }
 
     /**
-     * 静态文件资源目录映射为可以 Rest 方式访问的路径
+     * 将 bpmn 流程文件资源目录映射为可以 Rest 方式访问的路径
      */
-    @Bean(name = "staticResoucesPath")
-    public WebMvcConfigurer staticResoucesPath() {
+    @Bean(name = "bpmnResoucesPath")
+    public WebMvcConfigurer bpmnResoucesPath() {
         return new WebMvcConfigurer() {
             @Override
             public void addResourceHandlers(ResourceHandlerRegistry registry) {
                 registry.addResourceHandler("/processes/**").addResourceLocations("classpath:/processes/");
-                registry.addResourceHandler("/modeler/**").addResourceLocations("classpath:/modeler/");
-                registry.addResourceHandler("/idm/**").addResourceLocations("classpath:/idm/");
                 WebMvcConfigurer.super.addResourceHandlers(registry);
             }
         };
