@@ -28,7 +28,7 @@ public class CommonController extends WebBaseController {
      * @Description: 获取服务器时间
      * @return PageResult
      */
-    @RequestMapping(value = "/getTime")
+    @GetMapping(value = "/getTime")
     public PageResult getTime() {
         return PageResult.ok(new Date());
     }
@@ -41,7 +41,7 @@ public class CommonController extends WebBaseController {
      * @param principal
      * @return Principal
      */
-    @GetMapping("/user_info")
+    @GetMapping(value = "/user_info")
     public Principal user_info(Principal principal) {
         return principal;
     }
