@@ -54,7 +54,8 @@ public class VerifyCodeController extends WebBaseController {
         // 生成随机字串
         String verifyCode = VerifyCodeUtil.generateVerifyCode(4);
         // 放入 redis 中，过期时间 1 分钟
-        redisService.addString(GnolConstant.SESSION_VERIFY_CODE, 60, verifyCode.toLowerCase());
+        redisService.addString(redisService.generateKey(GnolConstant.SESSION_VERIFY_CODE, request.getSession().getId()),
+                60, verifyCode.toLowerCase());
         // 生成图片
         int w = 146, h = 33;
         try {
@@ -90,7 +91,9 @@ public class VerifyCodeController extends WebBaseController {
             captcha.out(out);
             out.flush();
             // 放入 redis 中，过期时间 1 分钟
-            redisService.addString(GnolConstant.SESSION_VERIFY_CODE, 60, captcha.text().toLowerCase());
+            redisService.addString(
+                    redisService.generateKey(GnolConstant.SESSION_VERIFY_CODE, request.getSession().getId()), 60,
+                    captcha.text().toLowerCase());
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -119,7 +122,9 @@ public class VerifyCodeController extends WebBaseController {
             // 输出
             captcha.out(response.getOutputStream());
             // 放入 redis 中，过期时间 1 分钟
-            redisService.addString(GnolConstant.SESSION_VERIFY_CODE, 60, captcha.text().toLowerCase());
+            redisService.addString(
+                    redisService.generateKey(GnolConstant.SESSION_VERIFY_CODE, request.getSession().getId()), 60,
+                    captcha.text().toLowerCase());
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -3,6 +3,7 @@ package com.gnol.springboot.client.config;
 import java.util.Set;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,8 +13,11 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import com.gnol.plugins.core.StringUtil;
+import com.gnol.redis.spring.boot.autoconfigure.RedisService;
 import com.gnol.springboot.client.daos.sys.ExtSysUserDao;
 import com.gnol.springboot.client.services.sys.SysMenuService;
 import com.gnol.springboot.common.dos.sys.SysUser;
@@ -39,9 +43,20 @@ public class UserDetailsServiceImpl implements UserDetailsService {
      */
     @Resource(name = "sysMenuServiceImpl")
     private SysMenuService sysMenuService;
+    /**
+     * redis 缓存服务实现
+     */
+    @Resource(name = "redisServiceImpl")
+    private RedisService redisService;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes())
+                .getRequest();
+        // 验证码
+        String verifyCode = redisService
+                .getString(redisService.generateKey(GnolConstant.SESSION_VERIFY_CODE, request.getSession().getId()));
+        logger.debug("服务器端验证码为 {}，用户输入的验证码为 {}。", verifyCode, request.getParameter(GnolConstant.SESSION_VERIFY_CODE));
         if (StringUtil.isBlank(username)) {
             throw new UsernameNotFoundException("userAccount cannot be empty !");
         }
