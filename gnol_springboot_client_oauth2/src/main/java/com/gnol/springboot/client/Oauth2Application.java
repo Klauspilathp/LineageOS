@@ -23,9 +23,9 @@ public class Oauth2Application {
 
     /**
      * jdbc 储存策略认证流程：
-     *  1、sys_user 表系统用户通过 com.gnol.springboot.oauth2.config.WebSecurityConfiguration 配置中的 
-     *      com.gnol.springboot.oauth2.config.UserDetailsServiceImpl.loadUserByUsername(String) 服务去从库中加载系统用户；
-     *  2、oauth_client_details 表客户端通过 com.gnol.springboot.oauth2.config.JdbcAuthorizationServerConfiguration 配置中的 
+     *  1、sys_user 表系统用户通过 com.gnol.springboot.client.config.WebSecurityConfiguration 配置中的 
+     *      com.gnol.springboot.client.config.UserDetailsServiceImpl.loadUserByUsername(String) 服务去从库中加载系统用户；
+     *  2、oauth_client_details 表客户端通过 com.gnol.springboot.client.config.JdbcAuthorizationServerConfiguration 配置中的 
      *      org.springframework.security.oauth2.provider.client.JdbcClientDetailsService.loadClientByClientId(String) 服务
      *      去主库中加载客户端信息；
      *  3、数据库中插入 INSERT INTO `oauth2`.`oauth_client_details` (`client_id`, `resource_ids`, `client_secret`, `scope`, 
