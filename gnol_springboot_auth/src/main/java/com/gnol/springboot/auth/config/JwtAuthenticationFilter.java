@@ -1,7 +1,6 @@
 package com.gnol.springboot.auth.config;
 
 import java.io.IOException;
-import java.util.Date;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -93,14 +92,7 @@ public class JwtAuthenticationFilter extends BasicAuthenticationFilter {
         Claims claims = JwtRsaUtil.getClaimsByToken(token, securityKey.getPublicKey());
         if (claims == null) {
             response(response, HttpServletResponse.SC_FORBIDDEN,
-                    PageResult.build(HttpStatus.HS_403.getKey(), "token 解析错误！"));
-            return;
-        }
-
-        // token 过期时间校验
-        if (claims.getExpiration().before(new Date())) {
-            response(response, HttpServletResponse.SC_FORBIDDEN,
-                    PageResult.build(HttpStatus.HS_403.getKey(), "token 已过期，请重新授权！"));
+                    PageResult.build(HttpStatus.HS_403.getKey(), "token 解析错误或已过期！"));
             return;
         }
 
