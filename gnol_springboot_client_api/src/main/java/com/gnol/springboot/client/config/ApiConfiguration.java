@@ -3,6 +3,9 @@ package com.gnol.springboot.client.config;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
 
 /**
  * @Title: ApiConfiguration
@@ -22,5 +25,34 @@ public class ApiConfiguration {
     public GnolProperties gnolProperties() {
         return new GnolProperties();
     }
+
+    // --- 支持跨域的两种配置方式
+    @Bean
+    public CorsFilter corsFilter() {
+        final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        final CorsConfiguration config = new CorsConfiguration();
+        config.setAllowCredentials(true); // 允许 cookies 跨域
+        config.addAllowedMethod("*"); // 允许提交请求的方法，* 表示全部允许
+        config.addAllowedOrigin("*"); // 允许向该服务器提交请求的 URI，* 表示全部允许
+        config.addAllowedHeader("*"); // 允许访问的头信息，* 表示全部
+        config.setMaxAge(18000L); // 预检请求的缓存时间（秒），即在这个时间段内对相同的跨域请求不会再预检
+        source.registerCorsConfiguration("/**", config);
+        return new CorsFilter(source);
+    }
+
+    /*@Bean
+    public WebMvcConfigurer corsConfigurer() {
+        return new WebMvcConfigurer() {
+            @Override
+            public void addCorsMappings(CorsRegistry registry) {
+                registry.addMapping("/**") // 拦截所有权请求
+                        .allowedMethods("*") // 允许提交请求的方法，* 表示全部允许
+                        .allowedOrigins("*") // 允许向该服务器提交请求的 URI，* 表示全部允许
+                        .allowCredentials(true) // 允许 cookies 跨域
+                        .allowedHeaders("*") // 允许访问的头信息，* 表示全部
+                        .maxAge(18000L); // 预检请求的缓存时间（秒），即在这个时间段内对相同的跨域请求不会再预检
+            }
+        };
+    }*/
 
 }
