@@ -187,7 +187,14 @@
     win.xadmin = new Xadmin();
 }(window);
 
+// 此处已经在 /gnol_springboot_client_web/src/main/resources/templates/sys/index/main.html 页面进行了菜单渲染，不需要再进行渲染，只要引入变量即可
 layui.use(['layer', 'element', 'jquery'], function() {
+    layer = layui.layer;
+    element = layui.element;
+    $ = layui.jquery;
+});
+
+/*layui.use(['layer', 'element', 'jquery'], function() {
     layer = layui.layer;
     element = layui.element;
     $ = layui.jquery;
@@ -353,7 +360,7 @@ layui.use(['layer', 'element', 'jquery'], function() {
 
     // 页面加载完要做的
     xadmin.end();
-});
+});*/
 // md5-----------------------------------------------------------------------------------
 /*
  * Add integers, wrapping at 2^32. This uses 16-bit operations internally
