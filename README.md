@@ -162,6 +162,7 @@ java -jar d7c_springboot_eureka_server.jar
 
 账号：wujialong
 密码都是：000000
+
 ![首页](https://images.gitee.com/uploads/images/2021/0611/094801_f98caed2_1070311.png "QQ图片20210611094207.png")
 
 ## 捐助打赏
