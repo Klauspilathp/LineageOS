@@ -1,5 +1,7 @@
 package com.gnol.springboot.client.services.test1;
 
+import java.util.List;
+
 import com.gnol.plugins.core.Page;
 import com.gnol.plugins.core.PageData;
 import com.gnol.plugins.core.PageResult;
@@ -24,5 +26,25 @@ public interface Test1TestService extends BaseService<Test1Test, Long> {
      * @return PageResult
      */
     PageResult listPDPage(Page<PageData> page);
+
+    /**
+     * @Title: listByTest1
+     * @author: 吴佳隆
+     * @data: 2020年7月5日 下午1:30:29
+     * @Description: 从 test1.test1_test 表查列表
+     * @param pd
+     * @return List<Test1Test>
+     */
+    List<Test1Test> listByTest1(PageData pd);
+
+    /**
+     * @Title: insert1
+     * @author: 吴佳隆
+     * @data: 2020年7月5日 下午1:41:49
+     * @Description: 插入数据
+     * @param test1
+     * @return int
+     */
+    int insert1(Test1Test test1);
 
 }

@@ -79,7 +79,7 @@ public class SysTestController extends WebBaseController {
     public PageResult test4() {
         PageData pd = this.getPageData();
         pd.put("sys_test", sysTestService.listBy(null));
-        pd.put("test1_test", test1TestService.listBy(null));
+        pd.put("test1_test", test1TestService.listByTest1(null));
         return PageResult.ok(pd);
     }
 
@@ -94,6 +94,7 @@ public class SysTestController extends WebBaseController {
 
     @RequestMapping(value = "/test6")
     @ResponseBody
+    @CurrDataSource(DataSourceType.SLAVE)
     public PageResult test6(String id) {
         Test1Test test = new Test1Test();
         test.setText("insert test1_test " + id);

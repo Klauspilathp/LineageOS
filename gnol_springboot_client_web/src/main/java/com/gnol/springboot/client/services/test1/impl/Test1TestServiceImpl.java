@@ -1,9 +1,13 @@
 package com.gnol.springboot.client.services.test1.impl;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
+import com.gnol.mybatis.spring.boot.autoconfigure.CurrDataSource;
+import com.gnol.mybatis.spring.boot.autoconfigure.DataSourceType;
 import com.gnol.plugins.core.Page;
 import com.gnol.plugins.core.PageData;
 import com.gnol.plugins.core.PageResult;
@@ -38,6 +42,18 @@ public class Test1TestServiceImpl extends AbstractBaseService<BaseTest1TestDao, 
     @Override
     public PageResult listPDPage(Page<PageData> page) {
         return PageResult.ok(test1TestDao.listPDPage(page)).setPage(page);
+    }
+
+    @CurrDataSource(DataSourceType.SLAVE)
+    @Override
+    public List<Test1Test> listByTest1(PageData pd) {
+        return dao.listBy(pd);
+    }
+
+    @CurrDataSource(DataSourceType.SLAVE)
+    @Override
+    public int insert1(Test1Test test1) {
+        return dao.insert(test1);
     }
 
 }
