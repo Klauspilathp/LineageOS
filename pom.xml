@@ -5,12 +5,12 @@
 	<parent>
 		<groupId>top.d7c.springboot.plugins</groupId>
 		<artifactId>d7c_springboot_plugins_parent</artifactId>
-		<version>1.0.0</version>
+		<version>1.0.1</version>
 		<relativePath />
 	</parent>
 	<groupId>top.d7c.springboot</groupId>
 	<artifactId>d7c_springboot</artifactId>
-	<version>1.0.0</version>
+	<version>1.0.1</version>
 	<packaging>pom</packaging>
 	<name>d7c_springboot</name>
 	<url>http://www.d7c.top/d7c_springboot/</url>
@@ -96,7 +96,7 @@
         <!-- 解决 Description	Resource Path Location Type Unknown	pom.xml	/d7c_springboot_common	line 1	Maven Configuration Problem -->
 		<maven-jar-plugin.version>3.1.1</maven-jar-plugin.version>
         <!-- jar 版本管理 -->
-		<d7c_springboot_plugins.version>1.0.0</d7c_springboot_plugins.version>
+		<d7c_springboot_plugins.version>1.0.1</d7c_springboot_plugins.version>
 	</properties>
 
     <!-- 只是对版本进行管理，不会实际引入 jar -->
