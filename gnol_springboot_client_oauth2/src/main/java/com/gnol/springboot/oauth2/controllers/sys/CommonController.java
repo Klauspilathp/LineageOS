@@ -5,7 +5,6 @@ import java.util.Date;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.gnol.plugins.core.PageResult;
@@ -30,7 +29,6 @@ public class CommonController extends WebBaseController {
      * @return PageResult
      */
     @RequestMapping(value = "/getTime")
-    @ResponseBody
     public PageResult getTime() {
         return PageResult.ok(new Date());
     }
@@ -40,12 +38,12 @@ public class CommonController extends WebBaseController {
      * @author: 吴佳隆
      * @data: 2020年7月26日 下午2:52:37
      * @Description: 获取当前登录用户信息
-     * @param user
+     * @param principal
      * @return Principal
      */
     @GetMapping("/user_info")
-    public Principal user_info(Principal user) {
-        return user;
+    public Principal user_info(Principal principal) {
+        return principal;
     }
 
 }
