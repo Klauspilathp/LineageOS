@@ -15,6 +15,9 @@
 			<if test="null != args.publicKey and args.publicKey != ''">
 				AND publicKey = #{args.publicKey, jdbcType=VARCHAR} 
 			</if>
+			<if test="null != args.expiration and args.expiration != ''">
+				AND expiration = #{args.expiration, jdbcType=BIGINT} 
+			</if>
 			<if test="null != args.remark and args.remark != ''">
 				AND remark = #{args.remark, jdbcType=VARCHAR} 
 			</if>
