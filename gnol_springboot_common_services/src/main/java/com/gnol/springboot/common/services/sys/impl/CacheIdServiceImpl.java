@@ -1,5 +1,6 @@
 package com.gnol.springboot.common.services.sys.impl;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.gnol.plugins.core.StringUtil;
@@ -20,7 +21,7 @@ public class CacheIdServiceImpl extends AbstractIdService {
      */
     private CacheService cacheService;
 
-    public CacheIdServiceImpl(CacheService cacheService) {
+    public CacheIdServiceImpl(@Qualifier("redisServiceImpl") CacheService cacheService) {
         super();
         this.cacheService = cacheService;
     }
