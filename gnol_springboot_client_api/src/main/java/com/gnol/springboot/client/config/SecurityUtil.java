@@ -28,7 +28,11 @@ public class SecurityUtil extends SecurityContextHolder {
      * UserDetails 实现对象
      */
     public static CustomUserDetails getUserDetails() {
-        Object principal = getAuthentication().getPrincipal();
+        Authentication authentication = getAuthentication();
+        if (authentication == null) {
+            return null;
+        }
+        Object principal = authentication.getPrincipal();
         if (principal instanceof CustomUserDetails) {
             return (CustomUserDetails) principal;
         }

@@ -64,7 +64,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 ).permitAll() // 免授权请求配置
                 .anyRequest().authenticated() // 其余所有请求都需要授权
                 .and().formLogin().loginProcessingUrl("/login") // 表单登录
-                .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS); // 禁用 session
+                .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED); // 有需要时才生成 session，使用授权码模式必须生成 session
         // disable page caching
         // http.headers().frameOptions().sameOrigin().cacheControl();
     }
