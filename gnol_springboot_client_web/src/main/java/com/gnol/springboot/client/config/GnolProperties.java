@@ -1,5 +1,14 @@
 package com.gnol.springboot.client.config;
 
+import java.security.KeyFactory;
+import java.security.NoSuchAlgorithmException;
+import java.security.interfaces.RSAPublicKey;
+import java.security.spec.InvalidKeySpecException;
+import java.security.spec.X509EncodedKeySpec;
+import java.util.Base64;
+
+import javax.annotation.PostConstruct;
+
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
@@ -26,6 +35,14 @@ public class GnolProperties {
      * 默认密码
      */
     private String defaultPassword;
+    /**
+     * 公钥字符串
+     */
+    private String publicKeyStr;
+    /**
+     * RSA 公钥对象
+     */
+    private RSAPublicKey rsaPublicKey;
 
     public String getSystemName() {
         return systemName;
@@ -41,6 +58,28 @@ public class GnolProperties {
 
     public void setDefaultPassword(String defaultPassword) {
         this.defaultPassword = defaultPassword;
+    }
+
+    public String getPublicKeyStr() {
+        return publicKeyStr;
+    }
+
+    public void setPublicKeyStr(String publicKeyStr) {
+        this.publicKeyStr = publicKeyStr;
+    }
+
+    public RSAPublicKey getRsaPublicKey() {
+        return rsaPublicKey;
+    }
+
+    // 修饰一个非静态的 void() 方法，被 @PostConstruct 修饰的方法会在服务器加载 Servlet 的时候被服务器调用一次，类似于 Servlet 的 init() 方法。
+    @PostConstruct
+    public void loadPublicKey() throws NoSuchAlgorithmException, InvalidKeySpecException {
+        if (this.rsaPublicKey == null) {
+            X509EncodedKeySpec keySpec = new X509EncodedKeySpec(Base64.getDecoder().decode(publicKeyStr));
+            KeyFactory keyFactory = KeyFactory.getInstance("RSA");
+            this.rsaPublicKey = (RSAPublicKey) keyFactory.generatePublic(keySpec);
+        }
     }
 
 }
