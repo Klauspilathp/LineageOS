@@ -7,10 +7,9 @@ import javax.annotation.Resource;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.security.oauth2.authserver.AuthorizationServerProperties;
+import org.springframework.cloud.bootstrap.encrypt.KeyProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -47,10 +46,10 @@ public class JwtKeyPairAuthorizationServerConfiguration extends AuthorizationSer
     @Resource(name = "masterDataSource")
     private DataSource dataSource;
     /**
-     * 认证服务器属性配置
+     * 密钥加密属性
      */
-    @Autowired
-    private AuthorizationServerProperties authorizationServerProperties;
+    @Resource(name = "keyProperties")
+    private KeyProperties keyProperties;
     /**
      * 认证管理对象
      */
@@ -58,11 +57,11 @@ public class JwtKeyPairAuthorizationServerConfiguration extends AuthorizationSer
     private AuthenticationManager authenticationManager;
 
     /**
-     * 认证服务器属性配置
+     * 密钥加密属性
      */
-    @Bean
-    public AuthorizationServerProperties authorizationServerProperties() {
-        return new AuthorizationServerProperties();
+    @Bean("keyProperties")
+    public KeyProperties keyProperties() {
+        return new KeyProperties();
     }
 
     /**
@@ -105,11 +104,10 @@ public class JwtKeyPairAuthorizationServerConfiguration extends AuthorizationSer
         JwtAccessTokenConverter tokenConverter = new JwtAccessTokenConverter();
         tokenConverter.setAccessTokenConverter(new CustomAccessTokenConverter());
         // jwt 非对称（密钥对）加密
-        KeyPair keyPair = new KeyStoreKeyFactory(
-                new ClassPathResource(authorizationServerProperties.getJwt().getKeyStore()), // 密钥文件路径
-                authorizationServerProperties.getJwt().getKeyStorePassword().toCharArray() // 密码
-        ).getKeyPair(authorizationServerProperties.getJwt().getKeyAlias(), // 别名
-                authorizationServerProperties.getJwt().getKeyPassword().toCharArray());
+        KeyPair keyPair = new KeyStoreKeyFactory(keyProperties.getKeyStore().getLocation(), // 密钥文件路径
+                keyProperties.getKeyStore().getSecret().toCharArray() // 密码
+        ).getKeyPair(keyProperties.getKeyStore().getAlias(), // 别名
+                keyProperties.getKeyStore().getPassword().toCharArray());
         tokenConverter.setKeyPair(keyPair);
         return tokenConverter;
     }
