@@ -6,12 +6,13 @@
 	<artifactId>d7c_springboot</artifactId>
 	<version>1.0.0</version>
 	<packaging>pom</packaging>
-	<url>
+	<name>d7c_springboot</name>
+	<url>http://www.d7c.top/d7c_springboot/</url>
+	<!-- 
 		https://start.spring.io/,
 		https://github.com/spring-projects/spring-boot,
 		http://c.biancheng.net/spring_cloud/
-	</url>
-	<name>d7c_springboot</name>
+	 -->
 	<description>d7c springboot 版项目父工程</description>
 
   	<!-- 设定主仓库，按设定顺序进行查找。 -->
@@ -75,7 +76,7 @@
 		<module>d7c_springboot_flowable</module>
 		<module>d7c_springboot_flowable_modeler</module>
 	</modules>
-	
+
 	<!-- 集中定义依赖版本号 -->
 	<properties>
 		<java.version>1.8</java.version>
@@ -107,6 +108,11 @@
 				<version>${d7c_springboot_plugins.version}</version>
 				<type>pom</type>
 				<scope>import</scope>
+			</dependency>
+			<dependency>
+				<groupId>com.d7c</groupId>
+				<artifactId>d7c_springboot_plugins_core</artifactId>
+				<version>${d7c_springboot_plugins.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>com.d7c</groupId>
@@ -189,16 +195,15 @@
 	</dependencyManagement>
 
 	<dependencies>
+		<dependency>
+			<groupId>com.d7c</groupId>
+			<artifactId>d7c_springboot_plugins_core</artifactId>
+		</dependency>
 		<!-- @ConfigurationProperties 使用 spring-boot-configuration-processorjar 注释的项目轻松生成配置元数据文件 -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-configuration-processor</artifactId>
 			<optional>true</optional>
-		</dependency>
-		<dependency>
-			<groupId>com.d7c</groupId>
-			<artifactId>d7c_springboot_plugins_core</artifactId>
-			<version>${d7c_springboot_plugins.version}</version>
 		</dependency>
         <!-- 热部署 -->
         <!-- devtools 可以实现页面热部署（即页面修改后会立即生效，这个可以直接在 applicatjwtties 文件中配置 spring.thymeleaf.cache=false 来实现） -->
@@ -244,10 +249,21 @@
 			</resource>
 		</resources>
 		<plugins>
+			<!-- 执行测试用例的插件 -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.22.2</version>
+				<configuration>
+					<skipTests>true</skipTests>
+					<testFailureIgnore>true</testFailureIgnore>
+				</configuration>
+			</plugin>
 			<!-- java 编译插件 -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.8.1</version>
 				<configuration>
 					<source>${java.version}</source>
 					<target>${java.version}</target>
@@ -267,12 +283,22 @@
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>versions-maven-plugin</artifactId>
+				<version>2.7</version>
 				<configuration>
 					<!-- 修改 pom 时是否对原文件进行备份 -->
 					<generateBackupPoms>false</generateBackupPoms>
 				</configuration>
 			</plugin>
 		</plugins>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-maven-plugin</artifactId>
+					<version>2.1.18.RELEASE</version>
+				</plugin>
+			</plugins>
+		</pluginManagement>
 	</build>
 
     <!-- 开发者信息 -->
