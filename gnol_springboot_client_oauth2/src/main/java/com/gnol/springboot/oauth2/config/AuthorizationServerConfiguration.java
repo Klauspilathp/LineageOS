@@ -1,11 +1,16 @@
 package com.gnol.springboot.oauth2.config;
 
+import java.security.KeyPair;
+
+import javax.annotation.Resource;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
@@ -18,6 +23,8 @@ import org.springframework.security.oauth2.provider.code.AuthorizationCodeServic
 import org.springframework.security.oauth2.provider.code.JdbcAuthorizationCodeServices;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JdbcTokenStore;
+import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
+import org.springframework.security.oauth2.provider.token.store.KeyStoreKeyFactory;
 
 /**
  * @Title: AuthorizationServerConfiguration
@@ -34,6 +41,11 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
      */
     @Autowired
     private DataSource dataSource;
+    /**
+     * SHA1 的 PasswordEncoder 加密实现类
+     */
+    @Resource(name = "sha1PasswordEncoder")
+    private PasswordEncoder passwordEncoder;
     /**
      * 认证管理对象
      */
@@ -65,6 +77,19 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
     }
 
     /**
+     * JWT 编码的令牌值和 OAuth2 身份验证之间进行转换工具
+     */
+    @Bean
+    public JwtAccessTokenConverter jwtAccessTokenConverter() {
+        JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
+        /*converter.setSigningKey("secret");*/
+        KeyPair keyPair = new KeyStoreKeyFactory(new ClassPathResource("oauth2.jks"), "oauth2".toCharArray())
+                .getKeyPair("oauth2");
+        converter.setKeyPair(keyPair);
+        return converter;
+    }
+
+    /**
      * 授权码模式数据来源
      */
     @Bean
@@ -77,8 +102,9 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
      */
     @Override
     public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
-        security.allowFormAuthenticationForClients().tokenKeyAccess("permitAll()") // 开启 /oauth/token_key 验证端口免授权访问
-                .checkTokenAccess("isAuthenticated()"); // 开启 /oauth/check_token 验证端口授权访问
+        security.passwordEncoder(passwordEncoder).tokenKeyAccess("permitAll()") // 所有客户端都能请求 /oauth/token_key 端点
+                .checkTokenAccess("isAuthenticated()") // 已验证的客户端才能请求 /oauth/check_token 端点
+                .allowFormAuthenticationForClients();
     }
 
     /**
@@ -94,8 +120,11 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
      */
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
-        endpoints.approvalStore(jdbcApprovalStore()).authenticationManager(authenticationManager)
-                .authorizationCodeServices(jdbcAuthorizationCodeServices()).tokenStore(jdbcTokenStore());
+        endpoints.authenticationManager(authenticationManager) // 认证管理对象
+                .approvalStore(jdbcApprovalStore()) // 授权信息保存策略
+                .accessTokenConverter(jwtAccessTokenConverter()) // JWT 编码的令牌值和 OAuth2 身份验证之间进行转换工具
+                .authorizationCodeServices(jdbcAuthorizationCodeServices()) // 授权码模式数据来源
+                .tokenStore(jdbcTokenStore()); // token 持久化策略
     }
 
 }
