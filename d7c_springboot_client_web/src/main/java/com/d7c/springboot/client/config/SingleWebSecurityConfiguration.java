@@ -12,9 +12,9 @@ import javax.sql.DataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -29,7 +29,6 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 
-import com.d7c.oauth2.spring.boot.SHA1PasswordEncoder;
 import com.d7c.plugins.core.StringUtil;
 import com.d7c.plugins.net.tools.IPUtil;
 import com.d7c.redis.spring.boot.autoconfigure.RedisService;
@@ -46,6 +45,12 @@ import com.d7c.springboot.common.enums.sys.LoginStatusEnum;
  * @date: 2020年7月6日 下午3:49:51
  * @Description: 单机 web security 配置
  */
+@ConditionalOnProperty( // 存在对应配置信息时初始化该配置类
+        prefix = "d7c.authorization.server", // 配置前缀 d7c.authorization.server
+        name = "enabled", // 配置名称
+        havingValue = "true", // 与配置值比较，如果相等则配置生效
+        matchIfMissing = true // 默认配置值，即默认开启此配置
+)
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity( // 开启 security 注解
@@ -85,16 +90,15 @@ public class SingleWebSecurityConfiguration extends WebSecurityConfigurerAdapter
      */
     @Resource(name = "redisServiceImpl")
     private RedisService redisService;
-
-    @Bean("sha1PasswordEncoder")
-    @Primary
-    public PasswordEncoder sha1PasswordEncoder() {
-        return new SHA1PasswordEncoder(2);
-    }
+    /**
+     * SHA1 的 PasswordEncoder 加密实现类
+     */
+    @Resource(name = "sha1PasswordEncoder")
+    private PasswordEncoder passwordEncoder;
 
     @Override
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService).passwordEncoder(sha1PasswordEncoder());
+        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
     }
 
     // org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl.CREATE_TABLE_SQL
