@@ -24,7 +24,7 @@ import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
 @Configuration
-@ComponentScan(value = {"org.flowable.ui.modeler.rest.app", "org.flowable.ui.common.rest"})
+@ComponentScan(value = {"org.flowable.ui.modeler.rest.app"/*, "org.flowable.ui.common.rest"*/})
 @EnableAsync
 public class AppDispatcherServletConfiguration implements WebMvcRegistrations {
     private static final Logger LOGGER = LoggerFactory.getLogger(AppDispatcherServletConfiguration.class);

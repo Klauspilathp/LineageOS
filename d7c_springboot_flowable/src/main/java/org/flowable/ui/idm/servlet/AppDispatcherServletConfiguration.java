@@ -25,8 +25,8 @@ import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
 @Configuration
-@ComponentScan(value = {
-        "org.flowable.ui.idm.rest.app" /*, "org.flowable.ui.common.rest.exception"*/}, excludeFilters = @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, value = {
+@ComponentScan(value = {"org.flowable.ui.idm.rest.app",
+        "org.flowable.ui.common.rest.exception"}, excludeFilters = @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, value = {
                 org.flowable.ui.common.rest.idm.remote.RemoteAccountResource.class}))
 @EnableAsync
 public class AppDispatcherServletConfiguration implements WebMvcRegistrations {
