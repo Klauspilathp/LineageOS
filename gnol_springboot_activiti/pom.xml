@@ -10,7 +10,8 @@
 	<artifactId>gnol_springboot_activiti</artifactId>
 	<packaging>jar</packaging>
 	<name>gnol_springboot_activiti</name>
-	<description>gnol_springboot 项目 activiti 工作流模块</description>
+	<description>gnol_springboot 项目 activiti 工作流模块，该模块以 jar 包的形式发布，只提供 REST 风格的 API 接口，
+		所有页面发布在 d7c_springboot_web 项目中或其他 web 容器中，BPMN 文件存储在其他存储服务上，仅通过输入流部署流程。</description>
 
 	<dependencies>
 		<!-- gnol 项目封装的 spring-boot 关于 oauth2 starter -->
