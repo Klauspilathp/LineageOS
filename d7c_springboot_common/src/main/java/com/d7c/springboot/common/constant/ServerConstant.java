@@ -15,8 +15,8 @@ public interface ServerConstant {
     String CONFIG = "d7c-springboot-config";
     String ADMIN = "d7c-springboot-admin";
     String DASHBOARD = "d7c-springboot-dashboard";
-    String WEB = "d7c-springboot-web";
-    String API = "d7c-springboot-api";
+    String WEB = "d7c-springboot-client-web";
+    String API = "d7c-springboot-client-api";
     String CLIENT1 = "d7c-springboot-client1";
     String CLIENT2 = "d7c-springboot-client2";
 
