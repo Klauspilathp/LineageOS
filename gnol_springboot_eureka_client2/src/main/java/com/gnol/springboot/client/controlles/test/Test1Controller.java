@@ -1,5 +1,7 @@
 package com.gnol.springboot.client.controlles.test;
 
+import javax.annotation.Resource;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,12 +30,20 @@ import com.netflix.discovery.EurekaClient;
 @RefreshScope
 public class Test1Controller {
     private static final Logger logger = LoggerFactory.getLogger(Test1Controller.class);
+    /**
+     * 具有负载均衡能力的 RestTemplate
+     */
     @Autowired
-    private RestTemplate restTemplate;
+    private RestTemplate loadBalancedRestTemplate;
     @Autowired
     private LoadBalancerClient loadBalancerClient;
     @Autowired
     private EurekaClient eurekaClient;
+    /**
+     * 没有负载均衡能力的 RestTemplate
+     */
+    @Resource(name = "restTemplate")
+    private RestTemplate restTemplate;
 
     /**
      * http://127.0.0.1:8093/test1/t1?id=2 需要关闭 com.gnol.springboot.client.config.RestTemplateConfig.restTemplate() 方法上的 @LoadBalanced 注解
@@ -53,7 +63,7 @@ public class Test1Controller {
     public Object t2(String id) {
         String url = "http://gnol-springboot-client1/test1/t1?id=" + id;
         logger.info("client2.t2 param id : {}, request url : {}", id, url);
-        Object result = restTemplate.getForEntity(url, Object.class);
+        Object result = loadBalancedRestTemplate.getForEntity(url, Object.class);
         return result;
     }
 

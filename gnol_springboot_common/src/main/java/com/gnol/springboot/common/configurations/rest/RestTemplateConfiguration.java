@@ -19,9 +19,16 @@ import com.gnol.springboot.common.configurations.exception.CustomResponseErrorHa
 @Configuration
 public class RestTemplateConfiguration {
 
-    @Bean
+    @Bean(name = "loadBalancedRestTemplate")
     @LoadBalanced // ribbon 的负载均衡注解，org.springframework.cloud.client.loadbalancer.LoadBalancerAutoConfiguration
     @Primary
+    public RestTemplate loadBalancedRestTemplate(RestTemplateBuilder builder) {
+        RestTemplate restTemplate = builder.build();
+        restTemplate.setErrorHandler(new CustomResponseErrorHandler());
+        return restTemplate;
+    }
+
+    @Bean(name = "restTemplate")
     public RestTemplate restTemplate(RestTemplateBuilder builder) {
         RestTemplate restTemplate = builder.build();
         restTemplate.setErrorHandler(new CustomResponseErrorHandler());
