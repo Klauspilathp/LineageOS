@@ -9,10 +9,13 @@ import com.gnol.plugins.core.PageData;
 import com.gnol.plugins.core.PageResult;
 import com.gnol.plugins.core.context.AbstractBaseService;
 import com.gnol.plugins.core.context.IdService;
+import com.gnol.plugins.tools.lang.RandomNumber;
 import com.gnol.springboot.client.daos.sys.ExtSysTestDao;
 import com.gnol.springboot.client.services.sys.SysTestService;
+import com.gnol.springboot.client.services.test1.Test1TestService;
 import com.gnol.springboot.common.daos.sys.BaseSysTestDao;
 import com.gnol.springboot.common.dos.sys.SysTest;
+import com.gnol.springboot.common.dos.test1.Test1Test;
 
 /**
  * @Title: SysTestServiceImpl
@@ -33,10 +36,28 @@ public class SysTestServiceImpl extends AbstractBaseService<BaseSysTestDao, SysT
      */
     @Resource(name = "dbIdServiceImpl")
     private IdService idService;
+    /**
+     * Test1Test Service 实现
+     */
+    @Resource(name = "test1TestServiceImpl")
+    private Test1TestService test1TestService;
 
     @Override
     public PageResult listPDPage(Page<PageData> page) {
         return PageResult.ok(sysTestDao.listPDPage(page)).setPage(page);
+    }
+
+    @Override
+    public PageResult insertTwoDataBase() {
+        int random = RandomNumber.getUnboundedInt();
+        SysTest test = new SysTest();
+        test.setName("insert two database by sys_test " + random);
+        int insert = dao.insert(test);
+
+        Test1Test test1 = new Test1Test();
+        test1.setText("insert two database by test1_test " + random);
+        int insert1 = test1TestService.insert(test1);
+        return PageResult.ok("sys_test：" + insert + ", test1_test：" + insert1 + ", random：" + random + "。");
     }
 
 }

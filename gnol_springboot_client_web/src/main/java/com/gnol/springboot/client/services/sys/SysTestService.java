@@ -25,4 +25,13 @@ public interface SysTestService extends BaseService<SysTest, Long> {
      */
     PageResult listPDPage(Page<PageData> page);
 
+    /**
+     * @Title: insertTwoDataBase
+     * @author: 吴佳隆
+     * @data: 2020年7月4日 下午6:22:14
+     * @Description: 同时操作两个库数据
+     * @return PageResult
+     */
+    PageResult insertTwoDataBase();
+
 }
