@@ -36,8 +36,25 @@ public class ShardingUserController extends WebBaseController {
     @Resource(name = "cacheIdServiceImpl")
     private IdService idService;
 
+    /**
+     * 测试单库分表
+     */
     @GetMapping(value = "t1")
     public PageResult t1() {
+        List<ShardingUser> shardingUsers = new ArrayList<ShardingUser>();
+        for (int i = 0; i < 100; i++) {
+            long userId = idService.getLong(ShardingUser.M.TABLE_NAME);
+            shardingUsers.add(new ShardingUser(userId, "user" + userId, i % 2));
+        }
+        shardingUserService.insertBatch(shardingUsers);
+        return PageResult.ok(shardingUsers);
+    }
+
+    /**
+     * 测试单表多库
+     */
+    @GetMapping(value = "t2")
+    public PageResult t2() {
         List<ShardingUser> shardingUsers = new ArrayList<ShardingUser>();
         for (int i = 0; i < 100; i++) {
             long userId = idService.getLong(ShardingUser.M.TABLE_NAME);
