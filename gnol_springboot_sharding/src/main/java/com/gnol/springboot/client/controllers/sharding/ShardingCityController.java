@@ -36,6 +36,9 @@ public class ShardingCityController extends WebBaseController {
     @Resource(name = "cacheIdServiceImpl")
     private IdService idService;
 
+    /**
+     * 测试单库分表
+     */
     @GetMapping(value = "t1")
     public PageResult t1() {
         List<ShardingCity> shardingCities = new ArrayList<ShardingCity>();
