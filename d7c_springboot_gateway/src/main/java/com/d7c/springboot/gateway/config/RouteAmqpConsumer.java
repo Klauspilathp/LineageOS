@@ -1,6 +1,5 @@
 package com.d7c.springboot.gateway.config;
 
-import org.springframework.amqp.core.Message;
 import org.springframework.amqp.rabbit.annotation.RabbitHandler;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +21,7 @@ import reactor.core.publisher.Mono;
  * @Description: 路由规则消费者去监听路由队列的变化并发布事件
  */
 @Component
-@RabbitListener(queues = "gateway:route") // 监听路由规则队列
+@RabbitListener(queues = GatewayConfiguration.GATEWAY_ROUTES_TOPIC_QUEUE) // 监听路由规则队列
 public class RouteAmqpConsumer {
     /**
      * 监听到队列改变时发布事件
@@ -36,9 +35,8 @@ public class RouteAmqpConsumer {
     private DynamicRouteDefinitionRepository routeDefinitionRepository;
 
     @RabbitHandler
-    public void routeHandler(Message msg) {
-        GatewayRouteDefinition gatewayRouteDefinition = JSON.parseObject(new String(msg.getBody()),
-                GatewayRouteDefinition.class);
+    public void routeHandler(String msg) {
+        GatewayRouteDefinition gatewayRouteDefinition = JSON.parseObject(msg, GatewayRouteDefinition.class);
         if (gatewayRouteDefinition == null) {
             return;
         }

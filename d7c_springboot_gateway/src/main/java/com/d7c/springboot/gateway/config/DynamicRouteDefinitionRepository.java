@@ -47,6 +47,9 @@ public class DynamicRouteDefinitionRepository implements RouteDefinitionReposito
      * 路由规则定义容器
      */
     private final Map<String, RouteDefinition> routes = synchronizedMap(new LinkedHashMap<String, RouteDefinition>());
+    /**
+     * 属性文件中 gateway 配置
+     */
     @Autowired
     private GatewayProperties properties;
     /**
@@ -76,9 +79,11 @@ public class DynamicRouteDefinitionRepository implements RouteDefinitionReposito
             // 将 routeDefinitions 解析成 List<RouteDefinition> 并赋值给 definitions
             definitions = JSON.parseArray(JSON.toJSONString(routeDefinitions), RouteDefinition.class);
         } else {
+            // 向消息队列发送一条点对点消息，通知加载数据
             GatewayRouteDefinition gatewayRouteDefinition = new GatewayRouteDefinition();
             gatewayRouteDefinition.setOperationType(GatewayRouteDefinition.OperationType.SELECT.name());
-            amqpTemplate.convertAndSend("gateway:routes", JSON.toJSONString(gatewayRouteDefinition));
+            amqpTemplate.convertAndSend(GatewayConfiguration.GATEWAY_ROUTES_DIRECT_EXCHANGE,
+                    GatewayConfiguration.GATEWAY_ROUTES_DIRECT_ROUTINGKEY, JSON.toJSONString(gatewayRouteDefinition));
             logger.warn("Redis 中不存在路由定义列表，向消息队列中发一条消息通知其他服务从数据库中查询路由定义数据并放入 Redis 中。");
 
             // 暂时加载本地路由定义列表
