@@ -1,0 +1,36 @@
+LogicTable：
+	数据分片的逻辑表，对于水平拆分的数据库（表），同一类表的总称。例如：订单数据根据主键尾数拆分为 10 张表，分别是 t_order_0 到 t_order_9，那么逻辑表名为 t_order。
+ActualTable：
+	在分片数据库中真实存在的物理表，即 LogicTable 中的 t_order_0 到 t_order_9。
+DataNode：
+	数据分片的最小单元，由数据源名称和数据表组成。例如：db_0.t_order_0。配置时默认各个分片数据库的表结构均相同，直接配置逻辑表和真实表对应关系即可，如果各数据库的表结构不同，可使用 ds.actual_table 配置。
+BindingTable：
+	指在任何场景下分片规则均一致的主表和子表。例如：订单表和订单项表，均按照订单 id 分片，则此两张表互为 BindingTable 关系，BindingTable 关系的多表关联查询不会出现笛卡尔积关联，关联查询效率将大大提升。
+ShardingColumn：
+	分片字段，用于将数据库（表）水平拆分的关键字段。例如：订单表订单 id 分片尾数取模分片，则订单 id 为分片字段。SQL 中如无分片字段，将执行全路由，性能较差。Sharding-JDBC 支持多分片字段。
+ShardingAlgorithm：
+	分片算法，Sharding-JDBC 通过分片算法将数据分片，支持通过等号、BETWEEN 和 IN 分片。分片算法目前需要业务方开发者自行实现，可实现的灵活度非常高。未来 Sharding-JDBC 也将会实现常用分片算法，如 range、hash 和 tag 等。
+SQL Hint：
+	对于分片字段非 SQL 决定，而由其他外置条件决定的场景，可使用 SQL Hint 灵活的注入分片字段。例如：内部系统按员工登录 ID 分库，而数据库中并无此字段。SQL Hint 支持通过 ThreadLocal 和 SQL 注释（待实现）两种方式实现。
+Config Map：
+	通过 Config Map 可以配置分库分表或读写分离数据源的元数据，可通过调用 ConfigMapContext.getInstance() 获取 ConfigMap 中的 shardingConfig 和 masterSlaveConfig 数据。
+例如：机器权重不同则流量可能不同，可通过 ConfigMap 配置机器权重元数据。
+
+分片策略：
+	Sharding-JDBC 提供了 5 种分片策略，由于分片算法和业务实现紧密相关，因此 Sharding-JDBC 并未提供内置分片算法，而是通过分片策略将各种场景提炼出来，提供更高层级的抽象，并提供接口让应用开发者自行实现分片算法。
+StandardShardingStrategy：
+	标准分片策略，提供对 SQL 语句中的 =、IN 和 BETWEEN AND 的分片操作支持。StandardShardingStrategy 只支持单分片键，提供 PreciseShardingAlgorithm 和 RangeShardingAlgorithm 两中分片算法。
+PreciseShardingAlgorithm（精确分库）是必选的，用于处理 = 和 IN 的分片。RangeShardingAlgorithm（范围分库）是可选的，用于处理 BETWEEN AND 分片，如果不配置 RangeShardingAlgorithm，
+SQL 中的 BETWEEN AND 将按照全库路由处理。
+ComplexShardingStrategy：
+	复合分片策略，提供对 SQL 语句中的 =、IN 和 BETWEEN AND 的分片操作支持。ComplexShardingStrategy 支持多分片键，由于多分片键之间的关系复杂，因此 Sharding-JDBC 并未做过多的封装，
+而是直接将分片键值组合以及分片操作符交于算法接口，完全由应用开发者实现，提供最大的灵活度。
+InlineShardingStrategy：
+	Inline 表达式分片策略，使用 Groovy 的 Inline 表达式对 SQL 语句中的 = 和 IN 的分片操作支持。InlineShardingStrategy 只支持单分片键，对于简单的分片算法，可通过简单的配置使用，从而避免繁琐的 Java 代码开发，
+如: t_user${userId % 8} 表示 t_user 表按照 userId 按 8 取模分成 8 个表，表名称为 t_user_0 到 t_user_7。
+HintShardingStrategy：
+	通过 Hint 而非 SQL 解析方式分片的策略。
+NoneShardingStrategy：
+	不分片的策略。
+
+
