@@ -1,11 +1,11 @@
-package com.gnol.springboot.client.bos.tree;
+package com.gnol.springboot.client.dtos.tree;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * @Title: SelectTreeUtil
- * @Package: com.gnol.springboot.client.bos.tree
+ * @Package: com.gnol.springboot.client.dtos.tree
  * @author: 吴佳隆
  * @date: 2020年4月18日 下午12:05:31
  * @Description: selectTree 工具类

@@ -10,7 +10,7 @@
 	</select>
 	
 	<!-- zTree 角色树 -->
-	<select id="listZTreeByParentId" parameterType="java.lang.Long" resultType="com.gnol.springboot.client.bos.tree.ZTree">
+	<select id="listZTreeByParentId" parameterType="java.lang.Long" resultType="com.gnol.springboot.client.dtos.tree.ZTree">
 		SELECT roleId id, parentId pId, roleName name, 0 checked, 1 isParent FROM sys_role
 		WHERE `status` = 1 
 			<if test="null != _parameter">
@@ -20,7 +20,7 @@
 	</select>
 	
 	<!-- SelectTree 下拉树 -->
-	<select id="listSelectTreeByParentId" parameterType="java.lang.Long" resultType="com.gnol.springboot.client.bos.tree.SelectTree">
+	<select id="listSelectTreeByParentId" parameterType="java.lang.Long" resultType="com.gnol.springboot.client.dtos.tree.SelectTree">
 		SELECT roleId id, parentId pId, roleName name<!-- , parentId title, "static/gnol/img/user.gif" icon --> FROM sys_role
 		WHERE `status` = 1 
 			<if test="null != _parameter">

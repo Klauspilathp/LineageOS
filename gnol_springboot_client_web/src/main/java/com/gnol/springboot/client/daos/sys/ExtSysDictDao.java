@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import com.gnol.plugins.core.Page;
 import com.gnol.plugins.core.PageData;
-import com.gnol.springboot.client.bos.tree.ZTree;
+import com.gnol.springboot.client.dtos.tree.ZTree;
 
 /**
  * @Title: ExtSysDictDao

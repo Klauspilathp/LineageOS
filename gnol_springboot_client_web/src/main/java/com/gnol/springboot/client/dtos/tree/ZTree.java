@@ -1,11 +1,11 @@
-package com.gnol.springboot.client.bos.tree;
+package com.gnol.springboot.client.dtos.tree;
 
 import java.io.Serializable;
 import java.util.List;
 
 /**
  * @Title: ZTree
- * @Package: com.gnol.springboot.client.bos.tree
+ * @Package: com.gnol.springboot.client.dtos.tree
  * @author: 吴佳隆
  * @date: 2020年4月7日 下午2:08:39
  * @Description: zTree 菜单树 Pojo

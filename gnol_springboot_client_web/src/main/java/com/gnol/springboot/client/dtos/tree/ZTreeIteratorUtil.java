@@ -1,4 +1,4 @@
-package com.gnol.springboot.client.bos.tree;
+package com.gnol.springboot.client.dtos.tree;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,7 +6,7 @@ import java.util.ListIterator;
 
 /**
  * @Title: ZTreeUtil
- * @Package: com.gnol.springboot.client.bos.tree
+ * @Package: com.gnol.springboot.client.dtos.tree
  * @author: 吴佳隆
  * @date: 2020年4月17日 下午6:38:23
  * @Description: ZTree 同步树工具类

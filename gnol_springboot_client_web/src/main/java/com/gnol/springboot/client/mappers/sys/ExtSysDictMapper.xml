@@ -4,7 +4,7 @@
 	<!-- resultMap引入：resultMap="com.gnol.springboot.common.daos.sys.BaseSysDictDao.BaseResultMap" -->
 	<!-- SQL 片段引入：<include refid="com.gnol.springboot.common.daos.sys.BaseSysDictDao.Base_Column_List"/> -->
 	<!-- zTree 菜单树 =======>start -->
-	<select id="listZTreeFormTreeFrameByParentId" parameterType="pd" resultType="com.gnol.springboot.client.bos.tree.ZTree">
+	<select id="listZTreeFormTreeFrameByParentId" parameterType="pd" resultType="com.gnol.springboot.client.dtos.tree.ZTree">
 		SELECT dictId id, parentId pId, IF("CN" &lt;=&gt; '${language}', dictCNValue, dictENValue) name, 1 isParent, 
 		"treeFrame" target, CONCAT("sys/dict/listByParentIdPage.shtml?dictId=", dictId) url, 
 		"static/plugins/zTree/3.5/img/diy/1_close.png" icon FROM sys_dict

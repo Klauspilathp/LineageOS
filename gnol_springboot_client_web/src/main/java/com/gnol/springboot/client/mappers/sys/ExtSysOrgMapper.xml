@@ -4,7 +4,7 @@
 	<!-- resultMap引入：resultMap="com.gnol.springboot.common.daos.sys.BaseSysOrgDao.BaseResultMap" -->
 	<!-- SQL 片段引入：<include refid="com.gnol.springboot.common.daos.sys.BaseSysOrgDao.Base_Column_List"/> -->
 	<!-- zTree 菜单树 -->
-	<select id="listZTreeFormTreeFrameByParentId" parameterType="java.lang.Long" resultType="com.gnol.springboot.client.bos.tree.ZTree">
+	<select id="listZTreeFormTreeFrameByParentId" parameterType="java.lang.Long" resultType="com.gnol.springboot.client.dtos.tree.ZTree">
 		SELECT orgId id, parentId pId, orgNameCN name, 0 checked, "treeFrame" target, "static/gnol/img/user.gif" icon, 
 		CONCAT("sys/org/listAllZTreeByParentId.shtml?orgId=", orgId) url FROM sys_org 
 		WHERE `status` = 1 
@@ -113,7 +113,7 @@
 	</select>
 	
 	<!-- SelectTree 下拉树 -->
-	<select id="listSelectTreeBy" parameterType="pd" resultType="com.gnol.springboot.client.bos.tree.SelectTree">
+	<select id="listSelectTreeBy" parameterType="pd" resultType="com.gnol.springboot.client.dtos.tree.SelectTree">
 		SELECT orgId id, parentId pId, orgNameCN name<!-- , parentId title, "static/gnol/img/user.gif" icon --> FROM sys_org
 		WHERE `status` = 1 
 			<if test="null != parentId">

@@ -1,10 +1,10 @@
-package com.gnol.springboot.client.bos.tree;
+package com.gnol.springboot.client.dtos.tree;
 
 import java.io.Serializable;
 
 /**
  * @Title: SelectTree
- * @Package: com.gnol.springboot.client.bos.tree
+ * @Package: com.gnol.springboot.client.dtos.tree
  * @author: 吴佳隆
  * @date: 2020年4月15日 下午6:07:44
  * @Description: SelectTree pojo

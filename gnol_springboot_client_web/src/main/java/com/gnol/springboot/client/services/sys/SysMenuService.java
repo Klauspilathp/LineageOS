@@ -6,8 +6,8 @@ import java.util.Set;
 import com.gnol.plugins.core.PageData;
 import com.gnol.plugins.core.PageResult;
 import com.gnol.plugins.core.context.BaseService;
-import com.gnol.springboot.client.bos.tree.MenuTree;
-import com.gnol.springboot.client.bos.tree.ZTree;
+import com.gnol.springboot.client.dtos.tree.MenuTree;
+import com.gnol.springboot.client.dtos.tree.ZTree;
 import com.gnol.springboot.common.dos.sys.SysMenu;
 
 /**

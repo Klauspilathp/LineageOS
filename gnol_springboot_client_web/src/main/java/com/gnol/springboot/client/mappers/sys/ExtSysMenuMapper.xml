@@ -18,7 +18,7 @@
 	</select>
 	
 	<!-- MenuTree 查询菜单树 =======>start -->
-	<resultMap id="ResultMenuTreeList" type="com.gnol.springboot.client.bos.tree.MenuTree">
+	<resultMap id="ResultMenuTreeList" type="com.gnol.springboot.client.dtos.tree.MenuTree">
 		<id column="menuId" property="menuId" jdbcType="INTEGER" />
 		<result column="parentId" property="parentId" jdbcType="INTEGER" />
 		<result column="menuName" property="menuName" jdbcType="VARCHAR" />
@@ -30,10 +30,10 @@
 		<result column="visible" property="visible" jdbcType="TINYINT" />
 		<!-- 
 			关闭 Mybatis 延迟加载后，collection 映射会报错；
-			开启 Mybatis 延迟加载后 dubbo 消费者的 com.gnol.springboot.client.bos.tree.MenuTree 对象中的 childrens 属性为 null；
+			开启 Mybatis 延迟加载后 dubbo 消费者的 com.gnol.springboot.client.dtos.tree.MenuTree 对象中的 childrens 属性为 null；
 			所以只能在 service 层做嵌套查询解决此问题。
 		 -->
-		<!-- <collection property="childrens" ofType="com.gnol.springboot.client.bos.tree.MenuTree" column="spid"
+		<!-- <collection property="childrens" ofType="com.gnol.springboot.client.dtos.tree.MenuTree" column="spid"
 			select="listMenuTreeByParentId">
 			<id column="menuId" property="menuId" jdbcType="INTEGER" />
 			<result column="parentId" property="parentId" jdbcType="INTEGER" />
@@ -61,7 +61,7 @@
 		menuId id, parentId pId, menuName name, icon, 0 checked, "treeFrame" target,
 		CONCAT("sys/menu/goEditMenu.shtml?menuId=", menuId) url
 	</sql>
-	<select id="listZTreeFormTreeFrameByParentId" parameterType="java.lang.Integer" resultType="com.gnol.springboot.client.bos.tree.ZTree">
+	<select id="listZTreeFormTreeFrameByParentId" parameterType="java.lang.Integer" resultType="com.gnol.springboot.client.dtos.tree.ZTree">
 		SELECT <include refid="zTree_Column_List" /> FROM sys_menu
 		WHERE `status` = 1 AND visible = 1 
 			<if test="null != _parameter">

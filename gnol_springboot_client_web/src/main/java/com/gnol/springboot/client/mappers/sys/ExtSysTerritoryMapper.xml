@@ -8,7 +8,7 @@
 		territoryId id, parentId pId, territoryNameCN name, 0 checked, 1 isParent, "treeFrame" target,
 		CONCAT("sys/territory/listByParentIdPage.shtml?territoryId=", territoryId) url 
 	</sql>
-	<select id="listZTreeFormTreeFrameByParentId" parameterType="java.lang.Long" resultType="com.gnol.springboot.client.bos.tree.ZTree">
+	<select id="listZTreeFormTreeFrameByParentId" parameterType="java.lang.Long" resultType="com.gnol.springboot.client.dtos.tree.ZTree">
 		SELECT <include refid="zTree_Column_List" /> FROM sys_territory
 		WHERE `status` = 1 
 		<if test="null != _parameter">
@@ -16,7 +16,7 @@
 		</if>
 		ORDER BY sort ASC
 	</select>
-	<select id="listZTreeByParentId" parameterType="java.lang.Long" resultType="com.gnol.springboot.client.bos.tree.ZTree">
+	<select id="listZTreeByParentId" parameterType="java.lang.Long" resultType="com.gnol.springboot.client.dtos.tree.ZTree">
 		SELECT territoryId id, parentId pId, territoryNameCN name, 1 isParent FROM sys_territory
 		WHERE `status` = 1 
 		<if test="null != _parameter">

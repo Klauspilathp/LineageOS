@@ -1,11 +1,11 @@
-package com.gnol.springboot.client.bos.tree;
+package com.gnol.springboot.client.dtos.tree;
 
 import java.io.Serializable;
 import java.util.List;
 
 /**
  * @Title: MenuTree
- * @Package: com.gnol.springboot.client.bos.tree
+ * @Package: com.gnol.springboot.client.dtos.tree
  * @author: 吴佳隆
  * @date: 2019年7月1日 下午4:19:48
  * @Description: 系统菜单树
