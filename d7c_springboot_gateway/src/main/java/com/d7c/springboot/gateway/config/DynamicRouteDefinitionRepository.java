@@ -6,11 +6,13 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.PostConstruct;
+
+import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cloud.gateway.config.GatewayProperties;
 import org.springframework.cloud.gateway.route.RouteDefinition;
 import org.springframework.cloud.gateway.route.RouteDefinitionRepository;
 import org.springframework.cloud.gateway.support.NotFoundException;
@@ -48,11 +50,6 @@ public class DynamicRouteDefinitionRepository implements RouteDefinitionReposito
      */
     private final Map<String, RouteDefinition> routes = synchronizedMap(new LinkedHashMap<String, RouteDefinition>());
     /**
-     * 属性文件中 gateway 配置
-     */
-    @Autowired
-    private GatewayProperties properties;
-    /**
      * redis 访问对象助手
      */
     @Autowired
@@ -63,39 +60,36 @@ public class DynamicRouteDefinitionRepository implements RouteDefinitionReposito
     @Autowired
     private AmqpTemplate amqpTemplate;
 
-    /**
-     * 该方法默认 eureka.client.registry-fetch-interval-seconds 秒刷新一次。
-     */
-    @Override
-    public Flux<RouteDefinition> getRouteDefinitions() {
-        if (!routes.isEmpty()) {
-            return Flux.fromIterable(routes.values());
-        }
-
+    @PostConstruct
+    public void loadRouteDefinitions() {
         // 从 redis 中获取路由列表
         Object routeDefinitions = template.opsForValue().get("gateway:routes");
         List<RouteDefinition> definitions = null;
         if (StringUtil.isNotBlank(routeDefinitions)) {
             // 将 routeDefinitions 解析成 List<RouteDefinition> 并赋值给 definitions
             definitions = JSON.parseArray(JSON.toJSONString(routeDefinitions), RouteDefinition.class);
-        } else {
-            // 向消息队列发送一条点对点消息，通知加载数据
-            GatewayRouteDefinition gatewayRouteDefinition = new GatewayRouteDefinition();
-            gatewayRouteDefinition.setOperationType(GatewayRouteDefinition.OperationType.SELECT.name());
-            amqpTemplate.convertAndSend(GatewayConfiguration.GATEWAY_ROUTES_DIRECT_EXCHANGE,
-                    GatewayConfiguration.GATEWAY_ROUTES_DIRECT_ROUTINGKEY, JSON.toJSONString(gatewayRouteDefinition));
-            logger.warn("Redis 中不存在路由定义列表，向消息队列中发一条消息通知其他服务从数据库中查询路由定义数据并放入 Redis 中。");
-
-            // 暂时加载本地路由定义列表
-            definitions = properties.getRoutes();
+            if (CollectionUtils.isNotEmpty(definitions)) {
+                // 将路由定义列表保存到本地缓存，减少查询，提高效率。
+                definitions.stream().forEach(route -> {
+                    routes.put(route.getId(), route);
+                });
+                return;
+            }
         }
+        // 向消息队列发送一条点对点消息，通知加载数据
+        GatewayRouteDefinition gatewayRouteDefinition = new GatewayRouteDefinition();
+        gatewayRouteDefinition.setOperationType(GatewayRouteDefinition.OperationType.SELECT.name());
+        amqpTemplate.convertAndSend(GatewayConfiguration.GATEWAY_ROUTES_DIRECT_EXCHANGE,
+                GatewayConfiguration.GATEWAY_ROUTES_DIRECT_ROUTINGKEY, JSON.toJSONString(gatewayRouteDefinition));
+        logger.warn("Redis 中不存在路由定义列表，向消息队列中发一条消息通知其他服务从数据库中查询路由定义数据并放入 Redis 中。");
+    }
 
-        // 将路由定义列表保存到本地缓存，减少查询，提高效率。
-        definitions.stream().forEach(route -> {
-            routes.put(route.getId(), route);
-        });
-
-        return Flux.fromIterable(definitions);
+    /**
+     * 该方法默认 eureka.client.registry-fetch-interval-seconds 秒刷新一次。
+     */
+    @Override
+    public Flux<RouteDefinition> getRouteDefinitions() {
+        return Flux.fromIterable(routes.values());
     }
 
     @Override
@@ -116,7 +110,7 @@ public class DynamicRouteDefinitionRepository implements RouteDefinitionReposito
                 routes.remove(id);
                 return Mono.empty();
             }
-            return Mono.defer(() -> Mono.error(new NotFoundException("RouteDefinition not found: " + routeId)));
+            return Mono.defer(() -> Mono.error(new NotFoundException("RouteDefinition not found: " + id)));
         });
     }
 

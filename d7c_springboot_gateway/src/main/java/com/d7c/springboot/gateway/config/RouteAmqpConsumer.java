@@ -1,10 +1,13 @@
 package com.d7c.springboot.gateway.config;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.annotation.RabbitHandler;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.event.RefreshRoutesEvent;
 import org.springframework.cloud.gateway.route.RouteDefinition;
+import org.springframework.cloud.gateway.route.RouteDefinitionWriter;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
 
@@ -23,6 +26,7 @@ import reactor.core.publisher.Mono;
 @Component
 @RabbitListener(queues = GatewayConfiguration.GATEWAY_ROUTES_TOPIC_QUEUE) // 监听路由规则队列
 public class RouteAmqpConsumer {
+    private static final Logger logger = LoggerFactory.getLogger(RouteAmqpConsumer.class);
     /**
      * 监听到队列改变时发布事件
      */
@@ -32,7 +36,7 @@ public class RouteAmqpConsumer {
      * 动态路由配置
      */
     @Autowired
-    private DynamicRouteDefinitionRepository routeDefinitionRepository;
+    private RouteDefinitionWriter routeDefinitionWriter;
 
     @RabbitHandler
     public void routeHandler(String msg) {
@@ -48,14 +52,22 @@ public class RouteAmqpConsumer {
                 || operationType.equalsIgnoreCase(GatewayRouteDefinition.OperationType.UPDATE.name())) {
             RouteDefinition routeDefinition = gatewayRouteDefinition.parseToRouteDefinition();
             if (routeDefinition != null) {
-                routeDefinitionRepository.save(Mono.just(routeDefinition)).subscribe();
-                publisher.publishEvent(new RefreshRoutesEvent(this));
+                try {
+                    routeDefinitionWriter.save(Mono.just(routeDefinition)).subscribe();
+                    publisher.publishEvent(new RefreshRoutesEvent(this));
+                } catch (Exception e) {
+                    logger.error("Error saving routing rule : {}", e.getMessage());
+                }
             }
         } else if (operationType.equalsIgnoreCase(GatewayRouteDefinition.OperationType.DELETE.name())) {
             String id = gatewayRouteDefinition.getId();
             if (StringUtil.isNotBlank(id)) {
-                routeDefinitionRepository.delete(Mono.just(id)).subscribe();
-                publisher.publishEvent(new RefreshRoutesEvent(this));
+                try {
+                    routeDefinitionWriter.delete(Mono.just(id)).subscribe();
+                    publisher.publishEvent(new RefreshRoutesEvent(this));
+                } catch (Exception e) {
+                    logger.error("Error deleting routing rule : {}", e.getMessage());
+                }
             }
         }
 
