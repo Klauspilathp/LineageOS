@@ -22,6 +22,10 @@ public class GnolProperties {
      * 系统名称
      */
     private String systemName;
+    /**
+     * 默认密码
+     */
+    private String defaultPassword;
 
     public String getSystemName() {
         return systemName;
@@ -29,6 +33,14 @@ public class GnolProperties {
 
     public void setSystemName(String systemName) {
         this.systemName = systemName;
+    }
+
+    public String getDefaultPassword() {
+        return defaultPassword;
+    }
+
+    public void setDefaultPassword(String defaultPassword) {
+        this.defaultPassword = defaultPassword;
     }
 
 }
