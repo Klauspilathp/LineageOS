@@ -79,12 +79,13 @@
 		{{#  } }}
 	</script>
 	<script type="text/html" id="table-toolbar">
-		<div class = "layui-btn-container" >
-            <button class="layui-btn layui-btn-sm" lay-event="goAdd">新增</button>
-            <button class="layui-btn layui-btn-sm" lay-event="batchDel">批量删除</button>
+		<div class = "layui-btn-container">
+            <button class="layui-btn layui-btn-sm" sec:authorize="hasRole('sys_user:goAdd')" onclick="xadmin.open('新增系统用户','/sys/user/goAdd', 800, 500)">新增</button>
+            <button class="layui-btn layui-btn-sm" lay-event="batchDel" sec:authorize="hasRole('sys_user:batchDel')">批量删除</button>
         </div>
     </script>
 	<script type="text/javascript" src="/static/lib/layui/layui.js" charset="UTF-8"></script>
+	<script type="text/javascript" src="/static/js/xadmin.js"></script>
 	<script type="text/javascript" src="/static/js/gnol.util.js"></script>
 	<!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
 	<!--[if lt IE 9]>
@@ -108,15 +109,11 @@
             // 头部工具栏监听事件
             table.on('toolbar(table-id)', function(obj) {
                 switch (obj.event) {
-                    case 'goAdd':
-                        
-                        break;
                     case 'batchDel':
                         var data = table.checkStatus(obj.config.id).data;
                         if (data.length == 0) {
                             errorMsg("请先选择要批量删除的用户！");
                         }
-                        //console.log(data);
                         break;
                     default:
                 }
