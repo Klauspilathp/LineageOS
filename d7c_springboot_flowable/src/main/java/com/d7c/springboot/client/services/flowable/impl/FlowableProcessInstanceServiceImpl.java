@@ -28,11 +28,18 @@ import com.d7c.springboot.client.services.flowable.FlowableProcessInstanceServic
  */
 @Service(value = "flowableProcessInstanceServiceImpl")
 public class FlowableProcessInstanceServiceImpl implements FlowableProcessInstanceService {
+    /**
+     * 操作流程实例服务
+     */
     @Autowired
     private RuntimeService runtimeService;
 
     @Override
     public PageResult listProcessInstance(Page<PageData> page) {
+        if (page == null) {
+            return PageResult.error("分页对象不能为空！");
+        }
+
         ProcessInstanceQuery processInstanceQuery = runtimeService.createProcessInstanceQuery();
         PageData args = page.getArgs();
         if (args != null && !args.isEmpty()) {

@@ -3,6 +3,7 @@ package com.d7c.springboot.client.services.flowable;
 import java.util.List;
 
 import com.d7c.plugins.core.PageData;
+import com.d7c.plugins.core.PageResult;
 
 /**
  * @Title: FlowableTaskService
@@ -23,5 +24,15 @@ public interface FlowableTaskService {
      * @return List<PageData>
      */
     List<PageData> listTask(String deploymentId, String userIdForCandidateAndAssignee);
+
+    /**
+     * @Title: listRunTask
+     * @author: 吴佳隆
+     * @data: 2021年5月8日 下午12:50:58
+     * @Description: 根据流程实例 ID 查询正在执行的任务列表
+     * @param processInstanceId
+     * @return PageResult
+     */
+    PageResult listRunTask(String processInstanceId);
 
 }

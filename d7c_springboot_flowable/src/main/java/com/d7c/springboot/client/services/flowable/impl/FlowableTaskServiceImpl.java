@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.d7c.plugins.core.PageData;
+import com.d7c.plugins.core.PageResult;
 import com.d7c.plugins.core.StringUtil;
 import com.d7c.springboot.client.services.flowable.FlowableTaskService;
 
@@ -22,6 +23,9 @@ import com.d7c.springboot.client.services.flowable.FlowableTaskService;
  */
 @Service(value = "flowableTaskServiceImpl")
 public class FlowableTaskServiceImpl implements FlowableTaskService {
+    /**
+     * 操作流程任务服务
+     */
     @Autowired
     private TaskService taskService;
 
@@ -46,11 +50,35 @@ public class FlowableTaskServiceImpl implements FlowableTaskService {
                     .set("claimTime", task.getClaimTime()) // 完成时间
                     .set("createTime", task.getCreateTime()) // 创建时间
                     .set("processDefinitionId", task.getProcessDefinitionId()) // 流程部署 ID
-                    .set("processInstanceId()", task.getProcessInstanceId()) // 流程实例 ID 
+                    .set("processInstanceId", task.getProcessInstanceId()) // 流程实例 ID 
             );
         });
 
         return pds;
+    }
+
+    @Override
+    public PageResult listRunTask(String processInstanceId) {
+        if (StringUtil.isBlank(processInstanceId)) {
+            return PageResult.error("processInstanceId 不能为空！");
+        }
+
+        List<Task> tasks = taskService.createTaskQuery().processInstanceId(processInstanceId).orderByTaskCreateTime()
+                .asc().list();
+
+        List<PageData> pds = new ArrayList<PageData>();
+        tasks.stream().forEach(task -> {
+            pds.add(PageData.build().set("taskId", task.getId()) // 任务 ID
+                    .set("taskName", task.getName()) // 任务名称
+                    .set("assignee", task.getAssignee()) // 任务接收人
+                    .set("claimTime", task.getClaimTime()) // 完成时间
+                    .set("createTime", task.getCreateTime()) // 创建时间
+                    .set("processDefinitionId", task.getProcessDefinitionId()) // 流程部署 ID
+                    .set("processInstanceId", task.getProcessInstanceId()) // 流程实例 ID 
+            );
+        });
+
+        return PageResult.ok(pds);
     }
 
 }
