@@ -1,6 +1,7 @@
 package com.gnol.springboot.client.config;
 
 import java.io.IOException;
+import java.util.Set;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -10,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
@@ -82,10 +84,12 @@ public class JwtAuthenticationFilter extends BasicAuthenticationFilter {
         }
 
         // 初始化 SecurityContextHolder对象
+        Set<SimpleGrantedAuthority> authorities = sysMenuService
+                .listPermissionsByRoleId(StringUtil.toLong(claims.get("roleId")));
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
-                StringUtil.toString(claims.get("username")), null,
-                sysMenuService.listPermissionsByRoleId(StringUtil.toLong(claims.get("roleId"))));
-        Object principal = authenticationToken.getPrincipal();
+                new CustomUserDetails(StringUtil.toLong(claims.get("userId")),
+                        StringUtil.toString(claims.get("username")), "NO_SESSION_AUTHENTICATION", true, authorities),
+                null, authorities);
         SecurityContextHolder.getContext().setAuthentication(authenticationToken);
         chain.doFilter(request, response);
     }
