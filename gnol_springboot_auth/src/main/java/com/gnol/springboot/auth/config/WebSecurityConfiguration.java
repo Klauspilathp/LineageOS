@@ -19,15 +19,15 @@ import com.gnol.springboot.auth.daos.security.ExtSecurityKeyDao;
 import com.gnol.springboot.auth.daos.sys.ExtSysMenuDao;
 
 /**
- * @Title: ClusterWebSecurityConfiguration
+ * @Title: WebSecurityConfiguration
  * @Package: com.gnol.springboot.client.config
  * @author: 吴佳隆
  * @date: 2020年7月6日 下午3:49:51
- * @Description: 集群 web security 配置
+ * @Description: web security 配置
  */
 @Configuration
 @EnableWebSecurity
-public class ClusterWebSecurityConfiguration extends WebSecurityConfigurerAdapter {
+public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     /**
      * gnol 系统_用户表 Service 实现
      */
