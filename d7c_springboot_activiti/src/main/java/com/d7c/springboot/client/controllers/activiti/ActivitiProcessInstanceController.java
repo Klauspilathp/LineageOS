@@ -8,6 +8,7 @@ import org.activiti.api.process.model.ProcessInstance;
 import org.activiti.api.process.model.builders.ProcessPayloadBuilder;
 import org.activiti.api.process.runtime.ProcessRuntime;
 import org.activiti.api.runtime.shared.query.Pageable;
+import org.activiti.engine.RuntimeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,6 +37,11 @@ public class ActivitiProcessInstanceController extends WebBaseController {
      */
     @Autowired
     private ProcessRuntime processRuntime;
+    /**
+     * 提供对流程进行控制的服务
+     */
+    @Autowired
+    private RuntimeService runtimeService;
 
     /**
      * @Title: listProcessInstance
@@ -51,6 +57,24 @@ public class ActivitiProcessInstanceController extends WebBaseController {
                 .processInstances(Pageable.of(page.getCurrentResult(), page.getPageSize()));
         page.setTotalResult(processInstances.getTotalItems());
         return PageResult.ok(processInstances.getContent()).setPage(page);
+    }
+
+    /**
+     * @Title: runProcessInstance
+     * @author: 吴佳隆
+     * @data: 2021年1月18日 下午2:33:54
+     * @Description: 启动流程实例
+     * @param processDefinitionKey  流程实例 Key
+     * @param businessKey           业务编号
+     * @param instanceVariable      流程实例参数
+     * @return PageResult
+     */
+    @GetMapping(value = "/runProcessInstance")
+    public PageResult runProcessInstance(@RequestParam("processDefinitionKey") String processDefinitionKey,
+            @RequestParam("businessKey") String businessKey, @RequestParam("variables") Map<String, Object> variables) {
+        org.activiti.engine.runtime.ProcessInstance processInstance = runtimeService
+                .startProcessInstanceByKey(processDefinitionKey, businessKey, variables);
+        return PageResult.ok(processInstance);
     }
 
     /**

@@ -3,6 +3,7 @@ package com.d7c.springboot.client.controllers.activiti;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.List;
 import java.util.zip.ZipInputStream;
 
 import javax.servlet.http.HttpServletRequest;
@@ -83,6 +84,23 @@ public class ActivitiProcessDefinitionController extends WebBaseController {
         }
         inputStream.close();
         response.flushBuffer();
+    }
+
+    /**
+     * @Title: listProcessDefinitionByProcessDefinitionKey
+     * @author: 吴佳隆
+     * @data: 2021年1月20日 下午5:51:21
+     * @Description: 根据流程定义 key 查询流程定义列表
+     * @param processDefinitionKey
+     * @return PageResult
+     */
+    @GetMapping(value = "/listProcessDefinitionByProcessDefinitionKey")
+    public PageResult listProcessDefinitionByProcessDefinitionKey(
+            @RequestParam("processDefinitionKey") String processDefinitionKey) {
+        List<org.activiti.engine.repository.ProcessDefinition> processDefinitions = repositoryService
+                .createProcessDefinitionQuery().processDefinitionKey(OPERATE_FAILED).orderByProcessDefinitionVersion()
+                .desc().list();
+        return PageResult.ok(processDefinitions);
     }
 
     /**

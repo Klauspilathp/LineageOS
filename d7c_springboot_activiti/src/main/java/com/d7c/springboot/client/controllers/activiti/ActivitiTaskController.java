@@ -74,7 +74,15 @@ public class ActivitiTaskController extends WebBaseController {
         return PageResult.ok(tasks.getContent()).setPage(page);
     }
 
-    @GetMapping(value = "/taskId")
+    /**
+     * @Title: completeTask
+     * @author: 吴佳隆
+     * @data: 2021年1月20日 下午5:44:45
+     * @Description: 执行个人任务
+     * @param taskId        任务 ID
+     * @return PageResult
+     */
+    @GetMapping(value = "/completeTask")
     public PageResult completeTask(@RequestParam("taskId") String taskId) {
         if (StringUtil.isBlank(taskId)) {
             return PageResult.error("taskId 不能为空！");
