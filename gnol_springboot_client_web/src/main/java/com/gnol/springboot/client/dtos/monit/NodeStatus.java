@@ -33,6 +33,10 @@ public class NodeStatus {
      */
     private String osVersion;
     /**
+     * 系统架构
+     */
+    private String osArch;
+    /**
      * java 版本
      */
     private String javaVersion;
@@ -67,7 +71,7 @@ public class NodeStatus {
     /**
      * 时间戳
      */
-    private long timestamp;
+    private String timestamp;
     /**
      * 文件编码方式
      */
@@ -84,7 +88,7 @@ public class NodeStatus {
     /**
      * 内存池信息
      */
-    private List<MemoryPoolInfo> memoryPoolInfoList;
+    private List<MemoryPoolInfo> memoryPoolInfos;
     /**
      * 内存总量(kb)
      */
@@ -142,7 +146,11 @@ public class NodeStatus {
     /**
      * 垃圾收集信息
      */
-    private List<GCInfo> gcInfoList;
+    private List<GCInfo> gcInfos;
+    /**
+     * 系统磁盘信息
+     */
+    private List<SysFileInfo> sysFileInfos;
 
     /**
      * 内存池信息
@@ -196,8 +204,8 @@ public class NodeStatus {
 
         @Override
         public String toString() {
-            return "MemoryPoolInfo{name='" + name + '\'' + ", usage='" + usage + '\'' + ", usageThreshold="
-                    + usageThreshold + ", usageThresholdExceeded=" + usageThresholdExceeded + ", usageThresholdCount="
+            return "MemoryPoolInfo{name='" + name + "\', usage='" + usage + "\', usageThreshold=" + usageThreshold
+                    + ", usageThresholdExceeded=" + usageThresholdExceeded + ", usageThresholdCount="
                     + usageThresholdCount + '}';
         }
 
@@ -237,7 +245,98 @@ public class NodeStatus {
 
         @Override
         public String toString() {
-            return "GCInfo{name='" + name + '\'' + ", count=" + count + ", time=" + time + '}';
+            return "GCInfo{name='" + name + "\', count=" + count + ", time=" + time + '}';
+        }
+
+    }
+
+    /**
+     * 系统磁盘信息
+     */
+    public class SysFileInfo {
+        /**
+         * 盘符路径
+         */
+        private String dirName;
+        /**
+         * 盘符类型
+         */
+        private String sysTypeName;
+        /**
+         * 文件类型
+         */
+        private String typeName;
+        /**
+         * 总大小
+         */
+        private String total;
+        /**
+         * 剩余大小
+         */
+        private String free;
+        /**
+         * 已经使用量
+         */
+        private String used;
+        /**
+         * 资源的使用率
+         */
+        private double usage;
+
+        public String getDirName() {
+            return dirName;
+        }
+
+        public void setDirName(String dirName) {
+            this.dirName = dirName;
+        }
+
+        public String getSysTypeName() {
+            return sysTypeName;
+        }
+
+        public void setSysTypeName(String sysTypeName) {
+            this.sysTypeName = sysTypeName;
+        }
+
+        public String getTypeName() {
+            return typeName;
+        }
+
+        public void setTypeName(String typeName) {
+            this.typeName = typeName;
+        }
+
+        public String getTotal() {
+            return total;
+        }
+
+        public void setTotal(String total) {
+            this.total = total;
+        }
+
+        public String getFree() {
+            return free;
+        }
+
+        public void setFree(String free) {
+            this.free = free;
+        }
+
+        public String getUsed() {
+            return used;
+        }
+
+        public void setUsed(String used) {
+            this.used = used;
+        }
+
+        public double getUsage() {
+            return usage;
+        }
+
+        public void setUsage(double usage) {
+            this.usage = usage;
         }
 
     }
@@ -280,6 +379,14 @@ public class NodeStatus {
 
     public void setOsVersion(String osVersion) {
         this.osVersion = osVersion;
+    }
+
+    public String getOsArch() {
+        return osArch;
+    }
+
+    public void setOsArch(String osArch) {
+        this.osArch = osArch;
     }
 
     public String getJavaVersion() {
@@ -346,11 +453,11 @@ public class NodeStatus {
         this.userCountry = userCountry;
     }
 
-    public long getTimestamp() {
+    public String getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(long timestamp) {
+    public void setTimestamp(String timestamp) {
         this.timestamp = timestamp;
     }
 
@@ -378,12 +485,12 @@ public class NodeStatus {
         this.nonHeapUsage = nonHeapUsage;
     }
 
-    public List<MemoryPoolInfo> getMemoryPoolInfoList() {
-        return memoryPoolInfoList;
+    public List<MemoryPoolInfo> getMemoryPoolInfos() {
+        return memoryPoolInfos;
     }
 
-    public void setMemoryPoolInfoList(List<MemoryPoolInfo> memoryPoolInfoList) {
-        this.memoryPoolInfoList = memoryPoolInfoList;
+    public void setMemoryPoolInfos(List<MemoryPoolInfo> memoryPoolInfos) {
+        this.memoryPoolInfos = memoryPoolInfos;
     }
 
     public long getTotalMemory() {
@@ -490,28 +597,37 @@ public class NodeStatus {
         this.totalThreadCount = totalThreadCount;
     }
 
-    public List<GCInfo> getGcInfoList() {
-        return gcInfoList;
+    public List<GCInfo> getGcInfos() {
+        return gcInfos;
     }
 
-    public void setGcInfoList(List<GCInfo> gcInfoList) {
-        this.gcInfoList = gcInfoList;
+    public void setGcInfos(List<GCInfo> gcInfos) {
+        this.gcInfos = gcInfos;
+    }
+
+    public List<SysFileInfo> getSysFileInfos() {
+        return sysFileInfos;
+    }
+
+    public void setSysFileInfos(List<SysFileInfo> sysFileInfos) {
+        this.sysFileInfos = sysFileInfos;
     }
 
     @Override
     public String toString() {
-        return "NodeStatus{id='" + id + '\'' + ", name='" + name + '\'' + ", ip='" + ip + '\'' + ", osName='" + osName
-                + '\'' + ", osVersion='" + osVersion + '\'' + ", javaVersion='" + javaVersion + '\'' + ", javaHome='"
-                + javaHome + '\'' + ", userName='" + userName + '\'' + ", userHome='" + userHome + '\'' + ", userDir='"
-                + userDir + '\'' + ", userTimezone='" + userTimezone + '\'' + ", userLanguage='" + userLanguage + '\''
-                + ", userCountry='" + userCountry + '\'' + ", timestamp=" + timestamp + ", fileEncoding='"
-                + fileEncoding + '\'' + ", heapUsage='" + heapUsage + '\'' + ", nonHeapUsage='" + nonHeapUsage + '\''
-                + ", memoryPoolInfoList=" + memoryPoolInfoList + ", totalMemory=" + totalMemory + ", freeMemory="
-                + freeMemory + ", maxMemory=" + maxMemory + ", jvmName='" + jvmName + '\'' + ", jvmVersion='"
-                + jvmVersion + '\'' + ", compilationName='" + compilationName + '\'' + ", totalCompilationTime="
-                + totalCompilationTime + ", currentThreadCount=" + currentThreadCount + ", currentThreadCpuTime="
-                + currentThreadCpuTime + ", peakThreadCount=" + peakThreadCount + ", daemonThreadCount="
-                + daemonThreadCount + ", totalThreadCount=" + totalThreadCount + ", gcInfoList=" + gcInfoList + '}';
+        return "NodeStatus{id='" + id + "\', name='" + name + "\', ip='" + ip + "\', osName='" + osName
+                + "\', osVersion='" + osVersion + "\', osArch='" + osArch + "\', javaVersion='" + javaVersion
+                + "\', javaHome='" + javaHome + "\', userName='" + userName + "\', userHome='" + userHome
+                + "\', userDir='" + userDir + "\', userTimezone='" + userTimezone + "\', userLanguage='" + userLanguage
+                + "\', userCountry='" + userCountry + "\', timestamp='" + timestamp + "\', fileEncoding='"
+                + fileEncoding + "\', heapUsage='" + heapUsage + "\', nonHeapUsage='" + nonHeapUsage
+                + "\', memoryPoolInfos=" + memoryPoolInfos + ", totalMemory=" + totalMemory + ", freeMemory="
+                + freeMemory + ", maxMemory=" + maxMemory + ", jvmName='" + jvmName + "\', jvmVersion='" + jvmVersion
+                + "\', compilationName='" + compilationName + "\', totalCompilationTime=" + totalCompilationTime
+                + ", currentThreadCount=" + currentThreadCount + ", currentThreadCpuTime=" + currentThreadCpuTime
+                + ", peakThreadCount=" + peakThreadCount + ", daemonThreadCount=" + daemonThreadCount
+                + ", totalThreadCount=" + totalThreadCount + ", gcInfos=" + gcInfos + ", sysFileInfos=" + sysFileInfos
+                + '}';
     }
 
 }

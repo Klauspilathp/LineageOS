@@ -9,10 +9,14 @@ import java.lang.management.RuntimeMXBean;
 import java.lang.management.ThreadMXBean;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 import com.gnol.plugins.tools.date.DateUtil;
 import com.gnol.springboot.client.config.GnolConstant;
+
+import oshi.SystemInfo;
+import oshi.software.os.OSFileStore;
 
 /**
  * @Title: NodeStatusUtil
@@ -46,7 +50,7 @@ public class NodeStatusUtil {
         nodeStatus.setUserTimezone(System.getProperty("user.timezone"));
         nodeStatus.setUserLanguage(System.getProperty("user.language"));
         nodeStatus.setUserCountry(System.getProperty("user.country"));
-        nodeStatus.setTimestamp(System.currentTimeMillis());
+        nodeStatus.setTimestamp(String.valueOf(System.currentTimeMillis()));
         nodeStatus.setFileEncoding(System.getProperty("file.encoding"));
 
         // 内存信息
@@ -54,16 +58,11 @@ public class NodeStatusUtil {
         nodeStatus.setHeapUsage(memoryMBean.getHeapMemoryUsage());
         nodeStatus.setNonHeapUsage(memoryMBean.getNonHeapMemoryUsage());
 
-        // 通过Runtime 获取 jvm 内存信息
-        nodeStatus.setTotalMemory(Runtime.getRuntime().totalMemory() / 1024);
-        nodeStatus.setFreeMemory(Runtime.getRuntime().freeMemory() / 1024);
-        nodeStatus.setMaxMemory(Runtime.getRuntime().maxMemory() / 1024);
-
         // 内存池信息
         List<MemoryPoolMXBean> mpMBeanList = ManagementFactory.getMemoryPoolMXBeans();
         List<NodeStatus.MemoryPoolInfo> list = new ArrayList<NodeStatus.MemoryPoolInfo>();
         for (MemoryPoolMXBean mpMBean : mpMBeanList) {
-            NodeStatus.MemoryPoolInfo memoryPoolInfo = nodeStatus.new MemoryPoolInfo();//创建内部类对象
+            NodeStatus.MemoryPoolInfo memoryPoolInfo = nodeStatus.new MemoryPoolInfo(); // 创建内部类对象
             memoryPoolInfo.setName(mpMBean.getName());
             memoryPoolInfo.setUsage(mpMBean.getUsage());
             if (mpMBean.isUsageThresholdSupported()) { // 判断此内存池是否支持阀值
@@ -73,9 +72,14 @@ public class NodeStatusUtil {
             }
             list.add(memoryPoolInfo);
         }
-        nodeStatus.setMemoryPoolInfoList(list);
+        nodeStatus.setMemoryPoolInfos(list);
 
-        // jvm信息
+        // 通过 Runtime 获取 jvm 内存信息
+        nodeStatus.setTotalMemory(Runtime.getRuntime().totalMemory() / 1024);
+        nodeStatus.setFreeMemory(Runtime.getRuntime().freeMemory() / 1024);
+        nodeStatus.setMaxMemory(Runtime.getRuntime().maxMemory() / 1024);
+
+        // jvm 信息
         RuntimeMXBean runtimeMBean = ManagementFactory.getRuntimeMXBean();
         nodeStatus.setJvmName(runtimeMBean.getVmName());
         nodeStatus.setJvmVersion(runtimeMBean.getVmVersion());
@@ -91,9 +95,6 @@ public class NodeStatusUtil {
         // 线程情况
         ThreadMXBean threadMBean = ManagementFactory.getThreadMXBean();
         nodeStatus.setCurrentThreadCount(threadMBean.getThreadCount());
-        nodeStatus.setPeakThreadCount(threadMBean.getPeakThreadCount());
-        nodeStatus.setDaemonThreadCount(threadMBean.getDaemonThreadCount());
-        nodeStatus.setTotalThreadCount(threadMBean.getTotalStartedThreadCount());
         // 是否支持 cpu 时间占用度量(当前线程)
         if (threadMBean.isCurrentThreadCpuTimeSupported() && threadMBean.isThreadCpuTimeEnabled()) {
             nodeStatus.setCurrentThreadCpuTime(threadMBean.getCurrentThreadCpuTime() / 1000000);
@@ -109,6 +110,9 @@ public class NodeStatusUtil {
                 }
             }*/
         }
+        nodeStatus.setPeakThreadCount(threadMBean.getPeakThreadCount());
+        nodeStatus.setDaemonThreadCount(threadMBean.getDaemonThreadCount());
+        nodeStatus.setTotalThreadCount(threadMBean.getTotalStartedThreadCount());
 
         // gc
         List<GarbageCollectorMXBean> gcMBeanList = ManagementFactory.getGarbageCollectorMXBeans();
@@ -120,8 +124,57 @@ public class NodeStatusUtil {
             gcInfo.setTime(gcMBean.getCollectionTime());
             gcInfoList.add(gcInfo);
         }
-        nodeStatus.setGcInfoList(gcInfoList);
+        nodeStatus.setGcInfos(gcInfoList);
+
+        // 系统磁盘信息
+        SystemInfo systemInfo = new SystemInfo();
+        List<NodeStatus.SysFileInfo> sysFileInfos = new LinkedList<NodeStatus.SysFileInfo>();
+        List<OSFileStore> osFileStores = systemInfo.getOperatingSystem().getFileSystem().getFileStores();
+        for (OSFileStore osFileStore : osFileStores) {
+            long free = osFileStore.getUsableSpace();
+            long total = osFileStore.getTotalSpace();
+            long used = total - free;
+            NodeStatus.SysFileInfo sysFile = nodeStatus.new SysFileInfo();
+            sysFile.setDirName(osFileStore.getMount());
+            sysFile.setSysTypeName(osFileStore.getType());
+            sysFile.setTypeName(osFileStore.getName());
+            sysFile.setTotal(convertFileSize(total));
+            sysFile.setFree(convertFileSize(free));
+            sysFile.setUsed(convertFileSize(used));
+            if (total == 0) {
+                sysFile.setUsage(0);
+            } else {
+                sysFile.setUsage(used / total);
+            }
+            sysFileInfos.add(sysFile);
+        }
+        nodeStatus.setSysFileInfos(sysFileInfos);
         return nodeStatus;
+    }
+
+    /**
+     * @Title: convertFileSize
+     * @author: 吴佳隆
+     * @data: 2020年7月23日 上午11:15:53
+     * @Description: 字节转换
+     * @param size      字节大小
+     * @return String   转换后的值
+     */
+    public static String convertFileSize(long size) {
+        long kb = 1024;
+        long mb = kb * 1024;
+        long gb = mb * 1024;
+        if (size >= gb) {
+            return String.format("%.1f GB", (float) size / gb);
+        } else if (size >= mb) {
+            float f = (float) size / mb;
+            return String.format(f > 100 ? "%.0f MB" : "%.1f MB", f);
+        } else if (size >= kb) {
+            float f = (float) size / kb;
+            return String.format(f > 100 ? "%.0f KB" : "%.1f KB", f);
+        } else {
+            return String.format("%d B", size);
+        }
     }
 
 }
