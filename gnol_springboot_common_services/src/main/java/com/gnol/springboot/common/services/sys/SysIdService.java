@@ -1,11 +1,11 @@
-package com.gnol.springboot.common.services;
+package com.gnol.springboot.common.services.sys;
 
 import com.gnol.plugins.core.context.BaseService;
 import com.gnol.springboot.common.dos.sys.SysId;
 
 /**
  * @Title: SysIdService
- * @Package: com.gnol.springboot.common.services
+ * @Package: com.gnol.springboot.common.services.sys
  * @author: 吴佳隆
  * @date: 2020年04月03日 12:15:02
  * @Description: gnol系统_主键操作 Service

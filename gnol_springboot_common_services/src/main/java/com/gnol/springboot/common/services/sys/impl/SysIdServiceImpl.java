@@ -1,4 +1,4 @@
-package com.gnol.springboot.common.services.impl;
+package com.gnol.springboot.common.services.sys.impl;
 
 import javax.annotation.Resource;
 
@@ -9,11 +9,11 @@ import com.gnol.plugins.core.context.AbstractBaseService;
 import com.gnol.springboot.common.daos.sys.BaseSysIdDao;
 import com.gnol.springboot.common.daos.sys.ExtSysIdDao;
 import com.gnol.springboot.common.dos.sys.SysId;
-import com.gnol.springboot.common.services.SysIdService;
+import com.gnol.springboot.common.services.sys.SysIdService;
 
 /**
  * @Title: SysIdServiceImpl
- * @Package: com.gnol.springboot.common.services.impl
+ * @Package: com.gnol.springboot.common.services.sys.impl
  * @author: 吴佳隆
  * @date: 2020年04月03日 12:15:02
  * @Description: gnol系统_主键操作 Service 实现

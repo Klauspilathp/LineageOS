@@ -1,4 +1,4 @@
-package com.gnol.springboot.common.services.impl;
+package com.gnol.springboot.common.services.sys.impl;
 
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -9,12 +9,12 @@ import org.springframework.stereotype.Service;
 
 import com.gnol.plugins.core.StringUtil;
 import com.gnol.springboot.common.dos.sys.SysId;
-import com.gnol.springboot.common.services.AbstractIdService;
-import com.gnol.springboot.common.services.SysIdService;
+import com.gnol.springboot.common.services.sys.AbstractIdService;
+import com.gnol.springboot.common.services.sys.SysIdService;
 
 /**
  * @Title: DbIdServiceImpl
- * @Package: com.gnol.springboot.common.services.impl
+ * @Package: com.gnol.springboot.common.services.sys.impl
  * @author: 吴佳隆
  * @date: 2020年4月3日 上午11:19:02
  * @Description: 基于数据库实现的 ID 生成服务实现
