@@ -15,3 +15,4 @@ gnol-springboot-web:8090
 gnol-springboot-api:8091
 gnol-springboot-client1:8092
 gnol-springboot-client2:8093
+gnol-springboot-webflux:8094
