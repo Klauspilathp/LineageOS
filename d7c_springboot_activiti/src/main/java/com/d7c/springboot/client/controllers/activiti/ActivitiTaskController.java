@@ -44,7 +44,7 @@ public class ActivitiTaskController extends WebBaseController {
      * @Title: deleteCandidateUser
      * @author: 吴佳隆
      * @data: 2021年1月21日 下午12:04:52
-     * @Description: 从租任务中删除候选人
+     * @Description: 从组任务中删除候选人
      * @param taskId
      * @param candidateUser
      * @return PageResult
