@@ -2,15 +2,20 @@ package com.d7c.springboot.client.controllers.evection;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.zip.ZipInputStream;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
+import org.activiti.api.process.model.ProcessDefinition;
 import org.activiti.api.process.runtime.ProcessRuntime;
+import org.activiti.api.runtime.shared.query.Pageable;
 import org.activiti.engine.RepositoryService;
 import org.activiti.engine.repository.Deployment;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,18 +23,20 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.d7c.plugins.core.Page;
 import com.d7c.plugins.core.PageData;
 import com.d7c.plugins.core.PageResult;
 import com.d7c.plugins.core.StringUtil;
+import com.d7c.plugins.core.enums.HttpStatus;
 import com.d7c.plugins.tools.idfactory.uuid.UUID;
 import com.d7c.springboot.client.controllers.WebBaseController;
 
 /**
- * @Title: EvectionFlowController
+ * @Title: EvectionProcessDefinitionController
  * @Package: com.d7c.springboot.client.controllers.evection
  * @author: 吴佳隆
  * @date: 2021年1月15日 上午7:52:44
- * @Description: 出差流程控制类
+ * @Description: 出差流程定义控制类
  */
 @RestController
 @RequestMapping(value = "/evection/processDefinition")
@@ -44,6 +51,54 @@ public class EvectionProcessDefinitionController extends WebBaseController {
      */
     @Autowired
     private RepositoryService repositoryService;
+
+    /**
+     * @Title: getProcessDefinitionXML
+     * @author: 吴佳隆
+     * @data: 2021年1月18日 上午9:26:28
+     * @Description: 获取流程定义 XML
+     * @param response
+     * @param deploymentId  部署 id，不能为空。
+     * @param resourceName  资源的名称，不能为空。
+     * @throws IOException 
+     */
+    @GetMapping(value = "/getProcessDefinitionXML")
+    public void getProcessDefinitionXML(HttpServletResponse response, @RequestParam("deploymentId") String deploymentId,
+            @RequestParam("resourceName") String resourceName) throws IOException {
+        if (StringUtil.isBlank(deploymentId)) {
+            response(response, HttpStatus.HS_270.getKey(), "deploymentId 不能为空！");
+            return;
+        }
+        if (StringUtil.isBlank(resourceName)) {
+            response(response, HttpStatus.HS_270.getKey(), "resourceName 不能为空！");
+            return;
+        }
+        InputStream inputStream = repositoryService.getResourceAsStream(deploymentId, resourceName);
+        int length = inputStream.available();
+        byte[] bytes = new byte[length];
+        response.setContentType("text/xml");
+        OutputStream outputStream = response.getOutputStream();
+        while (inputStream.read(bytes) != -1) {
+            outputStream.write(bytes);
+        }
+        inputStream.close();
+        response.flushBuffer();
+    }
+
+    /**
+     * @Title: listProcessDefinition
+     * @author: 吴佳隆
+     * @data: 2021年1月18日 上午9:11:15
+     * @Description: 分页查询流程定义列表
+     * @return PageResult
+     */
+    @GetMapping(value = "/listProcessDefinition")
+    public PageResult listProcessDefinition(Page<PageData> page) {
+        org.activiti.api.runtime.shared.query.Page<ProcessDefinition> processDefinitions = processRuntime
+                .processDefinitions(Pageable.of(page.getCurrentResult(), page.getPageSize()));
+        page.setTotalResult(processDefinitions.getTotalItems());
+        return PageResult.ok(processDefinitions.getContent()).setPage(page);
+    }
 
     /**
      * @Title: deploymentUploadProcess
@@ -92,6 +147,13 @@ public class EvectionProcessDefinitionController extends WebBaseController {
         }
     }
 
+    /**
+     * @Title: deploymentLocalProcess
+     * @author: 吴佳隆
+     * @data: 2021年1月18日 上午8:57:52
+     * @Description: 部署 resources/processess/ 目录下的资源文件或部署在线编辑流程
+     * @return PageResult
+     */
     @PostMapping(value = "/deploymentLocalProcess")
     @ResponseBody
     public PageResult deploymentLocalProcess() {
@@ -104,7 +166,7 @@ public class EvectionProcessDefinitionController extends WebBaseController {
         // 流程部署成功返回的部署对象
         Deployment deployment = null;
 
-        // 部署资源的文件名，该文件放在 resources/processess/ 目录下
+        // 部署 resources/processess/ 目录下的资源文件
         String deploymentFileName = pd.getString("deploymentFileName");
         if (StringUtil.isNotBlank(deploymentFileName)) {
             deployment = repositoryService.createDeployment()
@@ -121,7 +183,6 @@ public class EvectionProcessDefinitionController extends WebBaseController {
                     .deploy();
             return PageResult.ok(deployment.getId());
         }
-
         return PageResult.error("部署对象为空");
     }
 
