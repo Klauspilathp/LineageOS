@@ -54,7 +54,7 @@ public class SysTestServiceImpl extends AbstractBaseService<BaseSysTestDao, SysT
         test.setName("insert two database by sys_test " + random);
         int insert = dao.insert(test);
 
-        int a = 1 / 0;
+        // int a = 1 / 0;
 
         Test1Test test1 = new Test1Test();
         test1.setText("insert two database by test1_test " + random);

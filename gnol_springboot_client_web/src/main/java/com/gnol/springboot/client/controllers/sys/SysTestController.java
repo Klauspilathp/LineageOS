@@ -16,6 +16,7 @@ import com.gnol.mybatis.spring.boot.autoconfigure.CurrDataSource;
 import com.gnol.mybatis.spring.boot.autoconfigure.DataSourceType;
 import com.gnol.plugins.core.PageData;
 import com.gnol.plugins.core.PageResult;
+import com.gnol.plugins.tools.lang.RandomNumber;
 import com.gnol.springboot.client.controllers.WebBaseController;
 import com.gnol.springboot.client.services.sys.SysTestService;
 import com.gnol.springboot.client.services.test1.Test1TestService;
@@ -106,6 +107,26 @@ public class SysTestController extends WebBaseController {
     @ResponseBody
     public PageResult test7() {
         return sysTestService.insertTwoDataBase();
+    }
+
+    /**
+     * 启用事务后在同一个事务内不能分库 test7 会不能使用；
+     * 启用事务后 test8 能使用，但事务不完整。
+     */
+    @RequestMapping(value = "/test8")
+    @ResponseBody
+    public PageResult test8() {
+        int random = RandomNumber.getUnboundedInt();
+        SysTest test = new SysTest();
+        test.setName("insert two database by sys_test " + random);
+        int insert = sysTestService.insert(test);
+
+        // int a = 1 / 0;
+
+        Test1Test test1 = new Test1Test();
+        test1.setText("insert two database by test1_test " + random);
+        int insert1 = test1TestService.insert1(test1);
+        return PageResult.ok("sys_test：" + insert + ", test1_test：" + insert1 + ", random：" + random + "。");
     }
 
 }
