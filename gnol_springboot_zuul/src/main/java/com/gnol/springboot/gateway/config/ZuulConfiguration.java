@@ -1,5 +1,6 @@
 package com.gnol.springboot.gateway.config;
 
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -28,5 +29,14 @@ public class ZuulConfiguration {
     public Sampler defaultSampler() {
         return Sampler.ALWAYS_SAMPLE;
     }*/
+
+    /**
+     * gnol 系统自定义属性
+     */
+    @Bean(name = "gnolProperties")
+    @ConditionalOnMissingBean(GnolProperties.class)
+    public GnolProperties gnolProperties() {
+        return new GnolProperties();
+    }
 
 }
