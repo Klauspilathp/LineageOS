@@ -48,7 +48,7 @@ public class JwtTokenServiceImpl implements TokenService {
         if (pd == null || pd.isEmpty()) {
             return null;
         }
-        return jwtUtil.getClaimByToken(pd.getString("token"), jwtUtil.getJwtProperties().getSecret());
+        return jwtUtil.getClaimsByToken(pd.getString("token"), jwtUtil.getJwtProperties().getSecret());
     }
 
     @Override
