@@ -11,9 +11,9 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.d7c.fastDFS.spring.boot.autoconfigure.FastDFSService;
-import com.d7c.mybatis.spring.boot.autoconfigure.CurrDataSource;
-import com.d7c.mybatis.spring.boot.autoconfigure.DataSourceType;
+import com.d7c.fastDFS.springboot.autoconfigure.FastDFSService;
+import com.d7c.mybatis.springboot.autoconfigure.CurrDataSource;
+import com.d7c.mybatis.springboot.autoconfigure.DataSourceType;
 import com.d7c.plugins.core.PageData;
 import com.d7c.plugins.core.PageResult;
 import com.d7c.plugins.tools.lang.RandomNumber;

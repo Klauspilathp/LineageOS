@@ -8,7 +8,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import com.d7c.jwt.spring.boot.autoconfigure.JwtRsaUtil;
+import com.d7c.jwt.springboot.autoconfigure.JwtRsaUtil;
 import com.d7c.springboot.client.services.sys.SysMenuService;
 
 /**

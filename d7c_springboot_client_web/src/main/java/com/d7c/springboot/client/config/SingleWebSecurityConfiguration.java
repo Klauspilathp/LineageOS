@@ -30,7 +30,7 @@ import org.springframework.security.web.authentication.rememberme.PersistentToke
 
 import com.d7c.plugins.core.StringUtil;
 import com.d7c.plugins.net.tools.IPUtil;
-import com.d7c.redis.spring.boot.autoconfigure.RedisService;
+import com.d7c.redis.springboot.autoconfigure.RedisService;
 import com.d7c.springboot.client.services.sys.SysSessionService;
 import com.d7c.springboot.client.services.sys.SysUserService;
 import com.d7c.springboot.common.dos.sys.SysSession;

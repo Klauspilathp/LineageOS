@@ -21,8 +21,8 @@ import org.springframework.security.oauth2.provider.code.JdbcAuthorizationCodeSe
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JdbcTokenStore;
 
-import com.d7c.oauth2.spring.boot.CustomAccessTokenConverter;
-import com.d7c.oauth2.spring.boot.CustomWebResponseExceptionTranslator;
+import com.d7c.oauth2.springboot.CustomAccessTokenConverter;
+import com.d7c.oauth2.springboot.CustomWebResponseExceptionTranslator;
 
 /**
  * @Title: JdbcAuthorizationServerConfiguration

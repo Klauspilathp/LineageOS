@@ -6,8 +6,8 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
-import com.d7c.mybatis.spring.boot.autoconfigure.CurrDataSource;
-import com.d7c.mybatis.spring.boot.autoconfigure.DataSourceType;
+import com.d7c.mybatis.springboot.autoconfigure.CurrDataSource;
+import com.d7c.mybatis.springboot.autoconfigure.DataSourceType;
 import com.d7c.plugins.core.Page;
 import com.d7c.plugins.core.PageData;
 import com.d7c.plugins.core.PageResult;

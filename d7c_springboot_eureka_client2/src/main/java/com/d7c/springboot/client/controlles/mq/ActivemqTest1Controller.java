@@ -10,8 +10,8 @@ import org.springframework.jms.annotation.JmsListener;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import com.d7c.activemq.spring.boot.autoconfigure.ActivemqMessage;
-import com.d7c.activemq.spring.boot.autoconfigure.SendMessageService;
+import com.d7c.activemq.springboot.autoconfigure.ActivemqMessage;
+import com.d7c.activemq.springboot.autoconfigure.SendMessageService;
 import com.d7c.springboot.client.controlles.test.Test1Controller;
 
 /**

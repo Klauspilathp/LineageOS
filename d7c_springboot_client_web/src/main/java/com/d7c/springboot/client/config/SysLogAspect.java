@@ -18,7 +18,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import com.d7c.oauth2.spring.boot.SecurityUtil;
+import com.d7c.oauth2.springboot.SecurityUtil;
 import com.d7c.plugins.net.tools.IPUtil;
 import com.d7c.plugins.net.tools.UserAgentUtil;
 import com.d7c.plugins.tools.json.SFJsonUtil;

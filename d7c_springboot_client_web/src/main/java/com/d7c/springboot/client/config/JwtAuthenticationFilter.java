@@ -15,8 +15,8 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
-import com.d7c.jwt.spring.boot.autoconfigure.JwtRsaUtil;
-import com.d7c.oauth2.spring.boot.CustomUserDetails;
+import com.d7c.jwt.springboot.autoconfigure.JwtRsaUtil;
+import com.d7c.oauth2.springboot.CustomUserDetails;
 import com.d7c.plugins.core.PageResult;
 import com.d7c.plugins.core.StringUtil;
 import com.d7c.plugins.core.enums.HttpStatus;

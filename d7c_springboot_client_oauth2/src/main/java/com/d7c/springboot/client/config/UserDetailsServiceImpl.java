@@ -18,11 +18,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import com.d7c.mybatis.spring.boot.autoconfigure.CurrDataSource;
-import com.d7c.mybatis.spring.boot.autoconfigure.DataSourceType;
-import com.d7c.oauth2.spring.boot.CustomUserDetails;
+import com.d7c.mybatis.springboot.autoconfigure.CurrDataSource;
+import com.d7c.mybatis.springboot.autoconfigure.DataSourceType;
+import com.d7c.oauth2.springboot.CustomUserDetails;
 import com.d7c.plugins.core.StringUtil;
-import com.d7c.redis.spring.boot.autoconfigure.RedisService;
+import com.d7c.redis.springboot.autoconfigure.RedisService;
 import com.d7c.springboot.client.daos.sys.ExtSysMenuDao;
 import com.d7c.springboot.client.daos.sys.ExtSysUserDao;
 import com.d7c.springboot.common.dos.sys.SysUser;

@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.d7c.fastDFS.spring.boot.autoconfigure.FastDFSService;
+import com.d7c.fastDFS.springboot.autoconfigure.FastDFSService;
 import com.d7c.plugins.core.PageResult;
 import com.d7c.springboot.client.controllers.WebBaseController;
 

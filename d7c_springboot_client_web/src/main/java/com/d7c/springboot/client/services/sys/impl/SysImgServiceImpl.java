@@ -7,7 +7,7 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
-import com.d7c.fastDFS.spring.boot.autoconfigure.FastDFSService;
+import com.d7c.fastDFS.springboot.autoconfigure.FastDFSService;
 import com.d7c.plugins.core.PageData;
 import com.d7c.plugins.core.PageResult;
 import com.d7c.plugins.core.context.AbstractBaseService;

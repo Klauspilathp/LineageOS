@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.d7c.oauth2.spring.boot.SecurityUtil;
+import com.d7c.oauth2.springboot.SecurityUtil;
 import com.d7c.plugins.core.Page;
 import com.d7c.plugins.core.PageData;
 import com.d7c.plugins.core.PageResult;

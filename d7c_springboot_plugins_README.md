@@ -193,7 +193,7 @@ public class HttpTest {
 该模块主要是对 redis 缓存技术和 redisson 操作的封装，支持集群模式，同时提供了一些 redisson 操作 redis 的示例代码。
 
 ```
-package com.d7c.redis.spring.boot.tests;
+package com.d7c.redis.springboot.tests;
 
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;

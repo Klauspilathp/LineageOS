@@ -6,7 +6,7 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
-import com.d7c.jwt.spring.boot.autoconfigure.JwtUtil;
+import com.d7c.jwt.springboot.autoconfigure.JwtUtil;
 import com.d7c.plugins.core.PageData;
 import com.d7c.springboot.client.services.TokenService;
 

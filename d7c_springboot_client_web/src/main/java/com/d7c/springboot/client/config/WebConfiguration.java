@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import com.d7c.oauth2.spring.boot.SHA1PasswordEncoder;
+import com.d7c.oauth2.springboot.SHA1PasswordEncoder;
 
 /**
  * @Title: WebConfiguration

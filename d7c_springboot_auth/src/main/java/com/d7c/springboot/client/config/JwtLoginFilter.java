@@ -19,8 +19,8 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import com.d7c.jwt.spring.boot.autoconfigure.JwtRsaUtil;
-import com.d7c.oauth2.spring.boot.CustomUserDetails;
+import com.d7c.jwt.springboot.autoconfigure.JwtRsaUtil;
+import com.d7c.oauth2.springboot.CustomUserDetails;
 import com.d7c.plugins.core.PageResult;
 import com.d7c.plugins.core.StringUtil;
 import com.d7c.plugins.core.enums.HttpStatus;
@@ -52,7 +52,7 @@ public class JwtLoginFilter extends UsernamePasswordAuthenticationFilter {
     private JwtRsaUtil JwtRsaUtil;
 
     public JwtLoginFilter(AuthenticationManager authenticationManager, ExtSecurityKeyDao securityKeyDao,
-            com.d7c.jwt.spring.boot.autoconfigure.JwtRsaUtil jwtRsaUtil) {
+            com.d7c.jwt.springboot.autoconfigure.JwtRsaUtil jwtRsaUtil) {
         super();
         this.authenticationManager = authenticationManager;
         this.securityKeyDao = securityKeyDao;

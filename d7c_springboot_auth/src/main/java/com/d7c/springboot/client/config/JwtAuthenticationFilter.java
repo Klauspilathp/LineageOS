@@ -13,7 +13,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
-import com.d7c.jwt.spring.boot.autoconfigure.JwtRsaUtil;
+import com.d7c.jwt.springboot.autoconfigure.JwtRsaUtil;
 import com.d7c.plugins.core.PageResult;
 import com.d7c.plugins.core.StringUtil;
 import com.d7c.plugins.core.enums.HttpStatus;

@@ -15,8 +15,8 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import com.d7c.jwt.spring.boot.autoconfigure.JwtRsaUtil;
-import com.d7c.oauth2.spring.boot.SHA1PasswordEncoder;
+import com.d7c.jwt.springboot.autoconfigure.JwtRsaUtil;
+import com.d7c.oauth2.springboot.SHA1PasswordEncoder;
 import com.d7c.springboot.client.daos.security.ExtSecurityKeyDao;
 import com.d7c.springboot.client.daos.sys.ExtSysMenuDao;
 

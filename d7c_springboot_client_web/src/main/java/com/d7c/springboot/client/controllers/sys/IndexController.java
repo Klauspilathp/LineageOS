@@ -5,7 +5,7 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import com.d7c.fastDFS.spring.boot.autoconfigure.FastDFSProperties;
+import com.d7c.fastDFS.springboot.autoconfigure.FastDFSProperties;
 import com.d7c.plugins.core.PageData;
 import com.d7c.plugins.core.PageResult;
 import com.d7c.springboot.client.config.D7cProperties;

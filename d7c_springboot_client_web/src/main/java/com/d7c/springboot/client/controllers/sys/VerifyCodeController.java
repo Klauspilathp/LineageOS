@@ -15,7 +15,7 @@ import com.d7c.plugins.tools.code.VerifyCodeUtil;
 import com.d7c.plugins.tools.code.captcha.Captcha;
 import com.d7c.plugins.tools.code.captcha.GifCaptcha;
 import com.d7c.plugins.tools.code.captcha.SpecCaptcha;
-import com.d7c.redis.spring.boot.autoconfigure.RedisService;
+import com.d7c.redis.springboot.autoconfigure.RedisService;
 import com.d7c.springboot.client.config.D7cConstant;
 import com.d7c.springboot.client.controllers.WebBaseController;
 

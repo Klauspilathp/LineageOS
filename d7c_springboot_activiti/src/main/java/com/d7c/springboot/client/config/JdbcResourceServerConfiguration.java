@@ -15,8 +15,8 @@ import org.springframework.security.oauth2.provider.error.OAuth2AuthenticationEn
 import org.springframework.security.oauth2.provider.token.RemoteTokenServices;
 import org.springframework.web.client.RestTemplate;
 
-import com.d7c.oauth2.spring.boot.CustomAccessTokenConverter;
-import com.d7c.oauth2.spring.boot.CustomWebResponseExceptionTranslator;
+import com.d7c.oauth2.springboot.CustomAccessTokenConverter;
+import com.d7c.oauth2.springboot.CustomWebResponseExceptionTranslator;
 
 /**
  * @Title: JdbcResourceServerConfiguration

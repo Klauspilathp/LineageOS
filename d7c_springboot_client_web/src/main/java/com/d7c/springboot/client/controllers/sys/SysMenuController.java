@@ -11,11 +11,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.d7c.oauth2.spring.boot.SecurityUtil;
+import com.d7c.oauth2.springboot.SecurityUtil;
 import com.d7c.plugins.core.PageData;
 import com.d7c.plugins.core.PageResult;
 import com.d7c.plugins.core.StringUtil;
-import com.d7c.redis.spring.boot.autoconfigure.RedisService;
+import com.d7c.redis.springboot.autoconfigure.RedisService;
 import com.d7c.springboot.client.config.D7cConstant;
 import com.d7c.springboot.client.config.RedisPersistentTokenRepository;
 import com.d7c.springboot.client.controllers.WebBaseController;
