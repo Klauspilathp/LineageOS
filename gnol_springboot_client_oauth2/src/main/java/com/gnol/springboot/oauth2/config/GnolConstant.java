@@ -12,6 +12,10 @@ public class GnolConstant {
     // --- 当前服务器编号，0~1023，com.gnol.plugins.tools.idfactory.idworker.IdWorker 中 workerId 使用
     public static final String SERVER_NO = "SERVER_NO";
 
+    /*********************************************** session ********************************************/
+    // --- 验证码
+    public static final String SESSION_VERIFY_CODE = "SESSION_VERIFY_CODE";
+
     /*********************************************** auth **********************************************/
     // --- 请求参数中授权类型的 key
     public static final String AUTH_TYPE = "auth_type";

@@ -11,6 +11,7 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -51,10 +52,11 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.csrf().disable() // 关闭 csrf 跨站访问拦截
                 .authorizeRequests()
                 .antMatchers("/eureka/apps/**"/*eureka 心跳相关*/, "/actuator", "/actuator/**"/*监控相关*/, "/login"/*认证授权*/,
-                        "/validate"/*验证权限*/, "/logout"/*注销授权*/)
+                        "/validate"/*验证权限*/, "/logout"/*注销授权*/, "/oauth/**"/*认证请求*/)
                 .permitAll() // 免授权请求配置
                 .anyRequest().authenticated() // 其余所有请求都需要授权
-                .and().formLogin().loginProcessingUrl("/login");
+                .and().formLogin().loginProcessingUrl("/login").and().sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED); // 有需要时才生成 session
         // disable page caching
         // http.headers().frameOptions().sameOrigin().cacheControl();
     }
