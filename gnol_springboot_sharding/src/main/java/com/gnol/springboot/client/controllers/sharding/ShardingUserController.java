@@ -57,7 +57,7 @@ public class ShardingUserController extends WebBaseController {
     @GetMapping(value = "t2")
     public PageResult t2() {
         PageData pd = this.getEmptyPageData();
-        pd.put(ShardingUser.M.sex, 0);
+        pd.put(ShardingUser.M.sex, 1);
         List<ShardingUser> shardingUsers = shardingUserService.listBy(pd);
         return PageResult.ok(shardingUsers);
     }
