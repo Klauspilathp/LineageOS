@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -27,6 +28,11 @@ import com.gnol.springboot.auth.daos.sys.ExtSysMenuDao;
  */
 @Configuration
 @EnableWebSecurity
+@EnableGlobalMethodSecurity( // 开启 security 注解
+        prePostEnabled = false, // 基于表达式进行方法级别的访问控制
+        securedEnabled = false, // security 内置注解
+        jsr250Enabled = true // JSR-250 提供的安全控制注解
+)
 public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     /**
      * gnol 系统_用户表 Service 实现
