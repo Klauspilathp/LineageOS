@@ -29,24 +29,24 @@
 	                    </form>
 	                </div>
 	                <div class="layui-card-body ">
-	                    <table class="layui-table" lay-data="{url:'/sys/user/listPDPage', page:true, id:'table-id'}" lay-filter="table-id">
+	                    <table class="layui-table" lay-data="{url:'/sys/user/listPDPage', page:true, id:'table-id', toolbar: '#table-toolbar'}" lay-filter="table-id">
 	                        <thead>
 	                            <tr>
 	                                <th lay-data="{type:'checkbox'}">ID</th>
-	                                <th lay-data="{type:'numbers', width:80, sort: true}">序号</th>
+	                                <th lay-data="{type:'numbers', width:40, align:'center'}">序号</th>
 	                                <th lay-data="{field:'userId', width:80, sort: true}">ID</th>
-	                                <th lay-data="{field:'jobNumber', width:120, sort: true, edit: 'text'}">工号</th>
-	                                <th lay-data="{field:'userAccount', edit: 'text', minWidth: 100}">用户账号</th>
-	                                <th lay-data="{field:'nickname', edit: 'text', minWidth: 100}">昵称</th>
-	                                <th lay-data="{field:'age', edit: 'text', sort: true}">年龄</th>
-	                                <th lay-data="{field:'sex', edit: 'text'}">性别</th>
-	                                <th lay-data="{field:'phone', edit: 'text', minWidth: 100}">手机号</th>
-	                                <th lay-data="{field:'wxOpenid', edit: 'text', minWidth: 100}">微信号</th>
-	                                <th lay-data="{field:'email', edit: 'text', minWidth: 100}">邮箱</th>
-	                                <th lay-data="{field:'userType', edit: 'text', minWidth: 100}">用户类别</th>
-	                                <th lay-data="{field:'status', edit: 'text', minWidth: 100}">用户状态</th>
-	                                <th lay-data="{field:'loginTime', edit: 'text', minWidth: 100}">最近登录时间</th>
-	                                <th lay-data="{field:'loginIp', edit: 'text', minWidth: 100}">最近登录地址</th>
+	                                <th lay-data="{field:'jobNumber', width:120, sort: true}">工号</th>
+	                                <th lay-data="{field:'userAccount', minWidth: 90, align:'center'}">用户账号</th>
+	                                <th lay-data="{field:'nickname', minWidth: 100}">昵称</th>
+	                                <th lay-data="{field:'age', width: 80, sort: true, align:'center', templet: function (d) {return d.age + '岁'}}">年龄</th>
+	                                <th lay-data="{field:'sex', width: 60, align:'center', templet: function (d) {return d.sex == 1 ? '男' : '女'}}">性别</th>
+	                                <th lay-data="{field:'phone', minWidth: 100}">手机号</th>
+	                                <th lay-data="{field:'wxOpenid', width: 120}">微信号</th>
+	                                <th lay-data="{field:'email', minWidth: 100, templet: function (d) {return '<em>' + d.email + '</em>'}}">邮箱</th>
+	                                <th lay-data="{field:'userType', width: 110, align:'center', templet: '#userTypeTpl'}">用户类别</th>
+	                                <th lay-data="{field:'status', width: 80, align:'center', templet: function (d) {return d.status == 1 ? '正常' : d.status == 2 ? '冻结' : '删除'}}">用户状态</th>
+	                                <th lay-data="{field:'loginTime', width: 150, templet: function (d) {return (d.loginTime == undefined || d.loginTime == '' || d.loginTime == null) ? '' : layui.util.toDateString(d.loginTime, 'yyyy-MM-dd HH:mm:ss');}}">最近登录时间</th>
+	                                <th lay-data="{field:'loginIp', width: 90}">最近登录地址</th>
 	                            </tr>
 	                        </thead>
 	                    </table>
@@ -55,8 +55,37 @@
 	        </div>
 	    </div>
 	</div>
+	<script type="text/html" id="userTypeTpl">
+		{{# if(d.userType == 1){ }}
+			<span style="color: #F581B1;">系统用户</span>
+		{{#  } else if (d.userType == 10){ }}
+			<span style="color: #F581B1;">地域用户</span>
+		{{#  } else if (d.userType == 20){ }}
+			<span style="color: #F581B1;">组织机构用户</span>
+		{{#  } else if (d.userType == 30){ }}
+			<span style="color: #F581B1;">会员用户</span>
+		{{#  } else if (d.userType == 40){ }}
+			<span style="color: #F581B1;">访客</span>
+		{{#  } else if (d.userType == 50){ }}
+			<span style="color: #F581B1;">微信用户</span>
+		{{#  } else if (d.userType == 51){ }}
+			<span style="color: #F581B1;">微信小程序用户</span>
+		{{#  } else if (d.userType == 60){ }}
+			<span style="color: #F581B1;">支付宝用户</span>
+		{{#  } else if (d.userType == 61){ }}
+			<span style="color: #F581B1;">支付宝小程序用户</span>
+		{{#  } else { }}
+			<span style="color: #F581B1;">错误用户类型</span>
+		{{#  } }}
+	</script>
+	<script type="text/html" id="table-toolbar">
+		<div class = "layui-btn-container" >
+            <button class="layui-btn layui-btn-sm" lay-event="goAdd">新增</button>
+            <button class="layui-btn layui-btn-sm" lay-event="batchDel">批量删除</button>
+        </div>
+    </script>
 	<script type="text/javascript" src="/static/lib/layui/layui.js" charset="UTF-8"></script>
-	<script type="text/javascript" src="/static/js/xadmin.js"></script>
+	<script type="text/javascript" src="/static/js/gnol.util.js"></script>
 	<!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
 	<!--[if lt IE 9]>
 		<script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
@@ -75,7 +104,23 @@
             laydate.render({
                 elem: '#queryEndTime'
             });
-		    
+            
+            // 头部工具栏监听事件
+            table.on('toolbar(table-id)', function(obj) {
+                switch (obj.event) {
+                    case 'goAdd':
+                        
+                        break;
+                    case 'batchDel':
+                        var data = table.checkStatus(obj.config.id).data;
+                        if (data.length == 0) {
+                            errorMsg("请先选择要批量删除的用户！");
+                        }
+                        //console.log(data);
+                        break;
+                    default:
+                }
+            });
 		});
 	</script>
 </body>
