@@ -91,4 +91,26 @@ public class MQRabbitConsumerController implements RabbitConstant {
     }
     // ------- 业务队列，就是简单的点对点消息 ------- end
 
+    // --- 消息确认机制 ------- start
+    @RabbitListener(queues = DIRECT_CONFIRM_QUEUE)
+    public void getConfirmMsgTest(Channel channel, Message msg) {
+        long deliveryTag = msg.getMessageProperties().getDeliveryTag();
+        logger.info("getConfirmMsgTest received from {} message: [{}].", DIRECT_CONFIRM_QUEUE,
+                new String(msg.getBody()));
+        // 成功确认消息
+        try {
+            channel.basicAck(deliveryTag, true);
+        } catch (IOException e) {
+            e.printStackTrace();
+            // 失败确认
+            try {
+                channel.basicNack(deliveryTag, false, false);
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+        }
+
+    }
+    // --- 消息确认机制 ------- end
+
 }

@@ -11,6 +11,7 @@ import org.springframework.amqp.core.FanoutExchange;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.core.TopicExchange;
+import org.springframework.amqp.rabbit.connection.CorrelationData;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -245,7 +246,7 @@ public class MQRabbitProducerController implements RabbitConstant {
     }
 
     // 创建死信队列
-    @GetMapping(value = "/createDirectDelayQueue")
+    /*@GetMapping(value = "/createDirectDelayQueue")
     public PageResult createDirectDelayQueue() {
         // 创建队列
         amqpAdmin.declareQueue(new Queue(DIRECT_DELAY_QUEUE, true // 是否持久化
@@ -255,17 +256,20 @@ public class MQRabbitProducerController implements RabbitConstant {
         amqpAdmin.declareBinding(new Binding(DIRECT_DELAY_QUEUE, Binding.DestinationType.QUEUE, DIRECT_DELAY,
                 DIRECT_DELAY_ROUTINGKEY, null));
         return PageResult.ok();
-    }
+    }*/
 
     // 向业务对列发送一个点对点消息
     @GetMapping(value = "/sendBusMsgTest")
     public PageResult sendBusMsgTest() {
         // 设置每个消息都返回一个确认消息
         rabbitTemplate.setMandatory(true);
-        // 消息确认机制
-        rabbitTemplate.setConfirmCallback((correlationData, ack, s) -> {
+        /**
+         * 消息确认机制，这个回调会适用于当前控制类发送的所有消息，一个 RabbitTemplate 仅支持一个 ReturnCallback。
+         * com.gnol.springboot.client.controllers.mq.MQRabbitProducerController.sendConfirmMsgTest() 设置了一个，所以此处要注释掉。
+         */
+        /*rabbitTemplate.setConfirmCallback((correlationData, ack, s) -> {
             logger.info("消息确认 [{}]！", ack ? "成功" : "失败");
-        });
+        });*/
         // 消息发送失败机制
         rabbitTemplate.setReturnCallback((message, replyCode, replyText, exchange, routingKey) -> {
             logger.info("发送失败的消息 [{}]", new String(message.getBody()));
@@ -275,5 +279,57 @@ public class MQRabbitProducerController implements RabbitConstant {
         return PageResult.ok();
     }
     // ------- 死信队列 ------- end
+
+    // --- 消息确认机制 ------- start
+    // 创建交换机
+    @Bean("directConfirmExchange")
+    public DirectExchange directConfirmExchange() {
+        return new DirectExchange(DIRECT_CONFIRM);
+    }
+
+    // 创建队列
+    @Bean("directConfirmQueue")
+    public Queue directConfirmQueue() {
+        return new Queue(DIRECT_CONFIRM_QUEUE);
+    }
+
+    // 把队列绑定到交换机
+    @Bean("bindingConfirmQueueToDirectExchange")
+    public Binding bindingConfirmQueueToDirectExchange(@Qualifier("directConfirmQueue") Queue queue,
+            @Qualifier("directConfirmExchange") DirectExchange exchange) {
+        return BindingBuilder.bind(queue).to(exchange).with(DIRECT_CONFIRM_ROUTINGKEY);
+    }
+
+    @GetMapping(value = "/sendConfirmMsgTest")
+    public PageResult sendConfirmMsgTest() {
+        // 消息发送到交换器 Exchange 后触发回调
+        rabbitTemplate.setConfirmCallback(new RabbitTemplate.ConfirmCallback() {
+            @Override
+            public void confirm(CorrelationData correlationData, boolean ack, String cause) {
+                logger.info("消息唯一标识 correlationData = {}", correlationData);
+                logger.info("确认结果 ack = {}", ack);
+                logger.info("失败原因 cause = {}", cause);
+            }
+        });
+
+        // 配置 mandatory 后下面的 ReturnCallback 才会起作用
+        rabbitTemplate.setMandatory(true);
+        // 消息从交换器发送到对应的消息队列失败时触发（比如根据发送消息时指定的 routingKey 找不到指定队列时会触发）
+        rabbitTemplate.setReturnCallback(new RabbitTemplate.ReturnCallback() {
+            @Override
+            public void returnedMessage(Message message, int replyCode, String replyText, String exchange,
+                    String routingKey) {
+                logger.info("消息主体 message = {}", message);
+                logger.info("回复码 replyCode = {}", replyCode);
+                logger.info("回复描述 replyText = {}", replyText);
+                logger.info("交换机名字 exchange = {}", exchange);
+                logger.info("路由键 routingKey = {}", routingKey);
+            }
+        });
+        rabbitTemplate.convertAndSend(DIRECT_CONFIRM, DIRECT_CONFIRM_ROUTINGKEY,
+                "我是一个待确认的消息，发送时间是" + DateUtil.getDateSecond());
+        return PageResult.ok();
+    }
+    // --- 消息确认机制 ------- end
 
 }

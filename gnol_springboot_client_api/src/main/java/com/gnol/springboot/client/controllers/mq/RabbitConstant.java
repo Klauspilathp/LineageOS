@@ -57,5 +57,11 @@ public interface RabbitConstant {
     String DIRECT_DELAY_ROUTINGKEY = "directDelayRoutingKey";
     // 队列名称
     String DIRECT_DELAY_QUEUE = "directDelayQueue";
+    // --- 消息确认机制
+    String DIRECT_CONFIRM = "directConfirmExchange";
+    // routingKey 名称
+    String DIRECT_CONFIRM_ROUTINGKEY = "directConfirmRoutingKey";
+    // 队列名称
+    String DIRECT_CONFIRM_QUEUE = "directConfirmQueue";
 
 }
