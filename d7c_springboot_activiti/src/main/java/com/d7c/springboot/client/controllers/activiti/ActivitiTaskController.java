@@ -1,9 +1,12 @@
 package com.d7c.springboot.client.controllers.activiti;
 
+import java.util.List;
+
 import org.activiti.api.runtime.shared.query.Pageable;
 import org.activiti.api.task.model.Task;
 import org.activiti.api.task.model.builders.TaskPayloadBuilder;
 import org.activiti.api.task.runtime.TaskRuntime;
+import org.activiti.engine.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,10 +30,33 @@ import com.d7c.springboot.client.controllers.WebBaseController;
 @RequestMapping(value = "/activiti/task")
 public class ActivitiTaskController extends WebBaseController {
     /**
-     * 提供对流程任务存储库操作、访问的服务
+     * 提供与用户集成的流程任务存储库操作、访问的服务，内部实现依赖 {@link TaskService}
      */
     @Autowired
     private TaskRuntime taskRuntime;
+    /**
+     * 提供访问 {@link Task} 和表单相关操作的服务。
+     */
+    @Autowired
+    private TaskService taskService;
+
+    /**
+     * @Title: listTaskByKey
+     * @author: 吴佳隆
+     * @data: 2021年1月19日 上午9:49:49
+     * @Description: 根据给定的 taskDefinitionKey（UserTask 的 id） 查询任务列表。
+     * @param taskDefinitionKey 任务定义键
+     * @return PageResult
+     */
+    @GetMapping(value = "/listTaskByKey")
+    public PageResult listTaskByKey(@RequestParam("taskDefinitionKey") String taskDefinitionKey) {
+        if (StringUtil.isBlank(taskDefinitionKey)) {
+            return PageResult.error("taskDefinitionKey 不能为空！");
+        }
+        List<org.activiti.engine.task.Task> tasks = taskService.createTaskQuery().taskDefinitionKey(taskDefinitionKey)
+                .orderByTaskCreateTime().desc().list();
+        return PageResult.ok(tasks);
+    }
 
     /**
      * @Title: listTasks
