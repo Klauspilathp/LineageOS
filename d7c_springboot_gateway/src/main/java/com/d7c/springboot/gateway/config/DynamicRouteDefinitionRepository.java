@@ -1,16 +1,24 @@
 package com.d7c.springboot.gateway.config;
 
-import java.util.ArrayList;
+import static java.util.Collections.synchronizedMap;
+
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.gateway.config.GatewayProperties;
 import org.springframework.cloud.gateway.route.RouteDefinition;
 import org.springframework.cloud.gateway.route.RouteDefinitionRepository;
-import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.cloud.gateway.support.NotFoundException;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.stereotype.Repository;
+import org.springframework.util.StringUtils;
 
+import com.alibaba.fastjson.JSON;
 import com.d7c.plugins.core.StringUtil;
 
 import reactor.core.publisher.Flux;
@@ -21,47 +29,90 @@ import reactor.core.publisher.Mono;
  * @Package: com.d7c.springboot.gateway.config
  * @author: 吴佳隆
  * @date: 2020年8月1日 下午1:13:10
- * @Description: 动态路由配置，org.springframework.cloud.gateway.route.InMemoryRouteDefinitionRepository
+ * @Description: 动态路由配置。
+ * 参考：
+ *    org.springframework.cloud.gateway.route.InMemoryRouteDefinitionRepository，
+ * 从 org.springframework.cloud.gateway.config.GatewayAutoConfiguration 类中可以看出如果没有
+ * org.springframework.cloud.gateway.route.RouteDefinitionRepository 类型的 Bean 则使用
+ * org.springframework.cloud.gateway.route.InMemoryRouteDefinitionRepository 类加载路由规则。
+ * 配置信息加载顺序：
+ *    1、PropertiesRouteDefinitionLocator --> 配置文件加载初始化 --> CompositeRouteDefinitionLocator；
+ *    2、RouteDefinitionRepository --> 存储器中加载初始化 --> CompositeRouteDefinitionLocator；
+ *    3、DiscoveryClientRouteDefinitionLocator --> 注册中心加载初始化 --> CompositeRouteDefinitionLocator。
  */
-// @Repository
+@Repository
 public class DynamicRouteDefinitionRepository implements RouteDefinitionRepository {
     private static final Logger logger = LoggerFactory.getLogger(DynamicRouteDefinitionRepository.class);
     /**
-     * redis 对 String 操作模板
+     * 路由规则定义容器
+     */
+    private final Map<String, RouteDefinition> routes = synchronizedMap(new LinkedHashMap<String, RouteDefinition>());
+    @Autowired
+    private GatewayProperties properties;
+    /**
+     * redis 访问对象助手
      */
     @Autowired
-    private StringRedisTemplate template;
+    private RedisTemplate<String, Object> template;
     /**
      * amqp 模板
      */
     @Autowired
     private AmqpTemplate amqpTemplate;
-    /**
-     * 路由定义
-     */
-    private static List<RouteDefinition> definitions = new ArrayList<RouteDefinition>();
 
+    /**
+     * 该方法默认 eureka.client.registry-fetch-interval-seconds 秒刷新一次。
+     */
     @Override
     public Flux<RouteDefinition> getRouteDefinitions() {
-        // 从 redis 中获取路由列表
-        String routesStr = template.opsForValue().get("gateway:routes");
-        if (StringUtil.isNotBlank(routesStr)) {
-            // 将 routeStr 解析成 List<RouteDefinition> 并赋值给 definitions
-        } else {
-            amqpTemplate.convertAndSend("gateway:routes", true);
-            logger.debug("向队列中发一条消息通知消费者 redis 中的路由定义不存在，该查询并放入缓存了");
+        if (!routes.isEmpty()) {
+            return Flux.fromIterable(routes.values());
         }
+
+        // 从 redis 中获取路由列表
+        Object routeDefinitions = template.opsForValue().get("gateway:routes");
+        List<RouteDefinition> definitions = null;
+        if (StringUtil.isNotBlank(routeDefinitions)) {
+            // 将 routeDefinitions 解析成 List<RouteDefinition> 并赋值给 definitions
+            definitions = JSON.parseArray(JSON.toJSONString(routeDefinitions), RouteDefinition.class);
+        } else {
+            GatewayRouteDefinition gatewayRouteDefinition = new GatewayRouteDefinition();
+            gatewayRouteDefinition.setOperationType(GatewayRouteDefinition.OperationType.SELECT.name());
+            amqpTemplate.convertAndSend("gateway:routes", JSON.toJSONString(gatewayRouteDefinition));
+            logger.warn("Redis 中不存在路由定义列表，向消息队列中发一条消息通知其他服务从数据库中查询路由定义数据并放入 Redis 中。");
+
+            // 暂时加载本地路由定义列表
+            definitions = properties.getRoutes();
+        }
+
+        // 将路由定义列表保存到本地缓存，减少查询，提高效率。
+        definitions.stream().forEach(route -> {
+            routes.put(route.getId(), route);
+        });
+
         return Flux.fromIterable(definitions);
     }
 
     @Override
     public Mono<Void> save(Mono<RouteDefinition> route) {
-        return null;
+        return route.flatMap(r -> {
+            if (StringUtils.isEmpty(r.getId())) {
+                return Mono.error(new IllegalArgumentException("id may not be empty"));
+            }
+            routes.put(r.getId(), r);
+            return Mono.empty();
+        });
     }
 
     @Override
     public Mono<Void> delete(Mono<String> routeId) {
-        return null;
+        return routeId.flatMap(id -> {
+            if (routes.containsKey(id)) {
+                routes.remove(id);
+                return Mono.empty();
+            }
+            return Mono.defer(() -> Mono.error(new NotFoundException("RouteDefinition not found: " + routeId)));
+        });
     }
 
 }
