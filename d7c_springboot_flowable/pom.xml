@@ -13,10 +13,10 @@
 	<description>d7c_springboot 项目 flowable 工作流模块。</description>
 
 	<dependencies>
-		<!-- d7c 项目封装的 spring-boot 关于 oauth2 starter -->
+		<!-- web -->
 		<dependency>
-			<groupId>com.d7c</groupId>
-			<artifactId>spring-boot-starter-oauth2</artifactId>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>com.d7c</groupId>

@@ -6,9 +6,8 @@ import org.flowable.idm.spring.authentication.SpringEncoder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-
-import com.d7c.oauth2.spring.boot.SHA1PasswordEncoder;
 
 /**
  * @Title: D7cSpringIdmEngineConfiguration
@@ -20,15 +19,15 @@ import com.d7c.oauth2.spring.boot.SHA1PasswordEncoder;
 @Configuration
 public class D7cSpringIdmEngineConfiguration extends SpringIdmEngineConfiguration {
 
-    @Bean("sha1PasswordEncoder")
+    @Bean("bCryptPasswordEncoder")
     @Primary
-    public PasswordEncoder sha1PasswordEncoder() {
-        return new SHA1PasswordEncoder(2);
+    public PasswordEncoder bCryptPasswordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 
     @Bean
     public SpringEncoder d7cSpringEncoder() {
-        return new SpringEncoder(sha1PasswordEncoder());
+        return new SpringEncoder(bCryptPasswordEncoder());
     }
 
     @Override
