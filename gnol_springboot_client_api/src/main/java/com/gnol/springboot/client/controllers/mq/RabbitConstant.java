@@ -45,5 +45,17 @@ public interface RabbitConstant {
     String FANOUT_QUEUE_1 = "fanoutQueue1";
     String FANOUT_QUEUE_2 = "fanoutQueue2";
     String FANOUT_QUEUE_3 = "fanoutQueue3";
+    // ------- 业务队列，就是简单的点对点消息
+    String DIRECT_BUS = "directBusExchange";
+    // routingKey 名称
+    String DIRECT_BUS_ROUTINGKEY = "directBusRoutingKey";
+    // 队列名称
+    String DIRECT_BUS_QUEUE = "directBusQueue";
+    // ------- 死信队列
+    String DIRECT_DELAY = "directDelayExchange";
+    // routingKey 名称
+    String DIRECT_DELAY_ROUTINGKEY = "directDelayRoutingKey";
+    // 队列名称
+    String DIRECT_DELAY_QUEUE = "directDelayQueue";
 
 }

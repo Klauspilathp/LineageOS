@@ -1,8 +1,12 @@
 package com.gnol.springboot.client.controllers.mq;
 
+import java.io.IOException;
+
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
+
+import com.rabbitmq.client.Channel;
 
 /**
  * @Title: MQRabbitConsumerController
@@ -61,5 +65,30 @@ public class MQRabbitConsumerController implements RabbitConstant {
         logger.info("getFanout3MsgTest received from {} message: [{}].", FANOUT_QUEUE_3, new String(msg.getBody()));
     }
     // ------- 广播模式 ------- end
+
+    // ------- 业务队列，就是简单的点对点消息 ------- start
+    @RabbitListener(queues = DIRECT_BUS_QUEUE)
+    public void getBusMsgTest(Channel channel, Message msg) {
+        logger.info("getBusMsgTest received from {} message: [{}].", DIRECT_BUS_QUEUE, new String(msg.getBody()));
+        try {
+            // 手动签收
+            // channel.basicAck(msg.getMessageProperties().getDeliveryTag(), false);
+            // 拒绝消费消息（丢失消息） 给死信队列
+            channel.basicNack(msg.getMessageProperties().getDeliveryTag(), // 收到的标签
+                    false, // 只拒绝提供的交付标签
+                    false // 不会重回队列
+            );
+            logger.info("我拒绝接受它！");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // DIRECT_BUS_QUEUE 队列拒绝签收消息后，该消息变成死信消息被转发到死信队列消费。
+    @RabbitListener(queues = DIRECT_DELAY_QUEUE)
+    public void getDelayMsgTest(Message msg) {
+        logger.info("getDelayMsgTest received from {} message: [{}].", DIRECT_DELAY_QUEUE, new String(msg.getBody()));
+    }
+    // ------- 业务队列，就是简单的点对点消息 ------- end
 
 }

@@ -1,5 +1,8 @@
 package com.gnol.springboot.client.controllers.mq;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.amqp.core.AmqpAdmin;
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
@@ -191,5 +194,86 @@ public class MQRabbitProducerController implements RabbitConstant {
         amqpAdmin.declareBinding(new Binding(FANOUT_QUEUE_3, Binding.DestinationType.QUEUE, FANOUT, "", null));
         return PageResult.ok();
     }
+
+    // ------- 业务队列，就是简单的点对点消息 ------- start
+    // 创建交换机
+    @Bean("directBusExchange")
+    public DirectExchange directBusExchange() {
+        return new DirectExchange(DIRECT_BUS);
+    }
+
+    // 创建队列并绑定死信队列
+    @Bean("directBusQueue")
+    public Queue directBusQueue() {
+        Map<String, Object> params = new HashMap<>();
+        // x-dead-letter-exchange 声明了队列里的死信转发到的 DLX 名称
+        params.put("x-dead-letter-exchange", DIRECT_DELAY);
+        // x-dead-letter-routing-key 声明了这些死信在转发时携带的 routing-key
+        params.put("x-dead-letter-routing-key", DIRECT_DELAY_ROUTINGKEY);
+        // 设置队列中消息的过期时间，单位毫秒 x-message-ttl
+        // params.put("x-expires", 5 * 1000);
+        return new Queue(DIRECT_BUS_QUEUE, true, false, false, params);
+
+    }
+
+    // 把队列绑定到交换机
+    @Bean("bindingBusQueueToDirectExchange")
+    public Binding bindingBusQueueToDirectExchange(@Qualifier("directBusQueue") Queue queue,
+            @Qualifier("directBusExchange") DirectExchange exchange) {
+        return BindingBuilder.bind(queue).to(exchange).with(DIRECT_BUS_ROUTINGKEY);
+    }
+    // ------- 业务队列，就是简单的点对点消息 ------- end
+
+    // ------- 死信队列 ------- start
+    // 创建交换机
+    @Bean("directDelayExchange")
+    public DirectExchange directDelayExchange() {
+        return new DirectExchange(DIRECT_DELAY);
+    }
+
+    // 创建死信队列
+    @Bean("directDelayQueue")
+    public Queue directDelayQueue() {
+        return new Queue(DIRECT_DELAY_QUEUE);
+    }
+
+    // 把死信队列绑定到交换机
+    @Bean("bindingDelayQueueToDirectExchange")
+    public Binding bindingDelayQueueToDirectExchange(@Qualifier("directDelayQueue") Queue queue,
+            @Qualifier("directDelayExchange") DirectExchange exchange) {
+        return BindingBuilder.bind(queue).to(exchange).with(DIRECT_DELAY_ROUTINGKEY);
+    }
+
+    // 创建死信队列
+    @GetMapping(value = "/createDirectDelayQueue")
+    public PageResult createDirectDelayQueue() {
+        // 创建队列
+        amqpAdmin.declareQueue(new Queue(DIRECT_DELAY_QUEUE, true // 是否持久化
+        ));
+        amqpAdmin.declareExchange(new DirectExchange(DIRECT_DELAY));
+        // 创建绑定关系
+        amqpAdmin.declareBinding(new Binding(DIRECT_DELAY_QUEUE, Binding.DestinationType.QUEUE, DIRECT_DELAY,
+                DIRECT_DELAY_ROUTINGKEY, null));
+        return PageResult.ok();
+    }
+
+    // 向业务对列发送一个点对点消息
+    @GetMapping(value = "/sendBusMsgTest")
+    public PageResult sendBusMsgTest() {
+        // 设置每个消息都返回一个确认消息
+        rabbitTemplate.setMandatory(true);
+        // 消息确认机制
+        rabbitTemplate.setConfirmCallback((correlationData, ack, s) -> {
+            logger.info("消息确认 [{}]！", ack ? "成功" : "失败");
+        });
+        // 消息发送失败机制
+        rabbitTemplate.setReturnCallback((message, replyCode, replyText, exchange, routingKey) -> {
+            logger.info("发送失败的消息 [{}]", new String(message.getBody()));
+        });
+        rabbitTemplate.convertAndSend(DIRECT_BUS, DIRECT_BUS_ROUTINGKEY,
+                "我是一个业务消息，我将被转发至死信队列，发送时间是" + DateUtil.getDateSecond());
+        return PageResult.ok();
+    }
+    // ------- 死信队列 ------- end
 
 }
