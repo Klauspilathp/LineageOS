@@ -6,9 +6,11 @@ import javax.annotation.Resource;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.sql.DataSource;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
@@ -23,6 +25,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
+import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 
 import com.gnol.springboot.client.services.sys.SysMenuService;
 import com.gnol.springboot.client.services.sys.SysSessionService;
@@ -64,6 +68,11 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
      */
     @Resource(name = "sysMenuServiceImpl")
     private SysMenuService sysMenuService;
+    /**
+     * 数据源
+     */
+    @Autowired
+    private DataSource dataSource;
 
     @Bean("sha1PasswordEncoder")
     @Primary
@@ -74,6 +83,16 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService).passwordEncoder(sha1PasswordEncoder());
+    }
+
+    // org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl.CREATE_TABLE_SQL
+    @Bean("jdbcTokenRepositoryImpl")
+    public PersistentTokenRepository jdbcTokenRepositoryImpl() {
+        JdbcTokenRepositoryImpl tokenRepository = new JdbcTokenRepositoryImpl();
+        tokenRepository.setDataSource(dataSource);
+        // 首次设置为 true 创建表
+        // tokenRepository.setCreateTableOnStartup(true);
+        return tokenRepository;
     }
 
     @Override
@@ -107,12 +126,13 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                             AuthenticationException exception) throws IOException, ServletException {
                         response.sendRedirect("/index?error=" + exception.getMessage());
                     }
-                }).and().logout().logoutSuccessUrl("/index") // 登出授权
+                }).and().rememberMe().tokenRepository(jdbcTokenRepositoryImpl()) // new InMemoryTokenRepositoryImpl()、jdbcTokenRepositoryImpl()
+                .tokenValiditySeconds(60 * 60 * 24) // 记住我一天
+                .and().logout().logoutSuccessUrl("/index") // 登出授权
                 .invalidateHttpSession(true).clearAuthentication(true)
         // .httpBasic(); 以弹框方式认证
         // .accessDecisionManager(new CustomAccessDecisionManager()) // 自定义权限决策处理
         ;
-        // http.rememberMe().tokenRepository(rememberMeHandler).tokenValiditySeconds(60 * 60 * 24)
     }
 
 }
