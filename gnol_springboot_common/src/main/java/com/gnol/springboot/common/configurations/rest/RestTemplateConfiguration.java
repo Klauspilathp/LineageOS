@@ -1,5 +1,6 @@
 package com.gnol.springboot.common.configurations.rest;
 
+import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,8 +18,8 @@ public class RestTemplateConfiguration {
 
     @Bean
     @LoadBalanced // ribbon 的负载均衡注解，org.springframework.cloud.client.loadbalancer.LoadBalancerAutoConfiguration
-    public RestTemplate restTemplate() {
-        return new RestTemplate();
+    public RestTemplate restTemplate(RestTemplateBuilder builder) {
+        return builder.build();
     }
 
 }
