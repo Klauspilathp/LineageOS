@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
  * @date: 2019年7月4日 下午12:47:52
  * @Description: 定时任务测试
  */
-@Service(value = "taskDemo")
+@Service(value = "task1Demo")
 @Lazy(false)
 public class Task1Demo {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -26,7 +26,7 @@ public class Task1Demo {
      */
     @Scheduled(cron = "0/5 * * * * ?")
     public void testTask() {
-        logger.info("TaskDemo=======>定时任务测试...");
+        logger.info("Task1Demo.testTask=======>定时任务测试...");
     }
 
 }
