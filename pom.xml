@@ -38,6 +38,7 @@
 		<module>gnol_springboot_zuul</module>
 		<module>gnol_springboot_gateway</module>
 		<module>gnol_springboot_config</module>
+		<module>gnol_springboot_auth_feign</module>
 		<module>gnol_springboot_auth</module>
 		<module>gnol_springboot_admin</module>
 		<module>gnol_springboot_client_web</module>

@@ -5,6 +5,7 @@ import java.util.Date;
 
 import javax.annotation.PostConstruct;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.core.convert.support.GenericConversionService;
@@ -22,9 +23,11 @@ import com.gnol.plugins.tools.date.DateUtil;
  */
 @Configuration
 public class ConverterConfiguration {
+    @Autowired
+    private RequestMappingHandlerAdapter handlerAdapter;
 
     @PostConstruct
-    public void addConversionConfig(RequestMappingHandlerAdapter handlerAdapter) {
+    public void addConversionConfig() {
         ConfigurableWebBindingInitializer initializer = (ConfigurableWebBindingInitializer) handlerAdapter
                 .getWebBindingInitializer();
         if ((initializer != null ? initializer.getConversionService() : null) != null) {

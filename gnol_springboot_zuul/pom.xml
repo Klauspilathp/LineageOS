@@ -15,7 +15,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>com.gnol</groupId>
-			<artifactId>gnol_springboot_common_services</artifactId>
+			<artifactId>gnol_springboot_auth_feign</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 		<!-- zuul -->

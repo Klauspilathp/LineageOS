@@ -15,7 +15,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
  */
 @SpringBootApplication(scanBasePackages = {"com.gnol.springboot"})
 @EnableDiscoveryClient // eureka 客户端
-@EnableFeignClients(basePackages = {"com.gnol.springboot.common.feigns"}) // 启用 Fegin
+@EnableFeignClients(basePackages = {"com.gnol.springboot"}) // 启用 Fegin
 @EnableCircuitBreaker // 启用 hystrix
 public class ApiApplication {
 

@@ -1,4 +1,4 @@
-package com.gnol.springboot.common.mappings.auth;
+package com.gnol.springboot.auth.mappings;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -10,7 +10,7 @@ import com.gnol.plugins.core.PageResult;
 
 /**
  * @Title: AuthMapping
- * @Package: com.gnol.springboot.common.mappings.auth
+ * @Package: com.gnol.springboot.auth.mappings
  * @author: 吴佳隆
  * @date: 2020年6月28日 下午12:58:15
  * @Description: 认证服务接口

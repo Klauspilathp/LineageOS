@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.gnol.plugins.core.PageData;
 import com.gnol.plugins.core.PageResult;
+import com.gnol.springboot.auth.mappings.AuthMapping;
 import com.gnol.springboot.auth.services.AuthService;
-import com.gnol.springboot.common.mappings.auth.AuthMapping;
 
 /**
  * @Title: AuthController

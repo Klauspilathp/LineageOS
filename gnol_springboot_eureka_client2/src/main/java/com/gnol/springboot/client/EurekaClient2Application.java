@@ -21,7 +21,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
  * 而 @EnableDiscoveryClient 注解只需启动一个服务
  */
 @EnableDiscoveryClient
-@EnableFeignClients(basePackages = {"com.gnol.springboot.common.feigns"}) // 启用 Fegin
+@EnableFeignClients(basePackages = {"com.gnol.springboot"}) // 启用 Fegin
 @EnableCircuitBreaker // 启用 hystrix
 @EnableJms // 启用 jms 支持
 @EnableScheduling // 启用定时任务
