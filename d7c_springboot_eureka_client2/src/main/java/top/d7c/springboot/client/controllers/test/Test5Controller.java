@@ -1,4 +1,4 @@
-package top.d7c.springboot.client.controlles.test;
+package top.d7c.springboot.client.controllers.test;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,13 +8,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
-import top.d7c.plugins.core.PageResult;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
 
+import top.d7c.plugins.core.PageResult;
+
 /**
  * @Title: Test5Controller
- * @Package: top.d7c.springboot.client.controlles.test
+ * @Package: top.d7c.springboot.client.controllers.test
  * @author: 吴佳隆
  * @date: 2020年6月19日 下午5:20:18
  * @Description: hystrix 注解
@@ -42,8 +43,7 @@ public class Test5Controller {
     @RequestMapping(value = "/t1", method = RequestMethod.GET)
     public PageResult t1(String id) {
         logger.info("client2.t1 param id : {}", id);
-        return restTemplate.getForObject("http://d7c-springboot-client1/test2/t2?id=" + id,
-                PageResult.class);
+        return restTemplate.getForObject("http://d7c-springboot-client1/test2/t2?id=" + id, PageResult.class);
     }
 
     // 服务降级时调用

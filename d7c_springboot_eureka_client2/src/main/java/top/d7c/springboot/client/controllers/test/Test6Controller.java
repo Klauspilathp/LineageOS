@@ -1,4 +1,4 @@
-package top.d7c.springboot.client.controlles.test;
+package top.d7c.springboot.client.controllers.test;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,7 +15,7 @@ import top.d7c.plugins.core.PageResult;
 
 /**
  * @Title: Test6Controller
- * @Package: top.d7c.springboot.client.controlles.test
+ * @Package: top.d7c.springboot.client.controllers.test
  * @author: 吴佳隆
  * @date: 2020年6月19日 下午6:23:49
  * @Description: Feign 整合 Hystrix

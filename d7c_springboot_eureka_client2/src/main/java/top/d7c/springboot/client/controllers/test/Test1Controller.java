@@ -1,4 +1,4 @@
-package top.d7c.springboot.client.controlles.test;
+package top.d7c.springboot.client.controllers.test;
 
 import javax.annotation.Resource;
 
@@ -14,13 +14,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
-import top.d7c.plugins.core.PageResult;
 import com.netflix.appinfo.InstanceInfo;
 import com.netflix.discovery.EurekaClient;
 
+import top.d7c.plugins.core.PageResult;
+
 /**
  * @Title: Test1Controller
- * @Package: top.d7c.springboot.client.controlles.test
+ * @Package: top.d7c.springboot.client.controllers.test
  * @author: 吴佳隆
  * @date: 2020年6月17日 上午9:22:10
  * @Description: 测试服务发现

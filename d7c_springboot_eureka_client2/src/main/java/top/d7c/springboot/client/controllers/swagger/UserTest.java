@@ -1,11 +1,11 @@
-package top.d7c.springboot.client.controlles.swagger;
+package top.d7c.springboot.client.controllers.swagger;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 /**
  * @Title: UserTest
- * @Package: top.d7c.springboot.client.controlles.swagger
+ * @Package: top.d7c.springboot.client.controllers.swagger
  * @author: 吴佳隆
  * @date: 2019年7月29日 下午7:05:57
  * @Description: swagger 测试实体

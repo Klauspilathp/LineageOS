@@ -1,4 +1,4 @@
-package top.d7c.springboot.client.controlles.mq;
+package top.d7c.springboot.client.controllers.mq;
 
 import java.util.UUID;
 
@@ -12,18 +12,17 @@ import org.springframework.stereotype.Component;
 
 import top.d7c.activemq.springboot.autoconfigure.ActivemqMessage;
 import top.d7c.activemq.springboot.autoconfigure.SendMessageService;
-import top.d7c.springboot.client.controlles.test.Test1Controller;
 
 /**
  * @Title: ActivemqTest1Controller
- * @Package: top.d7c.springboot.client.controlles.mq
+ * @Package: top.d7c.springboot.client.controllers.mq
  * @author: 吴佳隆
  * @date: 2020年6月30日 下午5:49:22
  * @Description: activemq 点对点模式测试
  */
 @Component
 public class ActivemqTest1Controller {
-    private static final Logger logger = LoggerFactory.getLogger(Test1Controller.class);
+    private static final Logger logger = LoggerFactory.getLogger(ActivemqTest1Controller.class);
     @Resource(name = "sendMessageServiceImpl")
     private SendMessageService sendMessageService;
 

@@ -1,4 +1,4 @@
-package top.d7c.springboot.client.controlles.swagger;
+package top.d7c.springboot.client.controllers.swagger;
 
 import java.io.File;
 import java.io.IOException;
@@ -18,10 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import top.d7c.plugins.core.PageData;
-import top.d7c.plugins.core.PageResult;
-import top.d7c.plugins.tools.idfactory.IdFactory;
-
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -29,10 +25,13 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import top.d7c.plugins.core.PageData;
+import top.d7c.plugins.core.PageResult;
+import top.d7c.plugins.tools.idfactory.IdFactory;
 
 /**
  * @Title: UserTestController
- * @Package: top.d7c.springboot.client.controlles.swagger
+ * @Package: top.d7c.springboot.client.controllers.swagger
  * @author: 吴佳隆
  * @date: 2019年7月29日 下午7:10:10
  * @Description: swagger 测试 Controller
