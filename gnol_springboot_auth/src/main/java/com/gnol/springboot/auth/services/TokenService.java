@@ -19,21 +19,21 @@ public interface TokenService {
      * @Title: getToken
      * @author: 吴佳隆
      * @data: 2020年6月29日 下午12:27:22
-     * @Description: 获取 token
+     * @Description: 生成 token
      * @param claims    载荷
      * @return String
      */
     String getToken(Map<String, Object> claims);
 
     /**
-     * @Title: validateToken
+     * @Title: getClaimsByToken
      * @author: 吴佳隆
      * @data: 2020年6月29日 下午12:27:37
-     * @Description: 验证 token 是否有效，如果有效则返回载荷
+     * @Description: 根据 token 获取载荷
      * @param pd
      * @return Claims
      */
-    Claims validateToken(PageData pd);
+    Claims getClaimsByToken(PageData pd);
 
     /**
      * @Title: updateToken

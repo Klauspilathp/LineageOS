@@ -1,6 +1,5 @@
 package com.gnol.springboot.auth.services.impl;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -24,7 +23,6 @@ import com.gnol.springboot.common.enums.auth.AuthTypeEnum;
 import com.gnol.springboot.common.enums.sys.StatusEnum;
 
 import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.JwtException;
 
 /**
  * @Title: AuthServiceImpl
@@ -52,15 +50,10 @@ public class AuthServiceImpl implements AuthService {
     @Resource(name = "jwtTokenServiceImpl")
     private TokenService tokenService;
     /**
-     * 菜单资源实现
+     * 访问资源实现
      */
-    @Resource(name = "menuResourceServiceImpl")
-    private ResourceService menuResourceServiceImpl;
-    /**
-     * 接口资源实现
-     */
-    @Resource(name = "interfaceResourceServiceImpl")
-    private ResourceService interfaceResourceServiceImpl;
+    @Resource(name = "resourceServiceImpl")
+    private ResourceService resourceService;
 
     @Override
     public PageResult login(PageData pd) {
@@ -112,17 +105,11 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public PageResult validate(PageData pd) {
-        Claims claims = null;
-        try {
-            claims = tokenService.validateToken(pd);
-        } catch (JwtException e) {
-            e.printStackTrace();
-            return PageResult.error(e.getMessage());
+        Claims claims = tokenService.getClaimsByToken(pd);
+        if (claims == null) {
+            return PageResult.error("token 错误！");
         }
-        if (claims.getExpiration().before(new Date())) {
-            return PageResult.error("授权已过期");
-        }
-        return PageResult.ok(claims.toString());
+        return resourceService.isPermitted(pd, claims) ? PageResult.ok(claims) : PageResult.error("没有访问权限！");
     }
 
     @Override

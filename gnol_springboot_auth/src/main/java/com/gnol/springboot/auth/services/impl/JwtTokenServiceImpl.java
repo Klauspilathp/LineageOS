@@ -11,7 +11,6 @@ import com.gnol.plugins.core.PageData;
 import com.gnol.springboot.auth.services.TokenService;
 
 import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.JwtException;
 
 /**
  * @Title: JwtTokenServiceImpl
@@ -44,7 +43,7 @@ public class JwtTokenServiceImpl implements TokenService {
     }
 
     @Override
-    public Claims validateToken(PageData pd) {
+    public Claims getClaimsByToken(PageData pd) {
         if (pd == null || pd.isEmpty()) {
             return null;
         }
@@ -53,17 +52,11 @@ public class JwtTokenServiceImpl implements TokenService {
 
     @Override
     public String updateToken(PageData pd) {
-        String token = "";
         if (pd == null || pd.isEmpty()) {
-            return token;
+            return null;
         }
-        try {
-            token = jwtUtil.updateToken(pd.getString("token"), jwtUtil.getJwtProperties().getSecret(),
-                    jwtUtil.getJwtProperties().getExpiration());
-        } catch (JwtException e) {
-            e.printStackTrace();
-        }
-        return token;
+        return jwtUtil.updateToken(pd.getString("token"), jwtUtil.getJwtProperties().getSecret(),
+                jwtUtil.getJwtProperties().getExpiration());
     }
 
 }
