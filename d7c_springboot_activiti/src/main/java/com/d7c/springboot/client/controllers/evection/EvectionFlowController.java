@@ -1,9 +1,12 @@
 package com.d7c.springboot.client.controllers.evection;
 
+import javax.annotation.Resource;
+
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.d7c.springboot.client.controllers.WebBaseController;
+import com.d7c.springboot.client.services.evection.EvectionFlowService;
 
 /**
  * @Title: EvectionFlowController
@@ -15,6 +18,12 @@ import com.d7c.springboot.client.controllers.WebBaseController;
 @RestController
 @RequestMapping(value = "/evection/flow")
 public class EvectionFlowController extends WebBaseController {
+    /**
+     * 出差流程服务
+     */
+    @Resource(name = "evectionFlowServiceImpl")
+    private EvectionFlowService evectionFlowService;
+
     /**
      * 概要：
      * 1、Activiti 7 很多服务方法需要用户具有 ROLE_ACTIVITI_ADMIN 或 ROLE_ACTIVITI_USER（GROUP_users 组） 角色，
