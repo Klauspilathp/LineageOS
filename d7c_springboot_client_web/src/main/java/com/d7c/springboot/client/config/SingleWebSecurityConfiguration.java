@@ -12,7 +12,6 @@ import javax.sql.DataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -45,12 +44,6 @@ import com.d7c.springboot.common.enums.sys.LoginStatusEnum;
  * @date: 2020年7月6日 下午3:49:51
  * @Description: 单机 web security 配置
  */
-@ConditionalOnProperty( // 存在对应配置信息时初始化该配置类
-        prefix = "d7c.authorization.server", // 配置前缀 d7c.authorization.server
-        name = "enabled", // 配置名称
-        havingValue = "true", // 与配置值比较，如果相等则配置生效
-        matchIfMissing = true // 默认配置值，即默认开启此配置
-)
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity( // 开启 security 注解

@@ -42,8 +42,8 @@ public class PreAuthGlobalFilter implements GlobalFilter, Ordered {
         // 如果为空，那么将返回 401
         if (token == null || token.isEmpty()) {
             // 转换响应消息内容对象为字节
-            byte[] bits = PageResult.build(com.d7c.plugins.core.enums.HttpStatus.HS_401.getKey(), "没有 token")
-                    .toString().getBytes(StandardCharsets.UTF_8);
+            byte[] bits = PageResult.build(com.d7c.plugins.core.enums.HttpStatus.HS_401.getKey(), "没有 token").toString()
+                    .getBytes(StandardCharsets.UTF_8);
             DataBuffer buffer = response.bufferFactory().wrap(bits);
             // 设置响应对象状态码 401
             response.setStatusCode(HttpStatus.UNAUTHORIZED);

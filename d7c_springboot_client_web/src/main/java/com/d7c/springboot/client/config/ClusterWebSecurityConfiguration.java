@@ -52,8 +52,9 @@ public class ClusterWebSecurityConfiguration extends WebSecurityConfigurerAdapte
     public void configure(HttpSecurity http) throws Exception {
         http.csrf().disable() // 关闭 csrf 跨站访问拦截
                 .authorizeRequests()
-                .antMatchers("/eureka/apps/**"/*eureka 心跳相关*/, "/actuator", "/actuator/**"/*监控相关*/, "/login"/*认证授权*/,
-                        "/logout"/*注销授权*/)
+                .antMatchers("/eureka/apps/**"/*eureka 心跳相关*/, "/static/**"/*静态资源*/, "/favicon.ico", "/index"/*去登录页面*/,
+                        "/verifyCode" /*验证码*/, "/loginParam"/*登录页参数*/, "/actuator", "/actuator/**"/*监控相关*/,
+                        "/login"/*认证授权*/, "/logout"/*注销授权*/)
                 .permitAll() // 免授权请求配置
                 .anyRequest().authenticated() // 其余所有请求都需要授权
                 .and()

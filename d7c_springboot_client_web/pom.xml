@@ -18,13 +18,12 @@
 		<dependency>
 			<groupId>com.d7c</groupId>
 			<artifactId>spring-boot-starter-oauth2</artifactId>
-			<!-- 将此项目作为资源服务器时需要此依赖，原本此项目是一个授权服务器，扩展后需要依赖此 jar。 -->
-			<!-- <exclusions>
+			<exclusions>
 				<exclusion>
 					<groupId>org.springframework.cloud</groupId>
 					<artifactId>spring-cloud-starter-oauth2</artifactId>
 				</exclusion>
-			</exclusions> -->
+			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>com.d7c</groupId>
