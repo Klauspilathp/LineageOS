@@ -51,6 +51,7 @@
 		<module>gnol_springboot_quartz</module>
 		<module>gnol_springboot_client_oauth2</module>
 		<module>gnol_springboot_sharding</module>
+		<module>gnol_springboot_activiti</module>
 	</modules>
 	
 	<!-- 集中定义依赖版本号 -->
@@ -124,6 +125,12 @@
 			<dependency>
 				<groupId>com.gnol</groupId>
 				<artifactId>spring-boot-starter-oauth2</artifactId>
+				<version>${gnol_springboot_plugins.version}</version>
+			</dependency>
+			<!-- gnol 项目封装的 spring-boot 关于 activiti starter -->
+			<dependency>
+				<groupId>com.gnol</groupId>
+				<artifactId>spring-boot-starter-activiti</artifactId>
 				<version>${gnol_springboot_plugins.version}</version>
 			</dependency>
             <!-- gnol springboot 版插件工程 =======>end -->

@@ -20,3 +20,4 @@ gnol-springboot-webflux:8094
 gnol-springboot-websocket:8095
 gnol-springboot-sharding:8096
 gnol-springboot-quartz:8097
+gnol-springboot-activiti:8098
