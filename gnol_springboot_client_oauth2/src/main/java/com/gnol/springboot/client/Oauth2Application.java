@@ -66,6 +66,8 @@ public class Oauth2Application {
      *  
      * jwt 对称加密存储策略认证流程：
      *  1、
+     * jwt 非对称（密钥对）加密存储策略认证流程：
+     *  1、
      *  2、
      *  3、
      *  4、

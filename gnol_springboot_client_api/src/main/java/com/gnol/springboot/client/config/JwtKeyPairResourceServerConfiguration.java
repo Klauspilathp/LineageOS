@@ -3,9 +3,11 @@ package com.gnol.springboot.client.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.ResourceServerProperties;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.error.OAuth2AccessDeniedHandler;
@@ -19,11 +21,11 @@ import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
  * @Package: com.gnol.springboot.client.config
  * @author: 吴佳隆
  * @date: 2020年7月22日 下午2:09:54
- * @Description: jwt 对称加密储存策略存储授权码 oauth2 资源服务器配置
+ * @Description: jwt 非对称（密钥对）加密储存策略存储授权码 oauth2 资源服务器配置
  */
-// @Configuration
-// @EnableResourceServer
-public class JwtResourceServerConfiguration extends ResourceServerConfigurerAdapter {
+@Configuration
+@EnableResourceServer
+public class JwtKeyPairResourceServerConfiguration extends ResourceServerConfigurerAdapter {
     /**
      * 资源服务器属性配置
      */
