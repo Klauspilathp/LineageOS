@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>com.d7c</groupId>
 		<artifactId>d7c_springboot</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
+		<version>1.0.0</version>
 		<relativePath>../pom.xml</relativePath>
 	</parent>
 	<artifactId>d7c_springboot_eureka_server</artifactId>

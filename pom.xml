@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>com.d7c</groupId>
 		<artifactId>d7c_springboot_plugins</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
+		<version>1.0.0</version>
 		<relativePath />
 	</parent>
 	<artifactId>d7c_springboot</artifactId>
@@ -84,7 +84,7 @@
         <!-- 解决 Description	Resource Path Location Type Unknown	pom.xml	/d7c_springboot_common	line 1	Maven Configuration Problem -->
 		<maven-jar-plugin.version>3.1.1</maven-jar-plugin.version>
         <!-- jar 版本管理 -->
-		<d7c_springboot_plugins.version>0.0.1-SNAPSHOT</d7c_springboot_plugins.version>
+		<d7c_springboot_plugins.version>1.0.0</d7c_springboot_plugins.version>
 		<swagger.version>2.9.2</swagger.version>
 		<spring-boot-admin.version>2.1.6</spring-boot-admin.version>
 		<spring-boot-zuul.version>2.1.5.RELEASE</spring-boot-zuul.version>
@@ -293,6 +293,21 @@
 				</includes>
 			</resource>
 		</resources>
+		<plugins>
+			<!-- versions-maven-plugin 插件使用：
+				1、修改父项目版本：
+					mvn versions:set -DnewVersion=1.0.0
+				2、更新所有子项目版本：
+					mvn versions:update-child-modules -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>versions-maven-plugin</artifactId>
+				<configuration>
+					<!-- 修改 pom 时是否对原文件进行备份 -->
+					<generateBackupPoms>false</generateBackupPoms>
+				</configuration>
+			</plugin>
+		</plugins>
 	</build>
 
     <!-- 开发者信息 -->
