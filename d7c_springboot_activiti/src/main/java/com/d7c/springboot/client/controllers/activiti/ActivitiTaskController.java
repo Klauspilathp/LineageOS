@@ -41,6 +41,131 @@ public class ActivitiTaskController extends WebBaseController {
     private TaskService taskService;
 
     /**
+     * @Title: deleteCandidateUser
+     * @author: 吴佳隆
+     * @data: 2021年1月21日 下午12:04:52
+     * @Description: 从租任务中删除候选人
+     * @param taskId
+     * @param candidateUser
+     * @return PageResult
+     */
+    @GetMapping(value = "/deleteCandidateUser")
+    public PageResult deleteCandidateUser(@RequestParam("taskId") String taskId,
+            @RequestParam("candidateUser") String candidateUser) {
+        if (StringUtil.isBlank(taskId)) {
+            return PageResult.error("taskId 不能为空！");
+        }
+        if (StringUtil.isBlank(candidateUser)) {
+            return PageResult.error("candidateUser 不能为空！");
+        }
+        taskService.deleteCandidateUser(taskId, candidateUser);
+        return PageResult.ok();
+    }
+
+    /**
+     * @Title: addCandidateUser
+     * @author: 吴佳隆
+     * @data: 2021年1月21日 下午12:03:28
+     * @Description: 向组任务中添加任务候选人
+     * @param taskId
+     * @param candidateUser
+     * @return PageResult
+     */
+    @GetMapping(value = "/addCandidateUser")
+    public PageResult addCandidateUser(@RequestParam("taskId") String taskId,
+            @RequestParam("candidateUser") String candidateUser) {
+        if (StringUtil.isBlank(taskId)) {
+            return PageResult.error("taskId 不能为空！");
+        }
+        if (StringUtil.isBlank(candidateUser)) {
+            return PageResult.error("candidateUser 不能为空！");
+        }
+        taskService.addCandidateUser(taskId, candidateUser);
+        return PageResult.ok();
+    }
+
+    /**
+     * @Title: releaseByCandidateUser
+     * @author: 吴佳隆
+     * @data: 2021年1月21日 上午11:58:10
+     * @Description: 组任务的候选人退回任务
+     * @param taskId
+     * @param candidateUser
+     * @return PageResult
+     */
+    @GetMapping(value = "/releaseByCandidateUser")
+    public PageResult releaseByCandidateUser(@RequestParam("taskId") String taskId,
+            @RequestParam("candidateUser") String candidateUser) {
+        if (StringUtil.isBlank(taskId)) {
+            return PageResult.error("taskId 不能为空！");
+        }
+        if (StringUtil.isBlank(candidateUser)) {
+            return PageResult.error("candidateUser 不能为空！");
+        }
+        // 归还当前登录人的指定任务，当前登录人信息从 {@link SecurityManager} 中获取
+        // Task task = taskRuntime.release(TaskPayloadBuilder.release().withTaskId(taskId).build());
+        org.activiti.engine.task.Task task = taskService.createTaskQuery().taskId(taskId).taskAssignee(candidateUser)
+                .singleResult();
+        if (task == null) {
+            return PageResult.error("任务不存在！");
+        }
+        if (StringUtil.isNotBlank(task.getAssignee())) {
+            return PageResult.error("任务没有被领取！");
+        }
+        // 归还任务
+        taskService.setAssignee(taskId, null);
+        return PageResult.ok();
+    }
+
+    /**
+     * @Title: claimByCandidateUser
+     * @author: 吴佳隆
+     * @data: 2021年1月21日 上午10:29:27
+     * @Description: 组任务的候选人拾取任务
+     * @param taskId
+     * @param candidateUser
+     * @return PageResult
+     */
+    @GetMapping(value = "/claimByCandidateUser")
+    public PageResult claimByCandidateUser(@RequestParam("taskId") String taskId,
+            @RequestParam("candidateUser") String candidateUser) {
+        if (StringUtil.isBlank(taskId)) {
+            return PageResult.error("taskId 不能为空！");
+        }
+        if (StringUtil.isBlank(candidateUser)) {
+            return PageResult.error("candidateUser 不能为空！");
+        }
+        Task task = taskRuntime.task(taskId);
+        if (task == null) {
+            return PageResult.error("任务不存在！");
+        }
+        if (StringUtil.isNotBlank(task.getAssignee())) {
+            return PageResult.error("任务已被领取！");
+        }
+        // 拾取任务
+        taskService.claim(taskId, candidateUser);
+        return PageResult.ok();
+    }
+
+    /**
+     * @Title: listTaskByCandidateUser
+     * @author: 吴佳隆
+     * @data: 2021年1月21日 上午10:23:12
+     * @Description: 查询候选人任务列表
+     * @param candidateUser
+     * @return PageResult
+     */
+    @GetMapping(value = "/listTaskByCandidateUser")
+    public PageResult listTaskByCandidateUser(@RequestParam("candidateUser") String candidateUser) {
+        if (StringUtil.isBlank(candidateUser)) {
+            return PageResult.error("candidateUser 不能为空！");
+        }
+        List<org.activiti.engine.task.Task> tasks = taskService.createTaskQuery().taskCandidateUser(candidateUser)
+                .list();
+        return PageResult.ok(tasks);
+    }
+
+    /**
      * @Title: listTaskByKey
      * @author: 吴佳隆
      * @data: 2021年1月19日 上午9:49:49

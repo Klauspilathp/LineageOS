@@ -1,5 +1,6 @@
 package com.d7c.springboot.client.controllers.activiti;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -8,6 +9,7 @@ import org.activiti.api.process.model.ProcessInstance;
 import org.activiti.api.process.model.builders.ProcessPayloadBuilder;
 import org.activiti.api.process.runtime.ProcessRuntime;
 import org.activiti.api.runtime.shared.query.Pageable;
+import org.activiti.engine.RepositoryService;
 import org.activiti.engine.RuntimeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -42,6 +44,11 @@ public class ActivitiProcessInstanceController extends WebBaseController {
      */
     @Autowired
     private RuntimeService runtimeService;
+    /**
+     * 提供对流程定义和部署存储库的访问服务
+     */
+    @Autowired
+    private RepositoryService repositoryService;
 
     /**
      * @Title: listProcessInstance
@@ -120,10 +127,52 @@ public class ActivitiProcessInstanceController extends WebBaseController {
     }
 
     /**
+     * @Title: suspendedProcessInstanceByProcessDefinitionIdAndDate
+     * @author: 吴佳隆
+     * @data: 2021年1月21日 上午9:28:42
+     * @Description: 指定时间挂起流程定义下的所有流程实例。
+     * @param processDefinitionId
+     * @param suspensionDate
+     * @return PageResult
+     */
+    @GetMapping(value = "/suspendedProcessInstanceByProcessDefinitionIdAndDate")
+    public PageResult suspendedProcessInstanceByProcessDefinitionIdAndDate(
+            @RequestParam("processDefinitionId") String processDefinitionId,
+            @RequestParam("suspensionDate") Date suspensionDate) {
+        if (suspensionDate == null || suspensionDate.before(new Date())) {
+            suspensionDate = new Date();
+        }
+        repositoryService.suspendProcessDefinitionById(processDefinitionId, true, // true 挂起该流程定义下的所有流程实例
+                suspensionDate);
+        return PageResult.ok();
+    }
+
+    /**
+     * @Title: activateProcessInstanceByProcessDefinitionIdAndDate
+     * @author: 吴佳隆
+     * @data: 2021年1月21日 上午9:28:00
+     * @Description: 指定时间激活流程定义下的所有流程实例。
+     * @param processDefinitionId
+     * @param activationDate
+     * @return PageResult
+     */
+    @GetMapping(value = "/activateProcessInstanceByProcessDefinitionIdAndDate")
+    public PageResult activateProcessInstanceByProcessDefinitionIdAndDate(
+            @RequestParam("processDefinitionId") String processDefinitionId,
+            @RequestParam("activationDate") Date activationDate) {
+        if (activationDate == null || activationDate.before(new Date())) {
+            activationDate = new Date();
+        }
+        repositoryService.activateProcessDefinitionById(processDefinitionId, true, // true 激活该流程定义下的所有流程实例
+                activationDate);
+        return PageResult.ok();
+    }
+
+    /**
      * @Title: suspendedProcessInstance
      * @author: 吴佳隆
      * @data: 2021年1月18日 下午2:43:14
-     * @Description: 挂起流程实例
+     * @Description: 挂起单个流程实例
      * @param processDefinitionId   流程定义 ID
      * @return PageResult
      */
@@ -138,12 +187,13 @@ public class ActivitiProcessInstanceController extends WebBaseController {
      * @Title: activateProcessInstance
      * @author: 吴佳隆
      * @data: 2021年1月18日 下午2:44:37
-     * @Description: 激活流程实例
+     * @Description: 激活单个流程实例
      * @param processDefinitionId   流程定义 ID
      * @return PageResult
      */
     @GetMapping(value = "/activateProcessInstance")
     public PageResult activateProcessInstance(@RequestParam("processDefinitionId") String processDefinitionId) {
+        // 底层用的是 runtimeService.activateProcessInstanceById(processInstanceId);
         ProcessInstance processInstance = processRuntime
                 .resume(ProcessPayloadBuilder.resume().withProcessInstanceId(processDefinitionId).build());
         return PageResult.ok(processInstance);

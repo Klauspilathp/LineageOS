@@ -20,6 +20,8 @@ public class PMListener implements TaskListener {
          */
         if (delegateTask.getId().equals("usertask3") && EVENTNAME_CREATE.equals(delegateTask.getEventName())) {
             delegateTask.setAssignee(EVENTNAME_ASSIGNMENT);
+            // delegateTask.addCandidateUser("组任务任务接收人1");
+            // delegateTask.addCandidateUser("组任务任务接收人2");
         }
     }
 

@@ -54,6 +54,35 @@ public class ActivitiProcessDefinitionController extends WebBaseController {
     private RepositoryService repositoryService;
 
     /**
+     * @Title: getProcessDefinition
+     * @author: 吴佳隆
+     * @data: 2021年1月20日 下午5:57:55
+     * @Description: 根据流程定义 key 查询最新的流程定义
+     * @param processDefinitionKey  流程定义 key
+     * @return PageResult
+     */
+    @GetMapping(value = "/getProcessDefinition")
+    public PageResult getProcessDefinition(@RequestParam("processDefinitionKey") String processDefinitionKey) {
+        // 流程定义对象
+        org.activiti.engine.repository.ProcessDefinition processDefinition = repositoryService
+                .createProcessDefinitionQuery().processDefinitionKey(processDefinitionKey).singleResult();
+        /*if (processDefinition == null) {
+            return PageResult.error("流程定义不存在！");
+        }
+        // 流程部署 ID
+        String deploymentId = processDefinition.getDeploymentId();
+        // 获取 bpmn 文件名称
+        String diagramResourceName = processDefinition.getDiagramResourceName();
+        // 获取 png 文件名称
+        String resourceName = processDefinition.getResourceName();
+        // bpmn 文件输入流
+        InputStream diagramInputStream = repositoryService.getResourceAsStream(deploymentId, diagramResourceName);
+        // png 文件输入流
+        InputStream pngInputStream = repositoryService.getResourceAsStream(deploymentId, resourceName);*/
+        return PageResult.ok(processDefinition);
+    }
+
+    /**
      * @Title: getProcessDefinitionXML
      * @author: 吴佳隆
      * @data: 2021年1月18日 上午9:26:28
@@ -91,7 +120,7 @@ public class ActivitiProcessDefinitionController extends WebBaseController {
      * @author: 吴佳隆
      * @data: 2021年1月20日 下午5:51:21
      * @Description: 根据流程定义 key 查询流程定义列表
-     * @param processDefinitionKey
+     * @param processDefinitionKey  流程定义 key
      * @return PageResult
      */
     @GetMapping(value = "/listProcessDefinitionByProcessDefinitionKey")
