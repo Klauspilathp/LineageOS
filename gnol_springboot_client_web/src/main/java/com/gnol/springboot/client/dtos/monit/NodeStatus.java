@@ -107,6 +107,10 @@ public class NodeStatus {
      */
     private String jvmVersion;
     /**
+     * jvm 启动时间
+     */
+    private String jvmStartTime;
+    /**
      * 编译器名称
      */
     private String compilationName;
@@ -436,6 +440,14 @@ public class NodeStatus {
 
     public void setJvmVersion(String jvmVersion) {
         this.jvmVersion = jvmVersion;
+    }
+
+    public String getJvmStartTime() {
+        return jvmStartTime;
+    }
+
+    public void setJvmStartTime(String jvmStartTime) {
+        this.jvmStartTime = jvmStartTime;
     }
 
     public String getCompilationName() {

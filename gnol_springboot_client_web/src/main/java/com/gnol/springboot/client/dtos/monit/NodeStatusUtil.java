@@ -8,8 +8,10 @@ import java.lang.management.MemoryPoolMXBean;
 import java.lang.management.RuntimeMXBean;
 import java.lang.management.ThreadMXBean;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
+import com.gnol.plugins.tools.date.DateUtil;
 import com.gnol.springboot.client.config.GnolConstant;
 
 /**
@@ -77,6 +79,7 @@ public class NodeStatusUtil {
         RuntimeMXBean runtimeMBean = ManagementFactory.getRuntimeMXBean();
         nodeStatus.setJvmName(runtimeMBean.getVmName());
         nodeStatus.setJvmVersion(runtimeMBean.getVmVersion());
+        nodeStatus.setJvmStartTime(DateUtil.getDateSecond(new Date(runtimeMBean.getStartTime())));
 
         // 编译器
         CompilationMXBean compilMBean = ManagementFactory.getCompilationMXBean();
