@@ -72,6 +72,7 @@
 		<module>d7c_springboot_client_oauth2</module>
 		<module>d7c_springboot_sharding</module>
 		<module>d7c_springboot_activiti</module>
+		<module>d7c_springboot_flowable</module>
 	</modules>
 	
 	<!-- 集中定义依赖版本号 -->
@@ -152,6 +153,30 @@
 			<dependency>
 				<groupId>com.d7c</groupId>
 				<artifactId>spring-boot-starter-activiti</artifactId>
+				<version>${d7c_springboot_plugins.version}</version>
+			</dependency>
+			<!-- d7c 项目封装的 spring-boot 关于 aliyun oss starter -->
+			<dependency>
+				<groupId>com.d7c</groupId>
+				<artifactId>spring-boot-starter-aliyun-oss</artifactId>
+				<version>${d7c_springboot_plugins.version}</version>
+			</dependency>
+			<!-- d7c 项目封装的 spring-boot 关于 elasticsearch starter -->
+			<dependency>
+				<groupId>com.d7c</groupId>
+				<artifactId>spring-boot-starter-elasticsearch</artifactId>
+				<version>${d7c_springboot_plugins.version}</version>
+			</dependency>
+			<!-- d7c 项目封装的 spring-boot 关于 mongodb starter，建议采用 mongodb server 为 3.4.x、3.6.x -->
+			<dependency>
+				<groupId>com.d7c</groupId>
+				<artifactId>spring-boot-starter-mongodb</artifactId>
+				<version>${d7c_springboot_plugins.version}</version>
+			</dependency>
+			<!-- d7c 项目封装的 spring-boot 关于 flowable starter -->
+			<dependency>
+				<groupId>com.d7c</groupId>
+				<artifactId>spring-boot-starter-flowable</artifactId>
 				<version>${d7c_springboot_plugins.version}</version>
 			</dependency>
             <!-- d7c springboot 版插件工程 =======>end -->
