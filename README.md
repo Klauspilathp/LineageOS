@@ -6,7 +6,7 @@ d7c_springboot 项目是基于 d7c_springboot_plugins 开发的强权限校验�
 
 ## 软件架构
 
-d7c_springboot 采用 Maven 进行项目构建系统，支持 JDK1.8+、MySQL5.7/8+。该项目需要依赖 d7c_springboot_plugins 插件，如需源码请前往 [d7c_springboot_plugins](https://item.taobao.com/item.htm?ft=t&id=637995804294)，如需运维文档请前往 [d7c_docs](https://item.taobao.com/item.htm?ft=t&id=637839200595)。
+d7c_springboot 采用 Maven 进行项目构建系统，支持 JDK1.8+、MySQL5.7/8+。该项目需要依赖 d7c_springboot_plugins 插件，如需源码请前往 [d7c_springboot_plugins](https://gitee.com/d7c/d7c_springboot_plugins)，如需运维文档请前往 [d7c_docs](https://item.taobao.com/item.htm?ft=t&id=637839200595)。
 
 ## 安装教程
 
