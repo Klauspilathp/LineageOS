@@ -144,22 +144,6 @@ public class NodeStatus {
      */
     private List<GCInfo> gcInfoList;
 
-    @Override
-    public String toString() {
-        return "NodeStatus{id='" + id + '\'' + ", name='" + name + '\'' + ", ip='" + ip + '\'' + ", osName='" + osName
-                + '\'' + ", osVersion='" + osVersion + '\'' + ", javaVersion='" + javaVersion + '\'' + ", javaHome='"
-                + javaHome + '\'' + ", userName='" + userName + '\'' + ", userHome='" + userHome + '\'' + ", userDir='"
-                + userDir + '\'' + ", userTimezone='" + userTimezone + '\'' + ", userLanguage='" + userLanguage + '\''
-                + ", userCountry='" + userCountry + '\'' + ", timestamp=" + timestamp + ", fileEncoding='"
-                + fileEncoding + '\'' + ", heapUsage='" + heapUsage + '\'' + ", nonHeapUsage='" + nonHeapUsage + '\''
-                + ", memoryPoolInfoList=" + memoryPoolInfoList + ", totalMemory=" + totalMemory + ", freeMemory="
-                + freeMemory + ", maxMemory=" + maxMemory + ", jvmName='" + jvmName + '\'' + ", jvmVersion='"
-                + jvmVersion + '\'' + ", compilationName='" + compilationName + '\'' + ", totalCompilationTime="
-                + totalCompilationTime + ", currentThreadCount=" + currentThreadCount + ", currentThreadCpuTime="
-                + currentThreadCpuTime + ", peakThreadCount=" + peakThreadCount + ", daemonThreadCount="
-                + daemonThreadCount + ", totalThreadCount=" + totalThreadCount + ", gcInfoList=" + gcInfoList + '}';
-    }
-
     /**
      * 内存池信息
      */
@@ -169,13 +153,6 @@ public class NodeStatus {
         private long usageThreshold; // 内存池阀值
         private boolean usageThresholdExceeded; // 是否达到或超过阀值
         private long usageThresholdCount; // 超出阀值的次数
-
-        @Override
-        public String toString() {
-            return "MemoryPoolInfo{name='" + name + '\'' + ", usage='" + usage + '\'' + ", usageThreshold="
-                    + usageThreshold + ", usageThresholdExceeded=" + usageThresholdExceeded + ", usageThresholdCount="
-                    + usageThresholdCount + '}';
-        }
 
         public String getName() {
             return name;
@@ -217,6 +194,13 @@ public class NodeStatus {
             this.usageThresholdCount = usageThresholdCount;
         }
 
+        @Override
+        public String toString() {
+            return "MemoryPoolInfo{name='" + name + '\'' + ", usage='" + usage + '\'' + ", usageThreshold="
+                    + usageThreshold + ", usageThresholdExceeded=" + usageThresholdExceeded + ", usageThresholdCount="
+                    + usageThresholdCount + '}';
+        }
+
     }
 
     /**
@@ -226,11 +210,6 @@ public class NodeStatus {
         private String name; // 垃圾收集器名称
         private long count; // gc 次数
         private long time; // gc 耗时(ms)
-
-        @Override
-        public String toString() {
-            return "GCInfo{name='" + name + '\'' + ", count=" + count + ", time=" + time + '}';
-        }
 
         public String getName() {
             return name;
@@ -256,6 +235,11 @@ public class NodeStatus {
             this.time = time;
         }
 
+        @Override
+        public String toString() {
+            return "GCInfo{name='" + name + '\'' + ", count=" + count + ", time=" + time + '}';
+        }
+
     }
 
     public String getId() {
@@ -266,20 +250,20 @@ public class NodeStatus {
         this.id = id;
     }
 
-    public String getIp() {
-        return ip;
-    }
-
-    public void setIp(String ip) {
-        this.ip = ip;
-    }
-
     public String getName() {
         return name;
     }
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getIp() {
+        return ip;
+    }
+
+    public void setIp(String ip) {
+        this.ip = ip;
     }
 
     public String getOsName() {
@@ -512,6 +496,22 @@ public class NodeStatus {
 
     public void setGcInfoList(List<GCInfo> gcInfoList) {
         this.gcInfoList = gcInfoList;
+    }
+
+    @Override
+    public String toString() {
+        return "NodeStatus{id='" + id + '\'' + ", name='" + name + '\'' + ", ip='" + ip + '\'' + ", osName='" + osName
+                + '\'' + ", osVersion='" + osVersion + '\'' + ", javaVersion='" + javaVersion + '\'' + ", javaHome='"
+                + javaHome + '\'' + ", userName='" + userName + '\'' + ", userHome='" + userHome + '\'' + ", userDir='"
+                + userDir + '\'' + ", userTimezone='" + userTimezone + '\'' + ", userLanguage='" + userLanguage + '\''
+                + ", userCountry='" + userCountry + '\'' + ", timestamp=" + timestamp + ", fileEncoding='"
+                + fileEncoding + '\'' + ", heapUsage='" + heapUsage + '\'' + ", nonHeapUsage='" + nonHeapUsage + '\''
+                + ", memoryPoolInfoList=" + memoryPoolInfoList + ", totalMemory=" + totalMemory + ", freeMemory="
+                + freeMemory + ", maxMemory=" + maxMemory + ", jvmName='" + jvmName + '\'' + ", jvmVersion='"
+                + jvmVersion + '\'' + ", compilationName='" + compilationName + '\'' + ", totalCompilationTime="
+                + totalCompilationTime + ", currentThreadCount=" + currentThreadCount + ", currentThreadCpuTime="
+                + currentThreadCpuTime + ", peakThreadCount=" + peakThreadCount + ", daemonThreadCount="
+                + daemonThreadCount + ", totalThreadCount=" + totalThreadCount + ", gcInfoList=" + gcInfoList + '}';
     }
 
 }
