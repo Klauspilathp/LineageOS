@@ -20,7 +20,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 @EnableDiscoveryClient // eureka 客户端
 @EnableFeignClients // 启用 Fegin
 @EnableCircuitBreaker // 启用 hystrix
-@MapperScan(basePackages = {"com.gnol.springboot.common.mappers", "com.gnol.springboot.client.mappers"})
+@MapperScan(basePackages = {"com.gnol.springboot.common.daos", "com.gnol.springboot.client.daos"})
 public class WebApplication extends SpringBootServletInitializer {
 
     public static void main(String[] args) {

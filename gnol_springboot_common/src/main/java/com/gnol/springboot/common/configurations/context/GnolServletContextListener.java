@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Configuration;
  * @Package: com.gnol.springboot.common.configurations.context
  * @author: 吴佳隆
  * @date: 2020年7月1日 下午4:56:38
- * @Description: 容器监听
+ * @Description: 系统启停监听器
  */
 @Configuration
 public class GnolServletContextListener implements ServletContextListener {
