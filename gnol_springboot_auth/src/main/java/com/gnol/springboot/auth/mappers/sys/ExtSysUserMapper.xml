@@ -4,7 +4,7 @@
 	<!-- resultMap引入：resultMap="com.gnol.springboot.common.daos.sys.BaseSysUserDao.BaseResultMap" -->
 	<!-- SQL 片段引入：<include refid="com.gnol.springboot.common.daos.sys.BaseSysUserDao.Base_Column_List"/> -->
 	<!-- 根据用户名查询用户 -->
-	<select id="getSysUserByUserAccount" parameterType="string" resultMap="com.gnol.springboot.common.daos.sys.BaseSysUserDao.BaseResultMap">
+	<select id="getSysUserByUserAccount" parameterType="java.lang.String" resultMap="com.gnol.springboot.common.daos.sys.BaseSysUserDao.BaseResultMap">
 		SELECT <include refid="com.gnol.springboot.common.daos.sys.BaseSysUserDao.Base_Column_List"/> FROM sys_user 
 		WHERE userAccount = #{userAccount, jdbcType=VARCHAR}
 	</select>

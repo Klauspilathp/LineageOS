@@ -25,4 +25,14 @@ public interface ExtSysMenuDao {
      */
     Set<SimpleGrantedAuthority> listPermissionsByRoleId(Long roleId);
 
+    /**
+     * @Title: listInterfaceByRoleId
+     * @author: 吴佳隆
+     * @data: 2020年7月21日 下午4:51:47
+     * @Description: 根据角色编号查询接口列表
+     * @param roleId
+     * @return Set<String>
+     */
+    Set<String> listInterfaceByRoleId(Long roleId);
+
 }

@@ -1,10 +1,15 @@
 package com.gnol.springboot.auth.services.impl;
 
+import java.util.Set;
+
+import javax.annotation.Resource;
+
 import org.springframework.stereotype.Service;
 
 import com.gnol.plugins.core.PageData;
 import com.gnol.plugins.core.StringUtil;
 import com.gnol.springboot.auth.config.GnolConstant;
+import com.gnol.springboot.auth.daos.sys.ExtSysMenuDao;
 import com.gnol.springboot.auth.services.ResourceService;
 import com.gnol.springboot.common.enums.auth.AuthTypeEnum;
 
@@ -19,6 +24,11 @@ import io.jsonwebtoken.Claims;
  */
 @Service("resourceServiceImpl")
 public class ResourceServiceImpl implements ResourceService {
+    /**
+     * gnol 系统菜单表扩展 Dao
+     */
+    @Resource(name = "extSysMenuDao")
+    private ExtSysMenuDao sysMenuDao;
 
     @Override
     public boolean isPermitted(PageData pd, Claims claims) {
@@ -34,7 +44,10 @@ public class ResourceServiceImpl implements ResourceService {
         boolean isAuth = false;
         switch (authTypeEnum) {
             case WEB:
-
+                Set<String> interfaces = sysMenuDao.listInterfaceByRoleId(StringUtil.toLong(claims.get("resourceId")));
+                if (interfaces != null) {
+                    isAuth = interfaces.contains(servlet_path);
+                }
                 break;
             case WAP:
 

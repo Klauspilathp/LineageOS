@@ -9,5 +9,12 @@
 		INNER JOIN (SELECT menuId FROM sys_role_menu 
 			WHERE roleId = #{roleId, jdbcType=BIGINT}) r ON r.menuId = m.menuId 
 	</select>
+	
+	<!-- 根据角色编号查询接口列表 -->
+	<select id="listInterfaceByRoleId" parameterType="java.lang.Long" resultType="java.lang.String">
+		SELECT menuUrl FROM sys_menu m 
+		INNER JOIN (SELECT menuId FROM sys_role_menu 
+			WHERE roleId = #{roleId, jdbcType=BIGINT}) r ON r.menuId = m.menuId 
+	</select>
 
 </mapper>
