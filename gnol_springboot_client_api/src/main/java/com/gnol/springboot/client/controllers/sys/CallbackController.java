@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.oauth2.client.resource.OAuth2ProtectedResourceDetails;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
@@ -47,7 +48,7 @@ public class CallbackController extends WebBaseController {
      * @param code
      * @return PageResult
      */
-    @RequestMapping(value = "/getToken")
+    @GetMapping(value = "/getToken")
     public PageResult getToken(String code) {
         if (StringUtil.isBlank(code)) {
             return PageResult.error("code 不能为空");
