@@ -1,14 +1,7 @@
 package com.d7c.springboot.client.controllers.activiti;
 
-import java.util.ArrayList;
-import java.util.List;
+import javax.annotation.Resource;
 
-import org.activiti.api.runtime.shared.query.Pageable;
-import org.activiti.api.task.model.Task;
-import org.activiti.api.task.model.builders.TaskPayloadBuilder;
-import org.activiti.api.task.runtime.TaskRuntime;
-import org.activiti.engine.TaskService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,6 +12,7 @@ import com.d7c.plugins.core.PageData;
 import com.d7c.plugins.core.PageResult;
 import com.d7c.plugins.core.StringUtil;
 import com.d7c.springboot.client.controllers.WebBaseController;
+import com.d7c.springboot.client.services.activiti.ActivitiTaskService;
 
 /**
  * @Title: ActivitiTaskController
@@ -31,15 +25,10 @@ import com.d7c.springboot.client.controllers.WebBaseController;
 @RequestMapping(value = "/activiti/task")
 public class ActivitiTaskController extends WebBaseController {
     /**
-     * 提供与用户集成的流程任务存储库操作、访问的服务，内部实现依赖 {@link TaskService}，访问时用户需要拥有 ACTIVITI_USER 角色的权限。
+     * activiti 流程任务操作服务
      */
-    @Autowired
-    private TaskRuntime taskRuntime;
-    /**
-     * 提供访问 {@link Task} 和表单相关操作的服务。
-     */
-    @Autowired
-    private TaskService taskService;
+    @Resource(name = "activitiTaskServiceImpl")
+    private ActivitiTaskService activitiTaskService;
 
     /**
      * @Title: deleteCandidateUser
@@ -53,15 +42,7 @@ public class ActivitiTaskController extends WebBaseController {
     @GetMapping(value = "/deleteCandidateUser")
     public PageResult deleteCandidateUser(@RequestParam("taskId") String taskId,
             @RequestParam("candidateUser") String candidateUser) {
-        if (StringUtil.isBlank(taskId)) {
-            return PageResult.error("taskId 不能为空！");
-        }
-        if (StringUtil.isBlank(candidateUser)) {
-            return PageResult.error("candidateUser 不能为空！");
-        }
-
-        taskService.deleteCandidateUser(taskId, candidateUser);
-        return PageResult.ok();
+        return activitiTaskService.deleteCandidateUser(taskId, candidateUser);
     }
 
     /**
@@ -76,14 +57,7 @@ public class ActivitiTaskController extends WebBaseController {
     @GetMapping(value = "/addCandidateUser")
     public PageResult addCandidateUser(@RequestParam("taskId") String taskId,
             @RequestParam("candidateUser") String candidateUser) {
-        if (StringUtil.isBlank(taskId)) {
-            return PageResult.error("taskId 不能为空！");
-        }
-        if (StringUtil.isBlank(candidateUser)) {
-            return PageResult.error("candidateUser 不能为空！");
-        }
-        taskService.addCandidateUser(taskId, candidateUser);
-        return PageResult.ok();
+        return activitiTaskService.addCandidateUser(taskId, candidateUser);
     }
 
     /**
@@ -98,27 +72,7 @@ public class ActivitiTaskController extends WebBaseController {
     @GetMapping(value = "/releaseByCandidateUser")
     public PageResult releaseByCandidateUser(@RequestParam("taskId") String taskId,
             @RequestParam("candidateUser") String candidateUser) {
-        if (StringUtil.isBlank(taskId)) {
-            return PageResult.error("taskId 不能为空！");
-        }
-        if (StringUtil.isBlank(candidateUser)) {
-            return PageResult.error("candidateUser 不能为空！");
-        }
-
-        // 归还当前登录人的指定任务，当前登录人信息从 {@link SecurityManager} 中获取
-        // Task task = taskRuntime.release(TaskPayloadBuilder.release().withTaskId(taskId).build());
-        org.activiti.engine.task.Task task = taskService.createTaskQuery().taskId(taskId).taskAssignee(candidateUser)
-                .singleResult();
-        if (task == null) {
-            return PageResult.error("任务不存在！");
-        }
-        if (StringUtil.isNotBlank(task.getAssignee())) {
-            return PageResult.error("任务没有被领取！");
-        }
-
-        // 归还任务
-        taskService.setAssignee(taskId, null);
-        return PageResult.ok();
+        return activitiTaskService.releaseByCandidateUser(taskId, candidateUser);
     }
 
     /**
@@ -133,24 +87,7 @@ public class ActivitiTaskController extends WebBaseController {
     @GetMapping(value = "/claimByCandidateUser")
     public PageResult claimByCandidateUser(@RequestParam("taskId") String taskId,
             @RequestParam("candidateUser") String candidateUser) {
-        if (StringUtil.isBlank(taskId)) {
-            return PageResult.error("taskId 不能为空！");
-        }
-        if (StringUtil.isBlank(candidateUser)) {
-            return PageResult.error("candidateUser 不能为空！");
-        }
-
-        Task task = taskRuntime.task(taskId);
-        if (task == null) {
-            return PageResult.error("任务不存在！");
-        }
-        if (StringUtil.isNotBlank(task.getAssignee())) {
-            return PageResult.error("任务已被领取！");
-        }
-
-        // 拾取任务
-        taskService.claim(taskId, candidateUser);
-        return PageResult.ok();
+        return activitiTaskService.claimByCandidateUser(taskId, candidateUser);
     }
 
     /**
@@ -166,24 +103,7 @@ public class ActivitiTaskController extends WebBaseController {
         if (StringUtil.isBlank(candidateUser)) {
             return PageResult.error("candidateUser 不能为空！");
         }
-        List<org.activiti.engine.task.Task> tasks = taskService.createTaskQuery().taskCandidateUser(candidateUser)
-                .list();
-
-        List<PageData> pds = new ArrayList<PageData>();
-        for (org.activiti.engine.task.Task task : tasks) {
-            pds.add(PageData.build().set("id", task.getId()).set("name", task.getName())
-                    .set("description", task.getDescription()).set("priority", task.getPriority())
-                    .set("owner", task.getOwner()).set("assignee", task.getAssignee())
-                    .set("processInstanceId", task.getProcessInstanceId()).set("executionId", task.getExecutionId())
-                    .set("processDefinitionId", task.getProcessDefinitionId()).set("createTime", task.getCreateTime())
-                    .set("taskDefinitionKey", task.getTaskDefinitionKey()).set("dueDate", task.getDueDate())
-                    .set("category", task.getCategory()).set("parentTaskId", task.getParentTaskId())
-                    .set("tenantId", task.getTenantId()).set("formKey", task.getFormKey())
-                    .set("taskLocalVariables", task.getTaskLocalVariables())
-                    .set("processVariables", task.getProcessVariables()).set("claimTime", task.getClaimTime())
-                    .set("businessKey", task.getBusinessKey()));
-        }
-        return PageResult.ok(pds);
+        return PageResult.ok(activitiTaskService.listTaskByCandidateUser(candidateUser));
     }
 
     /**
@@ -199,24 +119,7 @@ public class ActivitiTaskController extends WebBaseController {
         if (StringUtil.isBlank(taskDefinitionKey)) {
             return PageResult.error("taskDefinitionKey 不能为空！");
         }
-        List<org.activiti.engine.task.Task> tasks = taskService.createTaskQuery().taskDefinitionKey(taskDefinitionKey)
-                .orderByTaskCreateTime().desc().list();
-
-        List<PageData> pds = new ArrayList<PageData>();
-        for (org.activiti.engine.task.Task task : tasks) {
-            pds.add(PageData.build().set("id", task.getId()).set("name", task.getName())
-                    .set("description", task.getDescription()).set("priority", task.getPriority())
-                    .set("owner", task.getOwner()).set("assignee", task.getAssignee())
-                    .set("processInstanceId", task.getProcessInstanceId()).set("executionId", task.getExecutionId())
-                    .set("processDefinitionId", task.getProcessDefinitionId()).set("createTime", task.getCreateTime())
-                    .set("taskDefinitionKey", task.getTaskDefinitionKey()).set("dueDate", task.getDueDate())
-                    .set("category", task.getCategory()).set("parentTaskId", task.getParentTaskId())
-                    .set("tenantId", task.getTenantId()).set("formKey", task.getFormKey())
-                    .set("taskLocalVariables", task.getTaskLocalVariables())
-                    .set("processVariables", task.getProcessVariables()).set("claimTime", task.getClaimTime())
-                    .set("businessKey", task.getBusinessKey()));
-        }
-        return PageResult.ok(pds);
+        return PageResult.ok(activitiTaskService.listTaskByKey(taskDefinitionKey));
     }
 
     /**
@@ -229,25 +132,7 @@ public class ActivitiTaskController extends WebBaseController {
      */
     @GetMapping(value = "/listTasks")
     public PageResult listTasks(Page<PageData> page) {
-        org.activiti.api.runtime.shared.query.Page<Task> tasks = taskRuntime
-                .tasks(Pageable.of(page.getCurrentResult(), page.getPageSize()));
-        page.setTotalResult(tasks.getTotalItems());
-
-        List<PageData> pds = new ArrayList<PageData>();
-        for (org.activiti.api.task.model.Task task : tasks.getContent()) {
-            pds.add(PageData.build().set("id", task.getId()).set("owner", task.getOwner())
-                    .set("assignee", task.getAssignee()).set("name", task.getName())
-                    .set("description", task.getDescription()).set("createdDate", task.getCreatedDate())
-                    .set("claimedDate", task.getClaimedDate()).set("dueDate", task.getDueDate())
-                    .set("priority", task.getPriority()).set("processDefinitionId", task.getProcessDefinitionId())
-                    .set("processInstanceId", task.getProcessInstanceId()).set("parentTaskId", task.getParentTaskId())
-                    .set("formKey", task.getFormKey()).set("completedDate", task.getCompletedDate())
-                    .set("duration", task.getDuration())
-                    .set("processDefinitionVersion", task.getProcessDefinitionVersion())
-                    .set("businessKey", task.getBusinessKey()).set("standalone", task.isStandalone())
-                    .set("taskDefinitionKey", task.getTaskDefinitionKey()));
-        }
-        return PageResult.ok(pds).setPage(page);
+        return activitiTaskService.listTasks(page);
     }
 
     /**
@@ -260,36 +145,7 @@ public class ActivitiTaskController extends WebBaseController {
      */
     @GetMapping(value = "/completeTask")
     public PageResult completeTask(@RequestParam("taskId") String taskId) {
-        if (StringUtil.isBlank(taskId)) {
-            return PageResult.error("taskId 不能为空！");
-        }
-
-        org.activiti.api.task.model.Task task = taskRuntime.task(taskId);
-        if (task == null) {
-            return PageResult.error("任务不存在！");
-        }
-        if (StringUtil.isNotBlank(task.getAssignee())) {
-            return PageResult.error("任务已被领取！");
-        }
-
-        // 拾取任务
-        taskRuntime.claim(TaskPayloadBuilder.claim().withTaskId(task.getId()).build());
-
-        // 完成任务
-        org.activiti.api.task.model.Task complete = taskRuntime
-                .complete(TaskPayloadBuilder.complete().withTaskId(task.getId()).build());
-
-        return PageResult.ok(PageData.build().set("id", complete.getId()).set("owner", complete.getOwner())
-                .set("assignee", complete.getAssignee()).set("name", complete.getName())
-                .set("description", complete.getDescription()).set("createdDate", complete.getCreatedDate())
-                .set("claimedDate", complete.getClaimedDate()).set("dueDate", complete.getDueDate())
-                .set("priority", complete.getPriority()).set("processDefinitionId", complete.getProcessDefinitionId())
-                .set("processInstanceId", complete.getProcessInstanceId())
-                .set("parentTaskId", complete.getParentTaskId()).set("formKey", complete.getFormKey())
-                .set("completedDate", complete.getCompletedDate()).set("duration", complete.getDuration())
-                .set("processDefinitionVersion", complete.getProcessDefinitionVersion())
-                .set("businessKey", complete.getBusinessKey()).set("standalone", complete.isStandalone())
-                .set("taskDefinitionKey", complete.getTaskDefinitionKey()));
+        return activitiTaskService.completeTask(taskId);
     }
 
 }
