@@ -156,7 +156,7 @@
 				<artifactId>ehcache</artifactId>
 				<version>${ehcache.version}</version>
 			</dependency>
-			<!-- 系统磁盘信息 -->
+			<!-- 操作系统信息 -->
 			<dependency>
 				<groupId>com.github.oshi</groupId>
 				<artifactId>oshi-core</artifactId>

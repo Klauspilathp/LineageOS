@@ -72,7 +72,7 @@
 			<groupId>com.gnol</groupId>
 			<artifactId>spring-boot-starter-jwt</artifactId>
 		</dependency>
-		<!-- 系统磁盘信息 -->
+		<!-- 操作系统信息 -->
 		<dependency>
 			<groupId>com.github.oshi</groupId>
 			<artifactId>oshi-core</artifactId>

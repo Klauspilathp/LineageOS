@@ -128,7 +128,7 @@ public class NodeStatus {
      */
     private int currentThreadCount;
     /**
-     * 当前线程占用cpu时间(ms)
+     * 当前线程占用 cpu 时间(ms)
      */
     private long currentThreadCpuTime;
     /**
@@ -148,6 +148,10 @@ public class NodeStatus {
      */
     private List<GCInfo> gcInfos;
     /**
+     * cpu 信息
+     */
+    private CpuInfo cpuInfo;
+    /**
      * 系统磁盘信息
      */
     private List<SysFileInfo> sysFileInfos;
@@ -156,11 +160,26 @@ public class NodeStatus {
      * 内存池信息
      */
     public class MemoryPoolInfo {
-        private String name; // 内存池名称
-        private MemoryUsage usage; // 内存池使用情况
-        private long usageThreshold; // 内存池阀值
-        private boolean usageThresholdExceeded; // 是否达到或超过阀值
-        private long usageThresholdCount; // 超出阀值的次数
+        /**
+         * 内存池名称
+         */
+        private String name;
+        /**
+         * 内存池使用情况
+         */
+        private MemoryUsage usage;
+        /**
+         * 内存池阀值
+         */
+        private long usageThreshold;
+        /**
+         * 是否达到或超过阀值
+         */
+        private boolean usageThresholdExceeded;
+        /**
+         * 超出阀值的次数
+         */
+        private long usageThresholdCount;
 
         public String getName() {
             return name;
@@ -215,9 +234,18 @@ public class NodeStatus {
      * 垃圾收集信息
      */
     public class GCInfo {
-        private String name; // 垃圾收集器名称
-        private long count; // gc 次数
-        private long time; // gc 耗时(ms)
+        /**
+         * 垃圾收集器名称
+         */
+        private String name;
+        /**
+         * gc 次数
+         */
+        private long count;
+        /**
+         * gc 耗时(ms)
+         */
+        private long time;
 
         public String getName() {
             return name;
@@ -246,6 +274,85 @@ public class NodeStatus {
         @Override
         public String toString() {
             return "GCInfo{name='" + name + "\', count=" + count + ", time=" + time + '}';
+        }
+
+    }
+
+    /**
+     * cpu 信息
+     */
+    public class CpuInfo {
+        /**
+         * 核心数
+         */
+        private int cpuNum;
+        /**
+         * CPU 总的使用率
+         */
+        private double total;
+        /**
+         * CPU 系统使用率
+         */
+        private double sys;
+        /**
+         * CPU 用户使用率
+         */
+        private double used;
+        /**
+         * CPU 当前等待率
+         */
+        private double wait;
+        /**
+         * CPU 当前空闲率
+         */
+        private double free;
+
+        public int getCpuNum() {
+            return cpuNum;
+        }
+
+        public void setCpuNum(int cpuNum) {
+            this.cpuNum = cpuNum;
+        }
+
+        public double getTotal() {
+            return total;
+        }
+
+        public void setTotal(double total) {
+            this.total = total;
+        }
+
+        public double getSys() {
+            return sys;
+        }
+
+        public void setSys(double sys) {
+            this.sys = sys;
+        }
+
+        public double getUsed() {
+            return used;
+        }
+
+        public void setUsed(double used) {
+            this.used = used;
+        }
+
+        public double getWait() {
+            return wait;
+        }
+
+        public void setWait(double wait) {
+            this.wait = wait;
+        }
+
+        public double getFree() {
+            return free;
+        }
+
+        public void setFree(double free) {
+            this.free = free;
         }
 
     }
@@ -605,6 +712,14 @@ public class NodeStatus {
         this.gcInfos = gcInfos;
     }
 
+    public CpuInfo getCpuInfo() {
+        return cpuInfo;
+    }
+
+    public void setCpuInfo(CpuInfo cpuInfo) {
+        this.cpuInfo = cpuInfo;
+    }
+
     public List<SysFileInfo> getSysFileInfos() {
         return sysFileInfos;
     }
@@ -626,8 +741,8 @@ public class NodeStatus {
                 + "\', compilationName='" + compilationName + "\', totalCompilationTime=" + totalCompilationTime
                 + ", currentThreadCount=" + currentThreadCount + ", currentThreadCpuTime=" + currentThreadCpuTime
                 + ", peakThreadCount=" + peakThreadCount + ", daemonThreadCount=" + daemonThreadCount
-                + ", totalThreadCount=" + totalThreadCount + ", gcInfos=" + gcInfos + ", sysFileInfos=" + sysFileInfos
-                + '}';
+                + ", totalThreadCount=" + totalThreadCount + ", gcInfos=" + gcInfos + ", cpuInfo=" + cpuInfo
+                + ", sysFileInfos=" + sysFileInfos + '}';
     }
 
 }

@@ -16,7 +16,10 @@ import com.gnol.plugins.tools.date.DateUtil;
 import com.gnol.springboot.client.config.GnolConstant;
 
 import oshi.SystemInfo;
+import oshi.hardware.CentralProcessor;
+import oshi.hardware.CentralProcessor.TickType;
 import oshi.software.os.OSFileStore;
+import oshi.util.Util;
 
 /**
  * @Title: NodeStatusUtil
@@ -42,6 +45,7 @@ public class NodeStatusUtil {
         nodeStatus.setIp(GnolConstant.LOCAL_IP);
         nodeStatus.setOsName(System.getProperty("os.name"));
         nodeStatus.setOsVersion(System.getProperty("os.version"));
+        nodeStatus.setOsArch(System.getProperty("os.arch"));
         nodeStatus.setJavaVersion(System.getProperty("java.version"));
         nodeStatus.setJavaHome(System.getProperty("java.home"));
         nodeStatus.setUserName(System.getProperty("user.name"));
@@ -126,8 +130,30 @@ public class NodeStatusUtil {
         }
         nodeStatus.setGcInfos(gcInfoList);
 
-        // 系统磁盘信息
         SystemInfo systemInfo = new SystemInfo();
+        // cpu 信息
+        CentralProcessor processor = systemInfo.getHardware().getProcessor();
+        long[] prevTicks = processor.getSystemCpuLoadTicks();
+        Util.sleep(1000);
+        long[] ticks = processor.getSystemCpuLoadTicks();
+        long nice = ticks[TickType.NICE.getIndex()] - prevTicks[TickType.NICE.getIndex()];
+        long irq = ticks[TickType.IRQ.getIndex()] - prevTicks[TickType.IRQ.getIndex()];
+        long softirq = ticks[TickType.SOFTIRQ.getIndex()] - prevTicks[TickType.SOFTIRQ.getIndex()];
+        long steal = ticks[TickType.STEAL.getIndex()] - prevTicks[TickType.STEAL.getIndex()];
+        long cSys = ticks[TickType.SYSTEM.getIndex()] - prevTicks[TickType.SYSTEM.getIndex()];
+        long user = ticks[TickType.USER.getIndex()] - prevTicks[TickType.USER.getIndex()];
+        long iowait = ticks[TickType.IOWAIT.getIndex()] - prevTicks[TickType.IOWAIT.getIndex()];
+        long idle = ticks[TickType.IDLE.getIndex()] - prevTicks[TickType.IDLE.getIndex()];
+        long totalCpu = user + nice + cSys + idle + iowait + irq + softirq + steal;
+        NodeStatus.CpuInfo cpuInfo = nodeStatus.new CpuInfo();
+        cpuInfo.setCpuNum(processor.getLogicalProcessorCount());
+        cpuInfo.setTotal(totalCpu);
+        cpuInfo.setSys(cSys);
+        cpuInfo.setUsed(user);
+        cpuInfo.setWait(iowait);
+        cpuInfo.setFree(idle);
+
+        // 系统磁盘信息
         List<NodeStatus.SysFileInfo> sysFileInfos = new LinkedList<NodeStatus.SysFileInfo>();
         List<OSFileStore> osFileStores = systemInfo.getOperatingSystem().getFileSystem().getFileStores();
         for (OSFileStore osFileStore : osFileStores) {
