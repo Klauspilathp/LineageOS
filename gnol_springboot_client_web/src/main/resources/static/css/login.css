@@ -38,6 +38,15 @@
     color: #fff;
     font-size: 16px;
 }
+.login .error-message {
+	background: #fff url() 0 0 no-repeat;
+	color: #CC3366!important; 
+}
+.login .forget-password {
+	float: right; 
+	color: #029789!important; 
+	cursor: pointer;
+}
 .login #darkbannerwrap {
     background: url(../images/aiwrap.png);
     width: 18px;
