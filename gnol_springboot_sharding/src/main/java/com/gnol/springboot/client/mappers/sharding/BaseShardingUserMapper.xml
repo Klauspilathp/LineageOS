@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gnol.springboot.client.daos.sharding.BaseShardingUserDao">
+    <!-- 通用查询映射结果 -->
+	<resultMap id="BaseResultMap" type="com.gnol.springboot.client.dos.sharding.ShardingUser">
+		<id column="userId" property="userId" jdbcType="BIGINT"/>
+		<result column="userName" property="userName" jdbcType="VARCHAR"/>
+		<result column="sex" property="sex" jdbcType="TINYINT"/>
+	</resultMap>
+	
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+		userId, userName, sex 
+	</sql>
+	
+	<!-- 插入数据 -->
+	<insert id="insert" parameterType="com.gnol.springboot.client.dos.sharding.ShardingUser">
+		INSERT INTO sharding_user (
+		<trim suffixOverrides=",">
+			userId, 
+			userName, 
+			sex, 
+		</trim>
+		) VALUES (
+		<trim suffixOverrides=",">
+			#{userId, jdbcType=BIGINT}, 
+			#{userName, jdbcType=VARCHAR}, 
+			#{sex, jdbcType=TINYINT}, 
+		</trim>)
+	</insert>
+	
+	<!-- 批量插入接口 -->
+	<insert id="insertBatch" parameterType="java.util.List">
+		INSERT INTO sharding_user (
+			userId, 
+			userName, 
+			sex) VALUES
+		<foreach collection="list" item="item" index="index" separator="," >
+			(#{item.userId, jdbcType=BIGINT}, 
+			#{item.userName, jdbcType=VARCHAR}, 
+			#{item.sex, jdbcType=TINYINT})
+		</foreach>
+	</insert>
+	
+	<!-- 更新全部字段 -->
+	<update id="updateByKey" parameterType="com.gnol.springboot.client.dos.sharding.ShardingUser">
+		UPDATE sharding_user SET 
+			userName = #{userName, jdbcType=VARCHAR}, 
+			sex = #{sex, jdbcType=TINYINT} 
+		WHERE userId = #{userId, jdbcType=BIGINT} 
+	</update>
+	
+	<!-- 只更新不为 null 和 空字符串的字段 -->
+	<update id="update" parameterType="com.gnol.springboot.client.dos.sharding.ShardingUser">
+		UPDATE sharding_user 
+		<trim prefix="set" suffixOverrides=",">
+			<if test="null != userName and userName != ''">
+				userName = #{userName, jdbcType=VARCHAR}, 
+			</if>
+			<if test="null != sex">
+				sex = #{sex, jdbcType=TINYINT}, 
+			</if>
+		</trim>
+		WHERE userId = #{userId, jdbcType=BIGINT} 
+	</update>
+	
+	<!-- 根据主键物理删除数据 -->
+	<delete id="deleteByKey" parameterType="java.lang.Long">
+		DELETE FROM sharding_user WHERE userId = #{userId, jdbcType=BIGINT}
+	</delete>
+	
+	<!-- 根据主键查询 pojo -->
+	<select id="getByKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+		SELECT <include refid="Base_Column_List"/> FROM sharding_user 
+		WHERE userId = #{userId, jdbcType=BIGINT}
+	</select>
+	
+	<!-- 根据主键查询 pojo -->
+	<select id="getPDByKey" parameterType="java.lang.Long" resultType="pd">
+		SELECT <include refid="Base_Column_List"/> FROM sharding_user 
+		WHERE userId = #{userId, jdbcType=BIGINT}
+	</select>
+	
+	<!-- 根据条件分页查询 pojo 列表 -->
+	<select id="listPage" parameterType="page" resultMap="BaseResultMap">
+		SELECT <include refid="Base_Column_List"/> FROM sharding_user 
+		WHERE 1 = 1 
+		<if test="args != null">
+			<if test="null != args.userName and args.userName != ''">
+				AND userName = #{args.userName, jdbcType=VARCHAR} 
+			</if>
+			<if test="null != args.sex">
+				AND sex = #{args.sex, jdbcType=TINYINT} 
+			</if>
+		</if>
+	</select>
+	
+	<!-- 根据条件查询 pojo 列表 -->
+	<select id="listBy" parameterType="pd" resultMap="BaseResultMap">
+		SELECT <include refid="Base_Column_List"/> FROM sharding_user 
+		WHERE 1 = 1 
+		<if test="null != userName and userName != ''">
+			AND userName = #{userName, jdbcType=VARCHAR} 
+		</if>
+		<if test="null != sex">
+			AND sex = #{sex, jdbcType=TINYINT} 
+		</if>
+	</select>
+	
+</mapper>
