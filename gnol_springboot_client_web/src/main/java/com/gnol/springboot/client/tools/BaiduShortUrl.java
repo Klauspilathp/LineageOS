@@ -54,7 +54,7 @@ public class BaiduShortUrl {
         PageResult result = RequestUtil.byHttp(request);
         if (!HttpStatus.equalValue(HttpStatus.HS_200, result.getStatus())) {
             logger.debug("请求服务异常 {}", result.getData());
-            return null;
+            return StringUtil.EMPTY;
         }
         Map<String, Object> data = SFJsonUtil.jsonToMap(result.getData());
         if (data.get("Code").equals(0)) {
