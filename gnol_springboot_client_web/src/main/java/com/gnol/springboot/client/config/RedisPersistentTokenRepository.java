@@ -31,7 +31,7 @@ public class RedisPersistentTokenRepository implements PersistentTokenRepository
     /**
      * token 有效期，单位秒
      */
-    private static Long TOKEN_EXPIRATION = TimeConstant.DAY_SECOND;
+    public static Long TOKEN_EXPIRATION = TimeConstant.DAY_SECOND;
     /**
      * 使用 StringRedisSerializer 序列化数据的 redis 模板
      */

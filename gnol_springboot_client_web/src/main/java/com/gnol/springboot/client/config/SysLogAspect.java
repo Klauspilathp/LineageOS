@@ -94,8 +94,8 @@ public class SysLogAspect {
     }
 
     public void doLog(JoinPoint joinPoint, Throwable throwable) {
-        Long userId = null;
-        if (userId == null) {
+        Long userId = SecurityUtil.getUserId();
+        if (userId == null) { // 没有登录不记录日志
             return;
         }
         logger.debug("开始插入日志...");

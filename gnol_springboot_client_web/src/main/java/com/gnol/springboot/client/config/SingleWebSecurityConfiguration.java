@@ -2,7 +2,6 @@ package com.gnol.springboot.client.config;
 
 import java.io.IOException;
 import java.util.Date;
-import java.util.List;
 
 import javax.annotation.Resource;
 import javax.servlet.ServletException;
@@ -32,8 +31,6 @@ import org.springframework.security.web.authentication.rememberme.PersistentToke
 
 import com.gnol.plugins.net.tools.IPUtil;
 import com.gnol.redis.spring.boot.autoconfigure.RedisService;
-import com.gnol.springboot.client.dtos.tree.MenuTree;
-import com.gnol.springboot.client.services.sys.SysMenuService;
 import com.gnol.springboot.client.services.sys.SysSessionService;
 import com.gnol.springboot.client.services.sys.SysUserService;
 import com.gnol.springboot.common.dos.sys.SysSession;
@@ -71,11 +68,6 @@ public class SingleWebSecurityConfiguration extends WebSecurityConfigurerAdapter
      */
     @Resource(name = "sysUserServiceImpl")
     private SysUserService sysUserService;
-    /**
-     * gnol 系统菜单表 Service
-     */
-    @Resource(name = "sysMenuServiceImpl")
-    private SysMenuService sysMenuService;
     /**
      * 数据源
      */
@@ -147,12 +139,8 @@ public class SingleWebSecurityConfiguration extends WebSecurityConfigurerAdapter
                         sysSession.setLoginStatus(user.getLoginStatus());
                         sysSession.setLoginTime(user.getLoginTime());
                         sysSession = sysSessionService.updateUserAddress(sysSession);
-
-                        // 获取授权菜单放入 redis 中
-                        List<MenuTree> listMenuTree = sysMenuService.listMenuTreeByRoleId(sysSession.getRoleId());
-                        redisService.addObject(
-                                redisService.generateKey(GnolConstant.MENULIST, sysSession.getSessionId()),
-                                redisPersistentTokenRepository.getTokenExpiration(), listMenuTree);
+                        redisService.addObject(redisService.generateKey(GnolConstant.SESSION_USER, sysUser.getUserId()),
+                                redisPersistentTokenRepository.getTokenExpiration(), sysSession);
 
                         // 重定向到首页
                         response.sendRedirect("/main");

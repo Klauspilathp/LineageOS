@@ -20,7 +20,7 @@ public class GnolConstant {
     // --- 验证码
     public static final String SESSION_VERIFY_CODE = "SESSION_VERIFY_CODE";
     // --- session 中的用户信息及角色信息
-    public static final String SESSION_USER = "SESSION_USER";
+    public static final String SESSION_USER = "SESSION:USER:";
     // --- 当前登录用户编号在 PageData 中的 KEY
     public static final String SESSION_USER_ID = "SESSION_USER_ID";
     // --- 全部菜单

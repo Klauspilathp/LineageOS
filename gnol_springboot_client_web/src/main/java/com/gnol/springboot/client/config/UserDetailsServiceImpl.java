@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -65,12 +64,17 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             throw new UsernameNotFoundException("the user does not exist !");
         }
         Set<SimpleGrantedAuthority> authorities = sysMenuService.listPermissionsByRoleId(sysUser.getRoleId());
-        User user = new User(username, // 用户名
+        /*User user = new User(username, // 用户名
                 username + "&" + sysUser.getPassword(), // 盐值 + 加密后的密码
                 StatusEnum.equalValue(StatusEnum.NORMAL, sysUser.getStatus()), // 账号是否被启用
                 true, // 账号是否没有过期
                 true, // 凭据是否没有过期
                 true, // 账号是否没有被锁定
+                authorities); // 权限列表*/
+        CustomUserDetails user = new CustomUserDetails(sysUser.getUserId(), // 系统用户主键
+                username, // 用户名
+                username + "&" + sysUser.getPassword(), // 盐值 + 加密后的密码
+                StatusEnum.equalValue(StatusEnum.NORMAL, sysUser.getStatus()), // 账号是否被启用
                 authorities); // 权限列表
         logger.debug("{} 用户正在尝试登陆！", username);
         return user;
