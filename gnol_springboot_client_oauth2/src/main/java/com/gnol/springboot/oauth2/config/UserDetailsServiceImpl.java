@@ -18,6 +18,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
+import com.gnol.mybatis.spring.boot.autoconfigure.CurrDataSource;
+import com.gnol.mybatis.spring.boot.autoconfigure.DataSourceType;
 import com.gnol.plugins.core.StringUtil;
 import com.gnol.redis.spring.boot.autoconfigure.RedisService;
 import com.gnol.springboot.common.dos.sys.SysUser;
@@ -52,6 +54,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Resource(name = "redisServiceImpl")
     private RedisService redisService;
 
+    @CurrDataSource(DataSourceType.SLAVE)
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         if (StringUtil.isBlank(username)) {
@@ -62,7 +65,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         // 授权类型
         AuthTypeEnum authTypeEnum = AuthTypeEnum.forKey(request.getParameter(GnolConstant.AUTH_TYPE));
         if (authTypeEnum == null) {
-            throw new UsernameNotFoundException("auth_type cannot be empty !");
+            authTypeEnum = AuthTypeEnum.WEB;
+            // throw new UsernameNotFoundException("auth_type cannot be empty !");
         }
         switch (authTypeEnum) {
             case WEB:

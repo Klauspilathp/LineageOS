@@ -49,6 +49,9 @@ public class SHA1PasswordEncoder implements PasswordEncoder {
         if ("userNotFoundPassword".equals(rawPassword)) {
             return rawPassword.toString();
         }
+        if (rawPassword.equals(StringUtil.EMPTY)) {
+            rawPassword = "&";
+        }
         String[] splits = StringUtil.splitPreserveAllTokens(rawPassword.toString(), "&", 2);
         if (splits.length < 2) {
             throw new IllegalArgumentException("rawPassword must contain &");
@@ -105,6 +108,10 @@ public class SHA1PasswordEncoder implements PasswordEncoder {
         }
         if (encodedPassword == null) {
             logger.warn("Empty encoded password");
+            return false;
+        }
+        if (encodedPassword.equals("userNotFoundPassword")) {
+            logger.error("No user is found in com.gnol.springboot.oauth2.config.UserDetailsServiceImpl.");
             return false;
         }
         String[] splits = StringUtil.splitPreserveAllTokens(encodedPassword, "&", 2);

@@ -2,6 +2,8 @@ package com.gnol.springboot.oauth2.config;
 
 import javax.annotation.Resource;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
@@ -30,12 +32,16 @@ import org.springframework.security.crypto.password.PasswordEncoder;
         jsr250Enabled = true // JSR-250 提供的安全控制注解
 )
 public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
+    private static final Logger logger = LoggerFactory.getLogger(WebSecurityConfiguration.class);
     /**
      * gnol 系统_用户表 Service 实现
      */
     @Resource(name = "userDetailsServiceImpl")
     private UserDetailsService userDetailsService;
 
+    /**
+     * SHA1 的 PasswordEncoder 加密实现类
+     */
     @Bean("sha1PasswordEncoder")
     @Primary
     public PasswordEncoder sha1PasswordEncoder() {
@@ -49,10 +55,13 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
+        logger.debug("Using custom configure(HttpSecurity).");
         http.csrf().disable() // 关闭 csrf 跨站访问拦截
-                .authorizeRequests()
+                .headers().frameOptions().disable() // 不允许 iframe 内呈现
+                .and().cors() // 支持跨域请求
+                .and().authorizeRequests()
                 .antMatchers("/eureka/apps/**"/*eureka 心跳相关*/, "/actuator", "/actuator/**"/*监控相关*/, "/login"/*认证授权*/,
-                        "/validate"/*验证权限*/, "/logout"/*注销授权*/, "/oauth/**"/*认证请求*/)
+                        "/logout"/*注销授权*/, "/oauth/**"/*认证请求*/)
                 .permitAll() // 免授权请求配置
                 .anyRequest().authenticated() // 其余所有请求都需要授权
                 .and().formLogin().loginProcessingUrl("/login").and().sessionManagement()
@@ -62,11 +71,12 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     }
 
     /**
-     * 将 AuthenticationManager 放入 Spring IOC 容器中，oauth2 认证服务要使用
+     * 将 AuthenticationManager 放入 Spring IOC 容器中，oauth2 认证服务密码模式要使用
      */
-    @Override
     @Bean
+    @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {
+        logger.debug("create AuthenticationManager");
         return super.authenticationManagerBean();
     }
 
