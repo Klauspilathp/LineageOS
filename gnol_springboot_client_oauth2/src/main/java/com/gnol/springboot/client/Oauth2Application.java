@@ -64,7 +64,7 @@ public class Oauth2Application {
      *          client_secret:000000（客户端密钥）
      *      数据到 127.0.0.1:9101/oauth/token 接口获取授权 token。
      *  
-     * jwt 存储策略认证流程：
+     * jwt 对称加密存储策略认证流程：
      *  1、
      *  2、
      *  3、
