@@ -83,9 +83,10 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                         response.sendRedirect("/index?error=" + exception.getMessage());
                     }
                 }).and().logout().logoutSuccessUrl("/index") // 登出授权
-                .invalidateHttpSession(true).clearAuthentication(true);
+                .invalidateHttpSession(true).clearAuthentication(true)
         // .httpBasic(); 以弹框方式认证
-        // .accessDecisionManager(new CustomAccessDecisionManager()) // 权限不足处理类
+        // .accessDecisionManager(new CustomAccessDecisionManager()) // 自定义权限决策处理
+        ;
     }
 
 }

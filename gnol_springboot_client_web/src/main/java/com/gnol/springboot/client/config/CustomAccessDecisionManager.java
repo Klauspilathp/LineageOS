@@ -15,7 +15,10 @@ import org.springframework.security.core.Authentication;
  * @Package: com.gnol.springboot.client.config
  * @author: 吴佳隆
  * @date: 2020年7月10日 下午5:54:46
- * @Description: 自定义权限决策处理，参考 org.springframework.security.access.vote.AffirmativeBased
+ * @Description: 自定义权限决策处理，一般以上同意或弃权则可以访问，参考 org.springframework.security.access.vote.AffirmativeBased
+ * AffirmativeBased – 任何一个 AccessDecisionVoter 返回同意则允许访问
+ * ConsensusBased – 同意投票多于拒绝投票（忽略弃权回答）则允许访问
+ * UnanimousBased – 每个投票者选择弃权或同意则允许访问
  */
 public class CustomAccessDecisionManager extends AbstractAccessDecisionManager {
 
@@ -43,9 +46,9 @@ public class CustomAccessDecisionManager extends AbstractAccessDecisionManager {
                     break;
             }
         }
-        if (deny > 0) {
+        if (getDecisionVoters().size() > deny * 2) {
             throw new AccessDeniedException(
-                    messages.getMessage("AbstractAccessDecisionManager.accessDenied", "Access is denied"));
+                    messages.getMessage("CustomAccessDecisionManager.accessDenied", "Access is denied"));
         }
     }
 
