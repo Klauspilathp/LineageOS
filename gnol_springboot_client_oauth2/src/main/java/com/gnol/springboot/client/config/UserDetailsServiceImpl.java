@@ -22,11 +22,11 @@ import com.gnol.mybatis.spring.boot.autoconfigure.CurrDataSource;
 import com.gnol.mybatis.spring.boot.autoconfigure.DataSourceType;
 import com.gnol.plugins.core.StringUtil;
 import com.gnol.redis.spring.boot.autoconfigure.RedisService;
+import com.gnol.springboot.client.daos.sys.ExtSysMenuDao;
+import com.gnol.springboot.client.daos.sys.ExtSysUserDao;
 import com.gnol.springboot.common.dos.sys.SysUser;
 import com.gnol.springboot.common.enums.auth.AuthTypeEnum;
 import com.gnol.springboot.common.enums.sys.StatusEnum;
-import com.gnol.springboot.client.daos.sys.ExtSysMenuDao;
-import com.gnol.springboot.client.daos.sys.ExtSysUserDao;
 
 /**
  * @Title: UserDetailsServiceImpl
