@@ -139,13 +139,15 @@ public class JwtKeyPairResourceServerConfiguration extends ResourceServerConfigu
             logger.warn("本地公钥读取失败，从授权服务器获取公共公钥。");
             // 获取授权服务器实例列表
             List<InstanceInfo> instances = eurekaClient.getApplication(oauth2ApplicationName).getInstances();
-            for (InstanceInfo instanceInfo : instances) {
-                if (instanceInfo.getStatus() == InstanceStatus.UP) { // 上线状态
-                    logger.debug("从 {} 服务获取公共公钥。", instanceInfo.getHomePageUrl());
-                    Map result = restTemplate.getForObject(instanceInfo.getHomePageUrl() + "/oauth/token_key",
-                            Map.class);
-                    key = result.get("value").toString();
-                    break;
+            if (instances != null) { // 避免抛出空指针异常
+                for (InstanceInfo instanceInfo : instances) {
+                    if (instanceInfo.getStatus() == InstanceStatus.UP) { // 上线状态
+                        logger.debug("从 {} 服务获取公共公钥。", instanceInfo.getHomePageUrl());
+                        Map result = restTemplate.getForObject(instanceInfo.getHomePageUrl() + "/oauth/token_key",
+                                Map.class);
+                        key = result.get("value").toString();
+                        break;
+                    }
                 }
             }
             if (StringUtil.isBlank(key)) {

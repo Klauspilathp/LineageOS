@@ -77,9 +77,8 @@ public class Oauth2Application {
      *          将打印出的公钥放到一个文件中，例如 oauth2-public.txt 中。注意生成公钥时 oauth2.jks 文件必须是授权服务器上的 oauth2.jks 文件。
      *      keytool -genkeypair -alias oauth2 -keyalg RSA -keypass oauth2keypass -keystore oauth2.keystore -storepass oauth2storepass
      *      keytool -list -rfc --keystore oauth2.keystore -storepass oauth2storepass | openssl x509 -inform pem -pubkey
-     *  2、
-     *  3、
-     *  4、
+     *  2、将 oauth2.jks 放到授权服务器的 resources 目录下，将 oauth2-public.txt 放到资源服务器的 resources 目录下；
+     *  3、其余流程同 jdbc 储存策略认证流程。
      */
     public static void main(String[] args) {
         SpringApplication.run(Oauth2Application.class, args);
