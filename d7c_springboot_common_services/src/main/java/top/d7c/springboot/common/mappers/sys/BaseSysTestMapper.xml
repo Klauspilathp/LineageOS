@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.d7c.springboot.common.daos.sys.BaseSysTestDao">
+    <!-- 通用查询映射结果 -->
+	<resultMap id="BaseResultMap" type="top.d7c.springboot.common.dos.sys.SysTest">
+		<id column="id" property="id" jdbcType="INTEGER"/>
+		<result column="name" property="name" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+		id, name 
+	</sql>
+	
+	<!-- 插入数据 -->
+	<insert id="insert" parameterType="top.d7c.springboot.common.dos.sys.SysTest">
+		INSERT INTO sys_test (
+		<trim suffixOverrides=",">
+			id, 
+			name, 
+		</trim>
+		) VALUES (
+		<trim suffixOverrides=",">
+			#{id, jdbcType=INTEGER}, 
+			#{name, jdbcType=VARCHAR}, 
+		</trim>)
+	</insert>
+	
+	<!-- 批量插入接口 -->
+	<insert id="insertBatch" parameterType="java.util.List">
+		INSERT INTO sys_test (
+			id, 
+			name) VALUES
+		<foreach collection="list" item="item" index="index" separator="," >
+			(#{item.id, jdbcType=INTEGER}, 
+			#{item.name, jdbcType=VARCHAR})
+		</foreach>
+	</insert>
+	
+	<!-- 更新全部字段 -->
+	<update id="updateByKey" parameterType="top.d7c.springboot.common.dos.sys.SysTest">
+		UPDATE sys_test SET 
+			name = #{name, jdbcType=VARCHAR} 
+		WHERE id = #{id, jdbcType=INTEGER} 
+	</update>
+	
+	<!-- 只更新不为 null 和 空字符串的字段 -->
+	<update id="update" parameterType="top.d7c.springboot.common.dos.sys.SysTest">
+		UPDATE sys_test 
+		<trim prefix="set" suffixOverrides=",">
+			<if test="null != name and name != ''">
+				name = #{name, jdbcType=VARCHAR}, 
+			</if>
+		</trim>
+		WHERE id = #{id, jdbcType=INTEGER} 
+	</update>
+	
+	<!-- 根据主键物理删除数据 -->
+	<delete id="deleteByKey" parameterType="java.lang.Long">
+		DELETE FROM sys_test WHERE id = #{id, jdbcType=INTEGER}
+	</delete>
+	
+	<!-- 根据主键查询 pojo -->
+	<select id="getByKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+		SELECT <include refid="Base_Column_List"/> FROM sys_test 
+		WHERE id = #{id, jdbcType=INTEGER}
+	</select>
+	
+	<!-- 根据主键查询 pojo -->
+	<select id="getPDByKey" parameterType="java.lang.Long" resultType="pd">
+		SELECT <include refid="Base_Column_List"/> FROM sys_test 
+		WHERE id = #{id, jdbcType=INTEGER}
+	</select>
+	
+	<!-- 根据条件分页查询 pojo 列表 -->
+	<select id="listPage" parameterType="page" resultMap="BaseResultMap">
+		SELECT <include refid="Base_Column_List"/> FROM sys_test 
+		WHERE 1 = 1 
+		<if test="args != null">
+			<if test="null != args.name and args.name != ''">
+				AND name = #{args.name, jdbcType=VARCHAR} 
+			</if>
+		</if>
+	</select>
+	
+	<!-- 根据条件查询 pojo 列表 -->
+	<select id="listBy" parameterType="pd" resultMap="BaseResultMap">
+		SELECT <include refid="Base_Column_List"/> FROM sys_test 
+		WHERE 1 = 1 
+		<if test="null != name and name != ''">
+			AND name = #{name, jdbcType=VARCHAR} 
+		</if>
+	</select>
+	
+</mapper>

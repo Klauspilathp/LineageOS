@@ -19,7 +19,7 @@
 		<logger name="org.activiti" level="debug" additivity="false">
 			<appender-ref ref="STDOUT" />
 		</logger>
-		<logger name="com.d7c.springboot" level="debug" additivity="false">
+		<logger name="top.d7c.springboot" level="debug" additivity="false">
 			<appender-ref ref="STDOUT" />
 		</logger>
 	</springProfile>

@@ -3,7 +3,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>com.d7c.springboot</groupId>
+		<groupId>top.d7c.springboot</groupId>
 		<artifactId>d7c_springboot</artifactId>
 		<version>1.0.0</version>
 		<relativePath>../pom.xml</relativePath>
@@ -16,17 +16,17 @@
 	<dependencies>
 		<!-- d7c 项目封装的 spring-boot 关于 oauth2 starter -->
 		<dependency>
-			<groupId>com.d7c.springboot.plugins</groupId>
+			<groupId>top.d7c.springboot.plugins</groupId>
 			<artifactId>spring-boot-starter-oauth2</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>com.d7c.springboot</groupId>
+			<groupId>top.d7c.springboot</groupId>
 			<artifactId>d7c_springboot_common_services</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 		<!-- d7c 项目封装的 spring-boot 关于 mybatis 持久化层 starter -->
 		<dependency>
-			<groupId>com.d7c.springboot.plugins</groupId>
+			<groupId>top.d7c.springboot.plugins</groupId>
 			<artifactId>spring-boot-starter-mybatis</artifactId>
 		</dependency>
 		<!-- eureka client -->
@@ -64,7 +64,7 @@
 			<artifactId>spring-cloud-starter-zipkin</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>com.d7c.springboot.plugins</groupId>
+			<groupId>top.d7c.springboot.plugins</groupId>
 			<artifactId>d7c_springboot_plugins_net</artifactId>
 		</dependency>
 		<!-- stream 响应式编程，早期版本是 spring-cloud-stream-rxjava -->

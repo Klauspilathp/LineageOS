@@ -7,7 +7,7 @@
     <userTask id="usertask2" name="项目经理审批">
       <documentation>项目经理审批中监听器用于将当前申请任务指派给申请人的项目经理。</documentation>
       <extensionElements>
-        <activiti:taskListener event="all" class="com.d7c.springboot.client.services.evection.listener.PMListener"></activiti:taskListener>
+        <activiti:taskListener event="all" class="top.d7c.springboot.client.services.evection.listener.PMListener"></activiti:taskListener>
       </extensionElements>
     </userTask>
     <sequenceFlow id="flow2" sourceRef="usertask1" targetRef="usertask2">
@@ -20,7 +20,7 @@
     <userTask id="usertask3" name="总经理审批">
       <documentation>总经理审批中监听器用于将当前申请任务指派给申请人的总经理。</documentation>
       <extensionElements>
-        <activiti:taskListener event="all" class="com.d7c.springboot.client.services.evection.listener.PMListener"></activiti:taskListener>
+        <activiti:taskListener event="all" class="top.d7c.springboot.client.services.evection.listener.PMListener"></activiti:taskListener>
       </extensionElements>
     </userTask>
     <sequenceFlow id="flow9" name="大于七天" sourceRef="exclusivegateway1" targetRef="usertask3">
@@ -41,7 +41,7 @@
     <userTask id="usertask5" name="报备人事">
       <documentation>报备人事中监听器用于将当前申请任务指派给申请人所在公司的人事。</documentation>
       <extensionElements>
-        <activiti:taskListener event="all" class="com.d7c.springboot.client.services.evection.listener.PMListener"></activiti:taskListener>
+        <activiti:taskListener event="all" class="top.d7c.springboot.client.services.evection.listener.PMListener"></activiti:taskListener>
       </extensionElements>
     </userTask>
     <userTask id="usertask6" name="通知人事结束出差" activiti:assignee="${applyUserId}"></userTask>

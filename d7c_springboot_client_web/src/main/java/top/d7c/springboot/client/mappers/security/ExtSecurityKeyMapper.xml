@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.d7c.springboot.client.daos.security.ExtSecurityKeyDao">
+	<!-- resultMap引入：resultMap="top.d7c.springboot.common.daos.security.BaseSecurityKeyDao.BaseResultMap" -->
+	<!-- SQL 片段引入：<include refid="top.d7c.springboot.common.daos.security.BaseSecurityKeyDao.Base_Column_List"/> -->
+
+	<!-- 根据条件分页查询d7c 系统安全模块_用户或系统密钥列表 -->
+	<select id="listPDPage" parameterType="page" resultType="pd">
+		SELECT <include refid="top.d7c.springboot.common.daos.security.BaseSecurityKeyDao.Base_Column_List"/> FROM security_key 
+		WHERE 1 = 1 
+		<if test="args != null">
+			<if test="null != args.privateKey and args.privateKey != ''">
+				AND privateKey = #{args.privateKey, jdbcType=VARCHAR} 
+			</if>
+			<if test="null != args.publicKey and args.publicKey != ''">
+				AND publicKey = #{args.publicKey, jdbcType=VARCHAR} 
+			</if>
+			<if test="null != args.expiration and args.expiration != ''">
+				AND expiration = #{args.expiration, jdbcType=BIGINT} 
+			</if>
+			<if test="null != args.remark and args.remark != ''">
+				AND remark = #{args.remark, jdbcType=VARCHAR} 
+			</if>
+			<if test="null != args.addTime">
+				AND addTime = #{args.addTime, jdbcType=TIMESTAMP} 
+			</if>
+			<if test="null != args.addUser">
+				AND addUser = #{args.addUser, jdbcType=BIGINT} 
+			</if>
+			<if test="null != args.modifyTime">
+				AND modifyTime = #{args.modifyTime, jdbcType=TIMESTAMP} 
+			</if>
+			<if test="null != args.modifyUser">
+				AND modifyUser = #{args.modifyUser, jdbcType=BIGINT} 
+			</if>
+			<if test="null != args.status">
+				AND status = #{args.status, jdbcType=TINYINT} 
+			</if>
+			<if test="null != args.checkValue">
+				AND checkValue = #{args.checkValue, jdbcType=INTEGER} 
+			</if>
+		</if>
+	</select>
+	
+	<!-- 根据d7c 系统安全模块_用户或系统密钥编号软删除d7c 系统安全模块_用户或系统密钥 -->
+	<update id="updateStatus" parameterType="pd">
+		update security_key set 
+			status = #{status, jdbcType=TINYINT}, 
+			modifyUser = #{modifyUser, jdbcType=BIGINT}, 
+			checkValue = checkValue() 
+		WHERE appid = #{appid, jdbcType=VARCHAR} AND checkValue = #{checkValue, jdbcType=INTEGER} 
+	</update>
+	
+</mapper>

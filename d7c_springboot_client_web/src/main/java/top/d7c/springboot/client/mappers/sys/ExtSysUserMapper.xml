@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.d7c.springboot.client.daos.sys.ExtSysUserDao">
+	<!-- resultMap引入：resultMap="top.d7c.springboot.common.daos.sys.BaseSysUserDao.BaseResultMap" -->
+	<!-- SQL 片段引入：<include refid="top.d7c.springboot.common.daos.sys.BaseSysUserDao.Base_Column_List"/> -->
+	<!-- 根据用户名查询用户 -->
+	<select id="getSysUserByUserAccount" parameterType="string" resultMap="top.d7c.springboot.common.daos.sys.BaseSysUserDao.BaseResultMap">
+		SELECT <include refid="top.d7c.springboot.common.daos.sys.BaseSysUserDao.Base_Column_List"/> FROM sys_user 
+		WHERE userAccount = #{userAccount, jdbcType=VARCHAR}
+	</select>
+	
+	<!-- 更新登录状态 -->
+	<update id="updateByLogin" parameterType="top.d7c.springboot.common.dos.sys.SysUser">
+		UPDATE sys_user SET 
+			loginStatus = #{loginStatus, jdbcType=TINYINT}, 
+			loginTime = #{loginTime, jdbcType=TIMESTAMP}, 
+			loginIp = #{loginIp, jdbcType=VARCHAR}
+		WHERE userId = #{userId, jdbcType=BIGINT} 
+	</update>
+	
+	<!-- 根据条件分页查询用户列表 -->
+	<select id="listPDPage" parameterType="page" resultType="pd">
+		SELECT a.userId, a.jobNumber, a.userAccount, a.nickname, a.birthday, a.age, a.sex, a.phone, a.wxOpenid, a.email, a.userType, 
+		a.administrator, a.loginStatus, a.loginTime, a.loginIp, a.freezeTime, a.freezeCause, a.status, a.checkValue<!-- , b.roleName -->
+		, c.orgNameCN FROM sys_user a 
+		<!-- INNER JOIN sys_role b ON a.roleId = b.roleId  -->
+		LEFT JOIN sys_org c ON a.orgId = c.orgId 
+		<where>
+			<if test="args != null">
+				<if test="null != args.roleId and args.roleId != ''">
+					AND a.roleId = #{args.roleId, jdbcType=BIGINT} 
+				</if>
+				<if test="null != args.jobNumber and args.jobNumber != ''">
+					AND a.jobNumber = #{args.jobNumber, jdbcType=VARCHAR} 
+				</if>
+				<if test="null != args.userAccount and args.userAccount != ''">
+					AND a.userAccount = #{args.userAccount, jdbcType=VARCHAR} 
+				</if>
+				<if test="null != args.nickname and args.nickname != ''">
+					AND a.nickname = #{args.nickname, jdbcType=VARCHAR} 
+				</if>
+				<if test="null != args.birthday and args.birthday != ''">
+					AND a.birthday = #{args.birthday, jdbcType=VARCHAR} 
+				</if>
+				<if test="null != args.age">
+					AND a.age = #{args.age, jdbcType=TINYINT} 
+				</if>
+				<if test="null != args.sex">
+					AND a.sex = #{args.sex, jdbcType=TINYINT} 
+				</if>
+				<if test="null != args.phone and args.phone != ''">
+					AND a.phone = #{args.phone, jdbcType=VARCHAR} 
+				</if>
+				<if test="null != args.wxOpenid and args.wxOpenid != ''">
+					AND a.wxOpenid = #{args.wxOpenid, jdbcType=VARCHAR} 
+				</if>
+				<if test="null != args.email and args.email != ''">
+					AND a.email = #{args.email, jdbcType=VARCHAR} 
+				</if>
+				<if test="null != args.userType">
+					AND a.userType = #{args.userType, jdbcType=TINYINT} 
+				</if>
+				<if test="null != args.administrator">
+					AND a.administrator = #{args.administrator, jdbcType=TINYINT} 
+				</if>
+				<if test="null != args.loginTime">
+					AND a.loginTime = #{args.loginTime, jdbcType=TIMESTAMP} 
+				</if>
+				<if test="null != args.status">
+					AND a.status = #{args.status, jdbcType=TINYINT} 
+				</if>
+				<if test="null != args.blocHQId">
+					AND c.blocHQId = #{args.blocHQId, jdbcType=BIGINT} 
+				</if>
+				<if test="null != args.areaHQId">
+					AND c.areaHQId = #{args.areaHQId, jdbcType=BIGINT} 
+				</if>
+				<if test="null != args.companyId">
+					AND c.companyId = #{args.companyId, jdbcType=BIGINT} 
+				</if>
+				<if test="null != args.orgId">
+					AND c.orgId = #{args.orgId, jdbcType=BIGINT} 
+				</if>
+			</if>
+		</where>
+	</select>
+	
+	<!-- 根据用户编号查询该用户一些信息 -->
+	<select id="getUserInfoByUserId" parameterType="java.lang.Long" resultType="pd">
+		SELECT a.roleId, a.administrator, a.userType, a.orgId FROM sys_user a 
+		WHERE a.userId = #{userId, jdbcType=BIGINT} 
+	</select>
+	
+	<!-- 根据用户编号软删除用户 -->
+	<update id="updateStatus" parameterType="pd">
+		update sys_user set 
+			status = #{status, jdbcType=TINYINT}, 
+			modifyUser = #{modifyUser, jdbcType=BIGINT}, 
+			checkValue = checkValue() 
+		WHERE userId = #{userId, jdbcType=BIGINT} AND checkValue = #{checkValue, jdbcType=INTEGER} 
+	</update>
+	
+	<!-- 判断数据中账号、手机号、邮箱是否已经存在并且不是当前用户 -->
+	<select id="hasExist" parameterType="string" resultType="int">
+		SELECT COUNT(*) FROM sys_user 
+		WHERE ${_parameter} 
+	</select>
+	
+	<!-- 批量软删除用户 -->
+	<update id="updateBatchStatus" parameterType="pd">
+		update sys_user set 
+			status = #{status, jdbcType=TINYINT}, 
+			modifyUser = #{modifyUser, jdbcType=BIGINT}, 
+			checkValue = checkValue() 
+		WHERE userId != #{SUPER_ADMIN_ID, jdbcType=BIGINT} AND userId IN 
+			<foreach item="userId" index="index" collection="userIds" open="(" separator="," close=")">
+				#{userId, jdbcType=BIGINT}
+			</foreach>
+	</update>
+	
+	<!-- 更新用户头像 -->
+	<update id="updateAvatar" parameterType="pd">
+		update sys_user set 
+			avatar = #{avatar, jdbcType=TINYINT} 
+		WHERE userId = #{userId, jdbcType=BIGINT} 
+	</update>
+	
+	<!-- 更新密码 -->
+	<update id="updatePassword" parameterType="pd">
+		update sys_user set 
+			password = #{password, jdbcType=VARCHAR}, 
+			passwordModifyTime = #{passwordModifyTime, jdbcType=TIMESTAMP} 
+		WHERE userId = #{userId, jdbcType=BIGINT} 
+	</update>
+
+</mapper>

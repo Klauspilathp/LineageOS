@@ -2,7 +2,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>com.d7c.springboot</groupId>
+		<groupId>top.d7c.springboot</groupId>
 		<artifactId>d7c_springboot</artifactId>
 		<version>1.0.0</version>
 		<relativePath>../pom.xml</relativePath>
@@ -14,7 +14,7 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>com.d7c.springboot.plugins</groupId>
+			<groupId>top.d7c.springboot.plugins</groupId>
 			<artifactId>d7c_springboot_plugins_tools</artifactId>
 		</dependency>
 		<dependency>
@@ -49,7 +49,7 @@
 		</dependency> -->
 		<!-- redis -->
 		<dependency>
-			<groupId>com.d7c.springboot.plugins</groupId>
+			<groupId>top.d7c.springboot.plugins</groupId>
 			<artifactId>spring-boot-starter-redis</artifactId>
 		</dependency>
 		<!-- ehcache 相关依赖，参考 https://www.cnblogs.com/wchxj/p/8119528.html -->

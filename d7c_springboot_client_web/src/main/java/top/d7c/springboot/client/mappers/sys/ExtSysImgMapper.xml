@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.d7c.springboot.client.daos.sys.ExtSysImgDao">
+	<!-- resultMap引入：resultMap="top.d7c.springboot.common.daos.sys.BaseSysImgDao.BaseResultMap" -->
+	<!-- SQL 片段引入：<include refid="top.d7c.springboot.common.daos.sys.BaseSysImgDao.Base_Column_List"/> -->
+	<!-- 根据图片类型查询图片列表 -->
+	<select id="listByImgType" parameterType="pd" resultType="pd">
+		SELECT imgId, imgName, imgPath, addTime FROM sys_img 
+		<where>
+			<if test="null != imgType and imgType != ''">
+				AND imgType = #{imgType, jdbcType=VARCHAR} 
+			</if>
+			<if test="null != status">
+				AND status = #{status, jdbcType=TINYINT} 
+			</if>
+		</where>
+		ORDER BY addTime DESC 
+	</select>
+	
+	<!-- 根据图片管理编号软删除图片 -->
+	<update id="updateStatus" parameterType="pd">
+		update sys_img set 
+			status = #{status, jdbcType=TINYINT}, 
+			modifyUser = #{modifyUser, jdbcType=BIGINT} 
+		WHERE imgId = #{imgId, jdbcType=BIGINT} 
+	</update>
+
+</mapper>

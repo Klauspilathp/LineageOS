@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.d7c.springboot.client.daos.sys.ExtSysLogDao">
+	<!-- resultMap引入：resultMap="top.d7c.springboot.common.daos.sys.BaseSysLogDao.BaseResultMap" -->
+	<!-- SQL 片段引入：<include refid="top.d7c.springboot.common.daos.sys.BaseSysLogDao.Base_Column_List"/> -->
+	
+	<!-- 根据条件分页查询日志列表 -->
+	<select id="listPDPage" parameterType="page" resultType="pd">
+		SELECT logId, requestUri, requestMethod, remoteAddr, userAgent, deviceName, browserName, logType, addTime FROM sys_log 
+		<where> 
+			<if test="args != null">
+				<if test="null != args.requestUri and args.requestUri != ''">
+					AND requestUri = #{args.requestUri, jdbcType=VARCHAR} 
+				</if>
+				<if test="null != args.requestMethod and args.requestMethod != ''">
+					AND requestMethod = #{args.requestMethod, jdbcType=VARCHAR} 
+				</if>
+				<if test="null != args.requestParams and args.requestParams != ''">
+					AND requestParams = #{args.requestParams, jdbcType=VARCHAR} 
+				</if>
+				<if test="null != args.exceptionInfo and args.exceptionInfo != ''">
+					AND exceptionInfo = #{args.exceptionInfo, jdbcType=VARCHAR} 
+				</if>
+				<if test="null != args.remoteAddr and args.remoteAddr != ''">
+					AND remoteAddr = #{args.remoteAddr, jdbcType=VARCHAR} 
+				</if>
+				<if test="null != args.userAgent and args.userAgent != ''">
+					AND userAgent = #{args.userAgent, jdbcType=VARCHAR} 
+				</if>
+				<if test="null != args.deviceName and args.deviceName != ''">
+					AND deviceName = #{args.deviceName, jdbcType=VARCHAR} 
+				</if>
+				<if test="null != args.browserName and args.browserName != ''">
+					AND browserName = #{args.browserName, jdbcType=VARCHAR} 
+				</if>
+				<if test="null != args.logType">
+					AND logType = #{args.logType, jdbcType=TINYINT} 
+				</if>
+				<if test="null != args.addTime">
+					AND addTime = #{args.addTime, jdbcType=TIMESTAMP} 
+				</if>
+				<if test="null != args.addUser">
+					AND addUser = #{args.addUser, jdbcType=BIGINT} 
+				</if>
+			</if>
+		</where>
+	</select>
+
+</mapper>

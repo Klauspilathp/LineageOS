@@ -3,12 +3,12 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>com.d7c.springboot.plugins</groupId>
+		<groupId>top.d7c.springboot.plugins</groupId>
 		<artifactId>d7c_springboot_plugins_parent</artifactId>
 		<version>1.0.0</version>
 		<relativePath />
 	</parent>
-	<groupId>com.d7c.springboot</groupId>
+	<groupId>top.d7c.springboot</groupId>
 	<artifactId>d7c_springboot</artifactId>
 	<version>1.0.0</version>
 	<packaging>pom</packaging>
@@ -109,90 +109,90 @@
 		<dependencies>
             <!-- d7c springboot 版插件工程 =======>start -->
 			<dependency>
-				<groupId>com.d7c.springboot.plugins</groupId>
+				<groupId>top.d7c.springboot.plugins</groupId>
 				<artifactId>d7c_springboot_plugins</artifactId>
 				<version>${d7c_springboot_plugins.version}</version>
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
 			<dependency>
-				<groupId>com.d7c.springboot.plugins</groupId>
+				<groupId>top.d7c.springboot.plugins</groupId>
 				<artifactId>d7c_springboot_plugins_core</artifactId>
 				<version>${d7c_springboot_plugins.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>com.d7c.springboot.plugins</groupId>
+				<groupId>top.d7c.springboot.plugins</groupId>
 				<artifactId>d7c_springboot_plugins_tools</artifactId>
 				<version>${d7c_springboot_plugins.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>com.d7c.springboot.plugins</groupId>
+				<groupId>top.d7c.springboot.plugins</groupId>
 				<artifactId>d7c_springboot_plugins_net</artifactId>
 				<version>${d7c_springboot_plugins.version}</version>
 			</dependency>
 			<!-- d7c 项目封装的 spring-boot 关于 fastDFS starter -->
 			<dependency>
-				<groupId>com.d7c.springboot.plugins</groupId>
+				<groupId>top.d7c.springboot.plugins</groupId>
 				<artifactId>spring-boot-starter-fastDFS</artifactId>
 				<version>${d7c_springboot_plugins.version}</version>
 			</dependency>
 			<!-- d7c 项目封装的 spring-boot 关于 jwt starter -->
 			<dependency>
-				<groupId>com.d7c.springboot.plugins</groupId>
+				<groupId>top.d7c.springboot.plugins</groupId>
 				<artifactId>spring-boot-starter-jwt</artifactId>
 				<version>${d7c_springboot_plugins.version}</version>
 			</dependency>
 			<!-- d7c 项目封装的 spring-boot 关于 redis starter -->
 			<dependency>
-				<groupId>com.d7c.springboot.plugins</groupId>
+				<groupId>top.d7c.springboot.plugins</groupId>
 				<artifactId>spring-boot-starter-redis</artifactId>
 				<version>${d7c_springboot_plugins.version}</version>
 			</dependency>
 			<!-- d7c 项目封装的 spring-boot 关于 activemq starter -->
 			<dependency>
-				<groupId>com.d7c.springboot.plugins</groupId>
+				<groupId>top.d7c.springboot.plugins</groupId>
 				<artifactId>spring-boot-starter-activemq</artifactId>
 				<version>${d7c_springboot_plugins.version}</version>
 			</dependency>
 			<!-- d7c 项目封装的 spring-boot 关于 mybatis 持久化层 starter -->
 			<dependency>
-				<groupId>com.d7c.springboot.plugins</groupId>
+				<groupId>top.d7c.springboot.plugins</groupId>
 				<artifactId>spring-boot-starter-mybatis</artifactId>
 				<version>${d7c_springboot_plugins.version}</version>
 			</dependency>
 			<!-- d7c 项目封装的 spring-boot 关于 oauth2 starter -->
 			<dependency>
-				<groupId>com.d7c.springboot.plugins</groupId>
+				<groupId>top.d7c.springboot.plugins</groupId>
 				<artifactId>spring-boot-starter-oauth2</artifactId>
 				<version>${d7c_springboot_plugins.version}</version>
 			</dependency>
 			<!-- d7c 项目封装的 spring-boot 关于 activiti starter -->
 			<dependency>
-				<groupId>com.d7c.springboot.plugins</groupId>
+				<groupId>top.d7c.springboot.plugins</groupId>
 				<artifactId>spring-boot-starter-activiti</artifactId>
 				<version>${d7c_springboot_plugins.version}</version>
 			</dependency>
 			<!-- d7c 项目封装的 spring-boot 关于 aliyun oss starter -->
 			<dependency>
-				<groupId>com.d7c.springboot.plugins</groupId>
+				<groupId>top.d7c.springboot.plugins</groupId>
 				<artifactId>spring-boot-starter-aliyun-oss</artifactId>
 				<version>${d7c_springboot_plugins.version}</version>
 			</dependency>
 			<!-- d7c 项目封装的 spring-boot 关于 elasticsearch starter -->
 			<dependency>
-				<groupId>com.d7c.springboot.plugins</groupId>
+				<groupId>top.d7c.springboot.plugins</groupId>
 				<artifactId>spring-boot-starter-elasticsearch</artifactId>
 				<version>${d7c_springboot_plugins.version}</version>
 			</dependency>
 			<!-- d7c 项目封装的 spring-boot 关于 mongodb starter，建议采用 mongodb server 为 3.4.x、3.6.x -->
 			<dependency>
-				<groupId>com.d7c.springboot.plugins</groupId>
+				<groupId>top.d7c.springboot.plugins</groupId>
 				<artifactId>spring-boot-starter-mongodb</artifactId>
 				<version>${d7c_springboot_plugins.version}</version>
 			</dependency>
 			<!-- d7c 项目封装的 spring-boot 关于 flowable starter -->
 			<dependency>
-				<groupId>com.d7c.springboot.plugins</groupId>
+				<groupId>top.d7c.springboot.plugins</groupId>
 				<artifactId>spring-boot-starter-flowable</artifactId>
 				<version>${d7c_springboot_plugins.version}</version>
 			</dependency>
@@ -202,7 +202,7 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>com.d7c.springboot.plugins</groupId>
+			<groupId>top.d7c.springboot.plugins</groupId>
 			<artifactId>d7c_springboot_plugins_core</artifactId>
 		</dependency>
 		<!-- @ConfigurationProperties 使用 spring-boot-configuration-processorjar 注释的项目轻松生成配置元数据文件 -->

@@ -33,9 +33,9 @@
 	<!-- 类型别名配置 -->
 	<typeAliases>
 		<!-- 封装的 map 对象 -->
-		<typeAlias type="com.d7c.plugins.core.PageData" alias="pd" />
+		<typeAlias type="top.d7c.plugins.core.PageData" alias="pd" />
 		<!-- 分页组件 -->
-		<typeAlias type="com.d7c.plugins.core.Page" alias="page" />
+		<typeAlias type="top.d7c.plugins.core.Page" alias="page" />
 	</typeAliases>
 
 </configuration>

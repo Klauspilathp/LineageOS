@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.d7c.springboot.client.daos.sys.ExtSysScheduleTriggerDao">
+	<!-- resultMap引入：resultMap="top.d7c.springboot.common.daos.sys.BaseSysScheduleTriggerDao.BaseResultMap" -->
+	<!-- SQL 片段引入：<include refid="top.d7c.springboot.common.daos.sys.BaseSysScheduleTriggerDao.Base_Column_List"/> -->
+
+	<!-- 根据条件分页查询d7c系统_任务调度列表 -->
+	<select id="listPDPage" parameterType="page" resultType="pd">
+		SELECT scheduleTriggerId, jobIp, jobGroup, jobName, cron, params, addTime, status, checkValue FROM sys_schedule_trigger 
+		WHERE 1 = 1 
+		<if test="args != null">
+			<if test="null != args.jobIp and args.jobIp != ''">
+				AND jobIp = #{args.jobIp, jdbcType=VARCHAR} 
+			</if>
+			<if test="null != args.jobGroup and args.jobGroup != ''">
+				AND jobGroup = #{args.jobGroup, jdbcType=VARCHAR} 
+			</if>
+			<if test="null != args.jobName and args.jobName != ''">
+				AND jobName = #{args.jobName, jdbcType=VARCHAR} 
+			</if>
+			<if test="null != args.cron and args.cron != ''">
+				AND cron = #{args.cron, jdbcType=VARCHAR} 
+			</if>
+			<if test="null != args.params and args.params != ''">
+				AND params = #{args.params, jdbcType=VARCHAR} 
+			</if>
+			<if test="null != args.remark and args.remark != ''">
+				AND remark = #{args.remark, jdbcType=VARCHAR} 
+			</if>
+			<if test="null != args.addTime">
+				AND addTime = #{args.addTime, jdbcType=TIMESTAMP} 
+			</if>
+			<if test="null != args.addUser">
+				AND addUser = #{args.addUser, jdbcType=BIGINT} 
+			</if>
+			<if test="null != args.modifyTime">
+				AND modifyTime = #{args.modifyTime, jdbcType=TIMESTAMP} 
+			</if>
+			<if test="null != args.modifyUser">
+				AND modifyUser = #{args.modifyUser, jdbcType=BIGINT} 
+			</if>
+			<if test="null != args.status">
+				AND status = #{args.status, jdbcType=TINYINT} 
+			</if>
+			<if test="null != args.checkValue">
+				AND checkValue = #{args.checkValue, jdbcType=INTEGER} 
+			</if>
+		</if>
+	</select>
+	
+	<!-- 根据d7c系统_任务调度编号软删除d7c系统_任务调度 -->
+	<update id="updateStatus" parameterType="pd">
+		update sys_schedule_trigger set 
+			status = #{status, jdbcType=TINYINT}, 
+			modifyUser = #{modifyUser, jdbcType=BIGINT}, 
+			checkValue = checkValue() 
+		WHERE scheduleTriggerId = #{scheduleTriggerId, jdbcType=BIGINT} AND checkValue = #{checkValue, jdbcType=INTEGER} 
+	</update>
+	
+</mapper>

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.d7c.springboot.client.daos.sys.ExtSysSessionDao">
+	<!-- resultMap引入：resultMap="top.d7c.springboot.common.daos.sys.BaseSysSessionDao.BaseResultMap" -->
+	<!-- SQL 片段引入：<include refid="top.d7c.springboot.common.daos.sys.BaseSysSessionDao.Base_Column_List"/> -->
+	<!-- 插入更新数据 -->
+	<insert id="insertReplace" parameterType="top.d7c.springboot.common.dos.sys.SysSession">
+		REPLACE INTO sys_session (
+		<trim suffixOverrides=",">
+			userId, 
+			sessionId, 
+			jobNumber, 
+			userAccount, 
+			roleId, 
+			roleName, 
+			menuQx, 
+			nickname, 
+			avatar, 
+			sex, 
+			birthday, 
+			phone, 
+			userType, 
+			administrator, 
+			orgId, 
+			blocHQId, 
+			blocHQName, 
+			areaHQId, 
+			areaHQName, 
+			companyId, 
+			companyName, 
+			departmentId, 
+			departmentName, 
+			loginStatus, 
+			loginTime, 
+		</trim>
+		) VALUES (
+		<trim suffixOverrides=",">
+			#{userId, jdbcType=BIGINT}, 
+			#{sessionId, jdbcType=VARCHAR}, 
+			#{jobNumber, jdbcType=VARCHAR}, 
+			#{userAccount, jdbcType=VARCHAR}, 
+			#{roleId, jdbcType=BIGINT}, 
+			#{roleName, jdbcType=VARCHAR}, 
+			#{menuQx, jdbcType=VARCHAR}, 
+			#{nickname, jdbcType=VARCHAR}, 
+			#{avatar, jdbcType=VARCHAR}, 
+			#{sex, jdbcType=TINYINT}, 
+			#{birthday, jdbcType=VARCHAR}, 
+			#{phone, jdbcType=VARCHAR}, 
+			#{userType, jdbcType=TINYINT}, 
+			#{administrator, jdbcType=TINYINT}, 
+			#{orgId, jdbcType=BIGINT}, 
+			#{blocHQId, jdbcType=BIGINT}, 
+			#{blocHQName, jdbcType=VARCHAR}, 
+			#{areaHQId, jdbcType=BIGINT}, 
+			#{areaHQName, jdbcType=VARCHAR}, 
+			#{companyId, jdbcType=BIGINT}, 
+			#{companyName, jdbcType=VARCHAR}, 
+			#{departmentId, jdbcType=BIGINT}, 
+			#{departmentName, jdbcType=VARCHAR}, 
+			#{loginStatus, jdbcType=TINYINT}, 
+			#{loginTime, jdbcType=TIMESTAMP}, 
+		</trim>)
+	</insert>
+	
+	<!-- 根据会话编号获取菜单权限 -->
+	<select id="getMenuQXBySessionId" parameterType="java.lang.String" resultType="java.lang.String">
+		SELECT menuQx FROM sys_session 
+		WHERE sessionId = #{sessionId, jdbcType=VARCHAR}
+	</select>
+	
+	<!-- 根据会话编号获取用户编号 -->
+	<select id="getUserIdBySessionId" parameterType="java.lang.String" resultType="java.lang.Long">
+		SELECT userId FROM sys_session 
+		WHERE sessionId = #{sessionId, jdbcType=VARCHAR}
+	</select>
+	
+</mapper>

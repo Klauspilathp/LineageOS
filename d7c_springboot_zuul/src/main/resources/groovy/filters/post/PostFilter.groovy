@@ -1,4 +1,4 @@
-package com.d7c.springboot.gateway.filters
+package top.d7c.springboot.gateway.filters
 
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -10,7 +10,7 @@ import com.netflix.zuul.exception.ZuulException
 
 /**
  * @Title: PostFilter
- * @Package: com.d7c.springboot.gateway.filters
+ * @Package: top.d7c.springboot.gateway.filters
  * @author: 吴佳隆
  * @date: 2021年1月4日 下午5:28:09
  * @Description: groovy 语言编写的 post 类型过滤器脚本。

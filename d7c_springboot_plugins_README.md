@@ -24,7 +24,7 @@ d7c_springboot_plugins 主框架是 SpringBoot 2.1.x 和 SpringCloud Greenwich.S
 该模块主要提供了一些网络操作工具类，主要有 HttpServletRequest 数据获取和解析、IP 获取、Mac 地址获取、Cookie 操作等工具类，最重要的是对 HTTP 请求进行了深度封装，一个实体类即可完成各种请求和响应。
 
 ```
-package com.d7c.plugins.net.http;
+package top.d7c.plugins.net.http;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -44,11 +44,11 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.util.EntityUtils;
 import org.junit.Test;
 
-import com.d7c.plugins.core.PageResult;
-import com.d7c.plugins.core.StringUtil;
-import com.d7c.plugins.core.enums.RequestMethodEnum;
-import com.d7c.plugins.net.tools.HttpUtil;
-import com.d7c.plugins.net.tools.RequestUtil;
+import top.d7c.plugins.core.PageResult;
+import top.d7c.plugins.core.StringUtil;
+import top.d7c.plugins.core.enums.RequestMethodEnum;
+import top.d7c.plugins.net.tools.HttpUtil;
+import top.d7c.plugins.net.tools.RequestUtil;
 
 public class HttpTest {
 
@@ -193,7 +193,7 @@ public class HttpTest {
 该模块主要是对 redis 缓存技术和 redisson 操作的封装，支持集群模式，同时提供了一些 redisson 操作 redis 的示例代码。
 
 ```
-package com.d7c.redis.springboot.tests;
+package top.d7c.redis.springboot.tests;
 
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
