@@ -3,13 +3,15 @@ package com.gnol.springboot.client.config;
 import java.util.Arrays;
 
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.oauth2.client.OAuth2ClientContext;
 import org.springframework.security.oauth2.client.OAuth2RestTemplate;
 import org.springframework.security.oauth2.client.resource.OAuth2ProtectedResourceDetails;
 import org.springframework.security.oauth2.client.token.AccessTokenProviderChain;
-import org.springframework.security.oauth2.client.token.grant.code.AuthorizationCodeAccessTokenProvider;
+import org.springframework.security.oauth2.client.token.grant.client.ClientCredentialsAccessTokenProvider;
+import org.springframework.security.oauth2.config.annotation.web.configuration.EnableOAuth2Client;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
@@ -22,18 +24,21 @@ import org.springframework.web.filter.CorsFilter;
  * @Description: api 项目配置类
  */
 @Configuration
+@EnableOAuth2Client // 必须在此类上加此注解 OAuth2RestTemplate 才能使用 eureka 服务名访问其他服务
 public class ApiConfiguration {
 
     /**
      * oauth2 rest 服务客户端
      */
     @Bean(name = "oAuth2RestTemplate")
-    public OAuth2RestTemplate oAuth2RestTemplate(OAuth2ClientContext context, OAuth2ProtectedResourceDetails details) {
+    @LoadBalanced
+    public OAuth2RestTemplate oAuth2RestTemplate(OAuth2ProtectedResourceDetails details, OAuth2ClientContext context) {
         OAuth2RestTemplate restTemplate = new OAuth2RestTemplate(details, context);
-        AuthorizationCodeAccessTokenProvider authCodeProvider = new AuthorizationCodeAccessTokenProvider();
-        authCodeProvider.setStateMandatory(false);
-        AccessTokenProviderChain provider = new AccessTokenProviderChain(Arrays.asList(authCodeProvider));
+        ClientCredentialsAccessTokenProvider accessTokenProvider = new ClientCredentialsAccessTokenProvider();
+        accessTokenProvider.supportsResource(details);
+        AccessTokenProviderChain provider = new AccessTokenProviderChain(Arrays.asList(accessTokenProvider));
         restTemplate.setAccessTokenProvider(provider);
+        restTemplate.setRetryBadAccessTokens(true);
         return restTemplate;
     }
 
