@@ -11,12 +11,8 @@ public class GnolConstant {
     /*********************************************** system ********************************************/
     // --- 当前服务器编号，0~1023，com.gnol.plugins.tools.idfactory.idworker.IdWorker 中 workerId 使用
     public static final String SERVER_NO = "SERVER_NO";
-    // --- session 前缀名
-    public static final String JSESSIONID = "GNOL_JSESSIONID";
 
     /*********************************************** session ********************************************/
-    // --- 绑定到会话的属性名
-    public static final String SESSION_ATTR_NAME = "SESSION_ATTR_NAME";
     // --- 验证码
     public static final String SESSION_VERIFY_CODE = "SESSION_VERIFY_CODE";
     // --- session 中的用户信息及角色信息
