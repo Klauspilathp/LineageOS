@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.flowable.engine.ManagementService;
 import org.flowable.engine.TaskService;
 import org.flowable.task.api.Task;
 import org.flowable.task.api.TaskQuery;
@@ -13,6 +14,7 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.d7c.flowable.engine.impl.cmd.TaskRollbackCmd;
 import com.d7c.plugins.core.PageData;
 import com.d7c.plugins.core.PageResult;
 import com.d7c.plugins.core.StringUtil;
@@ -32,12 +34,12 @@ public class FlowableTaskServiceImpl implements FlowableTaskService {
      */
     @Autowired
     private TaskService taskService;
-
     /**
      * 操作 CMD 及 JOB 相关服务
      */
-    /*@Autowired
-    private ManagementService managementService;*/
+    @Autowired
+    private ManagementService managementService;
+
     /**
      * 操作用户或组相关的服务
      */
@@ -134,6 +136,12 @@ public class FlowableTaskServiceImpl implements FlowableTaskService {
 
         taskService.unclaim(taskId);
 
+        return PageResult.ok();
+    }
+
+    @Override
+    public PageResult taskRollback(String taskId, String userId, Map<String, Object> variables) {
+        managementService.executeCommand(new TaskRollbackCmd(taskId, userId, variables));
         return PageResult.ok();
     }
 

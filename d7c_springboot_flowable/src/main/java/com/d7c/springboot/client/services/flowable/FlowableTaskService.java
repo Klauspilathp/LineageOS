@@ -58,4 +58,16 @@ public interface FlowableTaskService {
      */
     PageResult unclaim(String taskId);
 
+    /**
+     * @Title: taskRollback
+     * @author: 吴佳隆
+     * @data: 2021年5月11日 上午8:18:13
+     * @Description: 任务回滚
+     * @param taskId        任务 ID
+     * @param userId        任务处理人
+     * @param variables     任务回退参数
+     * @return PageResult
+     */
+    PageResult taskRollback(String taskId, String userId, Map<String, Object> variables);
+
 }
