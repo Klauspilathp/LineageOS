@@ -38,22 +38,31 @@ public class Oauth2Application {
      *      浏览器请求 http://127.0.0.1:9101/oauth/authorize?response_type=code&client_id=client1 接口；
      *      输入 sys_user 表系统用户名和密码认证登录，首次会跳转到授权确认页面，确认后跳转到授权回调页面；
      *      从浏览器地址栏获取授权码；
-     *      使用 Postman 以 form-data 表单提交方式发送 POST 请求提交 
+     *      使用 Postman 以 form-data 表单提交方式发送 POST 请求提交
      *          grant_type:authorization_code（授权码模式）
-     *          username:wujialong（系统用户名）
-     *          password:000000（系统用户密码）
      *          client_id:client1（客户端标识）
      *          client_secret:000000（客户端密钥）
      *          code:Y8yBUR（授权码）
      *      数据到 127.0.0.1:9101/oauth/token 接口获取授权 token；
-     *  4、
-     *  5、
-     *  6、
-     *  
-     *  sys_user 表用户通过 http://127.0.0.1:9101/oauth/authorize?response_type=code&client_id=client1（后面参数可选）请求服务器，由
-     *      com.gnol.springboot.oauth2.config.WebSecurityConfiguration 配置中的 
-     *      com.gnol.springboot.oauth2.config.UserDetailsServiceImpl.loadUserByUsername(String) 服务去从库加载监测系统用户，
-     * http://127.0.0.1:9101/oauth/authorize?response_type=code&client_id=client1
+     *      使用 GET 请求 url 后加 access_token=token 值、或 POST 请求 form-data 方式提交 access_token=token 值、或加入 OAuth2 认证请求头就可以访问资源服务器
+     *      http://127.0.0.1:8091 上的资源了。
+     *  5、简化模式示例：
+     *      浏览器请求 http://127.0.0.1:9101/oauth/authorize?response_type=token&client_id=client1 接口；
+     *      输入 sys_user 表系统用户名和密码认证登录，从浏览器地址栏获取 access_token；
+     *  6、密码模式示例：
+     *      直接使用 Postman 以 form-data 表单提交方式发送 POST 请求提交
+     *          grant_type:password（密码模式）
+     *          username:wujialong（系统用户名）
+     *          password:000000（系统用户密码）
+     *          client_id:client1（客户端标识）
+     *          client_secret:000000（客户端密钥）
+     *      数据到 127.0.0.1:9101/oauth/token 接口获取授权 token；
+     *  7、客户端模式示例：
+     *      直接使用 Postman 以 form-data 表单提交方式发送 POST 请求提交
+     *          grant_type:client_credentials（客户端模式）
+     *          client_id:client1（客户端标识）
+     *          client_secret:000000（客户端密钥）
+     *      数据到 127.0.0.1:9101/oauth/token 接口获取授权 token。
      *  
      * jwt 存储策略认证流程：
      *  1、
