@@ -22,7 +22,7 @@ public class Task2Demo {
 
     @Scheduled(initialDelay = 20000, fixedDelay = 10000)
     public void testTask() {
-        logger.info("Task1Demo.testTask=======>" + DateUtil.getDateSecond());
+        logger.info("Task2Demo.testTask=======>" + DateUtil.getDateSecond());
     }
 
 }
