@@ -58,7 +58,8 @@ public class FlowableProcessInstanceServiceImpl implements FlowableProcessInstan
     private HistoryService historyService;
 
     /**
-     * 流程表单操作服务
+     * 流程表单操作服务，提供了一系列获取已经定义的表单信息、启动表单实例、渲染表单内容等功能。
+     * 表单定义仅支持开始节点（流程启动时填写的表单信息）和任务节点（任务流转填写或修改的表单信息）。
      */
     /*@Autowired
     private FormService formService;*/
