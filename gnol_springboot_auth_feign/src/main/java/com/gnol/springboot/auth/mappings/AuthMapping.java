@@ -18,15 +18,15 @@ import com.gnol.plugins.core.PageResult;
 public interface AuthMapping {
 
     /**
-     * @Title: login
+     * @Title: authentication
      * @author: 吴佳隆
      * @data: 2020年6月28日 下午4:05:17
-     * @Description: 获取授权
+     * @Description: 认证授权
      * @param pd
      * @return PageResult
      */
-    @PostMapping(value = "/login")
-    PageResult login(@RequestBody PageData pd);
+    @PostMapping(value = "/authentication")
+    PageResult authentication(@RequestBody PageData pd);
 
     /**
      * @Title: validate
@@ -41,14 +41,14 @@ public interface AuthMapping {
     PageResult validate(@RequestParam("token") String token, @RequestParam("servletPath") String servletPath);
 
     /**
-     * @Title: logout
+     * @Title: unsubscribe
      * @author: 吴佳隆
      * @data: 2020年6月28日 下午4:05:42
      * @Description: 注销授权
      * @param pd
      * @return PageResult
      */
-    @PostMapping(value = "/logout")
-    PageResult logout(@RequestBody PageData pd);
+    @PostMapping(value = "/unsubscribe")
+    PageResult unsubscribe(@RequestBody PageData pd);
 
 }

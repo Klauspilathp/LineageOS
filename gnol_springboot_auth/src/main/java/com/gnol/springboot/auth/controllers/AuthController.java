@@ -25,11 +25,11 @@ public class AuthController implements AuthMapping {
     private AuthService authService;
 
     /**
-     * 通过网关发送 POST 请求 http://127.0.0.1:8080/auth/login，传入 user_type 参数
+     * 通过网关发送 POST 请求 http://127.0.0.1:8080/auth/authentication，传入 user_type 参数
      */
     @Override
-    public PageResult login(PageData pd) {
-        return authService.auth(pd);
+    public PageResult authentication(PageData pd) {
+        return authService.authentication(pd);
     }
 
     /**
@@ -44,11 +44,11 @@ public class AuthController implements AuthMapping {
     }
 
     /**
-     * 通过网关发送 POST 请求 http://127.0.0.1:8080/auth/logout，传入 token 参数
+     * 通过网关发送 POST 请求 http://127.0.0.1:8080/auth/unsubscribe，传入 token 参数
      */
     @Override
-    public PageResult logout(PageData pd) {
-        return authService.logout(pd);
+    public PageResult unsubscribe(PageData pd) {
+        return authService.unsubscribe(pd);
     }
 
 }

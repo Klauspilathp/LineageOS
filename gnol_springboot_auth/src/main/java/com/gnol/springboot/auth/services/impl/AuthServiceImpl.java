@@ -54,7 +54,7 @@ public class AuthServiceImpl implements AuthService {
     private ResourceService interfaceResourceServiceImpl;
 
     @Override
-    public PageResult auth(PageData pd) {
+    public PageResult authentication(PageData pd) {
         UserTypeEnum userTypeEnum = UserTypeEnum.forKey(pd.get("user_type"));
         if (userTypeEnum == null) {
             return PageResult.error("user_type 不能为空！");
@@ -108,7 +108,7 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public PageResult logout(PageData pd) {
+    public PageResult unsubscribe(PageData pd) {
         Claims claims = null;
         try {
             claims = tokenService.validateToken(pd);
