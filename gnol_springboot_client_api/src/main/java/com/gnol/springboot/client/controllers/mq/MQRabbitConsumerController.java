@@ -92,8 +92,16 @@ public class MQRabbitConsumerController implements RabbitConstant {
     // ------- 业务队列，就是简单的点对点消息 ------- end
 
     // --- 消息确认机制 ------- start
-    @RabbitListener(queues = DIRECT_CONFIRM_QUEUE)
-    public void getConfirmMsgTest(Channel channel, Message msg) {
+    @RabbitListener(queues = DIRECT_CONFIRM_QUEUE
+    /*, bindings = @QueueBinding( // 队列和交换机的绑定关系
+    value = @Queue(DIRECT_CONFIRM_QUEUE), // 队列名称
+    exchange = @Exchange(name = DIRECT_CONFIRM, // 交换机名称
+            type = "direct" // 交换机类型
+    ))*/
+    )
+    public void getConfirmMsgTest(Channel channel,
+            /*@Header(AmqpHeaders.DELIVERY_TAG) long deliveryTag,*/
+            Message msg) {
         long deliveryTag = msg.getMessageProperties().getDeliveryTag();
         logger.info("getConfirmMsgTest received from {} message: [{}].", DIRECT_CONFIRM_QUEUE,
                 new String(msg.getBody()));
