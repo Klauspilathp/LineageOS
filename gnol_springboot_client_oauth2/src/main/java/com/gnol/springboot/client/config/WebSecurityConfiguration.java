@@ -17,6 +17,8 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import com.gnol.oauth2.spring.boot.SHA1PasswordEncoder;
+
 /**
  * @Title: WebSecurityConfiguration
  * @Package: com.gnol.springboot.client.config
