@@ -24,4 +24,19 @@ public class EvectionFlowController extends WebBaseController {
     @Resource(name = "evectionFlowServiceImpl")
     private EvectionFlowService evectionFlowService;
 
+    /**
+     * 
+     * 
+     * 
+     * 
+     * 
+     * 
+     * 
+     * 
+     * 
+     * 
+     * 
+     * 
+     */
+
 }

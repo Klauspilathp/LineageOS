@@ -57,6 +57,12 @@ public class FlowableProcessInstanceServiceImpl implements FlowableProcessInstan
     @Autowired
     private HistoryService historyService;
 
+    /**
+     * 流程表单操作服务
+     */
+    /*@Autowired
+    private FormService formService;*/
+
     @Override
     public PageResult listProcessInstance(Page<PageData> page) {
         if (page == null) {

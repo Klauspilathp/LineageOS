@@ -33,6 +33,17 @@ public class FlowableTaskServiceImpl implements FlowableTaskService {
     @Autowired
     private TaskService taskService;
 
+    /**
+     * 操作 CMD 及 JOB 相关服务
+     */
+    /*@Autowired
+    private ManagementService managementService;*/
+    /**
+     * 操作用户或组相关的服务
+     */
+    /*@Autowired
+    private IdentityService identityService;*/
+
     @Override
     public List<PageData> listTask(String deploymentId, String userIdForCandidateAndAssignee) {
         TaskQuery taskQuery = taskService.createTaskQuery();

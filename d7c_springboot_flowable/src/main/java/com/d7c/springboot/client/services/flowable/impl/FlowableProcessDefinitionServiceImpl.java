@@ -28,6 +28,12 @@ public class FlowableProcessDefinitionServiceImpl implements FlowableProcessDefi
     @Autowired
     private RepositoryService repositoryService;
 
+    /**
+     * 操作动态 BPMN 服务
+     */
+    /*@Autowired
+    private DynamicBpmnService dynamicBpmnService;*/
+
     @Override
     public PageResult listActiveProcessDefinition(Page<PageData> page) {
         long count = repositoryService.createProcessDefinitionQuery().active().count();
