@@ -5,7 +5,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
-import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
 /**
@@ -16,8 +15,6 @@ import org.springframework.scheduling.annotation.EnableScheduling;
  * @Description: quartz 项目启动类
  */
 @SpringBootApplication(scanBasePackages = {"com.gnol.springboot"})
-@EnableFeignClients(basePackages = {"com.gnol.springboot"}) // 启用 Fegin
-// @EnableCircuitBreaker // 启用 hystrix
 @MapperScan(basePackages = {"com.gnol.springboot.client.daos"})
 @EnableScheduling // 启用定时任务
 public class QuartzApplication extends SpringBootServletInitializer {
