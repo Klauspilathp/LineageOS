@@ -64,10 +64,10 @@ public class DynamicRouteDefinitionRepository implements RouteDefinitionReposito
     public void loadRouteDefinitions() {
         // 从 redis 中获取路由列表
         Object routeDefinitions = template.opsForValue().get("gateway:routes");
-        List<RouteDefinition> definitions = null;
         if (StringUtil.isNotBlank(routeDefinitions)) {
             // 将 routeDefinitions 解析成 List<RouteDefinition> 并赋值给 definitions
-            definitions = JSON.parseArray(JSON.toJSONString(routeDefinitions), RouteDefinition.class);
+            List<RouteDefinition> definitions = JSON.parseArray(JSON.toJSONString(routeDefinitions),
+                    RouteDefinition.class);
             if (CollectionUtils.isNotEmpty(definitions)) {
                 // 将路由定义列表保存到本地缓存，减少查询，提高效率。
                 definitions.stream().forEach(route -> {
