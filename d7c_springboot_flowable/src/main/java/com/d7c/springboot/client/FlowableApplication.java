@@ -26,6 +26,13 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 @MapperScan(basePackages = {"com.d7c.springboot.common.daos", "com.d7c.springboot.client.daos"})
 public class FlowableApplication extends SpringBootServletInitializer {
 
+    /**
+     * org.flowable.engine.ProcessEngineConfiguration：流程引擎配置信息类。
+     * org.flowable.engine.impl.cfg.ProcessEngineConfigurationImpl：org.flowable.engine.ProcessEngineConfiguration 类的实现。
+     * org.flowable.engine.ProcessEngine：流程引擎类，提供对公开 BPM 和工作流操作的所有服务的访问。
+     * org.flowable.engine.impl.ProcessEngineImpl：org.flowable.engine.ProcessEngine 类的实现。
+     * org.flowable.engine.ProcessEngines：流程引擎管理类。
+     */
     public static void main(String[] args) {
         SpringApplication.run(FlowableApplication.class, args);
     }
