@@ -67,14 +67,14 @@ public class SwaggerConfig {
     }
 
     private ApiInfo apiInfo() {
-        Contact contact = new Contact("吴佳隆", "https://gitee.com/wujialong576/d7c_springboot.git",
+        Contact contact = new Contact("吴佳隆", "https://gitee.com/d7c/d7c_springboot.git",
                 "wjl5760610@126.com");
         return new ApiInfoBuilder().title("d7c 系统 API 接口文档") // 大标题 title
                 .description("基础 RESTful 风格的接口文档") // 小标题
                 .termsOfServiceUrl("127.0.0.1:8091/d7c.springboot") // 终端服务程序
                 .contact(contact) // 作者信息
                 .license("d7c 系统 springboot 版本") // 链接显示文字
-                .licenseUrl("https://gitee.com/wujialong576/d7c_springboot.git") // 网站链接
+                .licenseUrl("https://gitee.com/d7c/d7c_springboot.git") // 网站链接
                 .version("0.0.1") // 版本
                 .build();
     }
