@@ -25,7 +25,7 @@ public class SysTokenStoreController extends WebBaseController {
     /**
      * token 持久化策略
      */
-    @Autowired
+    @Autowired(required = false)
     private TokenStore tokenStore;
 
     /**
