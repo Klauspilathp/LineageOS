@@ -6,7 +6,7 @@ import javax.annotation.Resource;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.security.oauth2.authserver.AuthorizationServerProperties;
+import org.springframework.cloud.bootstrap.encrypt.KeyProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -42,10 +42,10 @@ public class JwtAuthorizationServerConfiguration extends AuthorizationServerConf
     @Resource(name = "masterDataSource")
     private DataSource dataSource;
     /**
-     * 认证服务器属性配置
+     * 密钥加密属性
      */
-    @Autowired
-    private AuthorizationServerProperties authorizationServerProperties;
+    @Resource(name = "keyProperties")
+    private KeyProperties keyProperties;
     /**
      * 认证管理对象
      */
@@ -53,11 +53,11 @@ public class JwtAuthorizationServerConfiguration extends AuthorizationServerConf
     private AuthenticationManager authenticationManager;
 
     /**
-     * 认证服务器属性配置
+     * 密钥加密属性
      */
-    @Bean
-    public AuthorizationServerProperties authorizationServerProperties() {
-        return new AuthorizationServerProperties();
+    @Bean("keyProperties")
+    public KeyProperties keyProperties() {
+        return new KeyProperties();
     }
 
     /**
@@ -99,7 +99,7 @@ public class JwtAuthorizationServerConfiguration extends AuthorizationServerConf
     public JwtAccessTokenConverter jwtAccessTokenConverter() {
         JwtAccessTokenConverter tokenConverter = new JwtAccessTokenConverter();
         tokenConverter.setAccessTokenConverter(new CustomAccessTokenConverter());
-        tokenConverter.setSigningKey(authorizationServerProperties.getJwt().getKeyValue()); // 对称密钥
+        tokenConverter.setSigningKey(keyProperties.getKey()); // 对称密钥
         return tokenConverter;
     }
 
