@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.gnol.plugins.core.PageData;
 import com.gnol.plugins.core.PageResult;
 import com.gnol.plugins.core.context.IdService;
 import com.gnol.springboot.client.controllers.WebBaseController;
@@ -61,6 +62,17 @@ public class ShardingUserController extends WebBaseController {
             shardingUsers.add(new ShardingUser(userId, "user" + userId, i % 2));
         }
         shardingUserService.insertBatch(shardingUsers);
+        return PageResult.ok(shardingUsers);
+    }
+
+    /**
+     * 测试单表多库
+     */
+    @GetMapping(value = "t3")
+    public PageResult t3() {
+        PageData pd = this.getEmptyPageData();
+        pd.put(ShardingUser.M.sex, 0);
+        List<ShardingUser> shardingUsers = shardingUserService.listBy(pd);
         return PageResult.ok(shardingUsers);
     }
 
