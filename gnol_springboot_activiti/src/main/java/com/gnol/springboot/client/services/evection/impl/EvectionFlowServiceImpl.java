@@ -2,6 +2,8 @@ package com.gnol.springboot.client.services.evection.impl;
 
 import org.activiti.api.process.runtime.ProcessRuntime;
 import org.activiti.api.task.runtime.TaskRuntime;
+import org.activiti.engine.HistoryService;
+import org.activiti.engine.RepositoryService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,10 @@ public class EvectionFlowServiceImpl implements EvectionFlowService {
     @Autowired
     private ProcessRuntime processRuntime;
     @Autowired
+    private RepositoryService repositoryService;
+    @Autowired
     private TaskRuntime taskRuntime;
+    @Autowired
+    private HistoryService historyService;
 
 }
