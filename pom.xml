@@ -3,16 +3,16 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>com.gnol</groupId>
-		<artifactId>gnol_springboot_plugins</artifactId>
+		<groupId>com.d7c</groupId>
+		<artifactId>d7c_springboot_plugins</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 		<relativePath />
 	</parent>
-	<artifactId>gnol_springboot</artifactId>
+	<artifactId>d7c_springboot</artifactId>
 	<packaging>pom</packaging>
 	<url>https://start.spring.io/,https://github.com/spring-projects/spring-boot,http://c.biancheng.net/spring_cloud/</url>
-	<name>gnol_springboot</name>
-	<description>gnol springboot 版项目父工程</description>
+	<name>d7c_springboot</name>
+	<description>d7c springboot 版项目父工程</description>
   
   	<!-- 设定主仓库，按设定顺序进行查找。 -->
 	<repositories>
@@ -32,25 +32,25 @@
 	</pluginRepositories>
 
 	<modules>
-		<module>gnol_springboot_common</module>
-		<module>gnol_springboot_common_services</module>
-		<module>gnol_springboot_eureka_server</module>
-		<module>gnol_springboot_zuul</module>
-		<module>gnol_springboot_gateway</module>
-		<module>gnol_springboot_config</module>
-		<module>gnol_springboot_auth_feign</module>
-		<module>gnol_springboot_auth</module>
-		<module>gnol_springboot_admin</module>
-		<module>gnol_springboot_client_web</module>
-		<module>gnol_springboot_client_api</module>
-		<module>gnol_springboot_eureka_client1</module>
-		<module>gnol_springboot_eureka_client2</module>
-		<module>gnol_springboot_dashboard</module>
-		<module>gnol_springboot_webflux</module>
-		<module>gnol_springboot_client_websocket</module>
-		<module>gnol_springboot_quartz</module>
-		<module>gnol_springboot_client_oauth2</module>
-		<module>gnol_springboot_sharding</module>
+		<module>d7c_springboot_common</module>
+		<module>d7c_springboot_common_services</module>
+		<module>d7c_springboot_eureka_server</module>
+		<module>d7c_springboot_zuul</module>
+		<module>d7c_springboot_gateway</module>
+		<module>d7c_springboot_config</module>
+		<module>d7c_springboot_auth_feign</module>
+		<module>d7c_springboot_auth</module>
+		<module>d7c_springboot_admin</module>
+		<module>d7c_springboot_client_web</module>
+		<module>d7c_springboot_client_api</module>
+		<module>d7c_springboot_eureka_client1</module>
+		<module>d7c_springboot_eureka_client2</module>
+		<module>d7c_springboot_dashboard</module>
+		<module>d7c_springboot_webflux</module>
+		<module>d7c_springboot_client_websocket</module>
+		<module>d7c_springboot_quartz</module>
+		<module>d7c_springboot_client_oauth2</module>
+		<module>d7c_springboot_sharding</module>
 	</modules>
 	
 	<!-- 集中定义依赖版本号 -->
@@ -59,10 +59,10 @@
 		<timestamp>${maven.build.timestamp}</timestamp>
         <!-- 表示属性 ${maven.build.timestamp} 的展示格式，默认值为 yyyyMMdd-HHmm -->
 		<maven.build.timestamp.format>yyyyMMdd-HHmmss</maven.build.timestamp.format>
-        <!-- 解决 Description	Resource Path Location Type Unknown	pom.xml	/gnol_springboot_common	line 1	Maven Configuration Problem -->
+        <!-- 解决 Description	Resource Path Location Type Unknown	pom.xml	/d7c_springboot_common	line 1	Maven Configuration Problem -->
 		<maven-jar-plugin.version>3.1.1</maven-jar-plugin.version>
         <!-- jar 版本管理 -->
-		<gnol_springboot_plugins.version>0.0.1-SNAPSHOT</gnol_springboot_plugins.version>
+		<d7c_springboot_plugins.version>0.0.1-SNAPSHOT</d7c_springboot_plugins.version>
 		<swagger.version>2.9.2</swagger.version>
 		<spring-boot-admin.version>2.1.6</spring-boot-admin.version>
 		<spring-boot-zuul.version>2.1.5.RELEASE</spring-boot-zuul.version>
@@ -79,54 +79,54 @@
     <!-- system：跟 provided 相似，但是在系统中要以外部JAR包的形式提供，maven 不会在 repository 查找它 -->
 	<dependencyManagement>
 		<dependencies>
-            <!-- gnol springboot 版插件工程 =======>start -->
+            <!-- d7c springboot 版插件工程 =======>start -->
 			<dependency>
-				<groupId>com.gnol</groupId>
-				<artifactId>gnol_springboot_plugins_tools</artifactId>
-				<version>${gnol_springboot_plugins.version}</version>
+				<groupId>com.d7c</groupId>
+				<artifactId>d7c_springboot_plugins_tools</artifactId>
+				<version>${d7c_springboot_plugins.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>com.gnol</groupId>
-				<artifactId>gnol_springboot_plugins_net</artifactId>
-				<version>${gnol_springboot_plugins.version}</version>
+				<groupId>com.d7c</groupId>
+				<artifactId>d7c_springboot_plugins_net</artifactId>
+				<version>${d7c_springboot_plugins.version}</version>
 			</dependency>
-			<!-- gnol 项目封装的 spring-boot 关于 fastDFS starter -->
+			<!-- d7c 项目封装的 spring-boot 关于 fastDFS starter -->
 			<dependency>
-				<groupId>com.gnol</groupId>
+				<groupId>com.d7c</groupId>
 				<artifactId>spring-boot-starter-fastDFS</artifactId>
-				<version>${gnol_springboot_plugins.version}</version>
+				<version>${d7c_springboot_plugins.version}</version>
 			</dependency>
-			<!-- gnol 项目封装的 spring-boot 关于 jwt starter -->
+			<!-- d7c 项目封装的 spring-boot 关于 jwt starter -->
 			<dependency>
-				<groupId>com.gnol</groupId>
+				<groupId>com.d7c</groupId>
 				<artifactId>spring-boot-starter-jwt</artifactId>
-				<version>${gnol_springboot_plugins.version}</version>
+				<version>${d7c_springboot_plugins.version}</version>
 			</dependency>
-			<!-- gnol 项目封装的 spring-boot 关于 redis starter -->
+			<!-- d7c 项目封装的 spring-boot 关于 redis starter -->
 			<dependency>
-				<groupId>com.gnol</groupId>
+				<groupId>com.d7c</groupId>
 				<artifactId>spring-boot-starter-redis</artifactId>
-				<version>${gnol_springboot_plugins.version}</version>
+				<version>${d7c_springboot_plugins.version}</version>
 			</dependency>
-			<!-- gnol 项目封装的 spring-boot 关于 activemq starter -->
+			<!-- d7c 项目封装的 spring-boot 关于 activemq starter -->
 			<dependency>
-				<groupId>com.gnol</groupId>
+				<groupId>com.d7c</groupId>
 				<artifactId>spring-boot-starter-activemq</artifactId>
-				<version>${gnol_springboot_plugins.version}</version>
+				<version>${d7c_springboot_plugins.version}</version>
 			</dependency>
-			<!-- gnol 项目封装的 spring-boot 关于 mybatis 持久化层 starter -->
+			<!-- d7c 项目封装的 spring-boot 关于 mybatis 持久化层 starter -->
 			<dependency>
-				<groupId>com.gnol</groupId>
+				<groupId>com.d7c</groupId>
 				<artifactId>spring-boot-starter-mybatis</artifactId>
-				<version>${gnol_springboot_plugins.version}</version>
+				<version>${d7c_springboot_plugins.version}</version>
 			</dependency>
-			<!-- gnol 项目封装的 spring-boot 关于 oauth2 starter -->
+			<!-- d7c 项目封装的 spring-boot 关于 oauth2 starter -->
 			<dependency>
-				<groupId>com.gnol</groupId>
+				<groupId>com.d7c</groupId>
 				<artifactId>spring-boot-starter-oauth2</artifactId>
-				<version>${gnol_springboot_plugins.version}</version>
+				<version>${d7c_springboot_plugins.version}</version>
 			</dependency>
-            <!-- gnol springboot 版插件工程 =======>end -->
+            <!-- d7c springboot 版插件工程 =======>end -->
             <!-- swagger 生成接口文档 =======>start -->
 			<dependency>
 				<groupId>io.springfox</groupId>
@@ -186,9 +186,9 @@
 			<optional>true</optional>
 		</dependency>
 		<dependency>
-			<groupId>com.gnol</groupId>
-			<artifactId>gnol_springboot_plugins_core</artifactId>
-			<version>${gnol_springboot_plugins.version}</version>
+			<groupId>com.d7c</groupId>
+			<artifactId>d7c_springboot_plugins_core</artifactId>
+			<version>${d7c_springboot_plugins.version}</version>
 		</dependency>
         <!-- 热部署 -->
         <!-- devtools 可以实现页面热部署（即页面修改后会立即生效，这个可以直接在 applicatjwtties 文件中配置 spring.thymeleaf.cache=false 来实现） -->
@@ -238,7 +238,7 @@
     <!-- 开发者信息 -->
 	<developers>
 		<developer>
-			<id>gnol</id>
+			<id>d7c</id>
 			<name>wujialong</name>
 			<email>wjl5760610@126.com</email>
 			<roles>
@@ -249,8 +249,8 @@
 	</developers>
 
 	<organization>
-		<name>gnol</name>
-		<url>http://gnol.com</url>
+		<name>d7c</name>
+		<url>http://d7c.com</url>
 	</organization>
 
 </project>

@@ -1,7 +1,7 @@
-# gnol_springboot
+# d7c_springboot
 
 #### Description
-gnol 项目 Spring Boot 版
+d7c 项目 Spring Boot 版
 
 #### Software Architecture
 Software architecture description

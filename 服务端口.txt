@@ -1,22 +1,22 @@
 # 服务端口
-gnol-springboot-zuul:8080
-gnol-springboot-gateway:8081
+d7c-springboot-zuul:8080
+d7c-springboot-gateway:8081
 
-gnol-springboot-eureka-server:9000
+d7c-springboot-eureka-server:9000
 
-gnol-springboot-auth:9100
-gnol-springboot-oauth2:9101
+d7c-springboot-auth:9100
+d7c-springboot-oauth2:9101
 
-gnol-springboot-config:9200
+d7c-springboot-config:9200
 
-gnol-springboot-admin:9300
-gnol-springboot-dashboard:9310
+d7c-springboot-admin:9300
+d7c-springboot-dashboard:9310
 
-gnol-springboot-web:8090
-gnol-springboot-api:8091
-gnol-springboot-client1:8092
-gnol-springboot-client2:8093
-gnol-springboot-webflux:8094
-gnol-springboot-websocket:8095
-gnol-springboot-sharding:8096
-gnol-springboot-quartz:8097
+d7c-springboot-web:8090
+d7c-springboot-api:8091
+d7c-springboot-client1:8092
+d7c-springboot-client2:8093
+d7c-springboot-webflux:8094
+d7c-springboot-websocket:8095
+d7c-springboot-sharding:8096
+d7c-springboot-quartz:8097

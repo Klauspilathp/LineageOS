@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.d7c.springboot.common.daos.sys.BaseSysRoleDao">
+    <!-- 通用查询映射结果 -->
+	<resultMap id="BaseResultMap" type="com.d7c.springboot.common.dos.sys.SysRole">
+		<id column="roleId" property="roleId" jdbcType="BIGINT"/>
+		<result column="parentId" property="parentId" jdbcType="BIGINT"/>
+		<result column="roleName" property="roleName" jdbcType="VARCHAR"/>
+		<result column="menuQx" property="menuQx" jdbcType="VARCHAR"/>
+		<result column="sort" property="sort" jdbcType="TINYINT"/>
+		<result column="remark" property="remark" jdbcType="VARCHAR"/>
+		<result column="addTime" property="addTime" jdbcType="TIMESTAMP"/>
+		<result column="addUser" property="addUser" jdbcType="BIGINT"/>
+		<result column="modifyTime" property="modifyTime" jdbcType="TIMESTAMP"/>
+		<result column="modifyUser" property="modifyUser" jdbcType="BIGINT"/>
+		<result column="status" property="status" jdbcType="TINYINT"/>
+		<result column="checkValue" property="checkValue" jdbcType="INTEGER"/>
+	</resultMap>
+	
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+		roleId, parentId, roleName, menuQx, sort, remark, addTime, addUser, modifyTime, modifyUser, status, checkValue 
+	</sql>
+	
+	<!-- 插入数据 -->
+	<insert id="insert" parameterType="com.d7c.springboot.common.dos.sys.SysRole">
+		INSERT INTO sys_role (
+		<trim suffixOverrides=",">
+			roleId, 
+			parentId, 
+			roleName, 
+			menuQx, 
+			sort, 
+			remark, 
+			addTime, 
+			addUser, 
+			status, 
+			checkValue, 
+		</trim>
+		) VALUES (
+		<trim suffixOverrides=",">
+			#{roleId, jdbcType=BIGINT}, 
+			#{parentId, jdbcType=BIGINT}, 
+			#{roleName, jdbcType=VARCHAR}, 
+			#{menuQx, jdbcType=VARCHAR}, 
+			#{sort, jdbcType=TINYINT}, 
+			#{remark, jdbcType=VARCHAR}, 
+			NOW(), 
+			#{addUser, jdbcType=BIGINT}, 
+			#{status, jdbcType=TINYINT}, 
+			checkValue(), 
+		</trim>)
+	</insert>
+	
+	<!-- 批量插入接口 -->
+	<insert id="insertBatch" parameterType="java.util.List">
+		INSERT INTO sys_role (
+			roleId, 
+			parentId, 
+			roleName, 
+			menuQx,  
+			sort, 
+			remark, 
+			addTime, 
+			addUser, 
+			status, 
+			checkValue) VALUES 
+    	<foreach collection="list" item="item" index="index" separator="," >
+        	(#{item.roleId, jdbcType=BIGINT}, 
+        	#{item.parentId, jdbcType=BIGINT}, 
+			#{item.roleName, jdbcType=VARCHAR}, 
+			#{item.menuQx, jdbcType=VARCHAR}, 
+			#{item.sort, jdbcType=TINYINT}, 
+			#{item.remark, jdbcType=VARCHAR}, 
+			NOW(), 
+			#{item.addUser, jdbcType=BIGINT},  
+			#{item.status, jdbcType=TINYINT}, 
+			checkValue())
+		</foreach>
+	</insert>
+	
+	<!-- 更新全部字段 -->
+	<update id="updateByKey" parameterType="com.d7c.springboot.common.dos.sys.SysRole">
+		UPDATE sys_role SET 
+			parentId = #{parentId, jdbcType=BIGINT}, 
+			roleName = #{roleName, jdbcType=VARCHAR}, 
+			menuQx = #{menuQx, jdbcType=VARCHAR}, 
+			sort = #{sort, jdbcType=TINYINT}, 
+			remark = #{remark, jdbcType=VARCHAR}, 
+			modifyUser = #{modifyUser, jdbcType=BIGINT}, 
+			status = #{status, jdbcType=TINYINT}, 
+			checkValue = checkValue()  
+		WHERE roleId = #{roleId, jdbcType=BIGINT} AND checkValue = #{checkValue, jdbcType=INTEGER}
+	</update>
+	
+	<!-- 只更新不为 null 和 空字符串的字段 -->
+	<update id="update" parameterType="com.d7c.springboot.common.dos.sys.SysRole">
+		UPDATE sys_role 
+		<trim prefix="set" suffixOverrides=",">
+			checkValue = checkValue(), 
+			<if test="null != parentId">
+				parentId = #{parentId, jdbcType=BIGINT}, 
+			</if>
+			<if test="null != roleName and roleName != ''">
+				roleName = #{roleName, jdbcType=VARCHAR}, 
+			</if>
+			<if test="null != menuQx and menuQx != ''">
+				menuQx = #{menuQx, jdbcType=VARCHAR}, 
+			</if>
+			<if test="null != sort">
+				sort = #{sort, jdbcType=TINYINT}, 
+			</if>
+			<if test="null != remark and remark != ''">
+				remark = #{remark, jdbcType=VARCHAR}, 
+			</if>
+			<if test="null != modifyUser">
+				modifyUser = #{modifyUser, jdbcType=BIGINT}, 
+			</if>
+			<if test="null != status">
+				status = #{status, jdbcType=TINYINT}, 
+			</if>
+			<if test="null != checkValue">
+				checkValue = #{checkValue, jdbcType=TINYINT}, 
+			</if>
+		</trim>
+		WHERE roleId = #{roleId, jdbcType=BIGINT} AND checkValue = #{checkValue, jdbcType=INTEGER}
+	</update>
+	
+	<!-- 根据主键物理删除数据 -->
+	<delete id="deleteByKey" parameterType="java.lang.Long">
+		DELETE FROM sys_role WHERE roleId = #{roleId, jdbcType=BIGINT}
+	</delete>
+	
+	<!-- 根据主键查询 pojo -->
+	<select id="getByKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+		SELECT <include refid="Base_Column_List"/> FROM sys_role 
+		WHERE roleId = #{roleId, jdbcType=BIGINT}
+	</select>
+	
+	<!-- 根据主键查询 pojo -->
+	<select id="getPDByKey" parameterType="java.lang.Long" resultType="pd">
+		SELECT <include refid="Base_Column_List"/> FROM sys_role 
+		WHERE roleId = #{roleId, jdbcType=BIGINT}
+	</select>
+	
+	<!-- 根据条件分页查询 pojo 列表 -->
+	<select id="listPage" parameterType="page" resultMap="BaseResultMap">
+		SELECT <include refid="Base_Column_List"/> FROM sys_role 
+		WHERE 1 = 1 
+		<if test="args != null">
+			<if test="null != args.parentId">
+				AND parentId = #{args.parentId, jdbcType=BIGINT} 
+			</if>
+			<if test="null != args.roleName and args.roleName != ''">
+				AND roleName = #{args.roleName, jdbcType=VARCHAR} 
+			</if>
+			<if test="null != args.menuQx and args.menuQx != ''">
+				AND menuQx = #{args.menuQx, jdbcType=VARCHAR} 
+			</if>
+			<if test="null != args.sort">
+				AND sort = #{args.sort, jdbcType=TINYINT} 
+			</if>
+			<if test="null != args.remark and args.remark != ''">
+				AND remark = #{args.remark, jdbcType=VARCHAR} 
+			</if>
+			<if test="null != args.addTime">
+				AND addTime = #{args.addTime, jdbcType=TIMESTAMP} 
+			</if>
+			<if test="null != args.addUser">
+				AND addUser = #{args.addUser, jdbcType=BIGINT} 
+			</if>
+			<if test="null != args.modifyTime">
+				AND modifyTime = #{args.modifyTime, jdbcType=TIMESTAMP} 
+			</if>
+			<if test="null != args.modifyUser">
+				AND modifyUser = #{args.modifyUser, jdbcType=BIGINT} 
+			</if>
+			<if test="null != args.status">
+				AND status = #{args.status, jdbcType=TINYINT} 
+			</if>
+			<if test="null != args.checkValue">
+				AND checkValue = #{args.checkValue, jdbcType=TINYINT} 
+			</if>
+		</if>
+	</select>
+	
+	<!-- 根据条件查询 pojo 列表 -->
+	<select id="listBy" parameterType="pd" resultMap="BaseResultMap">
+		SELECT <include refid="Base_Column_List"/> FROM sys_role 
+		WHERE 1 = 1 
+		<if test="null != parentId">
+			AND parentId = #{parentId, jdbcType=BIGINT} 
+		</if>
+		<if test="null != roleName and roleName != ''">
+			AND roleName = #{roleName, jdbcType=VARCHAR} 
+		</if>
+		<if test="null != menuQx and menuQx != ''">
+			AND menuQx = #{menuQx, jdbcType=VARCHAR} 
+		</if>
+		<if test="null != sort">
+			AND sort = #{sort, jdbcType=TINYINT} 
+		</if>
+		<if test="null != remark and remark != ''">
+			AND remark = #{remark, jdbcType=VARCHAR} 
+		</if>
+		<if test="null != addTime">
+			AND addTime = #{addTime, jdbcType=TIMESTAMP} 
+		</if>
+		<if test="null != addUser">
+			AND addUser = #{addUser, jdbcType=BIGINT} 
+		</if>
+		<if test="null != modifyTime">
+			AND modifyTime = #{modifyTime, jdbcType=TIMESTAMP} 
+		</if>
+		<if test="null != modifyUser">
+			AND modifyUser = #{modifyUser, jdbcType=BIGINT} 
+		</if>
+		<if test="null != status">
+			AND status = #{status, jdbcType=TINYINT} 
+		</if>
+		<if test="null != checkValue">
+			AND checkValue = #{checkValue, jdbcType=TINYINT} 
+		</if>
+	</select>
+	
+</mapper>

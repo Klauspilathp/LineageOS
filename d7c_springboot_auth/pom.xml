@@ -1,0 +1,79 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.d7c</groupId>
+		<artifactId>d7c_springboot</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+		<relativePath>../pom.xml</relativePath>
+	</parent>
+	<artifactId>d7c_springboot_auth</artifactId>
+	<packaging>jar</packaging>
+	<name>d7c_springboot_auth</name>
+	<description>d7c_springboot 项目授权服务模块</description>
+
+	<dependencies>
+		<!-- d7c 项目封装的 spring-boot 关于 oauth2 starter -->
+		<dependency>
+			<groupId>com.d7c</groupId>
+			<artifactId>spring-boot-starter-oauth2</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>org.springframework.cloud</groupId>
+					<artifactId>spring-cloud-starter-oauth2</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>com.d7c</groupId>
+			<artifactId>d7c_springboot_common_services</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.d7c</groupId>
+			<artifactId>d7c_springboot_auth_feign</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<!-- d7c 项目封装的 spring-boot 关于 mybatis 持久化层 starter -->
+		<dependency>
+			<groupId>com.d7c</groupId>
+			<artifactId>spring-boot-starter-mybatis</artifactId>
+		</dependency>
+		<!-- eureka client -->
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+		</dependency>
+		<!-- config client -->
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-config</artifactId>
+		</dependency>
+		<!-- admin client -->
+		<dependency>
+			<groupId>de.codecentric</groupId>
+			<artifactId>spring-boot-admin-starter-client</artifactId>
+		</dependency>
+		<!-- sleuth zipkin -->
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-zipkin</artifactId>
+		</dependency>
+		<!-- d7c 项目封装的 spring-boot 关于 jwt starter -->
+		<dependency>
+			<groupId>com.d7c</groupId>
+			<artifactId>spring-boot-starter-jwt</artifactId>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<finalName>${project.artifactId}</finalName>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>

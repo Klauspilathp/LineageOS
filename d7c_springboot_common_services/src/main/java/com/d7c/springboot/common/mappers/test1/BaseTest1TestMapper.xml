@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.d7c.springboot.common.daos.test1.BaseTest1TestDao">
+    <!-- 通用查询映射结果 -->
+	<resultMap id="BaseResultMap" type="com.d7c.springboot.common.dos.test1.Test1Test">
+		<id column="tid" property="tid" jdbcType="INTEGER"/>
+		<result column="text" property="text" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+		tid, text 
+	</sql>
+	
+	<!-- 插入数据 -->
+	<insert id="insert" parameterType="com.d7c.springboot.common.dos.test1.Test1Test">
+		INSERT INTO test1_test (
+		<trim suffixOverrides=",">
+			tid, 
+			text, 
+		</trim>
+		) VALUES (
+		<trim suffixOverrides=",">
+			#{tid, jdbcType=INTEGER}, 
+			#{text, jdbcType=VARCHAR}, 
+		</trim>)
+	</insert>
+	
+	<!-- 批量插入接口 -->
+	<insert id="insertBatch" parameterType="java.util.List">
+		INSERT INTO test1_test (
+			tid, 
+			text) VALUES
+		<foreach collection="list" item="item" index="index" separator="," >
+			(#{item.tid, jdbcType=INTEGER}, 
+			#{item.text, jdbcType=VARCHAR})
+		</foreach>
+	</insert>
+	
+	<!-- 更新全部字段 -->
+	<update id="updateByKey" parameterType="com.d7c.springboot.common.dos.test1.Test1Test">
+		UPDATE test1_test SET 
+			text = #{text, jdbcType=VARCHAR} 
+		WHERE tid = #{tid, jdbcType=INTEGER} 
+	</update>
+	
+	<!-- 只更新不为 null 和 空字符串的字段 -->
+	<update id="update" parameterType="com.d7c.springboot.common.dos.test1.Test1Test">
+		UPDATE test1_test 
+		<trim prefix="set" suffixOverrides=",">
+			<if test="null != text and text != ''">
+				text = #{text, jdbcType=VARCHAR}, 
+			</if>
+		</trim>
+		WHERE tid = #{tid, jdbcType=INTEGER} 
+	</update>
+	
+	<!-- 根据主键物理删除数据 -->
+	<delete id="deleteByKey" parameterType="java.lang.Long">
+		DELETE FROM test1_test WHERE tid = #{tid, jdbcType=INTEGER}
+	</delete>
+	
+	<!-- 根据主键查询 pojo -->
+	<select id="getByKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+		SELECT <include refid="Base_Column_List"/> FROM test1_test 
+		WHERE tid = #{tid, jdbcType=INTEGER}
+	</select>
+	
+	<!-- 根据主键查询 pojo -->
+	<select id="getPDByKey" parameterType="java.lang.Long" resultType="pd">
+		SELECT <include refid="Base_Column_List"/> FROM test1_test 
+		WHERE tid = #{tid, jdbcType=INTEGER}
+	</select>
+	
+	<!-- 根据条件分页查询 pojo 列表 -->
+	<select id="listPage" parameterType="page" resultMap="BaseResultMap">
+		SELECT <include refid="Base_Column_List"/> FROM test1_test 
+		WHERE 1 = 1 
+		<if test="args != null">
+			<if test="null != args.text and args.text != ''">
+				AND text = #{args.text, jdbcType=VARCHAR} 
+			</if>
+		</if>
+	</select>
+	
+	<!-- 根据条件查询 pojo 列表 -->
+	<select id="listBy" parameterType="pd" resultMap="BaseResultMap">
+		SELECT <include refid="Base_Column_List"/> FROM test1_test 
+		WHERE 1 = 1 
+		<if test="null != text and text != ''">
+			AND text = #{text, jdbcType=VARCHAR} 
+		</if>
+	</select>
+	
+</mapper>

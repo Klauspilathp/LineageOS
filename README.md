@@ -1,7 +1,7 @@
-# gnol_springboot
+# d7c_springboot
 
 #### 介绍
-gnol 项目 Spring Boot 版
+d7c 项目 Spring Boot 版
 
 #### 软件架构
 软件架构说明

@@ -1,0 +1,498 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.d7c.springboot.common.daos.sys.BaseSysOrgDao">
+    <!-- 通用查询映射结果 -->
+	<resultMap id="BaseResultMap" type="com.d7c.springboot.common.dos.sys.SysOrg">
+		<id column="orgId" property="orgId" jdbcType="BIGINT"/>
+		<result column="orgNameCN" property="orgNameCN" jdbcType="VARCHAR"/>
+		<result column="orgNameEN" property="orgNameEN" jdbcType="VARCHAR"/>
+		<result column="orgAlias" property="orgAlias" jdbcType="VARCHAR"/>
+		<result column="orgType" property="orgType" jdbcType="TINYINT"/>
+		<result column="orgAddress" property="orgAddress" jdbcType="VARCHAR"/>
+		<result column="orgCode" property="orgCode" jdbcType="VARCHAR"/>
+		<result column="level" property="level" jdbcType="TINYINT"/>
+		<result column="sort" property="sort" jdbcType="TINYINT"/>
+		<result column="principal" property="principal" jdbcType="VARCHAR"/>
+		<result column="contactAddress" property="contactAddress" jdbcType="VARCHAR"/>
+		<result column="postalcode" property="postalcode" jdbcType="VARCHAR"/>
+		<result column="phone" property="phone" jdbcType="VARCHAR"/>
+		<result column="qq" property="qq" jdbcType="VARCHAR"/>
+		<result column="weixin" property="weixin" jdbcType="VARCHAR"/>
+		<result column="email" property="email" jdbcType="VARCHAR"/>
+		<result column="parentId" property="parentId" jdbcType="BIGINT"/>
+		<result column="blocHQId" property="blocHQId" jdbcType="BIGINT"/>
+		<result column="blocHQNameCN" property="blocHQNameCN" jdbcType="VARCHAR"/>
+		<result column="areaHQId" property="areaHQId" jdbcType="BIGINT"/>
+		<result column="areaHQNameCN" property="areaHQNameCN" jdbcType="VARCHAR"/>
+		<result column="companyId" property="companyId" jdbcType="BIGINT"/>
+		<result column="companyNameCN" property="companyNameCN" jdbcType="VARCHAR"/>
+		<result column="remark" property="remark" jdbcType="VARCHAR"/>
+		<result column="addTime" property="addTime" jdbcType="TIMESTAMP"/>
+		<result column="addUser" property="addUser" jdbcType="BIGINT"/>
+		<result column="modifyTime" property="modifyTime" jdbcType="TIMESTAMP"/>
+		<result column="modifyUser" property="modifyUser" jdbcType="BIGINT"/>
+		<result column="status" property="status" jdbcType="TINYINT"/>
+		<result column="checkValue" property="checkValue" jdbcType="INTEGER"/>
+	</resultMap>
+	
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+		orgId, orgNameCN, orgNameEN, orgAlias, orgType, orgAddress, orgCode, level, sort, principal, contactAddress, postalcode, 
+		phone, qq, weixin, email, parentId, blocHQId, blocHQNameCN, areaHQId, areaHQNameCN, companyId, companyNameCN, remark, 
+		addTime, addUser, modifyTime, modifyUser, status, checkValue 
+	</sql>
+	
+	<!-- 插入数据 -->
+	<insert id="insert" parameterType="com.d7c.springboot.common.dos.sys.SysOrg">
+		INSERT INTO sys_org (
+		<trim suffixOverrides=",">
+			orgId, 
+			orgNameCN, 
+			orgNameEN, 
+			orgAlias, 
+			orgType, 
+			orgAddress, 
+			orgCode, 
+			level, 
+			sort, 
+			principal, 
+			contactAddress, 
+			postalcode, 
+			phone, 
+			qq, 
+			weixin, 
+			email, 
+			parentId, 
+			blocHQId, 
+			blocHQNameCN, 
+			areaHQId, 
+			areaHQNameCN, 
+			companyId, 
+			companyNameCN, 
+			remark, 
+			addTime, 
+			addUser, 
+			status, 
+			checkValue, 
+		</trim>
+		) VALUES (
+		<trim suffixOverrides=",">
+			#{orgId, jdbcType=BIGINT}, 
+			#{orgNameCN, jdbcType=VARCHAR}, 
+			#{orgNameEN, jdbcType=VARCHAR}, 
+			#{orgAlias, jdbcType=VARCHAR}, 
+			#{orgType, jdbcType=TINYINT}, 
+			#{orgAddress, jdbcType=VARCHAR}, 
+			#{orgCode, jdbcType=VARCHAR}, 
+			#{level, jdbcType=TINYINT}, 
+			#{sort, jdbcType=TINYINT}, 
+			#{principal, jdbcType=VARCHAR}, 
+			#{contactAddress, jdbcType=VARCHAR}, 
+			#{postalcode, jdbcType=VARCHAR}, 
+			#{phone, jdbcType=VARCHAR}, 
+			#{qq, jdbcType=VARCHAR}, 
+			#{weixin, jdbcType=VARCHAR}, 
+			#{email, jdbcType=VARCHAR}, 
+			#{parentId, jdbcType=BIGINT}, 
+			#{blocHQId, jdbcType=BIGINT}, 
+			#{blocHQNameCN, jdbcType=VARCHAR}, 
+			#{areaHQId, jdbcType=BIGINT}, 
+			#{areaHQNameCN, jdbcType=VARCHAR}, 
+			#{companyId, jdbcType=BIGINT}, 
+			#{companyNameCN, jdbcType=VARCHAR}, 
+			#{remark, jdbcType=VARCHAR}, 
+			NOW(), 
+			#{addUser, jdbcType=BIGINT}, 
+			#{status, jdbcType=TINYINT}, 
+			checkValue(), 
+		</trim>)
+	</insert>
+	
+	<!-- 批量插入接口 -->
+	<insert id="insertBatch" parameterType="java.util.List">
+		INSERT INTO sys_org (
+			orgId, 
+			orgNameCN, 
+			orgNameEN, 
+			orgAlias, 
+			orgType, 
+			orgAddress, 
+			orgCode, 
+			level, 
+			sort, 
+			principal, 
+			contactAddress, 
+			postalcode, 
+			phone, 
+			qq, 
+			weixin, 
+			email, 
+			parentId, 
+			blocHQId, 
+			blocHQNameCN, 
+			areaHQId, 
+			areaHQNameCN, 
+			companyId, 
+			companyNameCN, 
+			remark, 
+			addTime, 
+			addUser, 
+			status, 
+			checkValue) VALUES 
+    	<foreach collection="list" item="item" index="index" separator="," >
+        	(#{item.orgId, jdbcType=BIGINT}, 
+			#{item.orgNameCN, jdbcType=VARCHAR}, 
+			#{item.orgNameEN, jdbcType=VARCHAR}, 
+			#{item.orgAlias, jdbcType=VARCHAR}, 
+			#{item.orgType, jdbcType=TINYINT}, 
+			#{item.orgAddress, jdbcType=VARCHAR}, 
+			#{item.orgCode, jdbcType=VARCHAR}, 
+			#{item.level, jdbcType=TINYINT}, 
+			#{item.sort, jdbcType=TINYINT}, 
+			#{item.principal, jdbcType=VARCHAR}, 
+			#{item.contactAddress, jdbcType=VARCHAR}, 
+			#{item.postalcode, jdbcType=VARCHAR}, 
+			#{item.phone, jdbcType=VARCHAR}, 
+			#{item.qq, jdbcType=VARCHAR}, 
+			#{item.weixin, jdbcType=VARCHAR}, 
+			#{item.email, jdbcType=VARCHAR}, 
+			#{item.parentId, jdbcType=BIGINT}, 
+			#{item.blocHQId, jdbcType=BIGINT}, 
+			#{item.blocHQNameCN, jdbcType=VARCHAR}, 
+			#{item.areaHQId, jdbcType=BIGINT}, 
+			#{item.areaHQNameCN, jdbcType=VARCHAR}, 
+			#{item.companyId, jdbcType=BIGINT}, 
+			#{item.companyNameCN, jdbcType=VARCHAR}, 
+			#{item.remark, jdbcType=VARCHAR}, 
+			NOW(), 
+			#{item.addUser, jdbcType=BIGINT}, 
+			#{item.status, jdbcType=TINYINT}, 
+			checkValue())
+		</foreach>
+	</insert>
+	
+	<!-- 更新全部字段 -->
+	<update id="updateByKey" parameterType="com.d7c.springboot.common.dos.sys.SysOrg">
+		UPDATE sys_org SET 
+			orgNameCN = #{orgNameCN, jdbcType=VARCHAR}, 
+			orgNameEN = #{orgNameEN, jdbcType=VARCHAR}, 
+			orgAlias = #{orgAlias, jdbcType=VARCHAR}, 
+			orgType = #{orgType, jdbcType=TINYINT}, 
+			orgAddress = #{orgAddress, jdbcType=VARCHAR}, 
+			orgCode = #{orgCode, jdbcType=VARCHAR}, 
+			level = #{level, jdbcType=TINYINT}, 
+			sort = #{sort, jdbcType=TINYINT}, 
+			principal = #{principal, jdbcType=VARCHAR}, 
+			contactAddress = #{contactAddress, jdbcType=VARCHAR}, 
+			postalcode = #{postalcode, jdbcType=VARCHAR}, 
+			phone = #{phone, jdbcType=VARCHAR}, 
+			qq = #{qq, jdbcType=VARCHAR}, 
+			weixin = #{weixin, jdbcType=VARCHAR}, 
+			email = #{email, jdbcType=VARCHAR}, 
+			parentId = #{parentId, jdbcType=BIGINT}, 
+			blocHQId = #{blocHQId, jdbcType=BIGINT}, 
+			blocHQNameCN = #{blocHQNameCN, jdbcType=VARCHAR}, 
+			areaHQId = #{areaHQId, jdbcType=BIGINT}, 
+			areaHQNameCN = #{areaHQNameCN, jdbcType=VARCHAR}, 
+			companyId = #{companyId, jdbcType=BIGINT}, 
+			companyNameCN = #{companyNameCN, jdbcType=VARCHAR}, 
+			remark = #{remark, jdbcType=VARCHAR}, 
+			modifyUser = #{modifyUser, jdbcType=BIGINT}, 
+			status = #{status, jdbcType=TINYINT}, 
+			checkValue = checkValue() 
+		WHERE orgId = #{orgId, jdbcType=BIGINT} AND checkValue = #{checkValue, jdbcType=INTEGER}
+	</update>
+	
+	<!-- 只更新不为 null 和 空字符串的字段 -->
+	<update id="update" parameterType="com.d7c.springboot.common.dos.sys.SysOrg">
+		UPDATE sys_org 
+		<trim prefix="set" suffixOverrides=",">
+			checkValue = checkValue(), 
+			<if test="null != orgNameCN and orgNameCN != ''">
+				orgNameCN = #{orgNameCN, jdbcType=VARCHAR}, 
+			</if>
+			<if test="null != orgNameEN and orgNameEN != ''">
+				orgNameEN = #{orgNameEN, jdbcType=VARCHAR}, 
+			</if>
+			<if test="null != orgAlias and orgAlias != ''">
+				orgAlias = #{orgAlias, jdbcType=VARCHAR}, 
+			</if>
+			<if test="null != orgType">
+				orgType = #{orgType, jdbcType=TINYINT}, 
+			</if>
+			<if test="null != orgAddress and orgAddress != ''">
+				orgAddress = #{orgAddress, jdbcType=VARCHAR}, 
+			</if>
+			<if test="null != orgCode and orgCode != ''">
+				orgCode = #{orgCode, jdbcType=VARCHAR}, 
+			</if>
+			<if test="null != level">
+				level = #{level, jdbcType=TINYINT}, 
+			</if>
+			<if test="null != sort">
+				sort = #{sort, jdbcType=TINYINT}, 
+			</if>
+			<if test="null != principal and principal != ''">
+				principal = #{principal, jdbcType=VARCHAR}, 
+			</if>
+			<if test="null != contactAddress and contactAddress != ''">
+				contactAddress = #{contactAddress, jdbcType=VARCHAR}, 
+			</if>
+			<if test="null != postalcode and postalcode != ''">
+				postalcode = #{postalcode, jdbcType=VARCHAR}, 
+			</if>
+			<if test="null != phone and phone != ''">
+				phone = #{phone, jdbcType=VARCHAR}, 
+			</if>
+			<if test="null != qq and qq != ''">
+				qq = #{qq, jdbcType=VARCHAR}, 
+			</if>
+			<if test="null != weixin and weixin != ''">
+				weixin = #{weixin, jdbcType=VARCHAR}, 
+			</if>
+			<if test="null != email and email != ''">
+				email = #{email, jdbcType=VARCHAR}, 
+			</if>
+			<if test="null != parentId">
+				parentId = #{parentId, jdbcType=BIGINT}, 
+			</if>
+			<if test="null != blocHQId">
+				blocHQId = #{blocHQId, jdbcType=BIGINT}, 
+			</if>
+			<if test="null != blocHQNameCN and blocHQNameCN != ''">
+				blocHQNameCN = #{blocHQNameCN, jdbcType=VARCHAR}, 
+			</if>
+			<if test="null != areaHQId">
+				areaHQId = #{areaHQId, jdbcType=BIGINT}, 
+			</if>
+			<if test="null != areaHQNameCN and areaHQNameCN != ''">
+				areaHQNameCN = #{areaHQNameCN, jdbcType=VARCHAR}, 
+			</if>
+			<if test="null != companyId">
+				companyId = #{companyId, jdbcType=BIGINT}, 
+			</if>
+			<if test="null != companyNameCN and companyNameCN != ''">
+				companyNameCN = #{companyNameCN, jdbcType=VARCHAR}, 
+			</if>
+			<if test="null != remark and remark != ''">
+				remark = #{remark, jdbcType=VARCHAR}, 
+			</if>
+			<if test="null != modifyUser">
+				modifyUser = #{modifyUser, jdbcType=BIGINT}, 
+			</if>
+			<if test="null != status">
+				status = #{status, jdbcType=TINYINT}, 
+			</if>
+			<if test="null != checkValue">
+				checkValue = #{checkValue, jdbcType=TINYINT}, 
+			</if>
+		</trim>
+		WHERE orgId = #{orgId, jdbcType=BIGINT} AND checkValue = #{checkValue, jdbcType=INTEGER}
+	</update>
+	
+	<!-- 根据主键物理删除数据 -->
+	<delete id="deleteByKey" parameterType="java.lang.Long">
+		DELETE FROM sys_org WHERE orgId = #{orgId, jdbcType=BIGINT}
+	</delete>
+	
+	<!-- 根据主键查询 pojo -->
+	<select id="getByKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+		SELECT <include refid="Base_Column_List"/> FROM sys_org 
+		WHERE orgId = #{orgId, jdbcType=BIGINT}
+	</select>
+	
+	<!-- 根据主键查询 pojo -->
+	<select id="getPDByKey" parameterType="java.lang.Long" resultType="pd">
+		SELECT <include refid="Base_Column_List"/> FROM sys_org 
+		WHERE orgId = #{orgId, jdbcType=BIGINT}
+	</select>
+	
+	<!-- 根据条件分页查询 pojo 列表 -->
+	<select id="listPage" parameterType="page" resultMap="BaseResultMap">
+		SELECT <include refid="Base_Column_List"/> FROM sys_org 
+		WHERE 1 = 1 
+		<if test="args != null">
+			<if test="null != args.orgNameCN and args.orgNameCN != ''">
+				AND orgNameCN = #{args.orgNameCN, jdbcType=VARCHAR} 
+			</if>
+			<if test="null != args.orgNameEN and args.orgNameEN != ''">
+				AND orgNameEN = #{args.orgNameEN, jdbcType=VARCHAR} 
+			</if>
+			<if test="null != args.orgAlias and args.orgAlias != ''">
+				AND orgAlias = #{args.orgAlias, jdbcType=VARCHAR} 
+			</if>
+			<if test="null != args.orgType">
+				AND orgType = #{args.orgType, jdbcType=TINYINT} 
+			</if>
+			<if test="null != args.orgAddress and args.orgAddress != ''">
+				AND orgAddress = #{args.orgAddress, jdbcType=VARCHAR} 
+			</if>
+			<if test="null != args.orgCode and args.orgCode != ''">
+				AND orgCode = #{args.orgCode, jdbcType=VARCHAR} 
+			</if>
+			<if test="null != args.level">
+				AND level = #{args.level, jdbcType=TINYINT} 
+			</if>
+			<if test="null != args.sort">
+				AND sort = #{args.sort, jdbcType=TINYINT} 
+			</if>
+			<if test="null != args.principal and args.principal != ''">
+				AND principal = #{args.principal, jdbcType=VARCHAR} 
+			</if>
+			<if test="null != args.contactAddress and args.contactAddress != ''">
+				AND contactAddress = #{args.contactAddress, jdbcType=VARCHAR} 
+			</if>
+			<if test="null != args.postalcode and args.postalcode != ''">
+				AND postalcode = #{args.postalcode, jdbcType=VARCHAR} 
+			</if>
+			<if test="null != args.phone and args.phone != ''">
+				AND phone = #{args.phone, jdbcType=VARCHAR} 
+			</if>
+			<if test="null != args.qq and args.qq != ''">
+				AND qq = #{args.qq, jdbcType=VARCHAR} 
+			</if>
+			<if test="null != args.weixin and args.weixin != ''">
+				AND weixin = #{args.weixin, jdbcType=VARCHAR} 
+			</if>
+			<if test="null != args.email and args.email != ''">
+				AND email = #{args.email, jdbcType=VARCHAR} 
+			</if>
+			<if test="null != args.parentId">
+				AND parentId = #{args.parentId, jdbcType=BIGINT} 
+			</if>
+			<if test="null != args.blocHQId">
+				AND blocHQId = #{args.blocHQId, jdbcType=BIGINT} 
+			</if>
+			<if test="null != args.blocHQNameCN and args.blocHQNameCN != ''">
+				AND blocHQNameCN = #{args.blocHQNameCN, jdbcType=VARCHAR} 
+			</if>
+			<if test="null != args.areaHQId">
+				AND areaHQId = #{args.areaHQId, jdbcType=BIGINT} 
+			</if>
+			<if test="null != args.areaHQNameCN and args.areaHQNameCN != ''">
+				AND areaHQNameCN = #{args.areaHQNameCN, jdbcType=VARCHAR} 
+			</if>
+			<if test="null != args.companyId">
+				AND companyId = #{args.companyId, jdbcType=BIGINT} 
+			</if>
+			<if test="null != args.companyNameCN and args.companyNameCN != ''">
+				AND companyNameCN = #{args.companyNameCN, jdbcType=VARCHAR} 
+			</if>
+			<if test="null != args.remark and args.remark != ''">
+				AND remark = #{args.remark, jdbcType=VARCHAR} 
+			</if>
+			<if test="null != args.addTime">
+				AND addTime = #{args.addTime, jdbcType=TIMESTAMP} 
+			</if>
+			<if test="null != args.addUser">
+				AND addUser = #{args.addUser, jdbcType=BIGINT} 
+			</if>
+			<if test="null != args.modifyTime">
+				AND modifyTime = #{args.modifyTime, jdbcType=TIMESTAMP} 
+			</if>
+			<if test="null != args.modifyUser">
+				AND modifyUser = #{args.modifyUser, jdbcType=BIGINT} 
+			</if>
+			<if test="null != args.status">
+				AND status = #{args.status, jdbcType=TINYINT} 
+			</if>
+			<if test="null != args.checkValue">
+				AND checkValue = #{args.checkValue, jdbcType=TINYINT} 
+			</if>
+		</if>
+	</select>
+	
+	<!-- 根据条件查询 pojo 列表 -->
+	<select id="listBy" parameterType="pd" resultMap="BaseResultMap">
+		SELECT <include refid="Base_Column_List"/> FROM sys_org 
+		WHERE 1 = 1 
+		<if test="null != orgNameCN and orgNameCN != ''">
+			AND orgNameCN = #{orgNameCN, jdbcType=VARCHAR} 
+		</if>
+		<if test="null != orgNameEN and orgNameEN != ''">
+			AND orgNameEN = #{orgNameEN, jdbcType=VARCHAR} 
+		</if>
+		<if test="null != orgAlias and orgAlias != ''">
+			AND orgAlias = #{orgAlias, jdbcType=VARCHAR} 
+		</if>
+		<if test="null != orgType">
+			AND orgType = #{orgType, jdbcType=TINYINT} 
+		</if>
+		<if test="null != orgAddress and orgAddress != ''">
+			AND orgAddress = #{orgAddress, jdbcType=VARCHAR} 
+		</if>
+		<if test="null != orgCode and orgCode != ''">
+			AND orgCode = #{orgCode, jdbcType=VARCHAR} 
+		</if>
+		<if test="null != level">
+			AND level = #{level, jdbcType=TINYINT} 
+		</if>
+		<if test="null != sort">
+			AND sort = #{sort, jdbcType=TINYINT} 
+		</if>
+		<if test="null != principal and principal != ''">
+			AND principal = #{principal, jdbcType=VARCHAR} 
+		</if>
+		<if test="null != contactAddress and contactAddress != ''">
+			AND contactAddress = #{contactAddress, jdbcType=VARCHAR} 
+		</if>
+		<if test="null != postalcode and postalcode != ''">
+			AND postalcode = #{postalcode, jdbcType=VARCHAR} 
+		</if>
+		<if test="null != phone and phone != ''">
+			AND phone = #{phone, jdbcType=VARCHAR} 
+		</if>
+		<if test="null != qq and qq != ''">
+			AND qq = #{qq, jdbcType=VARCHAR} 
+		</if>
+		<if test="null != weixin and weixin != ''">
+			AND weixin = #{weixin, jdbcType=VARCHAR} 
+		</if>
+		<if test="null != email and email != ''">
+			AND email = #{email, jdbcType=VARCHAR} 
+		</if>
+		<if test="null != parentId">
+			AND parentId = #{parentId, jdbcType=BIGINT} 
+		</if>
+		<if test="null != blocHQId">
+			AND blocHQId = #{blocHQId, jdbcType=BIGINT} 
+		</if>
+		<if test="null != blocHQNameCN and blocHQNameCN != ''">
+			AND blocHQNameCN = #{blocHQNameCN, jdbcType=VARCHAR} 
+		</if>
+		<if test="null != areaHQId">
+			AND areaHQId = #{areaHQId, jdbcType=BIGINT} 
+		</if>
+		<if test="null != areaHQNameCN and areaHQNameCN != ''">
+			AND areaHQNameCN = #{areaHQNameCN, jdbcType=VARCHAR} 
+		</if>
+		<if test="null != companyId">
+			AND companyId = #{companyId, jdbcType=BIGINT} 
+		</if>
+		<if test="null != companyNameCN and companyNameCN != ''">
+			AND companyNameCN = #{companyNameCN, jdbcType=VARCHAR} 
+		</if>
+		<if test="null != remark and remark != ''">
+			AND remark = #{remark, jdbcType=VARCHAR} 
+		</if>
+		<if test="null != addTime">
+			AND addTime = #{addTime, jdbcType=TIMESTAMP} 
+		</if>
+		<if test="null != addUser">
+			AND addUser = #{addUser, jdbcType=BIGINT} 
+		</if>
+		<if test="null != modifyTime">
+			AND modifyTime = #{modifyTime, jdbcType=TIMESTAMP} 
+		</if>
+		<if test="null != modifyUser">
+			AND modifyUser = #{modifyUser, jdbcType=BIGINT} 
+		</if>
+		<if test="null != status">
+			AND status = #{status, jdbcType=TINYINT} 
+		</if>
+		<if test="null != checkValue">
+			AND checkValue = #{checkValue, jdbcType=TINYINT} 
+		</if>
+	</select>
+	
+</mapper>

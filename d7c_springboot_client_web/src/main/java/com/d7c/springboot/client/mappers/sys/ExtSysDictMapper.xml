@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.d7c.springboot.client.daos.sys.ExtSysDictDao">
+	<!-- resultMap引入：resultMap="com.d7c.springboot.common.daos.sys.BaseSysDictDao.BaseResultMap" -->
+	<!-- SQL 片段引入：<include refid="com.d7c.springboot.common.daos.sys.BaseSysDictDao.Base_Column_List"/> -->
+	<!-- zTree 菜单树 =======>start -->
+	<select id="listZTreeFormTreeFrameByParentId" parameterType="pd" resultType="com.d7c.springboot.client.dtos.tree.ZTree">
+		SELECT dictId id, parentId pId, IF("CN" &lt;=&gt; '${language}', dictCNValue, dictENValue) name, 1 isParent, 
+		"treeFrame" target, CONCAT("sys/dict/listByParentIdPage.shtml?dictId=", dictId) url, 
+		"static/plugins/zTree/3.5/img/diy/1_close.png" icon FROM sys_dict
+		<where>
+			<if test="null != parentId">
+				AND parentId = #{parentId, jdbcType=BIGINT} 
+			</if>
+		</where>
+		ORDER BY sort ASC
+	</select>
+	<!-- zTree 菜单树 =======>end -->
+	
+	<!-- 根据条件分页查询字典列表 -->
+	<select id="listPDPage" parameterType="page" resultType="pd">
+		SELECT dictId, parentId, dictType, dictKey, dictCNValue, dictENValue, sort, remark, addTime, status, checkValue FROM sys_dict 
+		<where>
+			<if test="args != null">
+				<if test="null != args.parentId">
+					AND parentId = #{args.parentId, jdbcType=BIGINT} 
+				</if>
+				<if test="null != args.dictType and args.dictType != ''">
+					AND dictType = #{args.dictType, jdbcType=VARCHAR} 
+				</if>
+				<if test="null != args.dictKey and args.dictKey != ''">
+					AND dictKey = #{args.dictKey, jdbcType=VARCHAR} 
+				</if>
+				<if test="null != args.dictCNValue and args.dictCNValue != ''">
+					AND dictCNValue = #{args.dictCNValue, jdbcType=VARCHAR} 
+				</if>
+				<if test="null != args.dictENValue and args.dictENValue != ''">
+					AND dictENValue = #{args.dictENValue, jdbcType=VARCHAR} 
+				</if>
+				<if test="null != args.sort">
+					AND sort = #{args.sort, jdbcType=TINYINT} 
+				</if>
+				<if test="null != args.addTime">
+					AND addTime = #{args.addTime, jdbcType=TIMESTAMP} 
+				</if>
+				<if test="null != args.addUser">
+					AND addUser = #{args.addUser, jdbcType=BIGINT} 
+				</if>
+				<if test="null != args.status">
+					AND status = #{args.status, jdbcType=TINYINT} 
+				</if>
+			</if>
+		</where>
+		ORDER BY sort ASC 
+	</select>
+	
+	<!-- 根据字典编号软删除字典 -->
+	<update id="updateStatus" parameterType="pd">
+		update sys_dict set 
+			status = #{status, jdbcType=TINYINT}, 
+			modifyUser = #{modifyUser, jdbcType=BIGINT}, 
+			checkValue = checkValue() 
+		WHERE dictId = #{dictId, jdbcType=BIGINT} AND checkValue = #{checkValue, jdbcType=INTEGER} 
+	</update>
+	
+	<!-- 判断数据库中 dictType、dictKey 是否已经存在并且不是当前字典 -->
+	<select id="hasExist" parameterType="pd" resultType="int">
+		SELECT COUNT(*) FROM sys_dict 
+		<where>
+			<if test="null != dictId">
+				AND dictId != #{dictId, jdbcType=BIGINT} 
+			</if>
+			<if test="null != dictType and dictType != ''">
+				AND dictType = #{dictType, jdbcType=VARCHAR} 
+			</if>
+			<if test="null != dictKey and dictKey != ''">
+				AND dictKey = #{dictKey, jdbcType=VARCHAR} 
+			</if>
+		</where>
+	</select>
+	
+	<!-- 根据父节点查询是否有子节点 -->
+	<select id="hasSon" parameterType="pd" resultType="int">
+		SELECT COUNT(*) FROM sys_dict 
+		<where>
+			<if test="null != parentId">
+				AND parentId = #{parentId, jdbcType=BIGINT} 
+			</if>
+			<if test="null != status and status != ''">
+				AND status = #{status, jdbcType=TINYINT} 
+			</if>
+		</where>
+	</select>
+	
+	<!-- 根据字典类型查询字典列表 -->
+	<select id="listDictByDictType" parameterType="pd" resultType="pd">
+		SELECT dictId id, dictKey AS "key", IF("CN" &lt;=&gt; '${language}', dictCNValue, dictENValue) AS "value" FROM sys_dict 
+		WHERE status = 1 AND dictType = #{dictType, jdbcType=VARCHAR} 
+		<choose>
+			<when test="null != dictKey and dictKey != ''">
+				AND dictKey = #{dictKey, jdbcType=VARCHAR} 
+				LIMIT 0, 1
+			</when>
+			<otherwise>
+				AND dictKey != #{dictType, jdbcType=VARCHAR} 
+				ORDER BY sort ASC 
+			</otherwise>
+		</choose>
+	</select>
+	
+</mapper>

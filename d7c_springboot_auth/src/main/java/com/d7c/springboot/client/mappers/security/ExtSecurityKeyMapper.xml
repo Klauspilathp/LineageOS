@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.d7c.springboot.client.daos.security.ExtSecurityKeyDao">
+	<!-- resultMap引入：resultMap="com.d7c.springboot.common.daos.security.BaseSecurityKeyDao.BaseResultMap" -->
+	<!-- SQL 片段引入：<include refid="com.d7c.springboot.common.daos.security.BaseSecurityKeyDao.Base_Column_List"/> -->
+	<!-- 根据 appid 查询私钥 -->
+	<select id="getPrivateKey" parameterType="java.lang.String" resultType="com.d7c.springboot.common.dos.security.SecurityKey">
+		SELECT privateKey, status, expiration FROM security_key 
+		WHERE appid = #{appid, jdbcType=VARCHAR}
+	</select>
+	
+	<!-- 根据 appid 查询公钥 -->
+	<select id="getPublicKey" parameterType="java.lang.String" resultType="com.d7c.springboot.common.dos.security.SecurityKey">
+		SELECT publicKey, status FROM security_key 
+		WHERE appid = #{appid, jdbcType=VARCHAR}
+	</select>
+
+</mapper>
