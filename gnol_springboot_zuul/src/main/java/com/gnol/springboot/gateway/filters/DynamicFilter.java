@@ -37,6 +37,7 @@ public class DynamicFilter {
      */
     @PostConstruct
     public void groovyLoadFilter() {
+        // FilterProcessor.setProcessor(new CustomFilterProcessor());
         FilterLoader.getInstance().setCompiler(new GroovyCompiler());
         FilterFileManager.setFilenameFilter(new GroovyFileFilter());
         String scriptRoot = gnolProperties.getGroovyFilters() + File.separator;
