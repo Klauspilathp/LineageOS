@@ -10,8 +10,10 @@
 	<artifactId>d7c_springboot_sharding</artifactId>
 	<packaging>jar</packaging>
 	<name>d7c_springboot_sharding</name>
+	<!-- 
+		https://shardingsphere.apache.org/document/legacy/3.x/document/cn/overview/
+	 -->
 	<description>d7c_springboot 项目 sharding 测试模块</description>
-	<url>https://shardingsphere.apache.org/document/legacy/3.x/document/cn/overview/</url>
 
 	<dependencies>
 		<dependency>

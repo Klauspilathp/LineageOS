@@ -10,7 +10,9 @@
 	<artifactId>d7c_springboot_flowable</artifactId>
 	<packaging>jar</packaging>
 	<name>d7c_springboot_flowable</name>
-	<url>https://tkjohn.github.io/flowable-userguide</url>
+	<!-- 
+		https://tkjohn.github.io/flowable-userguide
+	 -->
 	<description>d7c_springboot 项目 flowable 工作流模块。</description>
 
 	<dependencies>
