@@ -13,14 +13,14 @@ import com.gnol.plugins.core.PageResult;
 public interface AuthService {
 
     /**
-     * @Title: authentication
+     * @Title: login
      * @author: 吴佳隆
      * @data: 2020年6月28日 下午4:33:59
      * @Description: 认证授权
      * @param pd
      * @return PageResult
      */
-    PageResult authentication(PageData pd);
+    PageResult login(PageData pd);
 
     /**
      * @Title: validate
@@ -33,13 +33,13 @@ public interface AuthService {
     PageResult validate(PageData pd);
 
     /**
-     * @Title: unsubscribe
+     * @Title: logout
      * @author: 吴佳隆
      * @data: 2020年6月29日 下午12:20:43
      * @Description: 注销授权
      * @param pd
      * @return PageResult
      */
-    PageResult unsubscribe(PageData pd);
+    PageResult logout(PageData pd);
 
 }

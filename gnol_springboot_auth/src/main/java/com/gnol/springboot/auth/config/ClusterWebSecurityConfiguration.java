@@ -67,6 +67,8 @@ public class ClusterWebSecurityConfiguration extends WebSecurityConfigurerAdapte
                 .anyRequest().authenticated() // 其余所有请求都需要授权
                 .and().addFilter(new JwtLoginFilter(super.authenticationManager(), securityKeyDao, JwtRsaUtil)) // 登录授权过滤器
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS); // 禁用 HttpSession
+        // disable page caching
+        // http.headers().frameOptions().sameOrigin().cacheControl();
     }
 
 }
