@@ -4,7 +4,6 @@ import java.security.Principal;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.web.ServerProperties;
-import org.springframework.cloud.bootstrap.encrypt.KeyProperties;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -31,8 +30,6 @@ public class SysTestController extends WebBaseController {
      */
     @Autowired
     private ServerProperties server;
-    @Autowired
-    private KeyProperties keyProperties;
 
     @PostMapping(value = "/test1")
     public PageResult test1(Principal principal) {
@@ -43,7 +40,6 @@ public class SysTestController extends WebBaseController {
     @GetMapping(value = "/test2")
     public PageResult test2() {
         System.out.println(server);
-        System.out.println(keyProperties);
         CustomUserDetails userDetails = SecurityUtil.getUserDetails();
         Authentication authentication = SecurityUtil.getAuthentication();
         String username = SecurityUtil.getUsername();
