@@ -6,6 +6,7 @@
 		<id column="appid" property="appid" jdbcType="VARCHAR"/>
 		<result column="privateKey" property="privateKey" jdbcType="VARCHAR"/>
 		<result column="publicKey" property="publicKey" jdbcType="VARCHAR"/>
+		<result column="expiration" property="expiration" jdbcType="BIGINT"/>
 		<result column="remark" property="remark" jdbcType="VARCHAR"/>
 		<result column="addTime" property="addTime" jdbcType="TIMESTAMP"/>
 		<result column="addUser" property="addUser" jdbcType="BIGINT"/>
@@ -17,7 +18,7 @@
 	
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-		appid, privateKey, publicKey, remark, addTime, addUser, modifyTime, modifyUser, status, checkValue 
+		appid, privateKey, publicKey, expiration, remark, addTime, addUser, modifyTime, modifyUser, status, checkValue 
 	</sql>
 	
 	<!-- 插入数据 -->
@@ -27,6 +28,7 @@
 			appid, 
 			privateKey, 
 			publicKey, 
+			expiration, 
 			remark, 
 			addTime, 
 			addUser, 
@@ -38,6 +40,7 @@
 			#{appid, jdbcType=VARCHAR}, 
 			#{privateKey, jdbcType=VARCHAR}, 
 			#{publicKey, jdbcType=VARCHAR}, 
+			#{expiration, jdbcType=BIGINT}, 
 			#{remark, jdbcType=VARCHAR}, 
 			NOW(),
 			#{addUser, jdbcType=BIGINT}, 
@@ -52,6 +55,7 @@
 			appid, 
 			privateKey, 
 			publicKey, 
+			expiration, 
 			remark, 
 			addTime, 
 			addUser, 
@@ -61,6 +65,7 @@
 			(#{item.appid, jdbcType=VARCHAR}, 
 			#{item.privateKey, jdbcType=VARCHAR}, 
 			#{item.publicKey, jdbcType=VARCHAR}, 
+			#{item.expiration, jdbcType=BIGINT}, 
 			#{item.remark, jdbcType=VARCHAR}, 
 			NOW(),
 			#{item.addUser, jdbcType=BIGINT}, 
@@ -74,6 +79,7 @@
 		UPDATE security_key SET 
 			privateKey = #{privateKey, jdbcType=VARCHAR}, 
 			publicKey = #{publicKey, jdbcType=VARCHAR}, 
+			expiration = #{expiration, jdbcType=BIGINT}, 
 			remark = #{remark, jdbcType=VARCHAR}, 
 			modifyUser = #{modifyUser, jdbcType=BIGINT}, 
 			status = #{status, jdbcType=TINYINT}, 
@@ -91,6 +97,9 @@
 			</if>
 			<if test="null != publicKey and publicKey != ''">
 				publicKey = #{publicKey, jdbcType=VARCHAR}, 
+			</if>
+			<if test="null != expiration and expiration != ''">
+				expiration = #{expiration, jdbcType=BIGINT}, 
 			</if>
 			<if test="null != remark and remark != ''">
 				remark = #{remark, jdbcType=VARCHAR}, 
@@ -133,6 +142,9 @@
 			<if test="null != args.publicKey and args.publicKey != ''">
 				AND publicKey = #{args.publicKey, jdbcType=VARCHAR} 
 			</if>
+			<if test="null != args.expiration and args.expiration != ''">
+				AND expiration = #{args.expiration, jdbcType=BIGINT} 
+			</if>
 			<if test="null != args.remark and args.remark != ''">
 				AND remark = #{args.remark, jdbcType=VARCHAR} 
 			</if>
@@ -166,6 +178,9 @@
 		</if>
 		<if test="null != publicKey and publicKey != ''">
 			AND publicKey = #{publicKey, jdbcType=VARCHAR} 
+		</if>
+		<if test="null != expiration and expiration != ''">
+			AND expiration = #{expiration, jdbcType=BIGINT} 
 		</if>
 		<if test="null != remark and remark != ''">
 			AND remark = #{remark, jdbcType=VARCHAR} 

@@ -25,6 +25,10 @@ public class SecurityKey extends BasePojo {
      */
     private String publicKey;
     /**
+     * 有效期毫秒，默认 30 分钟
+     */
+    private Long expiration;
+    /**
      * 备注
      */
     private String remark;
@@ -53,6 +57,14 @@ public class SecurityKey extends BasePojo {
         this.publicKey = publicKey;
     }
 
+    public Long getExpiration() {
+        return expiration;
+    }
+
+    public void setExpiration(Long expiration) {
+        this.expiration = expiration;
+    }
+
     public String getRemark() {
         return remark;
     }
@@ -78,6 +90,10 @@ public class SecurityKey extends BasePojo {
          * 公钥
          */
         public final String publicKey = "publicKey";
+        /**
+         * 有效期毫秒，默认 30 分钟
+         */
+        public final String expiration = "expiration";
         /**
          * 备注
          */
