@@ -29,6 +29,7 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 
+import com.gnol.oauth2.spring.boot.SHA1PasswordEncoder;
 import com.gnol.plugins.core.StringUtil;
 import com.gnol.plugins.net.tools.IPUtil;
 import com.gnol.redis.spring.boot.autoconfigure.RedisService;

@@ -10,11 +10,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.gnol.oauth2.spring.boot.SecurityUtil;
 import com.gnol.plugins.core.Page;
 import com.gnol.plugins.core.PageData;
 import com.gnol.plugins.core.PageResult;
 import com.gnol.springboot.client.config.GnolConstant;
-import com.gnol.springboot.client.config.SecurityUtil;
 import com.gnol.springboot.client.controllers.WebBaseController;
 import com.gnol.springboot.client.dtos.tree.SelectTree;
 import com.gnol.springboot.client.dtos.tree.ZTree;

@@ -16,6 +16,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
 import com.gnol.jwt.spring.boot.autoconfigure.JwtRsaUtil;
+import com.gnol.oauth2.spring.boot.CustomUserDetails;
 import com.gnol.plugins.core.PageResult;
 import com.gnol.plugins.core.StringUtil;
 import com.gnol.plugins.core.enums.HttpStatus;
