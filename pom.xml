@@ -2,18 +2,18 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<parent>
-		<groupId>com.d7c</groupId>
-		<artifactId>d7c_springboot_plugins</artifactId>
-		<version>1.0.0</version>
-		<relativePath />
-	</parent>
+	<groupId>com.d7c</groupId>
 	<artifactId>d7c_springboot</artifactId>
+	<version>1.0.0</version>
 	<packaging>pom</packaging>
-	<url>https://start.spring.io/,https://github.com/spring-projects/spring-boot,http://c.biancheng.net/spring_cloud/</url>
+	<url>
+		https://start.spring.io/,
+		https://github.com/spring-projects/spring-boot,
+		http://c.biancheng.net/spring_cloud/
+	</url>
 	<name>d7c_springboot</name>
 	<description>d7c springboot 版项目父工程</description>
-  
+	
   	<!-- 设定主仓库，按设定顺序进行查找。 -->
 	<repositories>
 		<repository>
@@ -78,6 +78,10 @@
 	
 	<!-- 集中定义依赖版本号 -->
 	<properties>
+		<java.version>1.8</java.version>
+		<!-- 表示主源码的编码格式 -->
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <!-- 表示项目构建开始时间 -->
 		<timestamp>${maven.build.timestamp}</timestamp>
         <!-- 表示属性 ${maven.build.timestamp} 的展示格式，默认值为 yyyyMMdd-HHmm -->
@@ -86,13 +90,6 @@
 		<maven-jar-plugin.version>3.1.1</maven-jar-plugin.version>
         <!-- jar 版本管理 -->
 		<d7c_springboot_plugins.version>1.0.0</d7c_springboot_plugins.version>
-		<swagger.version>2.9.2</swagger.version>
-		<spring-boot-admin.version>2.1.6</spring-boot-admin.version>
-		<spring-boot-zuul.version>2.1.5.RELEASE</spring-boot-zuul.version>
-		<ehcache.version>2.10.4</ehcache.version>
-		<oshi.version>5.2.2</oshi.version>
-		<sharding.version>3.1.0</sharding.version>
-		<groovy.version>2.5.14</groovy.version>
 	</properties>
 
     <!-- 只是对版本进行管理，不会实际引入 jar -->
@@ -104,6 +101,13 @@
 	<dependencyManagement>
 		<dependencies>
             <!-- d7c springboot 版插件工程 =======>start -->
+			<dependency>
+				<groupId>com.d7c</groupId>
+				<artifactId>d7c_springboot_plugins</artifactId>
+				<version>${d7c_springboot_plugins.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
 			<dependency>
 				<groupId>com.d7c</groupId>
 				<artifactId>d7c_springboot_plugins_tools</artifactId>
@@ -181,61 +185,6 @@
 				<version>${d7c_springboot_plugins.version}</version>
 			</dependency>
             <!-- d7c springboot 版插件工程 =======>end -->
-            <!-- swagger 生成接口文档 =======>start -->
-			<dependency>
-				<groupId>io.springfox</groupId>
-				<artifactId>springfox-swagger2</artifactId>
-				<version>${swagger.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>io.springfox</groupId>
-				<artifactId>springfox-swagger-ui</artifactId>
-				<version>${swagger.version}</version>
-			</dependency>
-            <!-- swagger 生成接口文档 =======>end -->
-			<!-- admin server -->
-			<dependency>
-				<groupId>de.codecentric</groupId>
-				<artifactId>spring-boot-admin-starter-server</artifactId>
-				<version>${spring-boot-admin.version}</version>
-			</dependency>
-			<!-- admin client -->
-			<dependency>
-				<groupId>de.codecentric</groupId>
-				<artifactId>spring-boot-admin-starter-client</artifactId>
-				<version>${spring-boot-admin.version}</version>
-			</dependency>
-			<!-- zuul -->
-			<dependency>
-				<groupId>org.springframework.cloud</groupId>
-				<artifactId>spring-cloud-starter-netflix-zuul</artifactId>
-				<version>${spring-boot-zuul.version}</version>
-			</dependency>
-			<!-- ehcache 相关依赖，参考 https://www.cnblogs.com/wchxj/p/8119528.html -->
-			<dependency>
-				<groupId>net.sf.ehcache</groupId>
-				<artifactId>ehcache</artifactId>
-				<version>${ehcache.version}</version>
-			</dependency>
-			<!-- 操作系统信息 -->
-			<dependency>
-				<groupId>com.github.oshi</groupId>
-				<artifactId>oshi-core</artifactId>
-				<version>${oshi.version}</version>
-			</dependency>
-			<!-- sharding -->
-			<dependency>
-				<groupId>io.shardingsphere</groupId>
-				<artifactId>sharding-jdbc-spring-boot-starter</artifactId>
-				<version>${sharding.version}</version>
-			</dependency>
-			<!-- groovy -->
-			<dependency>
-				<groupId>org.codehaus.groovy</groupId>
-				<artifactId>groovy-all</artifactId>
-				<version>${groovy.version}</version>
-				<type>pom</type>
-			</dependency>
 		</dependencies>
 	</dependencyManagement>
 
@@ -295,6 +244,21 @@
 			</resource>
 		</resources>
 		<plugins>
+			<!-- java 编译插件 -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>${java.version}</source>
+					<target>${java.version}</target>
+					<encoding>${project.build.sourceEncoding}</encoding>
+					<showWarnings>true</showWarnings>
+					<compilerArguments>
+						<verbose />
+						<bootclasspath>${java.home}/lib/rt.jar;${java.home}/lib/jce.jar</bootclasspath>
+					</compilerArguments>
+				</configuration>
+			</plugin>
 			<!-- versions-maven-plugin 插件使用：
 				1、修改父项目版本：
 					mvn versions:set -DnewVersion=1.0.0
