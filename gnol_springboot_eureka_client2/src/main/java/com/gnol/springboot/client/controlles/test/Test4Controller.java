@@ -26,14 +26,14 @@ public class Test4Controller {
     private RestTemplate restTemplate;
 
     /**
-     * http://gnol-springboot-eureka-client1/test2/t1 请求正常
-     * http://gnol-springboot-eureka-client1/test2/t2 请求会被降级
+     * http://gnol-springboot-client1/test2/t1 请求正常
+     * http://gnol-springboot-client1/test2/t2 请求会被降级
      */
     @HystrixCommand(fallbackMethod = "getFallback")
     @RequestMapping(value = "/t1", method = RequestMethod.GET)
     public PageResult t1(String id) {
         logger.info("client2.t1 param id : {}", id);
-        return restTemplate.getForObject("http://gnol-springboot-eureka-client1/test2/t1?id=" + id, PageResult.class);
+        return restTemplate.getForObject("http://gnol-springboot-client1/test2/t1?id=" + id, PageResult.class);
     }
 
     // 服务降级时调用

@@ -53,7 +53,7 @@ public class Test2Controller {
  * @date: 2020年6月19日 上午10:21:54
  * @Description: Feign 客户端
  */
-@FeignClient(name = "gnol-springboot-eureka-client1")
+@FeignClient(name = "gnol-springboot-client1")
 interface Client1Test1FeignClient extends Client1Test1Mapping {
 
 }

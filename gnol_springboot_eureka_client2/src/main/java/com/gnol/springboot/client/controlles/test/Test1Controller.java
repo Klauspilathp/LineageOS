@@ -51,7 +51,7 @@ public class Test1Controller {
      */
     @RequestMapping("/t2")
     public Object t2(String id) {
-        String url = "http://gnol-springboot-eureka-client1/test1/t1?id=" + id;
+        String url = "http://gnol-springboot-client1/test1/t1?id=" + id;
         logger.info("client2.t2 param id : {}, request url : {}", id, url);
         Object result = restTemplate.getForEntity(url, Object.class);
         return result;
@@ -59,7 +59,7 @@ public class Test1Controller {
 
     @RequestMapping("/t3")
     public PageResult t3() {
-        ServiceInstance serviceInstance = loadBalancerClient.choose("gnol-springboot-eureka-client1");
+        ServiceInstance serviceInstance = loadBalancerClient.choose("gnol-springboot-client1");
         logger.info("client1.t3 {} : {} : {}", serviceInstance.getServiceId(), serviceInstance.getHost(),
                 serviceInstance.getPort());
         return PageResult.ok(new StringBuilder().append(serviceInstance.getServiceId()).append(" : ")
@@ -68,7 +68,7 @@ public class Test1Controller {
 
     @RequestMapping("/t4")
     public PageResult t4() {
-        InstanceInfo instance = eurekaClient.getNextServerFromEureka("gnol-springboot-eureka-client1", false);
+        InstanceInfo instance = eurekaClient.getNextServerFromEureka("gnol-springboot-client1", false);
         return PageResult.ok(instance.getHomePageUrl());
     }
 

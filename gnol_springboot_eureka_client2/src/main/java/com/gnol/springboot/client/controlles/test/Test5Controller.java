@@ -27,8 +27,8 @@ public class Test5Controller {
     private RestTemplate restTemplate;
 
     /**
-     * http://gnol-springboot-eureka-client1/test2/t1 请求正常
-     * http://gnol-springboot-eureka-client1/test2/t2 请求会被降级
+     * http://gnol-springboot-client1/test2/t1 请求正常
+     * http://gnol-springboot-client1/test2/t2 请求会被降级
      */
     @HystrixCommand(fallbackMethod = "getFallback", // 回调方法名
             groupKey = "client2Test5GroupKey", // 配置全局唯一标识的服务分组名称，相同分组的服务会聚合在一起，必填。
@@ -42,7 +42,7 @@ public class Test5Controller {
     @RequestMapping(value = "/t1", method = RequestMethod.GET)
     public PageResult t1(String id) {
         logger.info("client2.t1 param id : {}", id);
-        return restTemplate.getForObject("http://gnol-springboot-eureka-client1/test2/t2?id=" + id,
+        return restTemplate.getForObject("http://gnol-springboot-client1/test2/t2?id=" + id,
                 PageResult.class);
     }
 
