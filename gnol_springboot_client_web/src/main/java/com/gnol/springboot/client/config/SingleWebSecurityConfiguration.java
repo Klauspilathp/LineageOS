@@ -1,6 +1,8 @@
 package com.gnol.springboot.client.config;
 
 import java.io.IOException;
+import java.util.Date;
+import java.util.List;
 
 import javax.annotation.Resource;
 import javax.servlet.ServletException;
@@ -28,9 +30,15 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 
+import com.gnol.plugins.net.tools.IPUtil;
+import com.gnol.redis.spring.boot.autoconfigure.RedisService;
+import com.gnol.springboot.client.dtos.tree.MenuTree;
 import com.gnol.springboot.client.services.sys.SysMenuService;
 import com.gnol.springboot.client.services.sys.SysSessionService;
 import com.gnol.springboot.client.services.sys.SysUserService;
+import com.gnol.springboot.common.dos.sys.SysSession;
+import com.gnol.springboot.common.dos.sys.SysUser;
+import com.gnol.springboot.common.enums.sys.LoginStatusEnum;
 
 /**
  * @Title: SingleWebSecurityConfiguration
@@ -77,7 +85,12 @@ public class SingleWebSecurityConfiguration extends WebSecurityConfigurerAdapter
      * redis 中持久化记住我 token 实现
      */
     @Resource(name = "redisPersistentTokenRepository")
-    private PersistentTokenRepository persistentTokenRepository;
+    private RedisPersistentTokenRepository redisPersistentTokenRepository;
+    /**
+     * redis 缓存服务实现
+     */
+    @Resource(name = "redisServiceImpl")
+    private RedisService redisService;
 
     @Bean("sha1PasswordEncoder")
     @Primary
@@ -117,12 +130,31 @@ public class SingleWebSecurityConfiguration extends WebSecurityConfigurerAdapter
                     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
                             Authentication authentication) throws IOException, ServletException {
                         logger.debug("{} 用户在 {} 地址登录成功！", authentication.getName(), request.getRemoteAddr());
-                        // 修改用户登录状态
+                        // 根据账号查询用户信息
+                        SysUser sysUser = sysUserService.getSysUserByUserAccount(authentication.getName());
 
-                        // 更新 session 信息 TODO
+                        // 更新登录状态
+                        SysUser user = new SysUser();
+                        user.setUserId(sysUser.getUserId());
+                        user.setLoginStatus(LoginStatusEnum.ON_LINE.getKey());
+                        user.setLoginTime(new Date());
+                        user.setLoginIp(IPUtil.getIpAddr((HttpServletRequest) request));
+                        sysUserService.updateByLogin(user);
 
-                        // 获取授权菜单放入 redis 中 TODO
+                        // 更新 session 信息
+                        SysSession sysSession = new SysSession(request.getSession().getId(), user);
+                        // 设置地域信息及角色名
+                        sysSession.setLoginStatus(user.getLoginStatus());
+                        sysSession.setLoginTime(user.getLoginTime());
+                        sysSession = sysSessionService.updateUserAddress(sysSession);
 
+                        // 获取授权菜单放入 redis 中
+                        List<MenuTree> listMenuTree = sysMenuService.listMenuTreeByParentId(0);
+                        redisService.addObject(
+                                redisService.generateKey(GnolConstant.MENULIST, sysSession.getSessionId()),
+                                redisPersistentTokenRepository.getTokenExpiration(), listMenuTree);
+
+                        // 重定向到首页
                         response.sendRedirect("/main");
                     }
                 }).failureHandler(new AuthenticationFailureHandler() {
@@ -131,7 +163,7 @@ public class SingleWebSecurityConfiguration extends WebSecurityConfigurerAdapter
                             AuthenticationException exception) throws IOException, ServletException {
                         response.sendRedirect("/index?error=" + exception.getMessage());
                     }
-                }).and().rememberMe().tokenRepository(persistentTokenRepository) // new InMemoryTokenRepositoryImpl()、jdbcTokenRepositoryImpl()
+                }).and().rememberMe().tokenRepository(redisPersistentTokenRepository) // new InMemoryTokenRepositoryImpl()、jdbcTokenRepositoryImpl()
                 .tokenValiditySeconds(60 * 60 * 24) // 记住我一天
                 .and().logout().logoutSuccessUrl("/index") // 登出授权
                 .invalidateHttpSession(true).clearAuthentication(true)

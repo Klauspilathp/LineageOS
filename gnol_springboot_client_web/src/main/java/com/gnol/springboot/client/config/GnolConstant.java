@@ -24,9 +24,7 @@ public class GnolConstant {
     // --- 当前登录用户编号在 PageData 中的 KEY
     public static final String SESSION_USER_ID = "SESSION_USER_ID";
     // --- 全部菜单
-    public static final String SESSION_ALL_MENULIST = "SESSION_ALL_MENULIST";
-    // --- 当前菜单前缀
-    public static final String SESSION_CURR_MENULIST_ = "SESSION_CURR_MENULIST_";
+    public static final String MENULIST = "MENULIST:";
 
     /*********************************************** web ***********************************************/
     // 超级管理员编号
