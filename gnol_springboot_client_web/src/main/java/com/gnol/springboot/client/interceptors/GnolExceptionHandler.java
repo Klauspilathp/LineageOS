@@ -43,6 +43,7 @@ public class GnolExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public ModelAndView handlerException(Exception e) {
+        e.printStackTrace();
         Map<String, Object> model = new LinkedHashMap<>();
         model.put("timestamp", new Date());
         if (e instanceof MissingServletRequestParameterException) { // 缺少参数
