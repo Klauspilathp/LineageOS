@@ -3,6 +3,7 @@ package com.gnol.springboot.client.config;
 import java.util.concurrent.ThreadPoolExecutor;
 
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
@@ -18,6 +19,15 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
  */
 @Configuration
 public class WebConfiguration {
+
+    /**
+     * gnol 系统自定义属性
+     */
+    @Bean(name = "gnolProperties")
+    @ConditionalOnMissingBean(GnolProperties.class)
+    public GnolProperties gnolProperties() {
+        return new GnolProperties();
+    }
 
     /**
      * 线程池配置
