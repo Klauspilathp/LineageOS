@@ -47,7 +47,7 @@ public class ActivitiProcessDefinitionController extends WebBaseController {
     @Autowired
     private ProcessRuntime processRuntime;
     /**
-     * 提供对流程定义和部署存储库的访问的服务
+     * 提供对流程定义和部署存储库的访问服务
      */
     @Autowired
     private RepositoryService repositoryService;

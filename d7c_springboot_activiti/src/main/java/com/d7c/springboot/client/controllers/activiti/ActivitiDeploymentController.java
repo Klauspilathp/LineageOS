@@ -25,7 +25,7 @@ import com.d7c.springboot.client.controllers.WebBaseController;
 @RequestMapping(value = "/activiti/deployment")
 public class ActivitiDeploymentController extends WebBaseController {
     /**
-     * 提供对流程定义和部署存储库的访问的服务
+     * 提供对流程定义和部署存储库的访问服务
      */
     @Autowired
     private RepositoryService repositoryService;
