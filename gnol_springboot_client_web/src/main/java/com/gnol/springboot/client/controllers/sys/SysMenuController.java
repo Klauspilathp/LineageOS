@@ -7,6 +7,7 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.gnol.plugins.core.PageResult;
 import com.gnol.redis.spring.boot.autoconfigure.RedisService;
@@ -52,6 +53,7 @@ public class SysMenuController extends WebBaseController {
      * @return PageResult
      */
     @RequestMapping(value = "/authMenu", method = RequestMethod.GET)
+    @ResponseBody
     public PageResult authMenu() {
         Long userId = SecurityUtil.getUserId();
         Object listMenuTree = redisService
