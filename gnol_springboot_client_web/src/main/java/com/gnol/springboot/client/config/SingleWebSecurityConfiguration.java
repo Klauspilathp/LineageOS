@@ -142,14 +142,14 @@ public class SingleWebSecurityConfiguration extends WebSecurityConfigurerAdapter
                         sysUserService.updateByLogin(user);
 
                         // 更新 session 信息
-                        SysSession sysSession = new SysSession(request.getSession().getId(), user);
+                        SysSession sysSession = new SysSession(request.getSession().getId(), sysUser);
                         // 设置地域信息及角色名
                         sysSession.setLoginStatus(user.getLoginStatus());
                         sysSession.setLoginTime(user.getLoginTime());
                         sysSession = sysSessionService.updateUserAddress(sysSession);
 
                         // 获取授权菜单放入 redis 中
-                        List<MenuTree> listMenuTree = sysMenuService.listMenuTreeByParentId(0);
+                        List<MenuTree> listMenuTree = sysMenuService.listMenuTreeByRoleId(sysSession.getRoleId());
                         redisService.addObject(
                                 redisService.generateKey(GnolConstant.MENULIST, sysSession.getSessionId()),
                                 redisPersistentTokenRepository.getTokenExpiration(), listMenuTree);

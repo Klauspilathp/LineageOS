@@ -65,6 +65,15 @@ public class SysMenuServiceImpl extends AbstractBaseService<BaseSysMenuDao, SysM
     }
 
     @Override
+    public List<MenuTree> listMenuTreeByRoleId(Long roleId) {
+        List<MenuTree> allMenuTree = sysMenuDao.listMenuTreeByRoleId(roleId);
+        if (allMenuTree != null && !allMenuTree.isEmpty()) {
+            return new MenuTreeUtil().dealMenuTree(allMenuTree, 0);
+        }
+        return new ArrayList<MenuTree>();
+    }
+
+    @Override
     public List<ZTree> listZTreeFormTreeFrameByParentId_SYNC(Integer parentId) {
         // 查询出所有菜单信息列表
         List<ZTree> allMenu = sysMenuDao.listZTreeFormTreeFrameByParentId(null);

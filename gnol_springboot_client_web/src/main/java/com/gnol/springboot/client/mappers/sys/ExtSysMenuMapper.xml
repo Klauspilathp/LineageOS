@@ -54,6 +54,13 @@
 			</if>
 		ORDER BY sort ASC
 	</select>
+	<!-- 根据角色编号查询菜单树 -->
+	<select id="listMenuTreeByRoleId" parameterType="java.lang.Long" resultMap="ResultMenuTreeList">
+		SELECT a.menuId, a.parentId, a.menuName, a.permissions, a.menuUrl, a.icon, a.menuType, a.menuFunc, 
+		a.visible, a.menuId spid FROM sys_menu a INNER JOIN sys_role_menu b ON a.menuId = b.menuId 
+		WHERE a.`status` = 1 AND a.menuFunc != 3 AND b.roleId = #{_parameter, jdbcType=BIGINT} 
+		ORDER BY a.sort ASC
+	</select>
 	<!-- 查询菜单树 =======>end -->
 	
 	<!-- zTree 菜单树 =======>start -->

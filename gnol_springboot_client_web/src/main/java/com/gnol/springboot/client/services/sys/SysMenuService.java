@@ -52,6 +52,16 @@ public interface SysMenuService extends BaseService<SysMenu, Integer> {
     List<MenuTree> listMenuTreeByParentId(Integer parentId);
 
     /**
+     * @Title: listMenuTreeByRoleId
+     * @author: 吴佳隆
+     * @data: 2020年7月17日 下午7:47:16
+     * @Description: 根据角色编号查询菜单树
+     * @param roleId            角色编号
+     * @return List<MenuTree>
+     */
+    List<MenuTree> listMenuTreeByRoleId(Long roleId);
+
+    /**
      * @Title: listZTreeFormTreeFrameByParentId_SYNC
      * @author: 吴佳隆
      * @data: 2020年4月7日 下午2:58:12
