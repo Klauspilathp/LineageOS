@@ -1,9 +1,17 @@
 package com.gnol.springboot.client.config;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.Map;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.ResourceServerProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -15,6 +23,9 @@ import org.springframework.security.oauth2.provider.error.OAuth2AuthenticationEn
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
+import org.springframework.web.client.RestTemplate;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  * @Title: JdbcResourceServerConfiguration
@@ -31,6 +42,11 @@ public class JwtKeyPairResourceServerConfiguration extends ResourceServerConfigu
      */
     @Autowired
     private ResourceServerProperties resourceServerProperties;
+    /**
+     * RestTemplate 是 spring 提供的用于访问 rest 服务的客户端
+     */
+    @Autowired
+    private RestTemplate restTemplate;
     /**
      * 自定义异常转化器
      */
@@ -78,11 +94,27 @@ public class JwtKeyPairResourceServerConfiguration extends ResourceServerConfigu
     /**
      * jwt token 解析工具
      */
+    @SuppressWarnings("rawtypes")
     @Bean
     public JwtAccessTokenConverter jwtAccessTokenConverter() {
         JwtAccessTokenConverter tokenConverter = new JwtAccessTokenConverter();
-        tokenConverter.setSigningKey(resourceServerProperties.getJwt().getKeyValue()); // 对称密钥
         tokenConverter.setAccessTokenConverter(new CustomAccessTokenConverter());
+        String key = null;
+        Resource resource = new ClassPathResource(resourceServerProperties.getJwt().getKeyStore());
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(resource.getInputStream()))) {
+            key = br.lines().collect(Collectors.joining("\n"));
+        } catch (IOException ioe) {
+            ObjectMapper objectMapper = new ObjectMapper();
+            String result = restTemplate.getForObject(resourceServerProperties.getJwt().getKeyUri(), String.class);
+            try {
+                Map map = objectMapper.readValue(result, Map.class);
+                key = map.get("value").toString();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        tokenConverter.setSigningKey(key);
+        // tokenConverter.setVerifierKey(key);
         return tokenConverter;
     }
 
