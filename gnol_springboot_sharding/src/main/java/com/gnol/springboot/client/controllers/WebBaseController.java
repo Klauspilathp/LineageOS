@@ -229,9 +229,9 @@ public class WebBaseController {
             // 指定文件名
             try {
                 response.setHeader("content-disposition",
-                        "attachment; filename*=UTF-8''" + URLEncoder.encode(fileName, "UTF-8"));
+                        "attachment; filename=" + URLEncoder.encode(fileName, StringUtil.UTF_8));
             } catch (UnsupportedEncodingException e) {
-                response.setHeader("content-disposition", "attachment; filename*=UTF-8''" + fileName);
+                response.setHeader("content-disposition", "attachment; filename=" + fileName);
             }
         }
         response.setHeader("access-control-allow-origin", "*");
