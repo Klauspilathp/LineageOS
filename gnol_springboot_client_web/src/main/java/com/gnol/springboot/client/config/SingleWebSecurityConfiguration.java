@@ -29,6 +29,7 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 
+import com.gnol.plugins.core.StringUtil;
 import com.gnol.plugins.net.tools.IPUtil;
 import com.gnol.redis.spring.boot.autoconfigure.RedisService;
 import com.gnol.springboot.client.services.sys.SysSessionService;
@@ -152,7 +153,7 @@ public class SingleWebSecurityConfiguration extends WebSecurityConfigurerAdapter
                         response.sendRedirect("/index?error=" + exception.getMessage());
                     }
                 }).and().rememberMe().tokenRepository(redisPersistentTokenRepository) // new InMemoryTokenRepositoryImpl()、jdbcTokenRepositoryImpl()
-                .tokenValiditySeconds(60 * 60 * 24) // 记住我一天
+                .tokenValiditySeconds(StringUtil.toInt(redisPersistentTokenRepository.getTokenExpiration())) // 记住我一天
                 .and().logout().logoutSuccessUrl("/index") // 登出授权
                 .invalidateHttpSession(true).clearAuthentication(true)
         // .httpBasic(); 以弹框方式认证
