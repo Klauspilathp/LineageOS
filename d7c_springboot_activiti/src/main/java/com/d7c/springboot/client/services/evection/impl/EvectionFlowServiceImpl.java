@@ -5,8 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.annotation.Resource;
-
 import org.activiti.api.task.model.Task;
 import org.activiti.engine.HistoryService;
 import org.activiti.engine.RuntimeService;
@@ -23,7 +21,7 @@ import com.d7c.plugins.core.Page;
 import com.d7c.plugins.core.PageData;
 import com.d7c.plugins.core.PageResult;
 import com.d7c.plugins.core.StringUtil;
-import com.d7c.plugins.core.context.IdService;
+import com.d7c.plugins.tools.idfactory.IdFactory;
 import com.d7c.springboot.client.services.evection.EvectionFlowService;
 
 /**
@@ -37,11 +35,6 @@ import com.d7c.springboot.client.services.evection.EvectionFlowService;
 public class EvectionFlowServiceImpl implements EvectionFlowService {
     private static final Logger logger = LoggerFactory.getLogger(EvectionFlowServiceImpl.class);
     public static final String PROCESS_DEFINITION_KEY = "evectionProcess";
-    /**
-     * ID 生成服务
-     */
-    @Resource(name = "dbIdServiceImpl")
-    private IdService idService;
     /**
      * 提供对流程进行控制的服务
      */
@@ -67,7 +60,7 @@ public class EvectionFlowServiceImpl implements EvectionFlowService {
         }
         String businessKey = pd.getString("businessKey");
         if (StringUtil.isBlank(businessKey)) {
-            businessKey = String.valueOf(idService.getLong(PROCESS_DEFINITION_KEY));
+            businessKey = String.valueOf(IdFactory.nextStr());
         }
 
         Map<String, Object> variables = new HashMap<String, Object>();
