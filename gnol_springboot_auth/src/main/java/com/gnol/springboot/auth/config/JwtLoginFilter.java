@@ -10,6 +10,7 @@ import javax.servlet.UnavailableException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.http.MediaType;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -70,8 +71,7 @@ public class JwtLoginFilter extends UsernamePasswordAuthenticationFilter {
         } catch (IllegalArgumentException e) {
             e.printStackTrace();
         }
-        response.setHeader("Content-type", "application/json;charset=UTF-8");
-        response.setContentType("text/html; charset=UTF-8");
+        response.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
         response.setStatus(HttpServletResponse.SC_FORBIDDEN);
         try {
             response.getWriter().println(PageResult.build(HttpStatus.HS_403.getKey(), "授权失败").toString());
@@ -122,8 +122,7 @@ public class JwtLoginFilter extends UsernamePasswordAuthenticationFilter {
         String token = JwtRsaUtil.generateToken(claims, jwt_id, appid, securityKey.getPrivateKey(),
                 securityKey.getExpiration());
         response.addHeader(AuthConstant.AUTH_HEADER, "Bearer " + token);
-        response.setHeader("Content-type", "application/json;charset=UTF-8");
-        response.setContentType("text/html; charset=UTF-8");
+        response.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
         response.setStatus(HttpServletResponse.SC_OK);
         try {
             response.getWriter().println(PageResult.ok(token).toString());
