@@ -1,8 +1,15 @@
 package com.gnol.springboot.client.config;
 
+import java.util.Arrays;
+
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.oauth2.client.OAuth2ClientContext;
+import org.springframework.security.oauth2.client.OAuth2RestTemplate;
+import org.springframework.security.oauth2.client.resource.OAuth2ProtectedResourceDetails;
+import org.springframework.security.oauth2.client.token.AccessTokenProviderChain;
+import org.springframework.security.oauth2.client.token.grant.code.AuthorizationCodeAccessTokenProvider;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
@@ -16,6 +23,19 @@ import org.springframework.web.filter.CorsFilter;
  */
 @Configuration
 public class ApiConfiguration {
+
+    /**
+     * oauth2 rest 服务客户端
+     */
+    @Bean(name = "oAuth2RestTemplate")
+    public OAuth2RestTemplate oAuth2RestTemplate(OAuth2ClientContext context, OAuth2ProtectedResourceDetails details) {
+        OAuth2RestTemplate restTemplate = new OAuth2RestTemplate(details, context);
+        AuthorizationCodeAccessTokenProvider authCodeProvider = new AuthorizationCodeAccessTokenProvider();
+        authCodeProvider.setStateMandatory(false);
+        AccessTokenProviderChain provider = new AccessTokenProviderChain(Arrays.asList(authCodeProvider));
+        restTemplate.setAccessTokenProvider(provider);
+        return restTemplate;
+    }
 
     /**
      * gnol 系统自定义属性
