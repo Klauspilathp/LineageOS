@@ -1,5 +1,7 @@
 package com.gnol.springboot.common.services.sys.impl;
 
+import org.springframework.stereotype.Service;
+
 import com.gnol.plugins.core.StringUtil;
 import com.gnol.plugins.core.context.CacheService;
 import com.gnol.springboot.common.services.sys.AbstractIdService;
@@ -11,6 +13,7 @@ import com.gnol.springboot.common.services.sys.AbstractIdService;
  * @date: 2020年4月3日 上午11:10:40
  * @Description: 基于缓存实现的 ID 生成服务实现，建议使用 redis 的缓存实现
  */
+@Service(value = "cacheIdServiceImpl")
 public class CacheIdServiceImpl extends AbstractIdService {
     /**
      * 缓存接口，所有缓存实现都继承自此接口
