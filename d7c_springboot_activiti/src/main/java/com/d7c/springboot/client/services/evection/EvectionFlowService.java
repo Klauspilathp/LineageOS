@@ -1,5 +1,6 @@
 package com.d7c.springboot.client.services.evection;
 
+import com.d7c.plugins.core.Page;
 import com.d7c.plugins.core.PageData;
 import com.d7c.plugins.core.PageResult;
 
@@ -61,5 +62,35 @@ public interface EvectionFlowService {
      * @return PageResult
      */
     PageResult endEvection(PageData pd);
+
+    /**
+     * @Title: getFlowState
+     * @author: 吴佳隆
+     * @data: 2021年4月1日 上午8:37:53
+     * @Description: 获取当前流程状态
+     * @param pd
+     * @return PageResult
+     */
+    PageResult getFlowState(PageData pd);
+
+    /**
+     * @Title: listPDPage
+     * @author: 吴佳隆
+     * @data: 2021年4月1日 上午8:43:50
+     * @Description: 根据条件分页查询出差列表
+     * @param page
+     * @return PageResult
+     */
+    PageResult listPDPage(Page<PageData> page);
+
+    /**
+     * @Title: listEvectionHistoryFlow
+     * @author: 吴佳隆
+     * @data: 2021年4月1日 上午8:50:30
+     * @Description: 获取出差历史流程列表
+     * @param pd
+     * @return PageResult
+     */
+    PageResult listEvectionHistoryFlow(PageData pd);
 
 }
