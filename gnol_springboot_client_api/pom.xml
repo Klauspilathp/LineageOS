@@ -72,6 +72,10 @@
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-oauth2</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>com.gnol</groupId>
+			<artifactId>gnol_springboot_plugins_net</artifactId>
+		</dependency>
 	</dependencies>
 
 	<build>

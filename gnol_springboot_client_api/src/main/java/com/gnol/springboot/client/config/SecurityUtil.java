@@ -5,6 +5,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
+import com.alibaba.fastjson.JSONObject;
+
 /**
  * @Title: SecurityUtil
  * @Package: com.gnol.springboot.client.config
@@ -32,6 +34,18 @@ public class SecurityUtil extends SecurityContextHolder {
         }
         logger.debug("principal 为 {}", principal);
         return null;
+    }
+
+    /**
+     * 登录用户主键
+     */
+    public static Long getUserId() {
+        CustomUserDetails userDetails = getUserDetails();
+        if (userDetails == null) {
+            return null;
+        }
+        JSONObject params = (JSONObject) userDetails.getParams();
+        return params.getLong("userId");
     }
 
     /**

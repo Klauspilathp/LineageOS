@@ -47,6 +47,7 @@ public class SysTestController extends WebBaseController {
         CustomUserDetails userDetails = SecurityUtil.getUserDetails();
         Authentication authentication = SecurityUtil.getAuthentication();
         String username = SecurityUtil.getUsername();
+        Long userId = SecurityUtil.getUserId();
         return PageResult.ok("SysTestController.test2");
     }
 
