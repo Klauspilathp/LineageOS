@@ -67,6 +67,7 @@ public class Oauth2Application {
      * jwt 对称加密存储策略认证流程：
      *  1、授权服务器和资源服务器配置相同的加密密钥；
      *  2、其余流程同 jdbc 储存策略认证流程。
+     *  
      * jwt 非对称（密钥对）加密存储策略认证流程：
      *  1、使用 JDK 的 keytool 生成密钥对，示例：
      *      命令帮助：keytool -help
