@@ -4,7 +4,8 @@
 	<!-- http://ehcache.org/ehcache.xsd -->
 	<!-- 缓存存放目录，java.io.tmpdir 是操作系统缓存的临时目录 -->
 	<!-- <diskStore path="E:\Trash\cache\ehcaches" /> -->
-	<diskStore path="./ehcaches" />
+	<!-- <diskStore path="./ehcaches" /> -->
+	<diskStore path="java.io.tmpdir" />
 	
 	<!-- RMI 是 Java 的一种远程方法调用技术，是一种点对点的基于 Java 对象的通讯方式。EhCache 从 1.2 版本开始就支持 RMI 方式的缓存集群 -->
 	<!-- 在集群环境中 EhCache 所有缓存对象的键和值都必须是可序列化的，也就是必须实现 java.io.Serializable 接口，这点在其它集群方式下也是需要遵守的 -->
