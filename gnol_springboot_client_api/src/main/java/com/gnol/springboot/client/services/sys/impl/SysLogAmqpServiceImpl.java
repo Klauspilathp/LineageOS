@@ -31,7 +31,7 @@ public class SysLogAmqpServiceImpl implements SysLogAmqpService {
     @Autowired
     private AmqpTemplate amqpTemplate;
 
-    @Bean
+    @Bean("sysLogQueue")
     @ConditionalOnMissingBean(name = "sysLogQueue")
     public Queue sysLogQueue() {
         return new Queue(SYS_LOG_QUEUE);
