@@ -65,9 +65,14 @@ public class Oauth2Application {
      *      数据到 127.0.0.1:9101/oauth/token 接口获取授权 token。
      *  
      * jwt 对称加密存储策略认证流程：
-     *  1、
+     *  1、授权服务器和资源服务器配置相同的加密密钥；
+     *  2、其余流程同 jdbc 储存策略认证流程。
      * jwt 非对称（密钥对）加密存储策略认证流程：
-     *  1、
+     *  1、使用 JDK 的 keytool 生成密钥对，示例：
+     *      命令帮助：keytool -help
+     *      生成密钥帮助：keytool -genkeypair -help
+     *      生成密钥：keytool -genkeypair -alias oauth2 -keyalg RSA -keypass oauth2keypass -keystore oauth2.jks -storepass oauth2storepass
+     *      生成 oauth2.jks 在当前目录。
      *  2、
      *  3、
      *  4、

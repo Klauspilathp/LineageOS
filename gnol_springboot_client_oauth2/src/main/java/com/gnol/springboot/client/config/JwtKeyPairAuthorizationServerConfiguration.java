@@ -1,5 +1,6 @@
 package com.gnol.springboot.client.config;
 
+import java.security.KeyPair;
 import java.util.Arrays;
 
 import javax.annotation.Resource;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.oauth2.authserver.AuthorizationServerProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -27,6 +29,7 @@ import org.springframework.security.oauth2.provider.token.TokenEnhancerChain;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
+import org.springframework.security.oauth2.provider.token.store.KeyStoreKeyFactory;
 
 /**
  * @Title: JwtAuthorizationServerConfiguration
@@ -101,7 +104,12 @@ public class JwtKeyPairAuthorizationServerConfiguration extends AuthorizationSer
     public JwtAccessTokenConverter jwtAccessTokenConverter() {
         JwtAccessTokenConverter tokenConverter = new JwtAccessTokenConverter();
         tokenConverter.setAccessTokenConverter(new CustomAccessTokenConverter());
-        tokenConverter.setSigningKey(authorizationServerProperties.getJwt().getKeyValue()); // 对称密钥
+        // jwt 非对称（密钥对）加密
+        KeyPair keyPair = new KeyStoreKeyFactory(
+                new ClassPathResource(authorizationServerProperties.getJwt().getKeyStore()), // 密钥文件路径
+                authorizationServerProperties.getJwt().getKeyPassword().toCharArray() // 密码
+        ).getKeyPair(authorizationServerProperties.getJwt().getKeyAlias()); // 别名
+        tokenConverter.setKeyPair(keyPair);
         return tokenConverter;
     }
 
@@ -162,36 +170,5 @@ public class JwtKeyPairAuthorizationServerConfiguration extends AuthorizationSer
                 .exceptionTranslator(new CustomWebResponseExceptionTranslator()) // 自定义异常处理
                 .allowedTokenEndpointRequestMethods(HttpMethod.GET, HttpMethod.POST); // 允许 GET、POST 请求 /oauth/token 端点
     }
-
-    /*@Override
-    public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
-        endpoints.authenticationManager(authenticationManager) // 密码模式所需的认证管理对象
-                .authorizationCodeServices(jdbcAuthorizationCodeServices()) // 授权码模式数据来源
-                .approvalStore(jdbcApprovalStore()) // 授权信息保存策略
-                .tokenServices(authorizationServerTokenServices()) // 令牌服务
-                .exceptionTranslator(new CustomWebResponseExceptionTranslator()) // 自定义异常处理
-                .allowedTokenEndpointRequestMethods(HttpMethod.GET, HttpMethod.POST); // 允许 GET、POST 请求 /oauth/token 端点
-    }*/
-
-    /**
-     * 令牌服务
-     */
-    /*@Bean
-    public AuthorizationServerTokenServices authorizationServerTokenServices() {
-        DefaultTokenServices tokenServices = new DefaultTokenServices();
-        // 令牌默认有效期 2 小时
-        tokenServices.setAccessTokenValiditySeconds(7200);
-        tokenServices.setAuthenticationManager(authenticationManager);
-        tokenServices.setClientDetailsService(jdbcClientDetailsService());
-        // 刷新令牌默认有效期 3 天
-        tokenServices.setRefreshTokenValiditySeconds(259200);
-        // 支持令牌刷新
-        tokenServices.setSupportRefreshToken(true);
-        // 令牌增强策略
-        tokenServices.setTokenEnhancer(tokenEnhancerChain());
-        // 令牌存储策略
-        tokenServices.setTokenStore(jwtTokenStore());
-        return tokenServices;
-    }*/
 
 }
