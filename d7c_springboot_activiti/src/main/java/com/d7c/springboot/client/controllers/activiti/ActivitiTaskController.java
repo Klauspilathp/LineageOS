@@ -30,7 +30,7 @@ import com.d7c.springboot.client.controllers.WebBaseController;
 @RequestMapping(value = "/activiti/task")
 public class ActivitiTaskController extends WebBaseController {
     /**
-     * 提供与用户集成的流程任务存储库操作、访问的服务，内部实现依赖 {@link TaskService}
+     * 提供与用户集成的流程任务存储库操作、访问的服务，内部实现依赖 {@link TaskService}，访问时用户需要拥有 ACTIVITI_USER 角色的权限。
      */
     @Autowired
     private TaskRuntime taskRuntime;

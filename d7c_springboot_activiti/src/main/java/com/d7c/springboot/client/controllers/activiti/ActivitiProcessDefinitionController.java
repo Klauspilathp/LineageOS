@@ -42,7 +42,7 @@ import com.d7c.springboot.client.controllers.WebBaseController;
 @RequestMapping(value = "/activiti/processDefinition")
 public class ActivitiProcessDefinitionController extends WebBaseController {
     /**
-     * 操作流程实例服务
+     * 操作流程实例服务，访问时用户需要拥有 ACTIVITI_USER 角色的权限。
      */
     @Autowired
     private ProcessRuntime processRuntime;

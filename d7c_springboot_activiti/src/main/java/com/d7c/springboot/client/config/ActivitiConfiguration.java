@@ -21,7 +21,7 @@ import org.springframework.web.filter.CorsFilter;
  * @Package: com.d7c.springboot.client.config
  * @author: 吴佳隆
  * @date: 2020年7月26日 下午1:06:37
- * @Description: api 项目配置类
+ * @Description: activiti 项目配置类
  */
 @Configuration
 @EnableOAuth2Client // 必须在此类上加此注解 OAuth2RestTemplate 才能使用 eureka 服务名访问其他服务
