@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.security.oauth2.authserver.AuthorizationServerProperties;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.ResourceServerProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -43,6 +44,11 @@ public class JwtKeyPairResourceServerConfiguration extends ResourceServerConfigu
     @Autowired
     private ResourceServerProperties resourceServerProperties;
     /**
+     * 认证服务器属性配置
+     */
+    @Autowired
+    private AuthorizationServerProperties authorizationServerProperties;
+    /**
      * RestTemplate 是 spring 提供的用于访问 rest 服务的客户端
      */
     @Autowired
@@ -62,6 +68,14 @@ public class JwtKeyPairResourceServerConfiguration extends ResourceServerConfigu
      */
     @Autowired
     private OAuth2AccessDeniedHandler oAuth2AccessDeniedHandler;
+
+    /**
+     * 认证服务器属性配置
+     */
+    @Bean
+    public AuthorizationServerProperties authorizationServerProperties() {
+        return new AuthorizationServerProperties();
+    }
 
     /**
      * 自定义异常转化器
@@ -100,12 +114,12 @@ public class JwtKeyPairResourceServerConfiguration extends ResourceServerConfigu
         JwtAccessTokenConverter tokenConverter = new JwtAccessTokenConverter();
         tokenConverter.setAccessTokenConverter(new CustomAccessTokenConverter());
         String key = null;
-        Resource resource = new ClassPathResource(resourceServerProperties.getJwt().getKeyStore());
+        Resource resource = new ClassPathResource(authorizationServerProperties.getJwt().getKeyStore());
         try (BufferedReader br = new BufferedReader(new InputStreamReader(resource.getInputStream()))) {
-            key = br.lines().collect(Collectors.joining("\n"));
+            key = br.lines().collect(Collectors.joining("\r\n"));
         } catch (IOException ioe) {
             ObjectMapper objectMapper = new ObjectMapper();
-            String result = restTemplate.getForObject(resourceServerProperties.getJwt().getKeyUri(), String.class);
+            String result = restTemplate.getForObject(authorizationServerProperties.getTokenKeyAccess(), String.class);
             try {
                 Map map = objectMapper.readValue(result, Map.class);
                 key = map.get("value").toString();
@@ -113,8 +127,7 @@ public class JwtKeyPairResourceServerConfiguration extends ResourceServerConfigu
                 e.printStackTrace();
             }
         }
-        tokenConverter.setSigningKey(key);
-        // tokenConverter.setVerifierKey(key);
+        tokenConverter.setVerifierKey(key);
         return tokenConverter;
     }
 
