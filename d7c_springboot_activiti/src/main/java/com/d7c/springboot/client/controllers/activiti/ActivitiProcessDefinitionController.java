@@ -1,4 +1,4 @@
-package com.d7c.springboot.client.controllers.evection;
+package com.d7c.springboot.client.controllers.activiti;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -32,15 +32,15 @@ import com.d7c.plugins.tools.idfactory.uuid.UUID;
 import com.d7c.springboot.client.controllers.WebBaseController;
 
 /**
- * @Title: EvectionProcessDefinitionController
- * @Package: com.d7c.springboot.client.controllers.evection
+ * @Title: ActivitiProcessDefinitionController
+ * @Package: com.d7c.springboot.client.controllers.activiti
  * @author: 吴佳隆
  * @date: 2021年1月15日 上午7:52:44
- * @Description: 出差流程定义控制类
+ * @Description: activiti 流程定义操作控制类
  */
 @RestController
-@RequestMapping(value = "/evection/processDefinition")
-public class EvectionProcessDefinitionController extends WebBaseController {
+@RequestMapping(value = "/activiti/processDefinition")
+public class ActivitiProcessDefinitionController extends WebBaseController {
     /**
      * 操作流程实例服务
      */

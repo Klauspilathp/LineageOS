@@ -1,7 +1,9 @@
-package com.d7c.springboot.client.controllers.evection;
+package com.d7c.springboot.client.controllers.activiti;
 
-import org.activiti.api.process.runtime.ProcessRuntime;
+import java.util.List;
+
 import org.activiti.engine.RepositoryService;
+import org.activiti.engine.repository.Deployment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,25 +15,33 @@ import com.d7c.plugins.core.StringUtil;
 import com.d7c.springboot.client.controllers.WebBaseController;
 
 /**
- * @Title: EvectionDeploymentController
- * @Package: com.d7c.springboot.client.controllers.evection
+ * @Title: ActivitiDeploymentController
+ * @Package: com.d7c.springboot.client.controllers.activiti
  * @author: 吴佳隆
  * @date: 2021年1月15日 上午7:52:44
- * @Description: 出差流程部署控制类
+ * @Description: activiti 流程部署操作控制类
  */
 @RestController
-@RequestMapping(value = "/evection/deployment")
-public class EvectionDeploymentController extends WebBaseController {
-    /**
-     * 操作流程实例服务
-     */
-    @Autowired
-    private ProcessRuntime processRuntime;
+@RequestMapping(value = "/activiti/deployment")
+public class ActivitiDeploymentController extends WebBaseController {
     /**
      * 提供对流程定义和部署存储库的访问的服务
      */
     @Autowired
     private RepositoryService repositoryService;
+
+    /**
+     * @Title: listDeployment
+     * @author: 吴佳隆
+     * @data: 2021年1月18日 下午2:17:13
+     * @Description: 查询流程部署列表
+     * @return PageResult
+     */
+    @GetMapping(value = "/listDeployment")
+    public PageResult listDeployment() {
+        List<Deployment> deployments = repositoryService.createDeploymentQuery().list();
+        return PageResult.ok(deployments);
+    }
 
     /**
      * @Title: deleteDeployment
