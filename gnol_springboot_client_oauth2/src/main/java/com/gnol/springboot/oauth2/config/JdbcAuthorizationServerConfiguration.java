@@ -90,7 +90,7 @@ public class JdbcAuthorizationServerConfiguration extends AuthorizationServerCon
     @Override
     public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
         security.passwordEncoder(bCryptPasswordEncoder()).tokenKeyAccess("permitAll()") // 所有客户端都能请求 /oauth/token_key 端点
-                .checkTokenAccess("permitAll()") // 已验证的客户端才能请求 /oauth/check_token 端点
+                .checkTokenAccess("isAuthenticated()") // 已验证的客户端才能请求 /oauth/check_token 端点
                 .allowFormAuthenticationForClients(); // 允许表单方式认证
     }
 

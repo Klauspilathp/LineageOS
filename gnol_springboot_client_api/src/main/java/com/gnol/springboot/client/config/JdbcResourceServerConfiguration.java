@@ -56,7 +56,7 @@ public class JdbcResourceServerConfiguration extends ResourceServerConfigurerAda
      */
     @Override
     public void configure(ResourceServerSecurityConfigurer resources) throws Exception {
-        /* 配置令牌验证 */
+        // 配置 token 令牌验证
         RemoteTokenServices remoteTokenServices = new RemoteTokenServices();
         remoteTokenServices.setRestTemplate(restTemplate);
         remoteTokenServices.setCheckTokenEndpointUrl(authorizationServerProperties.getCheckTokenAccess());

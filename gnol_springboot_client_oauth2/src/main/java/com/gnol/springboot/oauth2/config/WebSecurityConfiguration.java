@@ -60,9 +60,8 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .headers().frameOptions().disable() // 不允许 iframe 内呈现
                 .and().cors() // 支持跨域请求
                 .and().authorizeRequests()
-                .antMatchers("/eureka/apps/**"/*eureka 心跳相关*/, "/actuator", "/actuator/**"/*监控相关*/, "/login"/*认证授权*/,
-                        "/logout"/*注销授权*/, "/oauth/**"/*认证请求*/)
-                .permitAll() // 免授权请求配置
+                .antMatchers("/eureka/apps/**"/*eureka 心跳相关*/, "/actuator", "/actuator/**"/*监控相关*/
+                ).permitAll() // 免授权请求配置
                 .anyRequest().authenticated() // 其余所有请求都需要授权
                 .and().formLogin().loginProcessingUrl("/login").and().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED); // 有需要时才生成 session
