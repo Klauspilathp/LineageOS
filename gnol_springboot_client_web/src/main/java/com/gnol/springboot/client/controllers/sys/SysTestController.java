@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.gnol.fastDFS.spring.boot.autoconfigure.FastDFService;
+import com.gnol.mybatis.spring.boot.autoconfigure.CurrDataSource;
+import com.gnol.mybatis.spring.boot.autoconfigure.DataSourceType;
 import com.gnol.plugins.core.PageData;
 import com.gnol.plugins.core.PageResult;
 import com.gnol.springboot.client.controllers.WebBaseController;
@@ -66,6 +68,7 @@ public class SysTestController extends WebBaseController {
 
     @RequestMapping(value = "/test3")
     @ResponseBody
+    @CurrDataSource(DataSourceType.SLAVE)
     public PageResult test3() {
         List<Test1Test> listBy = test1TestService.listBy(null);
         return PageResult.ok(listBy);
