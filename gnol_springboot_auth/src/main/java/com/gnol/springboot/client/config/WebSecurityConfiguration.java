@@ -16,6 +16,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.gnol.jwt.spring.boot.autoconfigure.JwtRsaUtil;
+import com.gnol.oauth2.spring.boot.SHA1PasswordEncoder;
 import com.gnol.springboot.client.daos.security.ExtSecurityKeyDao;
 import com.gnol.springboot.client.daos.sys.ExtSysMenuDao;
 

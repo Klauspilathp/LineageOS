@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
+import com.gnol.oauth2.spring.boot.CustomUserDetails;
 import com.gnol.plugins.core.StringUtil;
 import com.gnol.redis.spring.boot.autoconfigure.RedisService;
 import com.gnol.springboot.client.daos.sys.ExtSysMenuDao;

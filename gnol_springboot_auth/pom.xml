@@ -13,9 +13,16 @@
 	<description>gnol_springboot 项目授权服务模块</description>
 
 	<dependencies>
+		<!-- gnol 项目封装的 spring-boot 关于 oauth2 starter -->
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-web</artifactId>
+			<groupId>com.gnol</groupId>
+			<artifactId>spring-boot-starter-oauth2</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>org.springframework.cloud</groupId>
+					<artifactId>spring-cloud-starter-oauth2</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>com.gnol</groupId>
@@ -57,16 +64,6 @@
 			<groupId>com.gnol</groupId>
 			<artifactId>spring-boot-starter-jwt</artifactId>
 		</dependency>
-		<!-- 安全模块 -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-security</artifactId>
-		</dependency>
-		<!-- oauth2 -->
-		<!-- <dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-oauth2</artifactId>
-		</dependency> -->
 	</dependencies>
 
 	<build>

@@ -20,6 +20,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import com.gnol.jwt.spring.boot.autoconfigure.JwtRsaUtil;
+import com.gnol.oauth2.spring.boot.CustomUserDetails;
 import com.gnol.plugins.core.PageResult;
 import com.gnol.plugins.core.StringUtil;
 import com.gnol.plugins.core.enums.HttpStatus;
