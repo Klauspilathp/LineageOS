@@ -100,6 +100,7 @@ public class JwtAuthorizationServerConfiguration extends AuthorizationServerConf
     @Bean
     public JwtAccessTokenConverter jwtAccessTokenConverter() {
         JwtAccessTokenConverter tokenConverter = new JwtAccessTokenConverter();
+        tokenConverter.setAccessTokenConverter(new CustomAccessTokenConverter());
         tokenConverter.setSigningKey(authorizationServerProperties.getJwt().getKeyValue()); // 对称密钥
         return tokenConverter;
     }

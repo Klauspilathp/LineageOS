@@ -82,6 +82,7 @@ public class JwtResourceServerConfiguration extends ResourceServerConfigurerAdap
     public JwtAccessTokenConverter jwtAccessTokenConverter() {
         JwtAccessTokenConverter tokenConverter = new JwtAccessTokenConverter();
         tokenConverter.setSigningKey(resourceServerProperties.getJwt().getKeyValue()); // 对称密钥
+        tokenConverter.setAccessTokenConverter(new CustomAccessTokenConverter());
         return tokenConverter;
     }
 
