@@ -24,6 +24,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
+import com.gnol.springboot.client.services.sys.SysMenuService;
+import com.gnol.springboot.client.services.sys.SysSessionService;
+import com.gnol.springboot.client.services.sys.SysUserService;
+
 /**
  * @Title: WebSecurityConfiguration
  * @Package: com.gnol.springboot.client.config
@@ -45,6 +49,21 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
      */
     @Resource(name = "userDetailsServiceImpl")
     private UserDetailsService userDetailsService;
+    /**
+     * gnol 系统_用户详情权限临时表，用户在登录，下线等情况下触发插入、删除、更新操作，然后以此表关联业务表查询指定范围内的 Service 实现
+     */
+    @Resource(name = "sysSessionServiceImpl")
+    private SysSessionService sysSessionService;
+    /**
+     * gnol 系统_用户表 Service 实现
+     */
+    @Resource(name = "sysUserServiceImpl")
+    private SysUserService sysUserService;
+    /**
+     * gnol 系统菜单表 Service
+     */
+    @Resource(name = "sysMenuServiceImpl")
+    private SysMenuService sysMenuService;
 
     @Bean("sha1PasswordEncoder")
     @Primary
@@ -64,7 +83,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and().cors() // 支持跨域请求
                 .and().authorizeRequests()
                 .antMatchers("/eureka/apps/**"/*eureka 心跳相关*/, "/static/**"/*静态资源*/, "/favicon.ico", "/index"/*去登录页面*/,
-                        "/loginParam"/*登录页参数*/, "/actuator", "/actuator/**"/*监控相关*/)
+                        "/verifyCode" /*验证码*/, "/loginParam"/*登录页参数*/, "/actuator", "/actuator/**"/*监控相关*/)
                 .permitAll() // 免授权请求配置
                 .anyRequest().authenticated() // 其余所有请求都需要授权
                 .and().formLogin().usernameParameter("userAccount").passwordParameter("password").loginPage("/index")
@@ -74,6 +93,12 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
                             Authentication authentication) throws IOException, ServletException {
                         logger.debug("{} 用户在 {} 地址登录成功！", authentication.getName(), request.getRemoteAddr());
+                        // 修改用户登录状态
+
+                        // 更新 session 信息 TODO
+
+                        // 获取授权菜单放入 redis 中 TODO
+
                         response.sendRedirect("/main");
                     }
                 }).failureHandler(new AuthenticationFailureHandler() {
@@ -87,6 +112,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
         // .httpBasic(); 以弹框方式认证
         // .accessDecisionManager(new CustomAccessDecisionManager()) // 自定义权限决策处理
         ;
+        // http.rememberMe().tokenRepository(rememberMeHandler).tokenValiditySeconds(60 * 60 * 24)
     }
 
 }
