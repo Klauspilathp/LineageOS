@@ -5,11 +5,9 @@ import org.springframework.boot.autoconfigure.security.oauth2.OAuth2ClientProper
 import org.springframework.boot.autoconfigure.security.oauth2.authserver.AuthorizationServerProperties;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.ResourceServerProperties;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.token.RemoteTokenServices;
@@ -22,8 +20,8 @@ import org.springframework.web.client.RestTemplate;
  * @date: 2020年7月22日 下午2:09:54
  * @Description: Jdbc 储存策略存储授权码 oauth2 资源服务器配置
  */
-@Configuration
-@EnableResourceServer
+/*@Configuration
+@EnableResourceServer*/
 public class JdbcResourceServerConfiguration extends ResourceServerConfigurerAdapter {
     /**
      * gnol 系统自定义属性
