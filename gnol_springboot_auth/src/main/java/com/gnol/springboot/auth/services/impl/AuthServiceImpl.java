@@ -31,7 +31,7 @@ public class AuthServiceImpl implements AuthService {
     /**
      * 当前 token 用户信息存储的 key 前缀
      */
-    private static final String TOKEN = "token:";
+    private static final String TOKEN = "auth:token:";
     /**
      * redis 缓存服务实现
      */

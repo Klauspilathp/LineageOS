@@ -32,6 +32,9 @@ public class AuthController implements AuthMapping {
         return authService.auth(pd);
     }
 
+    /**
+     * 使用 feign 接口通过 GET 请求验证请求是否合法
+     */
     @Override
     public PageResult validate(String token, String servletPath) {
         PageData pd = new PageData();
