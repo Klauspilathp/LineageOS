@@ -1,13 +1,13 @@
-package com.gnol.springboot;
+package com.gnol.springboot.client;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class GnolSpringbootApplication {
+public class WebApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(GnolSpringbootApplication.class, args);
+        SpringApplication.run(WebApplication.class, args);
     }
 
 }

@@ -9,20 +9,24 @@
         <version>0.0.1-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
-    <artifactId>gnol_springboot_common</artifactId>
+    <artifactId>gnol_springboot_client_web</artifactId>
     <packaging>jar</packaging>
-    <name>gnol_springboot_common</name>
-    <description>gnol springboot 项目公共模块</description>
+    <name>gnol_springboot_client_web</name>
+    <description>gnol springboot 项目 web 服务</description>
 
     <dependencies>
         <dependency>
             <groupId>com.gnol</groupId>
-            <artifactId>gnol_springboot_core</artifactId>
+            <artifactId>gnol_springboot_service</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-aop</artifactId>
+            <artifactId>spring-boot-starter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
     </dependencies>
 
@@ -43,6 +47,5 @@
             </resource>
         </resources>
     </build>
-
 
 </project>

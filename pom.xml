@@ -12,22 +12,145 @@
     <artifactId>gnol_springboot</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
+    <url>https://start.spring.io/,https://github.com/spring-projects/spring-boot</url>
     <name>gnol_springboot</name>
     <description>gnol springboot 版项目父工程</description>
+
+    <!-- 设定主仓库，按设定顺序进行查找。 -->
+    <repositories>
+        <repository>
+            <id>alimaven</id>
+            <name>aliyun maven</name>
+            <url>http://maven.aliyun.com/nexus/content/groups/public</url>
+        </repository>
+    </repositories>
+    <!-- 设定插件仓库 -->
+    <pluginRepositories>
+        <pluginRepository>
+            <id>alimaven</id>
+            <name>aliyun maven</name>
+            <url>http://maven.aliyun.com/nexus/content/groups/public</url>
+        </pluginRepository>
+    </pluginRepositories>
 
     <modules>
         <module>gnol_springboot_core</module>
         <module>gnol_springboot_common</module>
+        <module>gnol_springboot_service</module>
+        <module>gnol_springboot_client_web</module>
+        <module>gnol_springboot_client_api</module>
     </modules>
 
+    <!-- 集中定义依赖版本号 -->
     <properties>
+        <!-- 表示项目构建开始时间 -->
+        <timestamp>${maven.build.timestamp}</timestamp>
+        <!-- 表示属性 ${maven.build.timestamp} 的展示格式，默认值为 yyyyMMdd-HHmm -->
+        <maven.build.timestamp.format>yyyyMMdd-HHmmss</maven.build.timestamp.format>
+        <!-- 表示主源码的编码格式 -->
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
+        <!-- 表示项目根目录，即包含 pom.xml 文件的目录 -->
+        <basedir>/</basedir>
+        <!-- jar 版本管理 -->
+        <gnol_plugins.version>0.0.1-SNAPSHOT</gnol_plugins.version>
     </properties>
 
+    <!-- 只是对版本进行管理，不会实际引入 jar -->
+    <!-- compile：默认的 scope，表示 dependency 可以在生命周期中使用。而且这些 dependencies 会传递到依赖的项目中，适用于所有阶段，会随着项目一起发布 -->
+    <!-- provided：跟 compile 相似，但是表明了dependency 由JDK或者容器提供，这个 scope 只能作用在编译和测试时，同时没有传递性 -->
+    <!-- runtime：表示 dependency 不作用在编译时，但会作用在运行和测试时，如JDBC驱动，适用运行和测试阶段 -->
+    <!-- test：表示 dependency 作用在测试时，不作用在运行时，只在测试时使用，用于编译和运行测试代码，不会随项目发布 -->
+    <!-- system：跟 provided 相似，但是在系统中要以外部JAR包的形式提供，maven 不会在 repository 查找它 -->
+    <dependencyManagement>
+        <dependencies>
+            <!-- gnol 插件 =======>start -->
+            <dependency>
+                <groupId>com.gnol</groupId>
+                <artifactId>gnol_plugins_core</artifactId>
+                <version>${gnol_plugins.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.gnol</groupId>
+                <artifactId>gnol_plugins_tools</artifactId>
+                <version>${gnol_plugins.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.gnol</groupId>
+                <artifactId>gnol_plugins_net</artifactId>
+                <version>${gnol_plugins.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.gnol</groupId>
+                <artifactId>gnol_plugins_dbs</artifactId>
+                <version>${gnol_plugins.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.gnol</groupId>
+                <artifactId>gnol_plugins_cache</artifactId>
+                <version>${gnol_plugins.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.gnol</groupId>
+                <artifactId>gnol_plugins_netty</artifactId>
+                <version>${gnol_plugins.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.gnol</groupId>
+                <artifactId>gnol_plugins_search</artifactId>
+                <version>${gnol_plugins.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.gnol</groupId>
+                <artifactId>gnol_plugins_ali</artifactId>
+                <version>${gnol_plugins.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.gnol</groupId>
+                <artifactId>gnol_plugins_weixin</artifactId>
+                <version>${gnol_plugins.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.gnol</groupId>
+                <artifactId>gnol_plugins_fastDFS</artifactId>
+                <version>${gnol_plugins.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.gnol</groupId>
+                <artifactId>gnol_plugins_vsftpd</artifactId>
+                <version>${gnol_plugins.version}</version>
+            </dependency>
+            <!-- gnol 插件 =======>end -->
+        </dependencies>
+    </dependencyManagement>
+
     <dependencies>
+        <!-- spring boot 缓存 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter</artifactId>
+            <artifactId>spring-boot-starter-cache</artifactId>
+        </dependency>
+        <!-- 热部署 -->
+        <!-- devtools 可以实现页面热部署（即页面修改后会立即生效，这个可以直接在 application.properties 文件中配置 spring.thymeleaf.cache=false 来实现） -->
+        <!-- 实现类文件热部署（类文件修改后不会立即生效），实现对属性文件的热部署。 -->
+        <!-- 即 devtools 会监听 classpath 下的文件变动，并且会立即重启应用（发生在保存时机），
+            注意：因为其采用的虚拟机机制，该项重启是很快的 -->
+        <!-- （1）base classloader （Base 类加载器）：加载不改变的 Class，例如：第三方提供的 jar 包。 -->
+        <!-- （2）restart classloader（Restart 类加载器）：加载正在开发的 Class。 -->
+        <!-- 为什么重启很快，因为重启的时候只是加载了在开发的 Class，没有重新加载第三方的 jar 包。 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <!-- optional=true, 依赖不会传递, 该项目依赖 devtools，之后依赖 boot 项目的项目如果想要使用 devtools, 需要重新引入 -->
+            <optional>true</optional>
+            <scope>runtime</scope>
+        </dependency>
+        <!-- @ConfigurationProperties 使用 spring-boot-configuration-processorjar 注释的项目轻松生成配置元数据文件 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -43,12 +166,71 @@
     </dependencies>
 
     <build>
+        <finalName>${project.artifactId}</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <!-- 如果不设置 fork，那么不会 restart，devtools 热部署不会起作用-->
+                    <fork>true</fork>
+                    <addResources>true</addResources>
+                </configuration>
+            </plugin>
+            <!-- 资源文件拷贝插件 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>2.7</version>
+                <configuration>
+                    <encoding>${project.build.sourceEncoding}</encoding>
+                </configuration>
+            </plugin>
+            <!-- java 编译插件 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.2</version>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                    <encoding>${project.build.sourceEncoding}</encoding>
+                    <showWarnings>true</showWarnings>
+                    <compilerArguments>
+                        <verbose/>
+                        <bootclasspath>${java.home}/lib/rt.jar;${java.home}/lib/jce.jar</bootclasspath>
+                    </compilerArguments>
+                </configuration>
+            </plugin>
+            <!-- 执行测试用例的插件 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.19</version>
+                <configuration>
+                    <skipTests>true</skipTests>
+                    <testFailureIgnore>true</testFailureIgnore>
+                </configuration>
             </plugin>
         </plugins>
     </build>
+
+    <!-- 开发者信息 -->
+    <developers>
+        <developer>
+            <id>gnol</id>
+            <name>wujialong</name>
+            <email>wjl5760610@126.com</email>
+            <roles>
+                <role>project owner</role>
+            </roles>
+            <timezone>+8</timezone>
+        </developer>
+    </developers>
+
+    <organization>
+        <name>gnol</name>
+        <url>http://gnol.com</url>
+    </organization>
 
 </project>
