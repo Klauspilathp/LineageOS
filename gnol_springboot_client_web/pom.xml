@@ -14,6 +14,10 @@
     <name>gnol_springboot_client_web</name>
     <description>gnol springboot 项目 web 服务</description>
 
+    <properties>
+
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>com.gnol</groupId>
