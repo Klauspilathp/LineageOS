@@ -1,13 +1,14 @@
-package com.gnol.springboot;
+package com.gnol.springboot.common;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class GnolSpringbootApplicationTests {
+class BaseTest {
 
     @Test
     void contextLoads() {
+
     }
 
 }
