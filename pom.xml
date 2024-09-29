@@ -58,6 +58,8 @@
         <druid-spring-boot-starter.version>1.1.22</druid-spring-boot-starter.version>
         <mysql-connector-java.version>8.0.17</mysql-connector-java.version>
         <druid.version>1.1.21</druid.version>
+        <swagger.version>2.9.2</swagger.version>
+        <junit.version>4.12</junit.version>
     </properties>
 
     <!-- 只是对版本进行管理，不会实际引入 jar -->
@@ -142,6 +144,18 @@
                 <artifactId>druid</artifactId>
                 <version>${druid.version}</version>
             </dependency>
+            <!-- swagger 生成接口文档 =======>start -->
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger2</artifactId>
+                <version>${swagger.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger-ui</artifactId>
+                <version>${swagger.version}</version>
+            </dependency>
+            <!-- swagger 生成接口文档 =======>end -->
         </dependencies>
     </dependencyManagement>
 
@@ -152,7 +166,7 @@
             <artifactId>spring-boot-starter-cache</artifactId>
         </dependency>
         <!-- 热部署 -->
-        <!-- devtools 可以实现页面热部署（即页面修改后会立即生效，这个可以直接在 application.properties 文件中配置 spring.thymeleaf.cache=false 来实现） -->
+        <!-- devtools 可以实现页面热部署（即页面修改后会立即生效，这个可以直接在 applicatjwtties 文件中配置 spring.thymeleaf.cache=false 来实现） -->
         <!-- 实现类文件热部署（类文件修改后不会立即生效），实现对属性文件的热部署。 -->
         <!-- 即 devtools 会监听 classpath 下的文件变动，并且会立即重启应用（发生在保存时机），
             注意：因为其采用的虚拟机机制，该项重启是很快的 -->
@@ -182,6 +196,13 @@
                     <artifactId>junit-vintage-engine</artifactId>
                 </exclusion>
             </exclusions>
+        </dependency>
+        <!-- 单元测试框架 -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 
