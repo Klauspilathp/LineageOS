@@ -21,7 +21,7 @@ import org.springframework.web.context.WebApplicationContext;
  * @Description: 基础测试类
  */
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = WebApplication.class)
+@SpringBootTest(classes = TestWebApplication.class)
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @WebAppConfiguration
 @Transactional
