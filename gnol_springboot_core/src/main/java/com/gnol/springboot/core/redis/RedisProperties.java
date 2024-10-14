@@ -4,10 +4,9 @@ package com.gnol.springboot.core.redis;
  * @Title: RedisProperties
  * @Package: com.gnol.springboot.core.redis
  * @author: 吴佳隆
- * @date: 2020/6/7 12:43
- * @Description: redis 属性配置类
+ * @date: 2020年6月7日 下午7:25:46
+ * @Description: TODO
  */
-
 public class RedisProperties {
 
 }

@@ -1,8 +1,9 @@
 package com.gnol.springboot.client.config;
 
-import io.swagger.annotations.ApiOperation;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import io.swagger.annotations.ApiOperation;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
@@ -16,7 +17,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
  * @Title: SwaggerConfig
  * @Package: com.gnol.springboot.client.config
  * @author: 吴佳隆
- * @date: 2020/6/7 13:37
+ * @date: 2020年6月8日 上午8:28:52
  * @Description: swagger 配置
  */
 @Configuration
