@@ -60,7 +60,6 @@
 		<mysql-connector-java.version>8.0.17</mysql-connector-java.version>
 		<druid.version>1.1.21</druid.version>
 		<swagger.version>2.9.2</swagger.version>
-		<junit.version>4.12</junit.version>
 	</properties>
 
     <!-- 只是对版本进行管理，不会实际引入 jar -->
@@ -198,10 +197,9 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
-        <!-- 单元测试框架 -->
 		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
+			<groupId>org.junit.platform</groupId>
+			<artifactId>junit-platform-launcher</artifactId>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>

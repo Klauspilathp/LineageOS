@@ -1,7 +1,6 @@
 package com.gnol.springboot.core;
 
-import org.junit.Before;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.junit.jupiter.api.Test;
 
 /**
  * @Title: BaseTest
@@ -10,12 +9,11 @@ import org.springframework.boot.test.context.SpringBootTest;
  * @date: 2020年6月7日 下午7:26:21
  * @Description: 基础测试类
  */
-@SpringBootTest
 public class BaseTest {
 
-    @Before
+    @Test
     public void contextLoads() {
-
+        System.out.println("aa");
     }
 
 }
