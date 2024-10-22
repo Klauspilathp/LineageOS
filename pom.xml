@@ -207,15 +207,6 @@
 	<build>
 		<finalName>${project.artifactId}</finalName>
 		<plugins>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-				<configuration>
-                    <!-- 如果不设置 fork，那么不会 restart，devtools 热部署不会起作用-->
-					<fork>true</fork>
-					<addResources>true</addResources>
-				</configuration>
-			</plugin>
             <!-- 资源文件拷贝插件 -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>

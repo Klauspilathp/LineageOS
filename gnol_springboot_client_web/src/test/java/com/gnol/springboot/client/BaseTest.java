@@ -18,7 +18,7 @@ import org.springframework.web.context.WebApplicationContext;
  * @Package: com.gnol.springboot.client
  * @author: 吴佳隆
  * @date: 2020年6月8日 上午8:27:40
- * @Description: 基础测试类
+ * @Description: 基础测试类，junit 测试类都需要继承此类
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = TestWebApplication.class)
