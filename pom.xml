@@ -2,12 +2,12 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<parent>
+	<!-- <parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>2.2.7.RELEASE</version>
-		<relativePath /> <!-- lookup parent from repository -->
-	</parent>
+		<relativePath />
+	</parent> -->
 	<groupId>com.gnol</groupId>
 	<artifactId>gnol_springboot</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
@@ -55,6 +55,7 @@
         <!-- 表示项目根目录，即包含 pom.xml 文件的目录 -->
 		<basedir>/</basedir>
         <!-- jar 版本管理 -->
+		<spring-boot-starter-parent.version>2.2.7.RELEASE</spring-boot-starter-parent.version>
 		<gnol_plugins.version>0.0.1-SNAPSHOT</gnol_plugins.version>
 		<druid-spring-boot-starter.version>1.1.22</druid-spring-boot-starter.version>
 		<mysql-connector-java.version>8.0.17</mysql-connector-java.version>
@@ -70,6 +71,13 @@
     <!-- system：跟 provided 相似，但是在系统中要以外部JAR包的形式提供，maven 不会在 repository 查找它 -->
 	<dependencyManagement>
 		<dependencies>
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-starter-parent</artifactId>
+				<version>${spring-boot-starter-parent.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
             <!-- gnol 插件 =======>start -->
 			<dependency>
 				<groupId>com.gnol</groupId>
@@ -190,12 +198,6 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
-			<exclusions>
-				<exclusion>
-					<groupId>org.junit.vintage</groupId>
-					<artifactId>junit-vintage-engine</artifactId>
-				</exclusion>
-			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>org.junit.platform</groupId>
@@ -211,6 +213,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-resources-plugin</artifactId>
+				<version>2.7</version>
 				<configuration>
 					<encoding>${project.build.sourceEncoding}</encoding>
 				</configuration>
@@ -219,6 +222,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.2</version>
 				<configuration>
 					<source>${java.version}</source>
 					<target>${java.version}</target>
@@ -234,6 +238,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.19</version>
 				<configuration>
 					<skipTests>true</skipTests>
 					<testFailureIgnore>true</testFailureIgnore>
