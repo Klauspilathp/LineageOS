@@ -1,0 +1,22 @@
+@SpringBootApplication 是一个组合注解，主要包含以下三个注解：
+	@SpringBootConfiguration：继承自 @Configuration，是一个配置类注解，用来实例化一个 bean；
+	@EnableAutoConfiguration：开启自动配置功能，会扫描带有 @Configuration 的类，然后初始化这些配置类中的信息并加入到应用上下文中去，同时完成一些基本的初始化工作；
+	@ComponentScan：组件包扫描，也就是需要扫描哪些包下的注解，可自动发现和装配一些 bean，默认扫描当前启动类所在包下面的类和下面的所有子包。
+
+@EnableConfigurationProperties：这是一个开启使用配置参数的注解，value 值就是配置实体参数映射的 ClassType，将配置实体作为配置来源。
+
+SpringBoot 内置条件注解有关 @ConditionalOnXxx 注解，根据名称可以理解为具有 Xxx 条件，条件注解是一个系列：
+	@ConditionalOnBean：当 SpringIoc 容器内存在指定 Bean 的条件；
+	@ConditionalOnClass：当 SpringIoc 容器内存在指定 Class 的条件；
+	@ConditionalOnExpression：基于 SpEL 表达式作为判断条件；
+	@ConditionalOnJava：基于 JVM 版本作为判断条件；
+	@ConditionalOnJndi：在 JNDI 存在时查找指定的位置；
+	@ConditionalOnMissingBean：当 SpringIoc 容器内不存在指定 Bean 的条件；
+	@ConditionalOnMissingClass：当 SpringIoc 容器内不存在指定 Class 的条件；
+	@ConditionalOnNotWebApplication：当前项目不是 Web 项目的条件；
+	@ConditionalOnProperty：指定的属性是否有指定的值；
+	@ConditionalOnResource：类路径是否有指定的值；
+	@ConditionalOnSingleCandidate：当指定 Bean 在 SpringIoc 容器内只有一个，或者虽然有多个但是指定首选的 Bean；
+	@ConditionalOnWebApplication：当前项目是 Web 项目的条件。
+
+
