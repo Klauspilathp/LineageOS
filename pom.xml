@@ -61,6 +61,7 @@
 		<mysql-connector-java.version>8.0.17</mysql-connector-java.version>
 		<druid.version>1.1.21</druid.version>
 		<swagger.version>2.9.2</swagger.version>
+		<mybatis-spring-boot-starter.version>2.0.1</mybatis-spring-boot-starter.version>
 	</properties>
 
     <!-- 只是对版本进行管理，不会实际引入 jar -->
@@ -164,15 +165,30 @@
 				<version>${swagger.version}</version>
 			</dependency>
             <!-- swagger 生成接口文档 =======>end -->
+			<dependency>
+				<groupId>org.mybatis.spring.boot</groupId>
+				<artifactId>mybatis-spring-boot-starter</artifactId>
+				<version>${mybatis-spring-boot-starter.version}</version>
+			</dependency>
 		</dependencies>
 	</dependencyManagement>
 
 	<dependencies>
+		<!-- @ConfigurationProperties 使用 spring-boot-configuration-processorjar 注释的项目轻松生成配置元数据文件 -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-configuration-processor</artifactId>
+			<optional>true</optional>
+		</dependency>
         <!-- spring boot 缓存 -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-cache</artifactId>
 		</dependency>
+		<!-- <dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-logging</artifactId>
+		</dependency> -->
         <!-- 热部署 -->
         <!-- devtools 可以实现页面热部署（即页面修改后会立即生效，这个可以直接在 applicatjwtties 文件中配置 spring.thymeleaf.cache=false 来实现） -->
         <!-- 实现类文件热部署（类文件修改后不会立即生效），实现对属性文件的热部署。 -->
@@ -187,12 +203,6 @@
             <!-- optional=true, 依赖不会传递, 该项目依赖 devtools，之后依赖 boot 项目的项目如果想要使用 devtools, 需要重新引入 -->
 			<optional>true</optional>
 			<scope>runtime</scope>
-		</dependency>
-        <!-- @ConfigurationProperties 使用 spring-boot-configuration-processorjar 注释的项目轻松生成配置元数据文件 -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-configuration-processor</artifactId>
-			<optional>true</optional>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

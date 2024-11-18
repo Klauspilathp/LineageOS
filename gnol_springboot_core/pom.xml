@@ -19,14 +19,6 @@
 			<artifactId>gnol_plugins_core</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>com.gnol</groupId>
-			<artifactId>gnol_plugins_dbs</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>com.gnol</groupId>
-			<artifactId>gnol_plugins_cache</artifactId>
-		</dependency>
-		<dependency>
 			<groupId>com.alibaba</groupId>
 			<artifactId>druid-spring-boot-starter</artifactId>
 		</dependency>
