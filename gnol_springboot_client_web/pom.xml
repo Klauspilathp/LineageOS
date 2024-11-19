@@ -41,6 +41,11 @@
 			<artifactId>springfox-swagger-ui</artifactId>
 		</dependency>
         <!-- swagger 生成接口文档 =======>end -->
+        <!-- gnol 项目封装的 spring-boot 关于 fastDFS starter -->
+		<dependency>
+			<groupId>com.gnol</groupId>
+			<artifactId>spring-boot-starter-fastDFS</artifactId>
+		</dependency>
 	</dependencies>
 
 	<build>

@@ -62,6 +62,7 @@
 		<druid.version>1.1.21</druid.version>
 		<swagger.version>2.9.2</swagger.version>
 		<mybatis-spring-boot-starter.version>2.0.1</mybatis-spring-boot-starter.version>
+		<spring-boot-starter-fastDFS.version>0.0.1-SNAPSHOT</spring-boot-starter-fastDFS.version>
 	</properties>
 
     <!-- 只是对版本进行管理，不会实际引入 jar -->
@@ -169,6 +170,12 @@
 				<groupId>org.mybatis.spring.boot</groupId>
 				<artifactId>mybatis-spring-boot-starter</artifactId>
 				<version>${mybatis-spring-boot-starter.version}</version>
+			</dependency>
+			<!-- gnol 项目封装的 spring-boot 关于 fastDFS starter -->
+			<dependency>
+				<groupId>com.gnol</groupId>
+				<artifactId>spring-boot-starter-fastDFS</artifactId>
+				<version>${spring-boot-starter-fastDFS.version}</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
