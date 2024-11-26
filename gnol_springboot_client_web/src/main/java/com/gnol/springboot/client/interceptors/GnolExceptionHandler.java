@@ -2,6 +2,7 @@ package com.gnol.springboot.client.interceptors;
 
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.gnol.plugins.core.PageResult;
 import com.gnol.plugins.core.enums.HttpStatus;
@@ -13,14 +14,18 @@ import com.gnol.plugins.core.exception.GnolRuntimeException;
  * @Package: com.gnol.springboot.client.interceptors
  * @author: 吴佳隆
  * @date: 2020年6月8日 上午8:27:00
- * @Description: 异常处理器
+ * @Description: 统一异常处理
  */
 @RestControllerAdvice
 public class GnolExceptionHandler {
 
     @ExceptionHandler(GnolException.class)
-    public PageResult handlerGnolException(GnolException e) {
-        return PageResult.build(e.getHs());
+    public ModelAndView handlerGnolException(GnolException e) {
+        ModelAndView mv = new ModelAndView();
+        mv.addObject("msg", e.toString());
+        mv.setViewName("error");
+        return mv;
+
     }
 
     @ExceptionHandler(GnolRuntimeException.class)

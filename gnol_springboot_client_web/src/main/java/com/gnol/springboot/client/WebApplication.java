@@ -12,7 +12,7 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
  * @date: 2020年6月8日 上午8:26:36
  * @Description: web 项目启动类
  */
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = {"com.gnol.springboot"})
 public class WebApplication extends SpringBootServletInitializer {
 
     public static void main(String[] args) {
