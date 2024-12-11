@@ -39,6 +39,7 @@
 		<module>gnol_springboot_service</module>
 		<module>gnol_springboot_client_web</module>
 		<module>gnol_springboot_client_api</module>
+		<module>gnol_springboot_eureka_server</module>
 	</modules>
 	
 	<!-- 集中定义依赖版本号 -->
@@ -56,6 +57,7 @@
 		<basedir>/</basedir>
         <!-- jar 版本管理 -->
 		<spring-boot-starter-parent.version>2.2.7.RELEASE</spring-boot-starter-parent.version>
+		<spring-cloud-dependencies.version>Hoxton.SR4</spring-cloud-dependencies.version>
 		<gnol_plugins.version>0.0.1-SNAPSHOT</gnol_plugins.version>
 		<druid-spring-boot-starter.version>1.1.22</druid-spring-boot-starter.version>
 		<mysql-connector-java.version>8.0.17</mysql-connector-java.version>
@@ -77,6 +79,13 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-starter-parent</artifactId>
 				<version>${spring-boot-starter-parent.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework.cloud</groupId>
+				<artifactId>spring-cloud-dependencies</artifactId>
+				<version>${spring-cloud-dependencies.version}</version>
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
