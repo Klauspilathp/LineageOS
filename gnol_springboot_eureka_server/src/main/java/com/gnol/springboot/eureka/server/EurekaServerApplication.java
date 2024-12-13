@@ -9,7 +9,7 @@ import org.springframework.cloud.netflix.eureka.server.EnableEurekaServer;
  * @Package: com.gnol.springboot.eureka.server
  * @author: 吴佳隆
  * @date: 2020年6月11日 下午7:23:03
- * @Description: eureka server 启动类
+ * @Description: eureka server 启动类，http://127.0.0.1:9080/
  */
 @SpringBootApplication(scanBasePackages = {"com.gnol.springboot"})
 @EnableEurekaServer
