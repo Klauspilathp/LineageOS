@@ -2,12 +2,6 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<parent>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.2.7.RELEASE</version>
-		<relativePath />
-	</parent>
 	<groupId>com.gnol</groupId>
 	<artifactId>gnol_springboot</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
@@ -34,16 +28,14 @@
 	</pluginRepositories>
 
 	<modules>
-		<module>gnol_springboot_core</module>
 		<module>gnol_springboot_common</module>
-		<module>gnol_springboot_service</module>
-		<module>gnol_springboot_client_web</module>
-		<module>gnol_springboot_client_api</module>
 		<module>gnol_springboot_eureka_server</module>
-		<module>gnol_springboot_eureka_client1</module>
-		<module>gnol_springboot_eureka_client2</module>
 		<module>gnol_springboot_zuul_gateway</module>
 		<module>gnol_springboot_auth</module>
+		<module>gnol_springboot_client_web</module>
+		<module>gnol_springboot_client_api</module>
+		<module>gnol_springboot_eureka_client1</module>
+		<module>gnol_springboot_eureka_client2</module>
 	</modules>
 	
 	<!-- 集中定义依赖版本号 -->
@@ -57,14 +49,12 @@
         <!-- 表示项目根目录，即包含 pom.xml 文件的目录 -->
 		<basedir>/</basedir>
         <!-- jar 版本管理 -->
-		<spring-cloud-dependencies.version>Hoxton.SR4</spring-cloud-dependencies.version>
-		<gnol_plugins.version>0.0.1-SNAPSHOT</gnol_plugins.version>
+		<gnol_springboot_plugins.version>0.0.1-SNAPSHOT</gnol_springboot_plugins.version>
 		<druid-spring-boot-starter.version>1.1.22</druid-spring-boot-starter.version>
 		<mysql-connector-java.version>8.0.17</mysql-connector-java.version>
 		<druid.version>1.1.21</druid.version>
 		<swagger.version>2.9.2</swagger.version>
 		<mybatis-spring-boot-starter.version>2.0.1</mybatis-spring-boot-starter.version>
-		<spring-boot-starter-fastDFS.version>0.0.1-SNAPSHOT</spring-boot-starter-fastDFS.version>
 	</properties>
 
     <!-- 只是对版本进行管理，不会实际引入 jar -->
@@ -75,78 +65,21 @@
     <!-- system：跟 provided 相似，但是在系统中要以外部JAR包的形式提供，maven 不会在 repository 查找它 -->
 	<dependencyManagement>
 		<dependencies>
-			<!-- 这种方式用于子项目中需要引入 springboot 而子项目需要引入自己的父项目
 			<dependency>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-starter-parent</artifactId>
-				<version>2.2.7.RELEASE</version>
-				<type>pom</type>
-				<scope>import</scope>
-			</dependency> -->
-			<dependency>
-				<groupId>org.springframework.cloud</groupId>
-				<artifactId>spring-cloud-dependencies</artifactId>
-				<version>${spring-cloud-dependencies.version}</version>
+				<groupId>com.gnol</groupId>
+				<artifactId>gnol_springboot_plugins</artifactId>
+				<version>${gnol_springboot_plugins.version}</version>
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
-            <!-- gnol 插件 =======>start -->
+            <!-- gnol springboot 版插件工程 =======>start -->
+			<!-- gnol 项目封装的 spring-boot 关于 fastDFS starter -->
 			<dependency>
 				<groupId>com.gnol</groupId>
-				<artifactId>gnol_plugins_core</artifactId>
-				<version>${gnol_plugins.version}</version>
+				<artifactId>spring-boot-starter-fastDFS</artifactId>
+				<version>${gnol_springboot_plugins.version}</version>
 			</dependency>
-			<dependency>
-				<groupId>com.gnol</groupId>
-				<artifactId>gnol_plugins_tools</artifactId>
-				<version>${gnol_plugins.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>com.gnol</groupId>
-				<artifactId>gnol_plugins_net</artifactId>
-				<version>${gnol_plugins.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>com.gnol</groupId>
-				<artifactId>gnol_plugins_dbs</artifactId>
-				<version>${gnol_plugins.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>com.gnol</groupId>
-				<artifactId>gnol_plugins_cache</artifactId>
-				<version>${gnol_plugins.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>com.gnol</groupId>
-				<artifactId>gnol_plugins_netty</artifactId>
-				<version>${gnol_plugins.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>com.gnol</groupId>
-				<artifactId>gnol_plugins_search</artifactId>
-				<version>${gnol_plugins.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>com.gnol</groupId>
-				<artifactId>gnol_plugins_ali</artifactId>
-				<version>${gnol_plugins.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>com.gnol</groupId>
-				<artifactId>gnol_plugins_weixin</artifactId>
-				<version>${gnol_plugins.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>com.gnol</groupId>
-				<artifactId>gnol_plugins_fastDFS</artifactId>
-				<version>${gnol_plugins.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>com.gnol</groupId>
-				<artifactId>gnol_plugins_vsftpd</artifactId>
-				<version>${gnol_plugins.version}</version>
-			</dependency>
-            <!-- gnol 插件 =======>end -->
+            <!-- gnol springboot 版插件工程 =======>end -->
 			<dependency>
 				<groupId>com.alibaba</groupId>
 				<artifactId>druid-spring-boot-starter</artifactId>
@@ -181,12 +114,6 @@
 				<artifactId>mybatis-spring-boot-starter</artifactId>
 				<version>${mybatis-spring-boot-starter.version}</version>
 			</dependency>
-			<!-- gnol 项目封装的 spring-boot 关于 fastDFS starter -->
-			<dependency>
-				<groupId>com.gnol</groupId>
-				<artifactId>spring-boot-starter-fastDFS</artifactId>
-				<version>${spring-boot-starter-fastDFS.version}</version>
-			</dependency>
 		</dependencies>
 	</dependencyManagement>
 
@@ -196,6 +123,11 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-configuration-processor</artifactId>
 			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>com.gnol</groupId>
+			<artifactId>gnol_springboot_plugins_core</artifactId>
+			<version>${gnol_springboot_plugins.version}</version>
 		</dependency>
         <!-- spring boot 缓存 -->
 		<dependency>
