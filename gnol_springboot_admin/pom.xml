@@ -7,10 +7,10 @@
 		<version>0.0.1-SNAPSHOT</version>
 		<relativePath>../pom.xml</relativePath>
 	</parent>
-	<artifactId>gnol_springboot_auth</artifactId>
+	<artifactId>gnol_springboot_admin</artifactId>
 	<packaging>jar</packaging>
-	<name>gnol_springboot_auth</name>
-	<description>gnol_springboot 项目授权服务模块</description>
+	<name>gnol_springboot_admin</name>
+	<description>gnol_springboot 项目监控系统</description>
 
 	<dependencies>
 		<dependency>
@@ -26,9 +26,10 @@
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
 		</dependency>
+		<!-- 监控和管理生产环境模块 -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-redis</artifactId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
 		</dependency>
 	</dependencies>
 

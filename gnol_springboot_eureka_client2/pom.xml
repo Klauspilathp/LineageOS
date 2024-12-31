@@ -10,7 +10,7 @@
 	<artifactId>gnol_springboot_eureka_client2</artifactId>
 	<packaging>jar</packaging>
 	<name>gnol_springboot_eureka_client2</name>
-	<description>gnol_springboot 项目 eureka 客户端模块1</description>
+	<description>gnol_springboot 项目 eureka 客户端模块2</description>
 
 	<dependencies>
 		<dependency>
@@ -25,11 +25,6 @@
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
-		</dependency>
-		<!-- 监控和管理生产环境模块 -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-actuator</artifactId>
 		</dependency>
 	</dependencies>
 
