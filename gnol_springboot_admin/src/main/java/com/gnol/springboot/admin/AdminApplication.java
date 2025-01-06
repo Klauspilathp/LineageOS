@@ -1,22 +1,22 @@
-package com.gnol.springboot.client;
+package com.gnol.springboot.admin;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 
 /**
- * @Title: EurekaClient2Application
- * @Package: com.gnol.springboot.client
+ * @Title: ConfigApplication
+ * @Package: com.gnol.springboot.admin
  * @author: 吴佳隆
- * @date: 2020年6月12日 上午8:11:59
- * @Description: eureka client 启动类
+ * @date: 2020年6月17日 下午3:48:36
+ * @Description: 管理中心启动类
  */
 @SpringBootApplication(scanBasePackages = {"com.gnol.springboot"})
 @EnableEurekaClient
-public class EurekaClient2Application {
+public class AdminApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(EurekaClient2Application.class, args);
+        SpringApplication.run(AdminApplication.class, args);
     }
 
 }
