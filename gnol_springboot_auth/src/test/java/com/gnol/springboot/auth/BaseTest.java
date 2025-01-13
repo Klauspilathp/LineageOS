@@ -1,6 +1,6 @@
 package com.gnol.springboot.auth;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 /**
  * @Title: BaseTest

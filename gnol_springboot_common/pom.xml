@@ -13,7 +13,11 @@
 	<description>gnol springboot 项目公共模块</description>
 
 	<dependencies>
-
+		<!-- amqp  -->
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-bus-amqp</artifactId>
+		</dependency>
 	</dependencies>
 
 	<build>

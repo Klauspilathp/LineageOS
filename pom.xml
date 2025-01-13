@@ -31,13 +31,13 @@
 		<module>gnol_springboot_common</module>
 		<module>gnol_springboot_eureka_server</module>
 		<module>gnol_springboot_zuul_gateway</module>
+		<module>gnol_springboot_config</module>
 		<module>gnol_springboot_auth</module>
+		<module>gnol_springboot_admin</module>
 		<module>gnol_springboot_client_web</module>
 		<module>gnol_springboot_client_api</module>
 		<module>gnol_springboot_eureka_client1</module>
 		<module>gnol_springboot_eureka_client2</module>
-		<module>gnol_springboot_admin</module>
-		<module>gnol_springboot_config</module>
 	</modules>
 	
 	<!-- 集中定义依赖版本号 -->
