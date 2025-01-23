@@ -31,7 +31,7 @@ public class Test1Controller {
 
     @RequestMapping("/t2")
     public Object t2(String id) {
-        String url = "http://gnol_springboot_eureka_client1/client1/test1/t1?id=" + id;
+        String url = "http://gnol-springboot-eureka-client1/client1/test1/t1?id=" + id;
         logger.info("client2.t2 param id : {}, request url : {}", id, url);
         Object result = restTemplate.getForEntity(url, Object.class);
         return result;
