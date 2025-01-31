@@ -21,6 +21,9 @@ public class Test1Controller {
     @Autowired
     private RestTemplate restTemplate;
 
+    /**
+     * http://127.0.0.1:8093/client2/test1/t1?id=2 需要关闭 com.gnol.springboot.client.config.RestTemplateConfig.restTemplate() 方法上的 @LoadBalanced 注解
+     */
     @RequestMapping("/t1")
     public Object t1(String id) {
         String url = "http://localhost:8092/client1/test1/t1?id=" + id;
@@ -29,6 +32,10 @@ public class Test1Controller {
         return result;
     }
 
+    /**
+     * http://127.0.0.1:8093/client2/test1/t2?id=2 需要开启 com.gnol.springboot.client.config.RestTemplateConfig.restTemplate() 方法上的 @LoadBalanced 注解，
+     * 并启动至少两个 gnol-springboot-eureka-client1 服务。
+     */
     @RequestMapping("/t2")
     public Object t2(String id) {
         String url = "http://gnol-springboot-eureka-client1/client1/test1/t1?id=" + id;

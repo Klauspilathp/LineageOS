@@ -16,7 +16,7 @@ import org.springframework.web.client.RestTemplate;
 public class RestTemplateConfig {
 
     @Bean
-    // @LoadBalanced // ribbon 的负载均衡注解
+    @LoadBalanced // ribbon 的负载均衡注解
     public RestTemplate restTemplate() {
         return new RestTemplate();
     }
