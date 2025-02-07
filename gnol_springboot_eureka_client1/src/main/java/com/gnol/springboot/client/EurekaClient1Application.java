@@ -2,7 +2,7 @@ package com.gnol.springboot.client;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
 /**
  * @Title: EurekaClient1Application
@@ -12,7 +12,7 @@ import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
  * @Description: eureka client 启动类
  */
 @SpringBootApplication(scanBasePackages = {"com.gnol.springboot"})
-@EnableEurekaClient
+@EnableDiscoveryClient
 public class EurekaClient1Application {
 
     public static void main(String[] args) {

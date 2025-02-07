@@ -2,6 +2,8 @@ package com.gnol.springboot.client.controllers.test;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -22,6 +24,12 @@ public class Test1Controller {
     @RequestMapping("/t1")
     public PageResult t1(String id) {
         logger.info("client1.t1 param id : {}", id);
+        return PageResult.ok(new StringBuilder().append("id 为").append(id).append(" 的用户是吴佳隆！！！"));
+    }
+
+    @GetMapping("/t2/{id}")
+    public PageResult t2(@PathVariable String id) {
+        logger.info("client1.t2 param id : {}", id);
         return PageResult.ok(new StringBuilder().append("id 为").append(id).append(" 的用户是吴佳隆！！！"));
     }
 
