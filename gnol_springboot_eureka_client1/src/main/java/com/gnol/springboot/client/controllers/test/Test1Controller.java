@@ -2,6 +2,8 @@ package com.gnol.springboot.client.controllers.test;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.client.serviceregistry.Registration;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,6 +22,8 @@ import com.gnol.plugins.core.PageResult;
 @RequestMapping("/test1")
 public class Test1Controller {
     private static final Logger logger = LoggerFactory.getLogger(Test1Controller.class);
+    @Autowired
+    private Registration registration;
 
     @RequestMapping("/t1")
     public PageResult t1(String id) {
@@ -31,6 +35,13 @@ public class Test1Controller {
     public PageResult t2(@PathVariable String id) {
         logger.info("client1.t2 param id : {}", id);
         return PageResult.ok(new StringBuilder().append("id 为").append(id).append(" 的用户是吴佳隆！！！"));
+    }
+
+    @GetMapping("/t3/{id}")
+    public PageResult t3() {
+        logger.info("client1.t3 registration {} : {}", registration.getHost(), registration.getPort());
+        return PageResult
+                .ok(new StringBuilder().append(registration.getHost()).append(" : ").append(registration.getPort()));
     }
 
 }
