@@ -7,6 +7,7 @@ import org.springframework.cloud.client.serviceregistry.Registration;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.gnol.plugins.core.PageResult;
@@ -25,19 +26,19 @@ public class Test1Controller {
     @Autowired
     private Registration registration;
 
-    @RequestMapping("/t1")
+    @RequestMapping(value = "/t1", method = RequestMethod.GET)
     public PageResult t1(String id) {
         logger.info("client1.t1 param id : {}", id);
         return PageResult.ok(new StringBuilder().append("id 为").append(id).append(" 的用户是吴佳隆！！！"));
     }
 
     @GetMapping("/t2/{id}")
-    public PageResult t2(@PathVariable String id) {
+    public PageResult t2(@PathVariable("id") String id) {
         logger.info("client1.t2 param id : {}", id);
         return PageResult.ok(new StringBuilder().append("id 为").append(id).append(" 的用户是吴佳隆！！！"));
     }
 
-    @GetMapping("/t3/{id}")
+    @GetMapping("/t3")
     public PageResult t3() {
         logger.info("client1.t3 registration {} : {}", registration.getHost(), registration.getPort());
         return PageResult
