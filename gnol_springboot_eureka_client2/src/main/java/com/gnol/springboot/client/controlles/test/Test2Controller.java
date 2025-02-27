@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.gnol.plugins.core.PageResult;
@@ -53,7 +54,6 @@ public class Test2Controller {
  * @Description: Feign 客户端
  */
 @FeignClient(name = "gnol-springboot-eureka-client1")
-@RequestMapping(path = "/client1/test1")
 interface Client1FeignClient extends Client1Test1Mapping {
 
 }
@@ -65,10 +65,11 @@ interface Client1FeignClient extends Client1Test1Mapping {
  * @date: 2020年6月19日 上午10:23:02
  * @Description: client1 的 test1 类服务接口
  */
+@RequestMapping(path = "/client1/test1")
 interface Client1Test1Mapping {
 
     @RequestMapping(value = "/t1", method = RequestMethod.GET)
-    PageResult t1(String id);
+    PageResult t1(@RequestParam("id") String id);
 
     @GetMapping("/t2/{id}")
     PageResult t2(@PathVariable("id") String id);

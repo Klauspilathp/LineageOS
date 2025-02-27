@@ -35,7 +35,7 @@ public class Test1Controller {
     @GetMapping("/t2/{id}")
     public PageResult t2(@PathVariable("id") String id) {
         logger.info("client1.t2 param id : {}", id);
-        return PageResult.ok(new StringBuilder().append("id 为").append(id).append(" 的用户是吴佳隆！！！"));
+        return PageResult.ok(new StringBuilder().append("id 为 ").append(id).append(" 的用户是吴佳隆！！！"));
     }
 
     @GetMapping("/t3")
