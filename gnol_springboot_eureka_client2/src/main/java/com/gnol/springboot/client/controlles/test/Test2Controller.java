@@ -23,7 +23,7 @@ import com.gnol.plugins.core.PageResult;
 @RestController
 @RequestMapping("/test2")
 public class Test2Controller {
-    private static final Logger logger = LoggerFactory.getLogger(Test1Controller.class);
+    private static final Logger logger = LoggerFactory.getLogger(Test2Controller.class);
     @Autowired
     private Client1FeignClient client1FeignClient;
 
