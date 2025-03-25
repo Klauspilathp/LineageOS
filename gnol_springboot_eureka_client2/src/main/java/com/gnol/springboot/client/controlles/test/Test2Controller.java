@@ -25,36 +25,36 @@ import com.gnol.plugins.core.PageResult;
 public class Test2Controller {
     private static final Logger logger = LoggerFactory.getLogger(Test2Controller.class);
     @Autowired
-    private Client1FeignClient client1FeignClient;
+    private Client1Test1FeignClient feignClient;
 
     @RequestMapping(value = "/t1", method = RequestMethod.GET)
     public Object t1(String id) {
         logger.info("client2.t1 param id : {}", id);
-        return client1FeignClient.t1(id);
+        return feignClient.t1(id);
     }
 
     @GetMapping("/t2/{id}")
     public PageResult t2(@PathVariable("id") String id) {
         logger.info("client2.t2 param id : {}", id);
-        return client1FeignClient.t2(id);
+        return feignClient.t2(id);
     }
 
     @GetMapping(value = "/t3")
     public Object t3() {
-        return client1FeignClient.t3();
+        return feignClient.t3();
     }
 
 }
 
 /**
- * @Title: Client1FeignClient
+ * @Title: Client1Test1FeignClient
  * @Package: com.gnol.springboot.client.controlles.test
  * @author: 吴佳隆
  * @date: 2020年6月19日 上午10:21:54
  * @Description: Feign 客户端
  */
 @FeignClient(name = "gnol-springboot-eureka-client1")
-interface Client1FeignClient extends Client1Test1Mapping {
+interface Client1Test1FeignClient extends Client1Test1Mapping {
 
 }
 
