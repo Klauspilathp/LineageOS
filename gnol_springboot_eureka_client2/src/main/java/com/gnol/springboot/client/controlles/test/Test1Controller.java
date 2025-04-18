@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
 import com.gnol.plugins.core.PageResult;
+import com.netflix.appinfo.InstanceInfo;
+import com.netflix.discovery.EurekaClient;
 
 /**
  * @Title: Test1Controller
@@ -26,6 +28,8 @@ public class Test1Controller {
     private RestTemplate restTemplate;
     @Autowired
     private LoadBalancerClient loadBalancerClient;
+    @Autowired
+    private EurekaClient eurekaClient;
 
     /**
      * http://127.0.0.1:8093/client2/test1/t1?id=2 需要关闭 com.gnol.springboot.client.config.RestTemplateConfig.restTemplate() 方法上的 @LoadBalanced 注解
@@ -56,6 +60,12 @@ public class Test1Controller {
                 serviceInstance.getPort());
         return PageResult.ok(new StringBuilder().append(serviceInstance.getServiceId()).append(" : ")
                 .append(serviceInstance.getHost()).append(" : ").append(serviceInstance.getPort()));
+    }
+
+    @RequestMapping("/t4")
+    public PageResult t4() {
+        InstanceInfo instance = eurekaClient.getNextServerFromEureka("gnol-springboot-eureka-client1", false);
+        return PageResult.ok(instance.getHomePageUrl());
     }
 
 }
