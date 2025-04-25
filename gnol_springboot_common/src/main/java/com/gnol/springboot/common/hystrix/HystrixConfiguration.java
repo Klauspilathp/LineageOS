@@ -11,7 +11,7 @@ import com.netflix.hystrix.contrib.metrics.eventstream.HystrixMetricsStreamServl
  * @Package: com.gnol.springboot.common.hystrix
  * @author: 吴佳隆
  * @date: 2020年6月20日 下午4:55:20
- * @Description: TODO
+ * @Description: 配置访问 /hystrix.stream 的 servlet
  */
 @Configuration
 public class HystrixConfiguration {

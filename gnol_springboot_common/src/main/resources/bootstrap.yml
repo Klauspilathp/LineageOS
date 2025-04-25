@@ -1,4 +1,4 @@
-# 
+# spring boot 2.x 以后使用了 endpoint，需要此配置才能访问 hystrix
 management:
   endpoints:
     web:
