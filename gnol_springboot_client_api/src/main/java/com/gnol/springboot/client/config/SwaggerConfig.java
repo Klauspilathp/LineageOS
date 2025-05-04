@@ -18,8 +18,8 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
  * @author: 吴佳隆
  * @date: 2020年6月8日 上午8:28:52
  * @Description: swagger 配置
- * http://127.0.0.1:8090/web/v2/api-docs
- * http://127.0.0.1:8090/web/swagger-ui.html
+ * http://127.0.0.1:8090/api/v2/api-docs
+ * http://127.0.0.1:8090/api/swagger-ui.html
  */
 @Configuration
 @EnableSwagger2

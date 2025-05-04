@@ -18,9 +18,8 @@ public class HystrixConfiguration {
 
     @Bean
     public ServletRegistrationBean<HystrixMetricsStreamServlet> hystrixMetricsStreamServlet() {
-        HystrixMetricsStreamServlet hystrixMetricsStreamServlet = new HystrixMetricsStreamServlet();
-        ServletRegistrationBean<HystrixMetricsStreamServlet> servletRegistrationBean = new ServletRegistrationBean<HystrixMetricsStreamServlet>();
-        servletRegistrationBean.setServlet(hystrixMetricsStreamServlet);
+        ServletRegistrationBean<HystrixMetricsStreamServlet> servletRegistrationBean = new ServletRegistrationBean<HystrixMetricsStreamServlet>(new HystrixMetricsStreamServlet());
+        servletRegistrationBean.setLoadOnStartup(1);
         servletRegistrationBean.addUrlMappings("/hystrix.stream");
         servletRegistrationBean.setName("hystrixMetricsStreamServlet");
         return servletRegistrationBean;
