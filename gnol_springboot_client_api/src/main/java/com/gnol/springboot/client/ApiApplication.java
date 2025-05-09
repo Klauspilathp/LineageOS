@@ -14,11 +14,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
  * @Description: api 服务启动类
  */
 @SpringBootApplication(scanBasePackages = {"com.gnol.springboot"})
-/**
- * @EnableEurekaClient 注解请求 http://gnol-springboot-eureka-client1 服务时至少需要启动两个客户端服务，
- * 而 @EnableDiscoveryClient 注解只需启动一个服务
- */
-@EnableDiscoveryClient
+@EnableDiscoveryClient // eureka 客户端
 @EnableFeignClients // 启用 Fegin
 @EnableCircuitBreaker // 启用 hystrix
 public class ApiApplication {

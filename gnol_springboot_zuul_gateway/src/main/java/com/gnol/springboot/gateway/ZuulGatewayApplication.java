@@ -3,6 +3,7 @@ package com.gnol.springboot.gateway;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.cloud.netflix.zuul.EnableZuulProxy;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 
 /**
@@ -13,12 +14,9 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
  * @Description: zuul gateway 启动类，http://127.0.0.1:9080/
  */
 @SpringBootApplication(scanBasePackages = {"com.gnol.springboot"})
-/**
- * @EnableEurekaClient 注解请求 http://gnol-springboot-eureka-client1 服务时至少需要启动两个客户端服务，
- * 而 @EnableDiscoveryClient 注解只需启动一个服务
- */
-@EnableDiscoveryClient
+@EnableDiscoveryClient // eureka 客户端
 @EnableFeignClients // 启用 Fegin
+@EnableZuulProxy // zuul
 public class ZuulGatewayApplication {
 
     public static void main(String[] args) {
