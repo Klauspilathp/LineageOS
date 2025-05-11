@@ -18,15 +18,20 @@
 			<artifactId>gnol_springboot_common</artifactId>
 			<version>${project.version}</version>
 		</dependency>
-		<!-- eureka -->
+		<!-- eureka client -->
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
 		</dependency>
-		<!-- config -->
+		<!-- config client -->
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-config</artifactId>
+		</dependency>
+		<!-- admin client -->
+		<dependency>
+			<groupId>de.codecentric</groupId>
+			<artifactId>spring-boot-admin-starter-client</artifactId>
 		</dependency>
 	</dependencies>
 

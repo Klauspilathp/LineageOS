@@ -19,10 +19,12 @@
 			<artifactId>gnol_springboot_common</artifactId>
 			<version>${project.version}</version>
 		</dependency>
+		<!-- eureka client -->
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
 		</dependency>
+		<!-- config client -->
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-config</artifactId>
@@ -41,6 +43,11 @@
 			<artifactId>springfox-swagger-ui</artifactId>
 		</dependency>
         <!-- swagger 生成接口文档 =======>end -->
+        <!-- admin client -->
+		<dependency>
+			<groupId>de.codecentric</groupId>
+			<artifactId>spring-boot-admin-starter-client</artifactId>
+		</dependency>
 	</dependencies>
 
 	<build>
