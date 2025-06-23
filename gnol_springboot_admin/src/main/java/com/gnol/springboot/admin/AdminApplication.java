@@ -3,8 +3,6 @@ package com.gnol.springboot.admin;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
-import org.springframework.cloud.netflix.hystrix.dashboard.EnableHystrixDashboard;
-import org.springframework.cloud.netflix.turbine.EnableTurbine;
 
 import de.codecentric.boot.admin.server.config.EnableAdminServer;
 
@@ -17,8 +15,6 @@ import de.codecentric.boot.admin.server.config.EnableAdminServer;
  */
 @SpringBootApplication(scanBasePackages = {"com.gnol.springboot"})
 @EnableDiscoveryClient // eureka 客户端
-@EnableHystrixDashboard // dashboard
-@EnableTurbine // turbine
 @EnableAdminServer // admin
 public class AdminApplication {
 

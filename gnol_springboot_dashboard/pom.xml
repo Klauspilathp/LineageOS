@@ -7,10 +7,10 @@
 		<version>0.0.1-SNAPSHOT</version>
 		<relativePath>../pom.xml</relativePath>
 	</parent>
-	<artifactId>gnol_springboot_admin</artifactId>
+	<artifactId>gnol_springboot_dashboard</artifactId>
 	<packaging>jar</packaging>
-	<name>gnol_springboot_admin</name>
-	<description>gnol_springboot 项目监控系统</description>
+	<name>gnol_springboot_dashboard</name>
+	<description>gnol_springboot dashboard 监控模块</description>
 
 	<dependencies>
 		<dependency>
@@ -28,10 +28,15 @@
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-config</artifactId>
 		</dependency>
-		<!-- admin server -->
+		<!-- dashboard -->
 		<dependency>
-			<groupId>de.codecentric</groupId>
-			<artifactId>spring-boot-admin-starter-server</artifactId>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-netflix-hystrix-dashboard</artifactId>
+		</dependency>
+		<!-- turbine -->
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-netflix-turbine</artifactId>
 		</dependency>
 	</dependencies>
 

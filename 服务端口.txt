@@ -8,6 +8,7 @@ gnol_springboot_auth:9100
 gnol_springboot_config:9200
 
 gnol_springboot_admin:9300
+gnol_springboot_dashboard:9301
 
 gnol_springboot_web:8090
 gnol_springboot_api:8091

@@ -42,6 +42,7 @@
 		<module>gnol_springboot_client_api</module>
 		<module>gnol_springboot_eureka_client1</module>
 		<module>gnol_springboot_eureka_client2</module>
+		<module>gnol_springboot_dashboard</module>
 	</modules>
 	
 	<!-- 集中定义依赖版本号 -->
