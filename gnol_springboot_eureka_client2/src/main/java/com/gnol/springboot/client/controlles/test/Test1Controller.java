@@ -32,22 +32,22 @@ public class Test1Controller {
     private EurekaClient eurekaClient;
 
     /**
-     * http://127.0.0.1:8093/client2/test1/t1?id=2 需要关闭 com.gnol.springboot.client.config.RestTemplateConfig.restTemplate() 方法上的 @LoadBalanced 注解
+     * http://127.0.0.1:8093/test1/t1?id=2 需要关闭 com.gnol.springboot.client.config.RestTemplateConfig.restTemplate() 方法上的 @LoadBalanced 注解
      */
     @RequestMapping("/t1")
     public Object t1(String id) {
-        String url = "http://localhost:8092/client1/test1/t1?id=" + id;
+        String url = "http://localhost:8092/test1/t1?id=" + id;
         logger.info("client2.t1 param id : {}, request url : {}", id, url);
         Object result = restTemplate.getForEntity(url, Object.class);
         return result;
     }
 
     /**
-     * http://127.0.0.1:8093/client2/test1/t2?id=2 需要开启 com.gnol.springboot.client.config.RestTemplateConfig.restTemplate() 方法上的 @LoadBalanced 注解
+     * http://127.0.0.1:8093/test1/t2?id=2 需要开启 com.gnol.springboot.client.config.RestTemplateConfig.restTemplate() 方法上的 @LoadBalanced 注解
      */
     @RequestMapping("/t2")
     public Object t2(String id) {
-        String url = "http://gnol-springboot-eureka-client1/client1/test1/t1?id=" + id;
+        String url = "http://gnol-springboot-eureka-client1/test1/t1?id=" + id;
         logger.info("client2.t2 param id : {}, request url : {}", id, url);
         Object result = restTemplate.getForEntity(url, Object.class);
         return result;

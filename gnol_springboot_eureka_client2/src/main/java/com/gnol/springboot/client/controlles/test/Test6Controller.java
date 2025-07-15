@@ -48,7 +48,7 @@ public class Test6Controller {
  * @Description: Feign 客户端
  */
 @FeignClient(name = "gnol-springboot-eureka-client1", // 服务应用名
-        path = "/client1/test2", // 服务路径前缀
+        path = "/test2", // 服务路径前缀
         fallback = Client1Test2FeignClientFallback.class // 回调函数类
 // configuration = FeignDisableHystrixConfiguration.class // 为当前 Feign 禁用 Hystrix 功能
 )

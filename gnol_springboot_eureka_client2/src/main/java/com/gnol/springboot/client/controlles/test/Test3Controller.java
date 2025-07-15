@@ -63,7 +63,7 @@ class Test3HystrixCommand extends HystrixCommand<PageResult> {
     // 服务正常调用
     @Override
     protected PageResult run() throws Exception {
-        return restTemplate.getForObject("http://gnol-springboot-eureka-client1/client1/test2/t2?id=" + id,
+        return restTemplate.getForObject("http://gnol-springboot-eureka-client1/test2/t2?id=" + id,
                 PageResult.class);
     }
 
