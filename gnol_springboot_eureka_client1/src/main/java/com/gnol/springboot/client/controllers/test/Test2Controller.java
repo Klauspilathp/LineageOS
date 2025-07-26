@@ -19,7 +19,7 @@ import com.gnol.plugins.core.PageResult;
  * @Description: 模拟服务超时、故障等
  */
 @RestController
-@RequestMapping("/test2")
+@RequestMapping("/client1/test2")
 public class Test2Controller {
     private static final Logger logger = LoggerFactory.getLogger(Test1Controller.class);
     @Autowired

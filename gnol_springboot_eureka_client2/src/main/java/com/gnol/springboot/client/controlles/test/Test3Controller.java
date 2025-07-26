@@ -21,7 +21,7 @@ import com.netflix.hystrix.HystrixCommandGroupKey;
  * @Description: hystrix 测试
  */
 @RestController
-@RequestMapping("/test3")
+@RequestMapping("/client2/test3")
 public class Test3Controller {
     private static final Logger logger = LoggerFactory.getLogger(Test3Controller.class);
     @Autowired
@@ -63,7 +63,7 @@ class Test3HystrixCommand extends HystrixCommand<PageResult> {
     // 服务正常调用
     @Override
     protected PageResult run() throws Exception {
-        return restTemplate.getForObject("http://gnol-springboot-eureka-client1/test2/t2?id=" + id,
+        return restTemplate.getForObject("http://gnol-springboot-eureka-client1/client1/test2/t2?id=" + id,
                 PageResult.class);
     }
 

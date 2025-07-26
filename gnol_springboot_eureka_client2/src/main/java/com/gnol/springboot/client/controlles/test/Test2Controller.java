@@ -21,7 +21,7 @@ import com.gnol.plugins.core.PageResult;
  * @Description: 测试 feign
  */
 @RestController
-@RequestMapping("/test2")
+@RequestMapping("/client2/test2")
 public class Test2Controller {
     private static final Logger logger = LoggerFactory.getLogger(Test2Controller.class);
     @Autowired
@@ -65,7 +65,7 @@ interface Client1Test1FeignClient extends Client1Test1Mapping {
  * @date: 2020年6月19日 上午10:23:02
  * @Description: client1 的 test1 类服务接口
  */
-@RequestMapping(path = "/test1")
+@RequestMapping(path = "/client1/test1")
 interface Client1Test1Mapping {
 
     @RequestMapping(value = "/t1", method = RequestMethod.GET)

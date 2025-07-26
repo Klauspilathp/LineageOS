@@ -20,7 +20,7 @@ import com.gnol.plugins.core.PageResult;
  * @Description: 测试服务发现
  */
 @RestController
-@RequestMapping("/test1")
+@RequestMapping("/client1/test1")
 public class Test1Controller {
     private static final Logger logger = LoggerFactory.getLogger(Test1Controller.class);
     @Autowired
