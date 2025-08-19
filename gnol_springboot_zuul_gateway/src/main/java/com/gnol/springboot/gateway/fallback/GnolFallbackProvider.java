@@ -15,6 +15,7 @@ import org.springframework.http.client.ClientHttpResponse;
 import org.springframework.stereotype.Component;
 
 import com.gnol.springboot.gateway.filters.PreAuthFilter;
+import com.netflix.hystrix.exception.HystrixTimeoutException;
 
 /**
  * @Title: GnolFallbackProvider
@@ -41,7 +42,11 @@ public class GnolFallbackProvider implements FallbackProvider {
         return new ClientHttpResponse() {
             @Override
             public HttpStatus getStatusCode() throws IOException {
-                return HttpStatus.OK;
+                if (cause instanceof HystrixTimeoutException) {
+                    return HttpStatus.GATEWAY_TIMEOUT;
+                } else {
+                    return HttpStatus.INTERNAL_SERVER_ERROR;
+                }
             }
 
             @Override
@@ -59,11 +64,17 @@ public class GnolFallbackProvider implements FallbackProvider {
 
             }
 
+            /**
+             * 响应体
+             */
             @Override
             public InputStream getBody() throws IOException {
-                return new ByteArrayInputStream("服务不可用".getBytes());
+                return new ByteArrayInputStream("服务不可用，请稍后再试。".getBytes());
             }
 
+            /**
+             * 请求头信息
+             */
             @Override
             public HttpHeaders getHeaders() {
                 HttpHeaders headers = new HttpHeaders();
