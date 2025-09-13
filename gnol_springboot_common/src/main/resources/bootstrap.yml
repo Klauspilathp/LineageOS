@@ -13,3 +13,7 @@ spring:
       uri: http://127.0.0.1:9200 # 配置中心地址
       label: master # profile 对应 config server 所获取配置文件中的 {profile}
       profile: dev # 指定 git 仓库的分支，对应 config server 所获取配置文件中的 {label}
+
+# config server 对称加密的密钥
+encrypt:
+  key: wujialong
