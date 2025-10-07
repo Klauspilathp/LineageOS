@@ -28,6 +28,11 @@
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-config-server</artifactId>
 		</dependency>
+		<!-- 与 spring-cloud-starter-bus-amqp 一起实现配置自动刷新 -->
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-config-monitor</artifactId>
+		</dependency>
 		<!-- admin client -->
 		<dependency>
 			<groupId>de.codecentric</groupId>
