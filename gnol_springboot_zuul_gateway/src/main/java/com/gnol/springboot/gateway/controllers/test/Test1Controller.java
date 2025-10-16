@@ -3,7 +3,10 @@ package com.gnol.springboot.gateway.controllers.test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
@@ -20,6 +23,7 @@ import com.gnol.plugins.core.PageResult;
  */
 @RestController
 @RequestMapping("/gateway/test1")
+@RefreshScope
 public class Test1Controller {
     private static final Logger logger = LoggerFactory.getLogger(Test1Controller.class);
     @Autowired
@@ -39,6 +43,14 @@ public class Test1Controller {
                 PageResult.class);
         pd.put("client2", client2.getData());
         return PageResult.ok(pd);
+    }
+
+    @Value("${server.port}")
+    private String serverPort;
+
+    @GetMapping("/t2")
+    public String t2() {
+        return serverPort;
     }
 
 }
