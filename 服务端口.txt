@@ -1,16 +1,17 @@
 # 服务端口
-gnol_springboot_gateway:8080
+gnol-springboot-gateway:8080
 
-gnol_springboot_eureka_server:9000
+gnol-springboot-eureka-server:9000
 
-gnol_springboot_auth:9100
+gnol-springboot-auth:9100
 
-gnol_springboot_config:9200
+gnol-springboot-config:9200
 
-gnol_springboot_admin:9300
-gnol_springboot_dashboard:9301
+gnol-springboot-admin:9300
+gnol-springboot-dashboard:9310
+gnol-springboot-zipkin:9320
 
-gnol_springboot_web:8090
-gnol_springboot_api:8091
-gnol_springboot_client1:8092
-gnol_springboot_client2:8093
+gnol-springboot-web:8090
+gnol-springboot-api:8091
+gnol-springboot-client1:8092
+gnol-springboot-client2:8093

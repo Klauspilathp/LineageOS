@@ -53,4 +53,11 @@ public class Test1Controller {
         return serverPort;
     }
 
+    @GetMapping("/t3")
+    public PageResult t3(String id) {
+        logger.info("gateway.t3 param id : {}", id);
+        return restTemplate.getForObject("http://gnol-springboot-eureka-client2/client2/test4/t1?id=" + id,
+                PageResult.class);
+    }
+
 }
