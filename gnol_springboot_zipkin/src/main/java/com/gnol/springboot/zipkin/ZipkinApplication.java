@@ -3,6 +3,8 @@ package com.gnol.springboot.zipkin;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import zipkin2.server.internal.EnableZipkinServer;
+
 /**
  * @Title: ZipkinApplication
  * @Package: com.gnol.springboot.zipkin
@@ -11,6 +13,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @Description: zipkin 调用链启动类
  */
 @SpringBootApplication(scanBasePackages = {"com.gnol.springboot"})
+@EnableZipkinServer
 public class ZipkinApplication {
 
     public static void main(String[] args) {
