@@ -13,6 +13,11 @@
 	<description>gnol_springboot 项目 zipkin 调用链模块</description>
 
 	<dependencies>
+		<dependency>
+			<groupId>com.gnol</groupId>
+			<artifactId>gnol_springboot_common</artifactId>
+			<version>${project.version}</version>
+		</dependency>
 		<!-- zipkin -->
 		<dependency>
 			<groupId>io.zipkin.java</groupId>
