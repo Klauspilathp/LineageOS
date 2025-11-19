@@ -1,5 +1,5 @@
 # 服务端口
-gnol-springboot-gateway:8080
+gnol-springboot-gateway:8088
 
 gnol-springboot-eureka-server:9000
 

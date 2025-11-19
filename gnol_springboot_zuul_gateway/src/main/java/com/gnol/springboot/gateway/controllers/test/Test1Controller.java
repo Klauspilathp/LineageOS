@@ -30,7 +30,7 @@ public class Test1Controller {
     private RestTemplate restTemplate;
 
     /**
-     * http://127.0.0.1:8080/gateway/test1/t1
+     * http://127.0.0.1:8088/gateway/test1/t1
      */
     @RequestMapping("/t1")
     public PageResult t1() {

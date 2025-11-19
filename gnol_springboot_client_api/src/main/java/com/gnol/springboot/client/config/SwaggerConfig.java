@@ -18,8 +18,8 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
  * @author: 吴佳隆
  * @date: 2020年6月8日 上午8:28:52
  * @Description: swagger 配置
- * http://127.0.0.1:8090/api/v2/api-docs
- * http://127.0.0.1:8090/api/swagger-ui.html
+ * http://127.0.0.1:8091/api/v2/api-docs
+ * http://127.0.0.1:8091/api/swagger-ui.html
  */
 @Configuration
 @EnableSwagger2
@@ -39,7 +39,7 @@ public class SwaggerConfig {
                 "wjl5760610@126.com");
         return new ApiInfoBuilder().title("gnol 系统 API 接口文档") // 大标题 title
                 .description("基础 RESTful 风格的接口文档") // 小标题
-                .termsOfServiceUrl("127.0.0.1:8080/gnol.springboot") // 终端服务程序
+                .termsOfServiceUrl("127.0.0.1:8091/gnol.springboot") // 终端服务程序
                 .contact(contact) // 作者信息
                 .license("gnol 系统 springboot 版本") // 链接显示文字
                 .licenseUrl("https://gitee.com/wujialong576/gnol_springboot.git") // 网站链接

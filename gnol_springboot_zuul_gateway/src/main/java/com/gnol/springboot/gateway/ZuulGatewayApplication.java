@@ -12,9 +12,9 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
  * @author: 吴佳隆
  * @date: 2020年6月11日 下午7:23:03
  * @Description: zuul gateway 启动类
- * http://127.0.0.1:8080/
- * 整合 hystrix：http://127.0.0.1:8080/hystrix.stream
- * zuul 的路由规则：http://127.0.0.1:8080/actuator/routes
+ * http://127.0.0.1:8088/
+ * 整合 hystrix：http://127.0.0.1:8088/hystrix.stream
+ * zuul 的路由规则：http://127.0.0.1:8088/actuator/routes
  */
 @SpringBootApplication(scanBasePackages = {"com.gnol.springboot"})
 @EnableDiscoveryClient // eureka 客户端
