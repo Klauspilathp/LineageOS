@@ -43,7 +43,6 @@
 		<module>gnol_springboot_eureka_client1</module>
 		<module>gnol_springboot_eureka_client2</module>
 		<module>gnol_springboot_dashboard</module>
-		<module>gnol_springboot_zipkin</module>
 	</modules>
 	
 	<!-- 集中定义依赖版本号 -->
@@ -63,7 +62,6 @@
 		<mybatis-spring-boot-starter.version>2.0.1</mybatis-spring-boot-starter.version>
 		<spring-boot-admin.version>2.1.6</spring-boot-admin.version>
 		<spring-boot-zuul.version>2.1.5.RELEASE</spring-boot-zuul.version>
-		<zipkin.version>2.12.9</zipkin.version>
 	</properties>
 
     <!-- 只是对版本进行管理，不会实际引入 jar -->
@@ -133,23 +131,6 @@
 				<groupId>org.springframework.cloud</groupId>
 				<artifactId>spring-cloud-starter-netflix-zuul</artifactId>
 				<version>${spring-boot-zuul.version}</version>
-			</dependency>
-			<!-- zipkin -->
-			<dependency>
-				<groupId>io.zipkin.java</groupId>
-				<artifactId>zipkin-server</artifactId>
-				<version>${zipkin.version}</version>
-				<exclusions>
-					<exclusion>
-						<groupId>org.springframework.boot</groupId>
-						<artifactId>spring-boot-starter-log4j2</artifactId>
-					</exclusion>
-				</exclusions>
-			</dependency>
-			<dependency>
-				<groupId>io.zipkin.java</groupId>
-				<artifactId>zipkin-autoconfigure-ui</artifactId>
-				<version>${zipkin.version}</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>

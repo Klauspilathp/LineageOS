@@ -9,7 +9,6 @@ gnol-springboot-config:9200
 
 gnol-springboot-admin:9300
 gnol-springboot-dashboard:9310
-gnol-springboot-zipkin:9320
 
 gnol-springboot-web:8090
 gnol-springboot-api:8091
