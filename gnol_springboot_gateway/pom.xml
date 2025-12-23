@@ -7,21 +7,16 @@
 		<version>0.0.1-SNAPSHOT</version>
 		<relativePath>../pom.xml</relativePath>
 	</parent>
-	<artifactId>gnol_springboot_zuul</artifactId>
+	<artifactId>gnol_springboot_gateway</artifactId>
 	<packaging>jar</packaging>
-	<name>gnol_springboot_zuul</name>
-	<description>gnol_springboot 项目 zuul 网关模块</description>
+	<name>gnol_springboot_gateway</name>
+	<description>gnol_springboot 项目 gateway 网关模块</description>
 
 	<dependencies>
 		<dependency>
 			<groupId>com.gnol</groupId>
 			<artifactId>gnol_springboot_common</artifactId>
 			<version>${project.version}</version>
-		</dependency>
-		<!-- zuul -->
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-netflix-zuul</artifactId>
 		</dependency>
 		<!-- eureka client -->
 		<dependency>

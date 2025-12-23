@@ -34,7 +34,8 @@
 	<modules>
 		<module>gnol_springboot_common</module>
 		<module>gnol_springboot_eureka_server</module>
-		<module>gnol_springboot_zuul_gateway</module>
+		<module>gnol_springboot_zuul</module>
+		<module>gnol_springboot_gateway</module>
 		<module>gnol_springboot_config</module>
 		<module>gnol_springboot_auth</module>
 		<module>gnol_springboot_admin</module>
