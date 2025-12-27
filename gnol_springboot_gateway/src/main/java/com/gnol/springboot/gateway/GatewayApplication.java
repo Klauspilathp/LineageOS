@@ -3,7 +3,6 @@ package com.gnol.springboot.gateway;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
-import org.springframework.cloud.openfeign.EnableFeignClients;
 
 /**
  * @Title: GatewayApplication
@@ -14,7 +13,6 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
  */
 @SpringBootApplication(scanBasePackages = {"com.gnol.springboot"})
 @EnableDiscoveryClient // eureka 客户端
-@EnableFeignClients // 启用 Fegin
 public class GatewayApplication {
 
     public static void main(String[] args) {
