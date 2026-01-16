@@ -15,7 +15,12 @@ spring:
       password: '000000'
       label: master # profile 对应 config server 所获取配置文件中的 {profile}
       profile: dev # 指定 git 仓库的分支，对应 config server 所获取配置文件中的 {label}
-
+      retry:
+        initial-interval: 2000
+        max-interval: 10000
+        multiplier: 2
+        max-attempts: 10
+      
 # config server 对称加密的密钥
 encrypt:
   key: wujialong
