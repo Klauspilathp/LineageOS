@@ -10,7 +10,7 @@
 	<artifactId>gnol_springboot_common</artifactId>
 	<packaging>jar</packaging>
 	<name>gnol_springboot_common</name>
-	<description>gnol springboot 项目公共模块</description>
+	<description>gnol springboot 项目公共模块，定义一些接口、常量、Feign 等</description>
 
 	<dependencies>
 		<dependency>

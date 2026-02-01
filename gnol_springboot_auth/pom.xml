@@ -47,6 +47,11 @@
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-oauth2</artifactId>
 		</dependency>
+		<!-- gnol 项目封装的 spring-boot 关于 jwt starter -->
+		<dependency>
+			<groupId>com.gnol</groupId>
+			<artifactId>spring-boot-starter-jwt</artifactId>
+		</dependency>
 	</dependencies>
 
 	<build>
