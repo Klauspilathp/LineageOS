@@ -86,6 +86,12 @@
 				<artifactId>spring-boot-starter-jwt</artifactId>
 				<version>${gnol_springboot_plugins.version}</version>
 			</dependency>
+			<!-- gnol 项目封装的 spring-boot 关于 redis starter -->
+			<dependency>
+				<groupId>com.gnol</groupId>
+				<artifactId>spring-boot-starter-redis</artifactId>
+				<version>${gnol_springboot_plugins.version}</version>
+			</dependency>
             <!-- gnol springboot 版插件工程 =======>end -->
 			<dependency>
 				<groupId>com.alibaba</groupId>
