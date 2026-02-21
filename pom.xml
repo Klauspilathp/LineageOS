@@ -160,11 +160,6 @@
 			<artifactId>gnol_springboot_plugins_core</artifactId>
 			<version>${gnol_springboot_plugins.version}</version>
 		</dependency>
-        <!-- spring boot 缓存 -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-cache</artifactId>
-		</dependency>
         <!-- 热部署 -->
         <!-- devtools 可以实现页面热部署（即页面修改后会立即生效，这个可以直接在 applicatjwtties 文件中配置 spring.thymeleaf.cache=false 来实现） -->
         <!-- 实现类文件、属性文件热部署（类文件修改后不会立即生效）。 即 devtools 会监听 classpath 下的文件变动，保存时会立即重启应用。
