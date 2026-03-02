@@ -1,4 +1,4 @@
-package com.gnol.springboot.client.config;
+package com.gnol.springboot.common.configurations.rest;
 
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;
@@ -6,14 +6,14 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.client.RestTemplate;
 
 /**
- * @Title: RestTemplateConfig
- * @Package: com.gnol.springboot.client.config
+ * @Title: RestTemplateConfiguration
+ * @Package: com.gnol.springboot.common.configurations.rest
  * @author: 吴佳隆
- * @date: 2020年6月17日 上午9:22:35
+ * @date: 2020年6月28日 下午7:12:05
  * @Description: RestTemplate 是 spring 提供的用于访问 rest 服务的客户端。
  */
 @Configuration
-public class RestTemplateConfig {
+public class RestTemplateConfiguration {
 
     @Bean
     @LoadBalanced // ribbon 的负载均衡注解，org.springframework.cloud.client.loadbalancer.LoadBalancerAutoConfiguration
