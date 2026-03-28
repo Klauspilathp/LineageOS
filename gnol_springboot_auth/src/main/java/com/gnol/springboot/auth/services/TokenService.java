@@ -4,6 +4,8 @@ import java.util.Map;
 
 import com.gnol.plugins.core.PageData;
 
+import io.jsonwebtoken.Claims;
+
 /**
  * @Title: TokenService
  * @Package: com.gnol.springboot.auth.services
@@ -27,11 +29,11 @@ public interface TokenService {
      * @Title: validateToken
      * @author: 吴佳隆
      * @data: 2020年6月29日 下午12:27:37
-     * @Description: 验证 token 是否有效
+     * @Description: 验证 token 是否有效，如果有效则返回载荷
      * @param pd
-     * @return boolean
+     * @return Claims
      */
-    boolean validateToken(PageData pd);
+    Claims validateToken(PageData pd);
 
     /**
      * @Title: updateToken

@@ -4,10 +4,13 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.springframework.stereotype.Service;
+
 import com.gnol.jwt.spring.boot.autoconfigure.JwtUtil;
 import com.gnol.plugins.core.PageData;
 import com.gnol.springboot.auth.services.TokenService;
 
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 
 /**
@@ -17,6 +20,7 @@ import io.jsonwebtoken.JwtException;
  * @date: 2020年6月28日 下午4:36:19
  * @Description: jwt token 服务实现
  */
+@Service("jwtTokenServiceImpl")
 public class JwtTokenServiceImpl implements TokenService {
     /**
      * jwt token 工具类
@@ -40,8 +44,8 @@ public class JwtTokenServiceImpl implements TokenService {
     }
 
     @Override
-    public boolean validateToken(PageData pd) {
-        return jwtUtil.isTokenExpired(pd.getString("token"), jwtUtil.getJwtProperties().getSecret());
+    public Claims validateToken(PageData pd) {
+        return jwtUtil.getClaimByToken(pd.getString("token"), jwtUtil.getJwtProperties().getSecret());
     }
 
     @Override

@@ -1,7 +1,7 @@
 package com.gnol.springboot.common.mappings.auth;
 
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import com.gnol.plugins.core.PageData;
 import com.gnol.plugins.core.PageResult;
@@ -13,7 +13,6 @@ import com.gnol.plugins.core.PageResult;
  * @date: 2020年6月28日 下午12:58:15
  * @Description: 认证服务接口
  */
-@RequestMapping(path = "/auth")
 public interface AuthMapping {
 
     /**
@@ -25,7 +24,7 @@ public interface AuthMapping {
      * @return PageResult
      */
     @PostMapping(value = "/login")
-    PageResult login(PageData pd);
+    PageResult login(@RequestBody PageData pd);
 
     /**
      * @Title: validate
@@ -36,7 +35,7 @@ public interface AuthMapping {
      * @return PageResult
      */
     @PostMapping(value = "/validate")
-    PageResult validate(PageData pd);
+    PageResult validate(@RequestBody PageData pd);
 
     /**
      * @Title: logout
@@ -47,6 +46,6 @@ public interface AuthMapping {
      * @return PageResult
      */
     @PostMapping(value = "/logout")
-    PageResult logout(PageData pd);
+    PageResult logout(@RequestBody PageData pd);
 
 }
