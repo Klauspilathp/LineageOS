@@ -3,8 +3,11 @@ package com.gnol.springboot.client.controlles.test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.loadbalancer.LoadBalancerClient;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
@@ -22,6 +25,7 @@ import com.netflix.discovery.EurekaClient;
  */
 @RestController
 @RequestMapping("/client2/test1")
+@RefreshScope
 public class Test1Controller {
     private static final Logger logger = LoggerFactory.getLogger(Test1Controller.class);
     @Autowired
@@ -66,6 +70,14 @@ public class Test1Controller {
     public PageResult t4() {
         InstanceInfo instance = eurekaClient.getNextServerFromEureka("gnol-springboot-eureka-client1", false);
         return PageResult.ok(instance.getHomePageUrl());
+    }
+
+    @Value("${server.port}")
+    private String serverPort;
+
+    @GetMapping("/t5")
+    public String t5() {
+        return serverPort;
     }
 
 }
