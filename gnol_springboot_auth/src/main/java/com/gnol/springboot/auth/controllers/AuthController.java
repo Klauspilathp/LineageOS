@@ -24,6 +24,9 @@ public class AuthController implements AuthMapping {
     @Resource(name = "authServiceImpl")
     private AuthService authService;
 
+    /**
+     * 通过网关发送 POST 请求 http://127.0.0.1:8080/auth/login，传入 user_type 参数
+     */
     @Override
     public PageResult login(PageData pd) {
         return authService.auth(pd);
