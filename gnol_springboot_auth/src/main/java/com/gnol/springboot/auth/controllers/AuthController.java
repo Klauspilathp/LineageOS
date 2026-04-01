@@ -37,6 +37,9 @@ public class AuthController implements AuthMapping {
         return authService.validate(pd);
     }
 
+    /**
+     * 通过网关发送 POST 请求 http://127.0.0.1:8080/auth/logout，传入 token 参数
+     */
     @Override
     public PageResult logout(PageData pd) {
         return authService.logout(pd);
