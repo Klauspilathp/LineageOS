@@ -1,5 +1,9 @@
 package com.gnol.springboot.common.mappings.auth;
 
+import java.util.Map;
+
+import org.springframework.cloud.openfeign.SpringQueryMap;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -31,11 +35,11 @@ public interface AuthMapping {
      * @author: 吴佳隆
      * @data: 2020年6月28日 下午4:05:28
      * @Description: 验证权限
-     * @param pd
+     * @param map
      * @return PageResult
      */
-    @PostMapping(value = "/validate")
-    PageResult validate(@RequestBody PageData pd);
+    @GetMapping(value = "/validate")
+    PageResult validate(@SpringQueryMap Map<String, Object> map);
 
     /**
      * @Title: logout

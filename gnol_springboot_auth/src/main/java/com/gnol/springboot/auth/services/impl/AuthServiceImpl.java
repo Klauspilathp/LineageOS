@@ -100,7 +100,6 @@ public class AuthServiceImpl implements AuthService {
             e.printStackTrace();
             return PageResult.error(e.getMessage());
         }
-        
         return PageResult.ok(claims.toString());
     }
 

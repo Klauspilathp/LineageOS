@@ -45,12 +45,18 @@ public class JwtTokenServiceImpl implements TokenService {
 
     @Override
     public Claims validateToken(PageData pd) {
+        if (pd == null || pd.isEmpty()) {
+            return null;
+        }
         return jwtUtil.getClaimByToken(pd.getString("token"), jwtUtil.getJwtProperties().getSecret());
     }
 
     @Override
     public String updateToken(PageData pd) {
         String token = "";
+        if (pd == null || pd.isEmpty()) {
+            return token;
+        }
         try {
             token = jwtUtil.updateToken(pd.getString("token"), jwtUtil.getJwtProperties().getSecret(),
                     jwtUtil.getJwtProperties().getExpiration());

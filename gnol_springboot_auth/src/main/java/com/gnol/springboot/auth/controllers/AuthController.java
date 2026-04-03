@@ -1,5 +1,7 @@
 package com.gnol.springboot.auth.controllers;
 
+import java.util.Map;
+
 import javax.annotation.Resource;
 
 import org.springframework.web.bind.annotation.RestController;
@@ -33,8 +35,8 @@ public class AuthController implements AuthMapping {
     }
 
     @Override
-    public PageResult validate(PageData pd) {
-        return authService.validate(pd);
+    public PageResult validate(Map<String, Object> map) {
+        return authService.validate(new PageData(map));
     }
 
     /**
