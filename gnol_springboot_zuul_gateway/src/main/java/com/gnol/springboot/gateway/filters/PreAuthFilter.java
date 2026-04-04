@@ -1,5 +1,8 @@
 package com.gnol.springboot.gateway.filters;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
@@ -8,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.netflix.zuul.filters.support.FilterConstants;
 import org.springframework.stereotype.Component;
 
-import com.gnol.plugins.core.PageData;
 import com.gnol.plugins.core.PageResult;
 import com.gnol.plugins.core.StringUtil;
 import com.gnol.plugins.core.exception.AuthRuntimeException;
@@ -52,12 +54,12 @@ public class PreAuthFilter extends ZuulFilter {
     public Object run() throws ZuulException {
         RequestContext ctx = RequestContext.getCurrentContext();
         HttpServletRequest request = ctx.getRequest();
-        PageData pd = new PageData();
-        pd.put("servlet_path", request.getServletPath());
-        pd.put("token", getTokenByRequest(request));
-        PageResult result = authFeignClient.validate(pd);
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("servlet_path", request.getServletPath());
+        map.put("token", getTokenByRequest(request));
+        PageResult result = authFeignClient.validate(map);
         if (!result.isOk()) {
-            logger.debug("{} 路径的接口被 token {} 的用户非法访问...", pd.get("servlet_path"), pd.get("token"));
+            logger.debug("{} 路径的接口被 token {} 的用户非法访问...", map.get("servlet_path"), map.get("token"));
             throw new AuthRuntimeException(result.getMessage());
         }
         // return 值没有意义，zuul 框架没有使用
