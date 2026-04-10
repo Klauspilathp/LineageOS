@@ -1,6 +1,10 @@
 package com.gnol.springboot.gateway.config;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import feign.codec.Encoder;
+import feign.form.spring.SpringFormEncoder;
 
 /**
  * @Title: ZuulConfiguration
@@ -11,5 +15,10 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 public class ZuulConfiguration {
+
+    @Bean
+    public Encoder feignFormEncoder() {
+        return new SpringFormEncoder();
+    }
 
 }
