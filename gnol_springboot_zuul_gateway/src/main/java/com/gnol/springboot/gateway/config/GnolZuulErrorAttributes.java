@@ -26,7 +26,7 @@ public class GnolZuulErrorAttributes extends DefaultErrorAttributes {
     @Override
     public Map<String, Object> getErrorAttributes(WebRequest webRequest, boolean includeStackTrace) {
         Map<String, Object> errorAttributes = super.getErrorAttributes(webRequest, includeStackTrace);
-        logger.info("原错误信息 {}...", errorAttributes.toString());
+        logger.debug("原错误信息 {}...", errorAttributes.toString());
         int status = errorAttributes.get("status") == null ? HttpStatus.HS_500.getKey()
                 : StringUtil.toInt(errorAttributes.get("status"));
         String message = errorAttributes.get("message") == null ? HttpStatus.getValue(status)
