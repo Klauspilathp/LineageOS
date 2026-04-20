@@ -1,8 +1,5 @@
 package com.gnol.springboot.gateway.filters;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
@@ -54,12 +51,14 @@ public class PreAuthFilter extends ZuulFilter {
     public Object run() throws ZuulException {
         RequestContext ctx = RequestContext.getCurrentContext();
         HttpServletRequest request = ctx.getRequest();
-        Map<String, Object> map = new HashMap<String, Object>();
-        map.put("servlet_path", request.getServletPath());
-        map.put("token", getTokenByRequest(request));
-        PageResult result = authFeignClient.validate(map);
+        String token = getTokenByRequest(request);
+        if (StringUtil.isBlank(token)) {
+            throw new AuthRuntimeException("非法请求！");
+        }
+        String servlet_path = request.getServletPath();
+        PageResult result = authFeignClient.validate(token, servlet_path);
         if (!result.isOk()) {
-            logger.debug("{} 路径的接口被 token {} 的用户非法访问...", map.get("servlet_path"), map.get("token"));
+            logger.debug("{} 路径的接口被 token {} 的用户非法访问...", servlet_path, token);
             throw new AuthRuntimeException(result.getMessage());
         }
         // return 值没有意义，zuul 框架没有使用

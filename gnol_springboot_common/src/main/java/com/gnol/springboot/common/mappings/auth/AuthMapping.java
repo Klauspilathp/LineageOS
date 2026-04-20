@@ -1,11 +1,9 @@
 package com.gnol.springboot.common.mappings.auth;
 
-import java.util.Map;
-
-import org.springframework.cloud.openfeign.SpringQueryMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.gnol.plugins.core.PageData;
 import com.gnol.plugins.core.PageResult;
@@ -33,13 +31,14 @@ public interface AuthMapping {
     /**
      * @Title: validate
      * @author: 吴佳隆
-     * @data: 2020年6月28日 下午4:05:28
+     * @data: 2020年6月30日 下午12:08:10
      * @Description: 验证权限
-     * @param map
+     * @param token         token 字符串
+     * @param servletPath   请求 uri
      * @return PageResult
      */
     @GetMapping(value = "/validate")
-    PageResult validate(@SpringQueryMap Map<String, Object> map);
+    PageResult validate(@RequestParam("token") String token, @RequestParam("servletPath") String servletPath);
 
     /**
      * @Title: logout

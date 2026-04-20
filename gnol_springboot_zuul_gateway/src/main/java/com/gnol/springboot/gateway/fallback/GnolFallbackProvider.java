@@ -14,6 +14,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.client.ClientHttpResponse;
 import org.springframework.stereotype.Component;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gnol.plugins.core.PageResult;
 import com.gnol.springboot.gateway.filters.PreAuthFilter;
 import com.netflix.hystrix.exception.HystrixTimeoutException;
@@ -70,9 +71,8 @@ public class GnolFallbackProvider implements FallbackProvider {
              */
             @Override
             public InputStream getBody() throws IOException {
-                return new ByteArrayInputStream(
-                        PageResult.build(com.gnol.plugins.core.enums.HttpStatus.HS_500.getKey(), "服务不可用，请稍后再试。")
-                                .toString().getBytes());
+                return new ByteArrayInputStream(new ObjectMapper().writeValueAsBytes(
+                        PageResult.build(com.gnol.plugins.core.enums.HttpStatus.HS_500.getKey(), "服务不可用，请稍后再试。")));
             }
 
             /**
