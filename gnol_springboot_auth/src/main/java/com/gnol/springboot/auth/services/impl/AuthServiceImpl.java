@@ -1,5 +1,6 @@
 package com.gnol.springboot.auth.services.impl;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -99,6 +100,9 @@ public class AuthServiceImpl implements AuthService {
         } catch (JwtException e) {
             e.printStackTrace();
             return PageResult.error(e.getMessage());
+        }
+        if (claims.getExpiration().before(new Date())) {
+            return PageResult.error("授权已过期");
         }
         return PageResult.ok(claims.toString());
     }

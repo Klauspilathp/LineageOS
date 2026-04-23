@@ -34,7 +34,6 @@ public class AuthController implements AuthMapping {
 
     @Override
     public PageResult validate(String token, String servletPath) {
-        System.out.println(token + "/n" + servletPath);
         PageData pd = new PageData();
         pd.put("token", token);
         pd.put("servlet_path", servletPath);
