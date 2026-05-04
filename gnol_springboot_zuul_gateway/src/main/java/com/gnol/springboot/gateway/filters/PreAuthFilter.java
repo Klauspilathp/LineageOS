@@ -38,7 +38,7 @@ public class PreAuthFilter extends ZuulFilter {
     public boolean shouldFilter() {
         RequestContext ctx = RequestContext.getCurrentContext();
         HttpServletRequest request = ctx.getRequest();
-        if (StringUtil.startsWith(request.getServletPath(), "/auth")) {
+        if (StringUtil.startsWith(request.getServletPath(), "/auth/")) {
             return false;
         }
         return true;
