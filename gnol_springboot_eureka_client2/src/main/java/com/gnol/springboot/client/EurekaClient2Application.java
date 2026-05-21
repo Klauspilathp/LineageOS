@@ -6,6 +6,7 @@ import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.jms.annotation.EnableJms;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 /**
  * @Title: EurekaClient2Application
@@ -23,6 +24,7 @@ import org.springframework.jms.annotation.EnableJms;
 @EnableFeignClients // 启用 Fegin
 @EnableCircuitBreaker // 启用 hystrix
 @EnableJms // 启用 jms 支持
+@EnableScheduling // 启用定时任务
 public class EurekaClient2Application {
 
     public static void main(String[] args) {

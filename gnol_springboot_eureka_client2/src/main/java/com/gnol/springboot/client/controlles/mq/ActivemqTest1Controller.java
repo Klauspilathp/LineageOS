@@ -1,7 +1,5 @@
 package com.gnol.springboot.client.controlles.mq;
 
-import java.util.Timer;
-import java.util.TimerTask;
 import java.util.UUID;
 
 import javax.annotation.Resource;
@@ -9,6 +7,7 @@ import javax.annotation.Resource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jms.annotation.JmsListener;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import com.gnol.activemq.spring.boot.autoconfigure.ActivemqMessage;
@@ -29,13 +28,7 @@ public class ActivemqTest1Controller {
     private SendMessageService sendMessageService;
 
     public ActivemqTest1Controller() {
-        new Timer().schedule(new TimerTask() {
-            @Override
-            public void run() {
-                sendMsg();
-            }
-        }, 30000, // 任务创建 0.5 分钟后开始执行第一次
-                10000); // 每隔 10 秒执行一次
+
     }
 
     @JmsListener(destination = "activemq.queue.test1", containerFactory = "queueListener")
@@ -43,6 +36,7 @@ public class ActivemqTest1Controller {
         logger.info("ActivemqTest1Controller.receiveQueue activemq.queue.test1 text：{}", text);
     }
 
+    @Scheduled(initialDelay = 20000, fixedDelay = 10000)
     public void sendMsg() {
         for (int i = 0; i < 10; i++) {
             sendMessageService.sendQueueMsg(new ActivemqMessage("activemq.queue.test1", UUID.randomUUID().toString()));

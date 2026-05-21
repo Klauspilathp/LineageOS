@@ -74,6 +74,11 @@
 	<dependencyManagement>
 		<dependencies>
             <!-- gnol springboot 版插件工程 =======>start -->
+			<dependency>
+				<groupId>com.gnol</groupId>
+				<artifactId>gnol_springboot_plugins_tools</artifactId>
+				<version>${gnol_springboot_plugins.version}</version>
+			</dependency>
 			<!-- gnol 项目封装的 spring-boot 关于 fastDFS starter -->
 			<dependency>
 				<groupId>com.gnol</groupId>
