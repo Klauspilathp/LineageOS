@@ -27,10 +27,6 @@ public class ActivemqTest1Controller {
     @Resource(name = "sendMessageServiceImpl")
     private SendMessageService sendMessageService;
 
-    public ActivemqTest1Controller() {
-
-    }
-
     @JmsListener(destination = "activemq.queue.test1", containerFactory = "queueListener")
     public void receiveQueue(String text) {
         logger.info("ActivemqTest1Controller.receiveQueue activemq.queue.test1 text：{}", text);
