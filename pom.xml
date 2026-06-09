@@ -56,11 +56,7 @@
 		<maven-jar-plugin.version>3.1.1</maven-jar-plugin.version>
         <!-- jar 版本管理 -->
 		<gnol_springboot_plugins.version>0.0.1-SNAPSHOT</gnol_springboot_plugins.version>
-		<druid-spring-boot-starter.version>1.1.22</druid-spring-boot-starter.version>
-		<mysql-connector-java.version>8.0.17</mysql-connector-java.version>
-		<druid.version>1.1.21</druid.version>
 		<swagger.version>2.9.2</swagger.version>
-		<mybatis-spring-boot-starter.version>2.0.1</mybatis-spring-boot-starter.version>
 		<spring-boot-admin.version>2.1.6</spring-boot-admin.version>
 		<spring-boot-zuul.version>2.1.5.RELEASE</spring-boot-zuul.version>
 	</properties>
@@ -104,23 +100,6 @@
 				<version>${gnol_springboot_plugins.version}</version>
 			</dependency>
             <!-- gnol springboot 版插件工程 =======>end -->
-			<dependency>
-				<groupId>com.alibaba</groupId>
-				<artifactId>druid-spring-boot-starter</artifactId>
-				<version>${druid-spring-boot-starter.version}</version>
-			</dependency>
-            <!-- mysql 驱动包 -->
-			<dependency>
-				<groupId>mysql</groupId>
-				<artifactId>mysql-connector-java</artifactId>
-				<version>${mysql-connector-java.version}</version>
-			</dependency>
-            <!-- druid 连接池 -->
-			<dependency>
-				<groupId>com.alibaba</groupId>
-				<artifactId>druid</artifactId>
-				<version>${druid.version}</version>
-			</dependency>
             <!-- swagger 生成接口文档 =======>start -->
 			<dependency>
 				<groupId>io.springfox</groupId>
@@ -133,11 +112,6 @@
 				<version>${swagger.version}</version>
 			</dependency>
             <!-- swagger 生成接口文档 =======>end -->
-			<dependency>
-				<groupId>org.mybatis.spring.boot</groupId>
-				<artifactId>mybatis-spring-boot-starter</artifactId>
-				<version>${mybatis-spring-boot-starter.version}</version>
-			</dependency>
 			<!-- admin server -->
 			<dependency>
 				<groupId>de.codecentric</groupId>
