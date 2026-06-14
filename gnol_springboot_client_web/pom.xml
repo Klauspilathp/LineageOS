@@ -19,6 +19,11 @@
 			<artifactId>gnol_springboot_common</artifactId>
 			<version>${project.version}</version>
 		</dependency>
+		<!-- gnol 项目封装的 spring-boot 关于 mybatis 持久化层 starter -->
+		<dependency>
+			<groupId>com.gnol</groupId>
+			<artifactId>spring-boot-starter-mybatis</artifactId>
+		</dependency>
 		<!-- eureka client -->
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>

@@ -99,6 +99,12 @@
 				<artifactId>spring-boot-starter-activemq</artifactId>
 				<version>${gnol_springboot_plugins.version}</version>
 			</dependency>
+			<!-- gnol 项目封装的 spring-boot 关于 mybatis 持久化层 starter -->
+			<dependency>
+				<groupId>com.gnol</groupId>
+				<artifactId>spring-boot-starter-mybatis</artifactId>
+				<version>${gnol_springboot_plugins.version}</version>
+			</dependency>
             <!-- gnol springboot 版插件工程 =======>end -->
             <!-- swagger 生成接口文档 =======>start -->
 			<dependency>
