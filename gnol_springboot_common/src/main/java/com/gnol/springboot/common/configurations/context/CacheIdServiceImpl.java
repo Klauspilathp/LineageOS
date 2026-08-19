@@ -1,0 +1,42 @@
+package com.gnol.springboot.common.configurations.context;
+
+import com.gnol.plugins.core.StringUtil;
+import com.gnol.plugins.core.context.CacheService;
+
+/**
+ * @Title: CacheIdServiceImpl
+ * @Package: com.gnol.springboot.common.configurations.context
+ * @author: 吴佳隆
+ * @date: 2020年4月3日 上午11:10:40
+ * @Description: 基于缓存实现的 ID 生成服务实现，建议使用 redis 的缓存实现
+ */
+public class CacheIdServiceImpl extends AbstractIdService {
+    /**
+     * 缓存接口，所有缓存实现都继承自此接口
+     */
+    private CacheService cacheService;
+
+    public CacheIdServiceImpl(CacheService cacheService) {
+        super();
+        this.cacheService = cacheService;
+    }
+
+    @Override
+    public long getLong(String idKey) {
+        if (StringUtil.isBlank(idKey)) {
+            idKey = "default_cache_id_key";
+        }
+        return cacheService.incr(idKey);
+    }
+
+    @Override
+    public long getLong(String idKey, int perNum) {
+        return this.getLong(idKey);
+    }
+
+    @Override
+    public String getString(String prefix) {
+        return prefix + this.getLong("default_cache_id_key");
+    }
+
+}
