@@ -15,6 +15,9 @@ import com.gnol.plugins.core.context.GnolApplicationObjectSupport;
 @Configuration
 public class CommonConfiguration {
 
+    /**
+     * 初始化  org.springframework.context.ApplicationContext
+     */
     @Bean
     public GnolApplicationObjectSupport gnolApplicationObjectSupport() {
         return new GnolApplicationObjectSupport();
