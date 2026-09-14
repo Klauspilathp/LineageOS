@@ -14,7 +14,7 @@ import com.gnol.redis.spring.boot.autoconfigure.RedisService;
 import com.gnol.springboot.auth.services.AuthService;
 import com.gnol.springboot.auth.services.ResourceService;
 import com.gnol.springboot.auth.services.TokenService;
-import com.gnol.springboot.common.enums.UserTypeEnum;
+import com.gnol.springboot.common.enums.sys.UserTypeEnum;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
