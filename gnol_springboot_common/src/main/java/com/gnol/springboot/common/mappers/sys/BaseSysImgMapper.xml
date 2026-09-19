@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gnol.springboot.common.daos.sys.BaseSysImgDao">
+    <!-- 通用查询映射结果 -->
+	<resultMap id="BaseResultMap" type="com.gnol.springboot.common.pojos.sys.SysImg">
+		<id column="imgId" property="imgId" jdbcType="BIGINT"/>
+		<result column="imgName" property="imgName" jdbcType="VARCHAR"/>
+		<result column="imgPath" property="imgPath" jdbcType="VARCHAR"/>
+		<result column="imgType" property="imgType" jdbcType="VARCHAR"/>
+		<result column="sort" property="sort" jdbcType="TINYINT"/>
+		<result column="remark" property="remark" jdbcType="VARCHAR"/>
+		<result column="addTime" property="addTime" jdbcType="TIMESTAMP"/>
+		<result column="addUser" property="addUser" jdbcType="BIGINT"/>
+		<result column="modifyTime" property="modifyTime" jdbcType="TIMESTAMP"/>
+		<result column="modifyUser" property="modifyUser" jdbcType="BIGINT"/>
+		<result column="status" property="status" jdbcType="TINYINT"/>
+	</resultMap>
+	
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+		imgId, imgName, imgPath, imgType, sort, remark, addTime, addUser, modifyTime, modifyUser, status 
+	</sql>
+	
+	<!-- 插入数据 -->
+	<insert id="insert" parameterType="com.gnol.springboot.common.pojos.sys.SysImg">
+		INSERT INTO sys_img (
+		<trim suffixOverrides=",">
+			imgId, 
+			imgName, 
+			imgPath, 
+			imgType, 
+			sort, 
+			remark, 
+			addTime, 
+			addUser, 
+			status, 
+		</trim>
+		) VALUES (
+		<trim suffixOverrides=",">
+			#{imgId, jdbcType=BIGINT}, 
+			#{imgName, jdbcType=VARCHAR}, 
+			#{imgPath, jdbcType=VARCHAR}, 
+			#{imgType, jdbcType=VARCHAR}, 
+			#{sort, jdbcType=TINYINT}, 
+			#{remark, jdbcType=VARCHAR}, 
+			NOW(), 
+			#{addUser, jdbcType=BIGINT}, 
+			#{status, jdbcType=TINYINT}, 
+		</trim>)
+	</insert>
+	
+	<!-- 批量插入接口 -->
+	<insert id="insertBatch" parameterType="java.util.List">
+		INSERT INTO sys_img (
+			imgId, 
+			imgName, 
+			imgPath, 
+			imgType, 
+			sort, 
+			remark, 
+			addTime, 
+			addUser, 
+			status) VALUES 
+    	<foreach collection="list" item="item" index="index" separator="," >
+        	(#{item.imgId, jdbcType=BIGINT}, 
+			#{item.imgName, jdbcType=VARCHAR}, 
+			#{item.imgPath, jdbcType=VARCHAR}, 
+			#{item.imgType, jdbcType=VARCHAR}, 
+			#{item.sort, jdbcType=TINYINT}, 
+			#{item.remark, jdbcType=VARCHAR}, 
+			NOW(), 
+			#{item.addUser, jdbcType=BIGINT}, 
+			#{item.status, jdbcType=TINYINT})
+		</foreach>
+	</insert>
+	
+	<!-- 更新全部字段 -->
+	<update id="updateByKey" parameterType="com.gnol.springboot.common.pojos.sys.SysImg">
+		UPDATE sys_img SET 
+			imgName = #{imgName, jdbcType=VARCHAR}, 
+			imgPath = #{imgPath, jdbcType=VARCHAR}, 
+			imgType = #{imgType, jdbcType=VARCHAR}, 
+			sort = #{sort, jdbcType=TINYINT}, 
+			remark = #{remark, jdbcType=VARCHAR}, 
+			modifyUser = #{modifyUser, jdbcType=BIGINT}, 
+			status = #{status, jdbcType=TINYINT} 
+		WHERE imgId = #{imgId, jdbcType=BIGINT} 
+	</update>
+	
+	<!-- 只更新不为 null 和 空字符串的字段 -->
+	<update id="update" parameterType="com.gnol.springboot.common.pojos.sys.SysImg">
+		UPDATE sys_img 
+		<trim prefix="set" suffixOverrides=",">
+			<if test="null != imgName and imgName != ''">
+				imgName = #{imgName, jdbcType=VARCHAR}, 
+			</if>
+			<if test="null != imgPath and imgPath != ''">
+				imgPath = #{imgPath, jdbcType=VARCHAR}, 
+			</if>
+			<if test="null != imgType and imgType != ''">
+				imgType = #{imgType, jdbcType=VARCHAR}, 
+			</if>
+			<if test="null != sort">
+				sort = #{sort, jdbcType=TINYINT}, 
+			</if>
+			<if test="null != remark and remark != ''">
+				remark = #{remark, jdbcType=VARCHAR}, 
+			</if>
+			<if test="null != modifyUser">
+				modifyUser = #{modifyUser, jdbcType=BIGINT}, 
+			</if>
+			<if test="null != status">
+				status = #{status, jdbcType=TINYINT}, 
+			</if>
+		</trim>
+		WHERE imgId = #{imgId, jdbcType=BIGINT} 
+	</update>
+	
+	<!-- 根据主键物理删除数据 -->
+	<delete id="deleteByKey" parameterType="java.lang.Long">
+		DELETE FROM sys_img WHERE imgId = #{imgId, jdbcType=BIGINT}
+	</delete>
+	
+	<!-- 根据主键查询 pojo -->
+	<select id="getByKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+		SELECT <include refid="Base_Column_List"/> FROM sys_img 
+		WHERE imgId = #{imgId, jdbcType=BIGINT} 
+	</select>
+	
+	<!-- 根据主键查询 pojo -->
+	<select id="getPDByKey" parameterType="java.lang.Long" resultType="pd">
+		SELECT <include refid="Base_Column_List"/> FROM sys_img 
+		WHERE imgId = #{imgId, jdbcType=BIGINT} 
+	</select>
+	
+	<!-- 根据条件分页查询 pojo 列表 -->
+	<select id="listPage" parameterType="page" resultMap="BaseResultMap">
+		SELECT <include refid="Base_Column_List"/> FROM sys_img 
+		WHERE 1 = 1 
+		<if test="args != null">
+			<if test="null != args.imgName and args.imgName != ''">
+				AND imgName = #{args.imgName, jdbcType=VARCHAR} 
+			</if>
+			<if test="null != args.imgPath and args.imgPath != ''">
+				AND imgPath = #{args.imgPath, jdbcType=VARCHAR} 
+			</if>
+			<if test="null != args.imgType and args.imgType != ''">
+				AND imgType = #{args.imgType, jdbcType=VARCHAR} 
+			</if>
+			<if test="null != args.sort">
+				AND sort = #{args.sort, jdbcType=TINYINT} 
+			</if>
+			<if test="null != args.remark and args.remark != ''">
+				AND remark = #{args.remark, jdbcType=VARCHAR} 
+			</if>
+			<if test="null != args.addTime">
+				AND addTime = #{args.addTime, jdbcType=TIMESTAMP} 
+			</if>
+			<if test="null != args.addUser">
+				AND addUser = #{args.addUser, jdbcType=BIGINT} 
+			</if>
+			<if test="null != args.modifyTime">
+				AND modifyTime = #{args.modifyTime, jdbcType=TIMESTAMP} 
+			</if>
+			<if test="null != args.modifyUser">
+				AND modifyUser = #{args.modifyUser, jdbcType=BIGINT} 
+			</if>
+			<if test="null != args.status">
+				AND status = #{args.status, jdbcType=TINYINT} 
+			</if>
+		</if>
+	</select>
+	
+	<!-- 根据条件查询 pojo 列表 -->
+	<select id="listBy" parameterType="pd" resultMap="BaseResultMap">
+		SELECT <include refid="Base_Column_List"/> FROM sys_img 
+		WHERE 1 = 1 
+		<if test="null != imgName and imgName != ''">
+			AND imgName = #{imgName, jdbcType=VARCHAR} 
+		</if>
+		<if test="null != imgPath and imgPath != ''">
+			AND imgPath = #{imgPath, jdbcType=VARCHAR} 
+		</if>
+		<if test="null != imgType and imgType != ''">
+			AND imgType = #{imgType, jdbcType=VARCHAR} 
+		</if>
+		<if test="null != sort">
+			AND sort = #{sort, jdbcType=TINYINT} 
+		</if>
+		<if test="null != remark and remark != ''">
+			AND remark = #{remark, jdbcType=VARCHAR} 
+		</if>
+		<if test="null != addTime">
+			AND addTime = #{addTime, jdbcType=TIMESTAMP} 
+		</if>
+		<if test="null != addUser">
+			AND addUser = #{addUser, jdbcType=BIGINT} 
+		</if>
+		<if test="null != modifyTime">
+			AND modifyTime = #{modifyTime, jdbcType=TIMESTAMP} 
+		</if>
+		<if test="null != modifyUser">
+			AND modifyUser = #{modifyUser, jdbcType=BIGINT} 
+		</if>
+		<if test="null != status">
+			AND status = #{status, jdbcType=TINYINT} 
+		</if>
+	</select>
+	
+</mapper>

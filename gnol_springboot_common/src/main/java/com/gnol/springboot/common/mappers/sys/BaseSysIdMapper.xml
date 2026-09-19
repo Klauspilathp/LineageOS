@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gnol.springboot.common.daos.sys.BaseSysIdDao">
+    <!-- 通用查询映射结果 -->
+	<resultMap id="BaseResultMap" type="com.gnol.springboot.common.pojos.sys.SysId">
+		<id column="idKey" property="idKey" jdbcType="VARCHAR"/>
+		<result column="startValue" property="startValue" jdbcType="BIGINT"/>
+		<result column="endValue" property="endValue" jdbcType="BIGINT"/>
+		<result column="perNum" property="perNum" jdbcType="INTEGER"/>
+		<result column="remark" property="remark" jdbcType="VARCHAR"/>
+		<result column="addTime" property="addTime" jdbcType="TIMESTAMP"/>
+		<result column="modifyTime" property="modifyTime" jdbcType="TIMESTAMP"/>
+	</resultMap>
+	
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+		idKey, startValue, endValue, perNum, remark, addTime, modifyTime 
+	</sql>
+	
+	<!-- 插入数据 -->
+	<insert id="insert" parameterType="com.gnol.springboot.common.pojos.sys.SysId">
+		INSERT INTO sys_id (
+		<trim suffixOverrides=",">
+			idKey, 
+			startValue, 
+			endValue, 
+			perNum, 
+			remark, 
+			addTime, 
+		</trim>
+		) VALUES (
+		<trim suffixOverrides=",">
+			#{idKey, jdbcType=VARCHAR}, 
+			#{startValue, jdbcType=BIGINT}, 
+			#{endValue, jdbcType=BIGINT}, 
+			#{perNum, jdbcType=INTEGER}, 
+			#{remark, jdbcType=VARCHAR}, 
+			NOW(), 
+		</trim>)
+	</insert>
+	
+	<!-- 批量插入接口 -->
+	<insert id="insertBatch" parameterType="java.util.List">
+		INSERT INTO sys_id (
+			idKey, 
+			startValue, 
+			endValue, 
+			perNum, 
+			remark, 
+			addTime) VALUES 
+    	<foreach collection="list" item="item" index="index" separator="," >
+        	(#{item.idKey, jdbcType=VARCHAR}, 
+			#{item.startValue, jdbcType=BIGINT}, 
+			#{item.endValue, jdbcType=BIGINT}, 
+			#{item.perNum, jdbcType=INTEGER}, 
+			#{item.remark, jdbcType=VARCHAR}, 
+			NOW())
+		</foreach>
+	</insert>
+	
+	<!-- 更新全部字段 -->
+	<update id="updateByKey" parameterType="com.gnol.springboot.common.pojos.sys.SysId">
+		UPDATE sys_id SET 
+			startValue = #{startValue, jdbcType=BIGINT}, 
+			endValue = #{endValue, jdbcType=BIGINT}, 
+			perNum = #{perNum, jdbcType=INTEGER}, 
+			remark = #{remark, jdbcType=VARCHAR}
+		WHERE idKey = #{idKey, jdbcType=VARCHAR} 
+	</update>
+	
+	<!-- 只更新不为 null 和 空字符串的字段 -->
+	<update id="update" parameterType="com.gnol.springboot.common.pojos.sys.SysId">
+		UPDATE sys_id 
+		<trim prefix="set" suffixOverrides=",">
+			<if test="null != startValue">
+				startValue = #{startValue, jdbcType=BIGINT}, 
+			</if>
+			<if test="null != endValue">
+				endValue = #{endValue, jdbcType=BIGINT}, 
+			</if>
+			<if test="null != perNum">
+				perNum = #{perNum, jdbcType=INTEGER}, 
+			</if>
+			<if test="null != remark and remark != ''">
+				remark = #{remark, jdbcType=VARCHAR}, 
+			</if>
+		</trim>
+		WHERE idKey = #{idKey, jdbcType=VARCHAR} 
+	</update>
+	
+	<!-- 根据主键物理删除数据 -->
+	<delete id="deleteByKey" parameterType="java.lang.String">
+		DELETE FROM sys_id WHERE idKey = #{idKey, jdbcType=VARCHAR}
+	</delete>
+	
+	<!-- 根据主键查询 pojo -->
+	<select id="getByKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+		SELECT <include refid="Base_Column_List"/> FROM sys_id 
+		WHERE idKey = #{idKey, jdbcType=VARCHAR}
+	</select>
+	
+	<!-- 根据主键查询 pojo -->
+	<select id="getPDByKey" parameterType="java.lang.String" resultType="pd">
+		SELECT <include refid="Base_Column_List"/> FROM sys_id 
+		WHERE idKey = #{idKey, jdbcType=VARCHAR}
+	</select>
+	
+	<!-- 根据条件分页查询 pojo 列表 -->
+	<select id="listPage" parameterType="page" resultMap="BaseResultMap">
+		SELECT <include refid="Base_Column_List"/> FROM sys_id 
+		WHERE 1 = 1 
+		<if test="args != null">
+			<if test="null != args.idKey and args.idKey != ''">
+				AND idKey = #{args.idKey, jdbcType=VARCHAR} 
+			</if>
+			<if test="null != args.startValue">
+				AND startValue = #{args.startValue, jdbcType=BIGINT} 
+			</if>
+			<if test="null != args.endValue">
+				AND endValue = #{args.endValue, jdbcType=BIGINT} 
+			</if>
+			<if test="null != args.perNum">
+				AND perNum = #{args.perNum, jdbcType=INTEGER} 
+			</if>
+			<if test="null != args.remark and args.remark != ''">
+				AND remark = #{args.remark, jdbcType=VARCHAR} 
+			</if>
+			<if test="null != args.addTime">
+				AND addTime = #{args.addTime, jdbcType=TIMESTAMP} 
+			</if>
+			<if test="null != args.modifyTime">
+				AND modifyTime = #{args.modifyTime, jdbcType=TIMESTAMP} 
+			</if>
+		</if>
+	</select>
+	
+	<!-- 根据条件查询 pojo 列表 -->
+	<select id="listBy" parameterType="pd" resultMap="BaseResultMap">
+		SELECT <include refid="Base_Column_List"/> FROM sys_id 
+		WHERE 1 = 1 
+		<if test="null != idKey and idKey != ''">
+			AND idKey = #{idKey, jdbcType=VARCHAR} 
+		</if>
+		<if test="null != startValue">
+			AND startValue = #{startValue, jdbcType=BIGINT} 
+		</if>
+		<if test="null != endValue">
+			AND endValue = #{endValue, jdbcType=BIGINT} 
+		</if>
+		<if test="null != perNum">
+			AND perNum = #{perNum, jdbcType=INTEGER} 
+		</if>
+		<if test="null != remark and remark != ''">
+			AND remark = #{remark, jdbcType=VARCHAR} 
+		</if>
+		<if test="null != addTime">
+			AND addTime = #{addTime, jdbcType=TIMESTAMP} 
+		</if>
+		<if test="null != modifyTime">
+			AND modifyTime = #{modifyTime, jdbcType=TIMESTAMP} 
+		</if>
+	</select>
+	
+</mapper>

@@ -1,0 +1,436 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gnol.springboot.common.daos.sys.BaseSysTerritoryDao">
+    <!-- 通用查询映射结果 -->
+	<resultMap id="BaseResultMap" type="com.gnol.springboot.common.pojos.sys.SysTerritory">
+		<id column="territoryId" property="territoryId" jdbcType="BIGINT"/>
+		<result column="territoryNameCN" property="territoryNameCN" jdbcType="VARCHAR"/>
+		<result column="territoryNameEN" property="territoryNameEN" jdbcType="VARCHAR"/>
+		<result column="territoryAlias" property="territoryAlias" jdbcType="VARCHAR"/>
+		<result column="territoryCode" property="territoryCode" jdbcType="VARCHAR"/>
+		<result column="level" property="level" jdbcType="TINYINT"/>
+		<result column="sort" property="sort" jdbcType="TINYINT"/>
+		<result column="parentId" property="parentId" jdbcType="BIGINT"/>
+		<result column="stateId" property="stateId" jdbcType="BIGINT"/>
+		<result column="stateNameCN" property="stateNameCN" jdbcType="VARCHAR"/>
+		<result column="provinceId" property="provinceId" jdbcType="BIGINT"/>
+		<result column="provinceNameCN" property="provinceNameCN" jdbcType="VARCHAR"/>
+		<result column="cityId" property="cityId" jdbcType="BIGINT"/>
+		<result column="cityNameCN" property="cityNameCN" jdbcType="VARCHAR"/>
+		<result column="countyId" property="countyId" jdbcType="BIGINT"/>
+		<result column="countyNameCN" property="countyNameCN" jdbcType="VARCHAR"/>
+		<result column="streetId" property="streetId" jdbcType="BIGINT"/>
+		<result column="streetNameCN" property="streetNameCN" jdbcType="VARCHAR"/>
+		<result column="busId" property="busId" jdbcType="BIGINT"/>
+		<result column="remark" property="remark" jdbcType="VARCHAR"/>
+		<result column="addTime" property="addTime" jdbcType="TIMESTAMP"/>
+		<result column="addUser" property="addUser" jdbcType="BIGINT"/>
+		<result column="modifyTime" property="modifyTime" jdbcType="TIMESTAMP"/>
+		<result column="modifyUser" property="modifyUser" jdbcType="BIGINT"/>
+		<result column="status" property="status" jdbcType="TINYINT"/>
+		<result column="checkValue" property="checkValue" jdbcType="INTEGER"/>
+	</resultMap>
+	
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+		territoryId, territoryNameCN, territoryNameEN, territoryAlias, territoryCode, level, sort, parentId, stateId, stateNameCN, provinceId, provinceNameCN, cityId, cityNameCN, countyId, countyNameCN, streetId, streetNameCN, busId, remark, addTime, addUser, modifyTime, modifyUser, status, checkValue 
+	</sql>
+	
+	<!-- 插入数据 -->
+	<insert id="insert" parameterType="com.gnol.springboot.common.pojos.sys.SysTerritory">
+		INSERT INTO sys_territory (
+		<trim suffixOverrides=",">
+			territoryId, 
+			territoryNameCN, 
+			territoryNameEN, 
+			territoryAlias, 
+			territoryCode, 
+			level, 
+			sort, 
+			parentId, 
+			stateId, 
+			stateNameCN, 
+			provinceId, 
+			provinceNameCN, 
+			cityId, 
+			cityNameCN, 
+			countyId, 
+			countyNameCN, 
+			streetId, 
+			streetNameCN, 
+			busId, 
+			remark, 
+			addTime, 
+			addUser, 
+			status, 
+			checkValue, 
+		</trim>
+		) VALUES (
+		<trim suffixOverrides=",">
+			#{territoryId, jdbcType=BIGINT}, 
+			#{territoryNameCN, jdbcType=VARCHAR}, 
+			#{territoryNameEN, jdbcType=VARCHAR}, 
+			#{territoryAlias, jdbcType=VARCHAR}, 
+			#{territoryCode, jdbcType=VARCHAR}, 
+			#{level, jdbcType=TINYINT}, 
+			#{sort, jdbcType=TINYINT}, 
+			#{parentId, jdbcType=BIGINT}, 
+			#{stateId, jdbcType=BIGINT}, 
+			#{stateNameCN, jdbcType=VARCHAR}, 
+			#{provinceId, jdbcType=BIGINT}, 
+			#{provinceNameCN, jdbcType=VARCHAR}, 
+			#{cityId, jdbcType=BIGINT}, 
+			#{cityNameCN, jdbcType=VARCHAR}, 
+			#{countyId, jdbcType=BIGINT}, 
+			#{countyNameCN, jdbcType=VARCHAR}, 
+			#{streetId, jdbcType=BIGINT}, 
+			#{streetNameCN, jdbcType=VARCHAR}, 
+			#{busId, jdbcType=BIGINT}, 
+			#{remark, jdbcType=VARCHAR}, 
+			NOW(), 
+			#{addUser, jdbcType=BIGINT}, 
+			#{status, jdbcType=TINYINT}, 
+			checkValue(), 
+		</trim>)
+	</insert>
+	
+	<!-- 批量插入接口 -->
+	<insert id="insertBatch" parameterType="java.util.List">
+		INSERT INTO sys_territory (
+			territoryId, 
+			territoryNameCN, 
+			territoryNameEN, 
+			territoryAlias, 
+			territoryCode, 
+			level, 
+			sort, 
+			parentId, 
+			stateId, 
+			stateNameCN, 
+			provinceId, 
+			provinceNameCN, 
+			cityId, 
+			cityNameCN, 
+			countyId, 
+			countyNameCN, 
+			streetId, 
+			streetNameCN, 
+			busId, 
+			remark, 
+			addTime, 
+			addUser, 
+			status, 
+			checkValue) VALUES 
+    	<foreach collection="list" item="item" index="index" separator="," >
+        	(#{item.territoryId, jdbcType=BIGINT}, 
+			#{item.territoryNameCN, jdbcType=VARCHAR}, 
+			#{item.territoryNameEN, jdbcType=VARCHAR}, 
+			#{item.territoryAlias, jdbcType=VARCHAR}, 
+			#{item.territoryCode, jdbcType=VARCHAR}, 
+			#{item.level, jdbcType=TINYINT}, 
+			#{item.sort, jdbcType=TINYINT}, 
+			#{item.parentId, jdbcType=BIGINT}, 
+			#{item.stateId, jdbcType=BIGINT}, 
+			#{item.stateNameCN, jdbcType=VARCHAR}, 
+			#{item.provinceId, jdbcType=BIGINT}, 
+			#{item.provinceNameCN, jdbcType=VARCHAR}, 
+			#{item.cityId, jdbcType=BIGINT}, 
+			#{item.cityNameCN, jdbcType=VARCHAR}, 
+			#{item.countyId, jdbcType=BIGINT}, 
+			#{item.countyNameCN, jdbcType=VARCHAR}, 
+			#{item.streetId, jdbcType=BIGINT}, 
+			#{item.streetNameCN, jdbcType=VARCHAR}, 
+			#{item.busId, jdbcType=BIGINT}, 
+			#{item.remark, jdbcType=VARCHAR}, 
+			NOW(), 
+			#{item.addUser, jdbcType=BIGINT}, 
+			#{item.status, jdbcType=TINYINT}, 
+			checkValue())
+		</foreach>
+	</insert>
+	
+	<!-- 更新全部字段 -->
+	<update id="updateByKey" parameterType="com.gnol.springboot.common.pojos.sys.SysTerritory">
+		UPDATE sys_territory SET 
+			territoryNameCN = #{territoryNameCN, jdbcType=VARCHAR}, 
+			territoryNameEN = #{territoryNameEN, jdbcType=VARCHAR}, 
+			territoryAlias = #{territoryAlias, jdbcType=VARCHAR}, 
+			territoryCode = #{territoryCode, jdbcType=VARCHAR}, 
+			level = #{level, jdbcType=TINYINT}, 
+			sort = #{sort, jdbcType=TINYINT}, 
+			parentId = #{parentId, jdbcType=BIGINT}, 
+			stateId = #{stateId, jdbcType=BIGINT}, 
+			stateNameCN = #{stateNameCN, jdbcType=VARCHAR}, 
+			provinceId = #{provinceId, jdbcType=BIGINT}, 
+			provinceNameCN = #{provinceNameCN, jdbcType=VARCHAR}, 
+			cityId = #{cityId, jdbcType=BIGINT}, 
+			cityNameCN = #{cityNameCN, jdbcType=VARCHAR}, 
+			countyId = #{countyId, jdbcType=BIGINT}, 
+			countyNameCN = #{countyNameCN, jdbcType=VARCHAR}, 
+			streetId = #{streetId, jdbcType=BIGINT}, 
+			streetNameCN = #{streetNameCN, jdbcType=VARCHAR}, 
+			busId = #{busId, jdbcType=BIGINT}, 
+			remark = #{remark, jdbcType=VARCHAR}, 
+			modifyUser = #{modifyUser, jdbcType=BIGINT}, 
+			status = #{status, jdbcType=TINYINT}, 
+			checkValue = checkValue() 
+		WHERE territoryId = #{territoryId, jdbcType=BIGINT} AND checkValue = #{checkValue, jdbcType=INTEGER}
+	</update>
+	
+	<!-- 只更新不为 null 和 空字符串的字段 -->
+	<update id="update" parameterType="com.gnol.springboot.common.pojos.sys.SysTerritory">
+		UPDATE sys_territory 
+		<trim prefix="set" suffixOverrides=",">
+			checkValue = checkValue(), 
+			<if test="null != territoryNameCN and territoryNameCN != ''">
+				territoryNameCN = #{territoryNameCN, jdbcType=VARCHAR}, 
+			</if>
+			<if test="null != territoryNameEN and territoryNameEN != ''">
+				territoryNameEN = #{territoryNameEN, jdbcType=VARCHAR}, 
+			</if>
+			<if test="null != territoryAlias and territoryAlias != ''">
+				territoryAlias = #{territoryAlias, jdbcType=VARCHAR}, 
+			</if>
+			<if test="null != territoryCode and territoryCode != ''">
+				territoryCode = #{territoryCode, jdbcType=VARCHAR}, 
+			</if>
+			<if test="null != level">
+				level = #{level, jdbcType=TINYINT}, 
+			</if>
+			<if test="null != sort">
+				sort = #{sort, jdbcType=TINYINT}, 
+			</if>
+			<if test="null != parentId">
+				parentId = #{parentId, jdbcType=BIGINT}, 
+			</if>
+			<if test="null != stateId">
+				stateId = #{stateId, jdbcType=BIGINT}, 
+			</if>
+			<if test="null != stateNameCN and stateNameCN != ''">
+				stateNameCN = #{stateNameCN, jdbcType=VARCHAR}, 
+			</if>
+			<if test="null != provinceId">
+				provinceId = #{provinceId, jdbcType=BIGINT}, 
+			</if>
+			<if test="null != provinceNameCN and provinceNameCN != ''">
+				provinceNameCN = #{provinceNameCN, jdbcType=VARCHAR}, 
+			</if>
+			<if test="null != cityId">
+				cityId = #{cityId, jdbcType=BIGINT}, 
+			</if>
+			<if test="null != cityNameCN and cityNameCN != ''">
+				cityNameCN = #{cityNameCN, jdbcType=VARCHAR}, 
+			</if>
+			<if test="null != countyId">
+				countyId = #{countyId, jdbcType=BIGINT}, 
+			</if>
+			<if test="null != countyNameCN and countyNameCN != ''">
+				countyNameCN = #{countyNameCN, jdbcType=VARCHAR}, 
+			</if>
+			<if test="null != streetId">
+				streetId = #{streetId, jdbcType=BIGINT}, 
+			</if>
+			<if test="null != streetNameCN and streetNameCN != ''">
+				streetNameCN = #{streetNameCN, jdbcType=VARCHAR}, 
+			</if>
+			<if test="null != busId">
+				busId = #{busId, jdbcType=BIGINT}, 
+			</if>
+			<if test="null != remark and remark != ''">
+				remark = #{remark, jdbcType=VARCHAR}, 
+			</if>
+			<if test="null != modifyUser">
+				modifyUser = #{modifyUser, jdbcType=BIGINT}, 
+			</if>
+			<if test="null != status">
+				status = #{status, jdbcType=TINYINT}, 
+			</if>
+			<if test="null != checkValue">
+				checkValue = #{checkValue, jdbcType=TINYINT}, 
+			</if>
+		</trim>
+		WHERE territoryId = #{territoryId, jdbcType=BIGINT} AND checkValue = #{checkValue, jdbcType=INTEGER}
+	</update>
+	
+	<!-- 根据主键物理删除数据 -->
+	<delete id="deleteByKey" parameterType="java.lang.Long">
+		DELETE FROM sys_territory WHERE territoryId = #{territoryId, jdbcType=BIGINT}
+	</delete>
+	
+	<!-- 根据主键查询 pojo -->
+	<select id="getByKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+		SELECT <include refid="Base_Column_List"/> FROM sys_territory 
+		WHERE territoryId = #{territoryId, jdbcType=BIGINT}
+	</select>
+	
+	<!-- 根据主键查询 pojo -->
+	<select id="getPDByKey" parameterType="java.lang.Long" resultType="pd">
+		SELECT <include refid="Base_Column_List"/> FROM sys_territory 
+		WHERE territoryId = #{territoryId, jdbcType=BIGINT}
+	</select>
+	
+	<!-- 根据条件分页查询 pojo 列表 -->
+	<select id="listPage" parameterType="page" resultMap="BaseResultMap">
+		SELECT <include refid="Base_Column_List"/> FROM sys_territory 
+		WHERE 1 = 1 
+		<if test="args != null">
+			<if test="null != args.territoryNameCN and args.territoryNameCN != ''">
+				AND territoryNameCN = #{args.territoryNameCN, jdbcType=VARCHAR} 
+			</if>
+			<if test="null != args.territoryNameEN and args.territoryNameEN != ''">
+				AND territoryNameEN = #{args.territoryNameEN, jdbcType=VARCHAR} 
+			</if>
+			<if test="null != args.territoryAlias and args.territoryAlias != ''">
+				AND territoryAlias = #{args.territoryAlias, jdbcType=VARCHAR} 
+			</if>
+			<if test="null != args.territoryCode and args.territoryCode != ''">
+				AND territoryCode = #{args.territoryCode, jdbcType=VARCHAR} 
+			</if>
+			<if test="null != args.level">
+				AND level = #{args.level, jdbcType=TINYINT} 
+			</if>
+			<if test="null != args.sort">
+				AND sort = #{args.sort, jdbcType=TINYINT} 
+			</if>
+			<if test="null != args.parentId">
+				AND parentId = #{args.parentId, jdbcType=BIGINT} 
+			</if>
+			<if test="null != args.stateId">
+				AND stateId = #{args.stateId, jdbcType=BIGINT} 
+			</if>
+			<if test="null != args.stateNameCN and args.stateNameCN != ''">
+				AND stateNameCN = #{args.stateNameCN, jdbcType=VARCHAR} 
+			</if>
+			<if test="null != args.provinceId">
+				AND provinceId = #{args.provinceId, jdbcType=BIGINT} 
+			</if>
+			<if test="null != args.provinceNameCN and args.provinceNameCN != ''">
+				AND provinceNameCN = #{args.provinceNameCN, jdbcType=VARCHAR} 
+			</if>
+			<if test="null != args.cityId">
+				AND cityId = #{args.cityId, jdbcType=BIGINT} 
+			</if>
+			<if test="null != args.cityNameCN and args.cityNameCN != ''">
+				AND cityNameCN = #{args.cityNameCN, jdbcType=VARCHAR} 
+			</if>
+			<if test="null != args.countyId">
+				AND countyId = #{args.countyId, jdbcType=BIGINT} 
+			</if>
+			<if test="null != args.countyNameCN and args.countyNameCN != ''">
+				AND countyNameCN = #{args.countyNameCN, jdbcType=VARCHAR} 
+			</if>
+			<if test="null != args.streetId">
+				AND streetId = #{args.streetId, jdbcType=BIGINT} 
+			</if>
+			<if test="null != args.streetNameCN and args.streetNameCN != ''">
+				AND streetNameCN = #{args.streetNameCN, jdbcType=VARCHAR} 
+			</if>
+			<if test="null != args.busId">
+				AND busId = #{args.busId, jdbcType=BIGINT} 
+			</if>
+			<if test="null != args.remark and args.remark != ''">
+				AND remark = #{args.remark, jdbcType=VARCHAR} 
+			</if>
+			<if test="null != args.addTime">
+				AND addTime = #{args.addTime, jdbcType=TIMESTAMP} 
+			</if>
+			<if test="null != args.addUser">
+				AND addUser = #{args.addUser, jdbcType=BIGINT} 
+			</if>
+			<if test="null != args.modifyTime">
+				AND modifyTime = #{args.modifyTime, jdbcType=TIMESTAMP} 
+			</if>
+			<if test="null != args.modifyUser">
+				AND modifyUser = #{args.modifyUser, jdbcType=BIGINT} 
+			</if>
+			<if test="null != args.status">
+				AND status = #{args.status, jdbcType=TINYINT} 
+			</if>
+			<if test="null != args.checkValue">
+				AND checkValue = #{args.checkValue, jdbcType=TINYINT} 
+			</if>
+		</if>
+	</select>
+	
+	<!-- 根据条件查询 pojo 列表 -->
+	<select id="listBy" parameterType="pd" resultMap="BaseResultMap">
+		SELECT <include refid="Base_Column_List"/> FROM sys_territory 
+		WHERE 1 = 1 
+		<if test="null != territoryNameCN and territoryNameCN != ''">
+			AND territoryNameCN = #{territoryNameCN, jdbcType=VARCHAR} 
+		</if>
+		<if test="null != territoryNameEN and territoryNameEN != ''">
+			AND territoryNameEN = #{territoryNameEN, jdbcType=VARCHAR} 
+		</if>
+		<if test="null != territoryAlias and territoryAlias != ''">
+			AND territoryAlias = #{territoryAlias, jdbcType=VARCHAR} 
+		</if>
+		<if test="null != territoryCode and territoryCode != ''">
+			AND territoryCode = #{territoryCode, jdbcType=VARCHAR} 
+		</if>
+		<if test="null != level">
+			AND level = #{level, jdbcType=TINYINT} 
+		</if>
+		<if test="null != sort">
+			AND sort = #{sort, jdbcType=TINYINT} 
+		</if>
+		<if test="null != parentId">
+			AND parentId = #{parentId, jdbcType=BIGINT} 
+		</if>
+		<if test="null != stateId">
+			AND stateId = #{stateId, jdbcType=BIGINT} 
+		</if>
+		<if test="null != stateNameCN and stateNameCN != ''">
+			AND stateNameCN = #{stateNameCN, jdbcType=VARCHAR} 
+		</if>
+		<if test="null != provinceId">
+			AND provinceId = #{provinceId, jdbcType=BIGINT} 
+		</if>
+		<if test="null != provinceNameCN and provinceNameCN != ''">
+			AND provinceNameCN = #{provinceNameCN, jdbcType=VARCHAR} 
+		</if>
+		<if test="null != cityId">
+			AND cityId = #{cityId, jdbcType=BIGINT} 
+		</if>
+		<if test="null != cityNameCN and cityNameCN != ''">
+			AND cityNameCN = #{cityNameCN, jdbcType=VARCHAR} 
+		</if>
+		<if test="null != countyId">
+			AND countyId = #{countyId, jdbcType=BIGINT} 
+		</if>
+		<if test="null != countyNameCN and countyNameCN != ''">
+			AND countyNameCN = #{countyNameCN, jdbcType=VARCHAR} 
+		</if>
+		<if test="null != streetId">
+			AND streetId = #{streetId, jdbcType=BIGINT} 
+		</if>
+		<if test="null != streetNameCN and streetNameCN != ''">
+			AND streetNameCN = #{streetNameCN, jdbcType=VARCHAR} 
+		</if>
+		<if test="null != busId">
+			AND busId = #{busId, jdbcType=BIGINT} 
+		</if>
+		<if test="null != remark and remark != ''">
+			AND remark = #{remark, jdbcType=VARCHAR} 
+		</if>
+		<if test="null != addTime">
+			AND addTime = #{addTime, jdbcType=TIMESTAMP} 
+		</if>
+		<if test="null != addUser">
+			AND addUser = #{addUser, jdbcType=BIGINT} 
+		</if>
+		<if test="null != modifyTime">
+			AND modifyTime = #{modifyTime, jdbcType=TIMESTAMP} 
+		</if>
+		<if test="null != modifyUser">
+			AND modifyUser = #{modifyUser, jdbcType=BIGINT} 
+		</if>
+		<if test="null != status">
+			AND status = #{status, jdbcType=TINYINT} 
+		</if>
+		<if test="null != checkValue">
+			AND checkValue = #{checkValue, jdbcType=TINYINT} 
+		</if>
+	</select>
+	
+</mapper>

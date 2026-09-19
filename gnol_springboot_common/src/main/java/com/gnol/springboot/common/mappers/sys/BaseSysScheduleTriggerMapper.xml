@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gnol.springboot.common.daos.sys.BaseSysScheduleTriggerDao">
+    <!-- 通用查询映射结果 -->
+	<resultMap id="BaseResultMap" type="com.gnol.springboot.common.pojos.sys.SysScheduleTrigger">
+		<id column="scheduleTriggerId" property="scheduleTriggerId" jdbcType="BIGINT"/>
+		<result column="jobIp" property="jobIp" jdbcType="VARCHAR"/>
+		<result column="jobGroup" property="jobGroup" jdbcType="VARCHAR"/>
+		<result column="jobName" property="jobName" jdbcType="VARCHAR"/>
+		<result column="cron" property="cron" jdbcType="VARCHAR"/>
+		<result column="params" property="params" jdbcType="VARCHAR"/>
+		<result column="remark" property="remark" jdbcType="VARCHAR"/>
+		<result column="addTime" property="addTime" jdbcType="TIMESTAMP"/>
+		<result column="addUser" property="addUser" jdbcType="BIGINT"/>
+		<result column="modifyTime" property="modifyTime" jdbcType="TIMESTAMP"/>
+		<result column="modifyUser" property="modifyUser" jdbcType="BIGINT"/>
+		<result column="status" property="status" jdbcType="TINYINT"/>
+		<result column="checkValue" property="checkValue" jdbcType="INTEGER"/>
+	</resultMap>
+	
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+		scheduleTriggerId, jobIp, jobGroup, jobName, cron, params, remark, addTime, addUser, modifyTime, modifyUser, status, checkValue 
+	</sql>
+	
+	<!-- 插入数据 -->
+	<insert id="insert" parameterType="com.gnol.springboot.common.pojos.sys.SysScheduleTrigger">
+		INSERT INTO sys_schedule_trigger (
+		<trim suffixOverrides=",">
+			scheduleTriggerId, 
+			jobIp, 
+			jobGroup, 
+			jobName, 
+			cron, 
+			params, 
+			remark, 
+			addTime, 
+			addUser, 
+			status, 
+			checkValue, 
+		</trim>
+		) VALUES (
+		<trim suffixOverrides=",">
+			#{scheduleTriggerId, jdbcType=BIGINT}, 
+			#{jobIp, jdbcType=VARCHAR}, 
+			#{jobGroup, jdbcType=VARCHAR}, 
+			#{jobName, jdbcType=VARCHAR}, 
+			#{cron, jdbcType=VARCHAR}, 
+			#{params, jdbcType=VARCHAR}, 
+			#{remark, jdbcType=VARCHAR}, 
+			NOW(),
+			#{addUser, jdbcType=BIGINT}, 
+			#{status, jdbcType=TINYINT}, 
+			checkValue(), 
+		</trim>)
+	</insert>
+	
+	<!-- 批量插入接口 -->
+	<insert id="insertBatch" parameterType="java.util.List">
+		INSERT INTO sys_schedule_trigger (
+			scheduleTriggerId, 
+			jobIp, 
+			jobGroup, 
+			jobName, 
+			cron, 
+			params, 
+			remark, 
+			addTime, 
+			addUser, 
+			status, 
+			checkValue) VALUES
+		<foreach collection="list" item="item" index="index" separator="," >
+			(#{item.scheduleTriggerId, jdbcType=BIGINT}, 
+			#{item.jobIp, jdbcType=VARCHAR}, 
+			#{item.jobGroup, jdbcType=VARCHAR}, 
+			#{item.jobName, jdbcType=VARCHAR}, 
+			#{item.cron, jdbcType=VARCHAR}, 
+			#{item.params, jdbcType=VARCHAR}, 
+			#{item.remark, jdbcType=VARCHAR}, 
+			NOW(),
+			#{item.addUser, jdbcType=BIGINT}, 
+			#{item.status, jdbcType=TINYINT}, 
+			checkValue())
+		</foreach>
+	</insert>
+	
+	<!-- 更新全部字段 -->
+	<update id="updateByKey" parameterType="com.gnol.springboot.common.pojos.sys.SysScheduleTrigger">
+		UPDATE sys_schedule_trigger SET 
+			jobIp = #{jobIp, jdbcType=VARCHAR}, 
+			jobGroup = #{jobGroup, jdbcType=VARCHAR}, 
+			jobName = #{jobName, jdbcType=VARCHAR}, 
+			cron = #{cron, jdbcType=VARCHAR}, 
+			params = #{params, jdbcType=VARCHAR}, 
+			remark = #{remark, jdbcType=VARCHAR}, 
+			modifyUser = #{modifyUser, jdbcType=BIGINT}, 
+			status = #{status, jdbcType=TINYINT}, 
+			checkValue = checkValue() 
+		WHERE scheduleTriggerId = #{scheduleTriggerId, jdbcType=BIGINT} AND checkValue = #{checkValue, jdbcType=INTEGER}
+	</update>
+	
+	<!-- 只更新不为 null 和 空字符串的字段 -->
+	<update id="update" parameterType="com.gnol.springboot.common.pojos.sys.SysScheduleTrigger">
+		UPDATE sys_schedule_trigger 
+		<trim prefix="set" suffixOverrides=",">
+			checkValue = checkValue(), 
+			<if test="null != jobIp and jobIp != ''">
+				jobIp = #{jobIp, jdbcType=VARCHAR}, 
+			</if>
+			<if test="null != jobGroup and jobGroup != ''">
+				jobGroup = #{jobGroup, jdbcType=VARCHAR}, 
+			</if>
+			<if test="null != jobName and jobName != ''">
+				jobName = #{jobName, jdbcType=VARCHAR}, 
+			</if>
+			<if test="null != cron and cron != ''">
+				cron = #{cron, jdbcType=VARCHAR}, 
+			</if>
+			<if test="null != params and params != ''">
+				params = #{params, jdbcType=VARCHAR}, 
+			</if>
+			<if test="null != remark and remark != ''">
+				remark = #{remark, jdbcType=VARCHAR}, 
+			</if>
+			<if test="null != modifyUser">
+				modifyUser = #{modifyUser, jdbcType=BIGINT}, 
+			</if>
+			<if test="null != status">
+				status = #{status, jdbcType=TINYINT}, 
+			</if>
+		</trim>
+		WHERE scheduleTriggerId = #{scheduleTriggerId, jdbcType=BIGINT} AND checkValue = #{checkValue, jdbcType=INTEGER}
+	</update>
+	
+	<!-- 根据主键物理删除数据 -->
+	<delete id="deleteByKey" parameterType="java.lang.Long">
+		DELETE FROM sys_schedule_trigger WHERE scheduleTriggerId = #{scheduleTriggerId, jdbcType=BIGINT}
+	</delete>
+	
+	<!-- 根据主键查询 pojo -->
+	<select id="getByKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+		SELECT <include refid="Base_Column_List"/> FROM sys_schedule_trigger 
+		WHERE scheduleTriggerId = #{scheduleTriggerId, jdbcType=BIGINT}
+	</select>
+	
+	<!-- 根据主键查询 pojo -->
+	<select id="getPDByKey" parameterType="java.lang.Long" resultType="pd">
+		SELECT <include refid="Base_Column_List"/> FROM sys_schedule_trigger 
+		WHERE scheduleTriggerId = #{scheduleTriggerId, jdbcType=BIGINT}
+	</select>
+	
+	<!-- 根据条件分页查询 pojo 列表 -->
+	<select id="listPage" parameterType="page" resultMap="BaseResultMap">
+		SELECT <include refid="Base_Column_List"/> FROM sys_schedule_trigger 
+		WHERE 1 = 1 
+		<if test="args != null">
+			<if test="null != args.jobIp and args.jobIp != ''">
+				AND jobIp = #{args.jobIp, jdbcType=VARCHAR} 
+			</if>
+			<if test="null != args.jobGroup and args.jobGroup != ''">
+				AND jobGroup = #{args.jobGroup, jdbcType=VARCHAR} 
+			</if>
+			<if test="null != args.jobName and args.jobName != ''">
+				AND jobName = #{args.jobName, jdbcType=VARCHAR} 
+			</if>
+			<if test="null != args.cron and args.cron != ''">
+				AND cron = #{args.cron, jdbcType=VARCHAR} 
+			</if>
+			<if test="null != args.params and args.params != ''">
+				AND params = #{args.params, jdbcType=VARCHAR} 
+			</if>
+			<if test="null != args.remark and args.remark != ''">
+				AND remark = #{args.remark, jdbcType=VARCHAR} 
+			</if>
+			<if test="null != args.addTime">
+				AND addTime = #{args.addTime, jdbcType=TIMESTAMP} 
+			</if>
+			<if test="null != args.addUser">
+				AND addUser = #{args.addUser, jdbcType=BIGINT} 
+			</if>
+			<if test="null != args.modifyTime">
+				AND modifyTime = #{args.modifyTime, jdbcType=TIMESTAMP} 
+			</if>
+			<if test="null != args.modifyUser">
+				AND modifyUser = #{args.modifyUser, jdbcType=BIGINT} 
+			</if>
+			<if test="null != args.status">
+				AND status = #{args.status, jdbcType=TINYINT} 
+			</if>
+			<if test="null != args.checkValue">
+				AND checkValue = #{args.checkValue, jdbcType=INTEGER} 
+			</if>
+		</if>
+	</select>
+	
+	<!-- 根据条件查询 pojo 列表 -->
+	<select id="listBy" parameterType="pd" resultMap="BaseResultMap">
+		SELECT <include refid="Base_Column_List"/> FROM sys_schedule_trigger 
+		WHERE 1 = 1 
+		<if test="null != jobIp and jobIp != ''">
+			AND jobIp = #{jobIp, jdbcType=VARCHAR} 
+		</if>
+		<if test="null != jobGroup and jobGroup != ''">
+			AND jobGroup = #{jobGroup, jdbcType=VARCHAR} 
+		</if>
+		<if test="null != jobName and jobName != ''">
+			AND jobName = #{jobName, jdbcType=VARCHAR} 
+		</if>
+		<if test="null != cron and cron != ''">
+			AND cron = #{cron, jdbcType=VARCHAR} 
+		</if>
+		<if test="null != params and params != ''">
+			AND params = #{params, jdbcType=VARCHAR} 
+		</if>
+		<if test="null != remark and remark != ''">
+			AND remark = #{remark, jdbcType=VARCHAR} 
+		</if>
+		<if test="null != addTime">
+			AND addTime = #{addTime, jdbcType=TIMESTAMP} 
+		</if>
+		<if test="null != addUser">
+			AND addUser = #{addUser, jdbcType=BIGINT} 
+		</if>
+		<if test="null != modifyTime">
+			AND modifyTime = #{modifyTime, jdbcType=TIMESTAMP} 
+		</if>
+		<if test="null != modifyUser">
+			AND modifyUser = #{modifyUser, jdbcType=BIGINT} 
+		</if>
+		<if test="null != status">
+			AND status = #{status, jdbcType=TINYINT} 
+		</if>
+		<if test="null != checkValue">
+			AND checkValue = #{checkValue, jdbcType=INTEGER} 
+		</if>
+	</select>
+	
+</mapper>
