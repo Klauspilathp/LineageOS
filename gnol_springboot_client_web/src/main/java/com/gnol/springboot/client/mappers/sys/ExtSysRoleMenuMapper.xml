@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gnol.springboot.client.daos.sys.ExtSysRoleMenuDao">
+	<!-- resultMap引入：resultMap="com.gnol.springboot.common.daos.sys.BaseSysRoleMenuDao.BaseResultMap" -->
+	<!-- SQL 片段引入：<include refid="com.gnol.springboot.common.daos.sys.BaseSysRoleMenuDao.Base_Column_List"/> -->
+	
+	<!-- ZTree 根据角色编号查询角色权限，查询出全部菜单树，有权限的选中 -->
+	<select id="listAuthByRoleId" parameterType="pd" resultType="com.gnol.springboot.client.bos.tree.ZTree">
+		SELECT a.menuId id, a.parentId pId, a.menuName name, IF(b.menuId IS NULL, FALSE, TRUE) checked FROM sys_menu a 
+		LEFT JOIN (SELECT menuId FROM sys_role_menu WHERE roleId = #{roleId, jdbcType=BIGINT}) b ON a.menuId = b.menuId 
+		WHERE a.`status` = 1 AND a.visible = 1 
+			<if test="null != menuType and menuType != ''">
+				AND a.menuType = #{menuType, jdbcType=TINYINT}, 
+			</if>
+		ORDER BY a.sort ASC
+	</select>
+	
+</mapper>
