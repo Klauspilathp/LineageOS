@@ -1,4 +1,4 @@
-package com.gnol.springboot.client.daos.sys;
+package com.gnol.springboot.common.daos.sys;
 
 import org.springframework.stereotype.Repository;
 
@@ -6,7 +6,7 @@ import com.gnol.springboot.common.pojos.sys.SysId;
 
 /**
  * @Title: ExtSysIdDao
- * @Package: com.gnol.springboot.client.daos.sys
+ * @Package: com.gnol.springboot.common.daos.sys
  * @author: 吴佳隆
  * @date: 2020年04月03日 12:15:02
  * @Description: gnol系统_主键操作扩展 Dao
