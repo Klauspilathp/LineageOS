@@ -2,6 +2,8 @@ package com.gnol.springboot.client.controllers.sys;
 
 import java.io.FileNotFoundException;
 
+import javax.annotation.Resource;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -9,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.gnol.fastDFS.spring.boot.autoconfigure.FastDFService;
 import com.gnol.springboot.client.controllers.WebBaseController;
+import com.gnol.springboot.client.services.sys.SysTestService;
 
 /**
  * @Title: SysTestController
@@ -18,10 +21,15 @@ import com.gnol.springboot.client.controllers.WebBaseController;
  * @Description: gnol 系统测试 Controller
  */
 @Controller
-@RequestMapping(value = "/test")
+@RequestMapping(value = "/sys/test")
 public class SysTestController extends WebBaseController {
     @Autowired
     private FastDFService fastDFService;
+    /**
+     * SysTest Service 实现
+     */
+    @Resource(name = "sysTestServiceImpl")
+    private SysTestService sysTestService;
 
     @RequestMapping(value = "/test1")
     public String test1(ModelMap map) throws FileNotFoundException {
