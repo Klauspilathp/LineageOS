@@ -1,4 +1,4 @@
-package com.gnol.springboot.client.daos.sys;
+package com.gnol.springboot.client.daos.test1;
 
 import java.util.List;
 
@@ -8,19 +8,19 @@ import com.gnol.plugins.core.Page;
 import com.gnol.plugins.core.PageData;
 
 /**
- * @Title: ExtSysTestDao
- * @Package: com.gnol.springboot.client.daos.sys
+ * @Title: ExtTest1TestDao
+ * @Package: com.gnol.springboot.client.daos.test1
  * @author: 吴佳隆
- * @date: 2020年07月04日 12:42:01
- * @Description: SysTest扩展 Dao
+ * @date: 2020年07月04日 12:52:38
+ * @Description: Test1Test扩展 Dao
  */
-@Repository(value = "extSysTestDao")
-public interface ExtSysTestDao {
+@Repository(value = "extTest1TestDao")
+public interface ExtTest1TestDao {
 
     /**
      * @Title: listPDPage
      * @author: 吴佳隆
-     * @data: 2020年07月04日 12:42:01
+     * @data: 2020年07月04日 12:52:38
      * @Description: 根据条件分页查询列表
      * @param page
      * @return List<PageData>
