@@ -33,6 +33,7 @@
 
 	<modules>
 		<module>gnol_springboot_common</module>
+		<module>gnol_springboot_common_services</module>
 		<module>gnol_springboot_eureka_server</module>
 		<module>gnol_springboot_zuul</module>
 		<module>gnol_springboot_gateway</module>
