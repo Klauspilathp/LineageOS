@@ -8,8 +8,8 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 import com.gnol.plugins.core.StringUtil;
-import com.gnol.springboot.common.configurations.context.AbstractIdService;
 import com.gnol.springboot.common.pojos.sys.SysId;
+import com.gnol.springboot.common.services.AbstractIdService;
 import com.gnol.springboot.common.services.SysIdService;
 
 /**

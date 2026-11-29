@@ -2,7 +2,7 @@ package com.gnol.springboot.common.services.impl;
 
 import com.gnol.plugins.core.StringUtil;
 import com.gnol.plugins.core.context.CacheService;
-import com.gnol.springboot.common.configurations.context.AbstractIdService;
+import com.gnol.springboot.common.services.AbstractIdService;
 
 /**
  * @Title: CacheIdServiceImpl
